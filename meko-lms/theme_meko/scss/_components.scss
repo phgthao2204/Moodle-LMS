@@ -1,0 +1,408 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - SHARED UI COMPONENTS
+// Buttons, Solid Badges, Filter Chips, and Standardized 14-Field Course Card
+// ==============================================================================
+
+// 1. Standard Button Variants
+.btn-accees-primary,
+.btn-ds-primary {
+    background-color: $brand-primary !important;
+    color: #FFFFFF !important;
+    border: 1px solid $brand-primary !important;
+    border-radius: $radius-md !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    padding: 8px 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+    cursor: pointer !important;
+    transition: background-color 0.15s ease, transform 0.1s ease !important;
+
+    &:hover,
+    &:focus {
+        background-color: $brand-primary-hover !important;
+        border-color: $brand-primary-hover !important;
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+    }
+}
+
+.btn-accees-navy,
+.btn-login-navy {
+    background-color: $brand-navy !important;
+    color: #FFFFFF !important;
+    border: 1px solid $brand-navy !important;
+    border-radius: $radius-md !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    padding: 8px 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+    cursor: pointer !important;
+    transition: background-color 0.15s ease, transform 0.1s ease !important;
+
+    &:hover,
+    &:focus {
+        background-color: $brand-primary !important;
+        border-color: $brand-primary !important;
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+    }
+}
+
+// Design System Solid Green (#39B500) SSO Login CTA Button
+.btn-accees-nav-sso {
+    background-color: #39B500 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #39B500 !important;
+    border-radius: $radius-md !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    padding: 7px 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    transition: background-color 0.15s ease, transform 0.1s ease !important;
+
+    &:hover,
+    &:focus {
+        background-color: #2F9800 !important;
+        border-color: #2F9800 !important;
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+    }
+}
+
+.btn-accees-secondary,
+.btn-accees-outline-navy,
+.btn-ds-outline-primary {
+    background-color: #FFFFFF !important;
+    color: $brand-primary !important;
+    border: 1.5px solid $brand-primary !important;
+    border-radius: $radius-md !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    padding: 8px 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+    transition: all 0.15s ease !important;
+
+    &:hover,
+    &:focus {
+        background-color: $brand-primary !important;
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+    }
+}
+
+.btn-ds-outline-secondary {
+    background-color: #FFFFFF !important;
+    color: $brand-success !important;
+    border: 1.5px solid $brand-success !important;
+    border-radius: $radius-md !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    padding: 8px 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease !important;
+
+    &:hover,
+    &:focus {
+        background-color: $brand-success !important;
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+    }
+}
+
+.btn-ds-outline-accent {
+    background-color: #FFFFFF !important;
+    color: $brand-warning !important;
+    border: 1.5px solid $brand-warning !important;
+    border-radius: $radius-md !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    padding: 8px 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease !important;
+
+    &:hover,
+    &:focus {
+        background-color: $brand-warning !important;
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+    }
+}
+
+.btn-ds-outline-sm {
+    background-color: $brand-primary-tint !important;
+    color: $brand-primary !important;
+    border: 1px solid $brand-primary-border !important;
+    border-radius: $radius-md !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    padding: 5px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: all 0.15s ease !important;
+
+    &:hover,
+    &:focus {
+        background-color: $brand-primary !important;
+        border-color: $brand-primary !important;
+        color: #FFFFFF !important;
+        text-decoration: none !important;
+    }
+}
+
+// 2. Solid Badges & Domain Pills
+.badge-solid-primary,
+.ds-badge.badge-light-blue {
+    background-color: $brand-primary-tint !important;
+    color: $brand-primary !important;
+    border: 1px solid $brand-primary-border !important;
+    font-weight: 700 !important;
+    border-radius: $radius-md !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-solid-success,
+.ds-badge.badge-light-green {
+    background-color: $brand-success-tint !important;
+    color: $brand-success-text !important;
+    border: 1px solid $brand-success-border !important;
+    font-weight: 700 !important;
+    border-radius: $radius-md !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-solid-warning,
+.ds-badge.badge-light-orange {
+    background-color: $brand-warning-tint !important;
+    color: $brand-warning !important;
+    border: 1px solid $brand-warning-border !important;
+    font-weight: 700 !important;
+    border-radius: $radius-md !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-solid-slate {
+    background-color: $bg-page !important;
+    color: $text-secondary !important;
+    border: 1px solid $border-default !important;
+    font-weight: 700 !important;
+    border-radius: $radius-md !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+// 3. Standardized 14-Field Course Card (.accees-course-card)
+.course-card-unit,
+.accees-course-card {
+    background-color: $bg-surface !important;
+    border: 1px solid $border-default !important;
+    border-radius: $radius-lg !important;
+    overflow: hidden !important;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+
+    &:hover {
+        transform: translateY(-3px) !important;
+        border-color: $brand-primary !important;
+        box-shadow: 0 10px 22px rgba(0, 0, 182, 0.08) !important;
+
+        .course-thumbnail-area img.course-cover-img {
+            transform: scale(1.05);
+        }
+    }
+
+    .course-thumbnail-area {
+        position: relative;
+        overflow: hidden;
+
+        img.course-cover-img {
+            transition: transform 0.35s ease;
+        }
+    }
+
+    .accees-card-top-bar {
+        height: 4px;
+        background-color: $brand-primary;
+        width: 100%;
+    }
+
+    .accees-domain-pill {
+        background-color: $brand-primary-tint !important;
+        color: $brand-primary !important;
+        font-size: 10.5px !important;
+        border: 1px solid $brand-primary-border !important;
+        border-radius: $radius-sm !important;
+        letter-spacing: 0.3px !important;
+        font-weight: 700 !important;
+        padding: 3px 8px !important;
+    }
+
+    .course-code {
+        color: $text-muted !important;
+        font-size: 11px !important;
+        font-family: $font-family-mono;
+        font-weight: 700 !important;
+    }
+
+    .featured-star {
+        color: $brand-warning !important;
+        font-size: 13px !important;
+        line-height: 1;
+    }
+
+    .course-card-title {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        line-height: 1.4 !important;
+        min-height: 42px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+
+        a {
+            color: $text-main !important;
+            text-decoration: none !important;
+
+            &:hover {
+                color: $brand-primary !important;
+            }
+        }
+    }
+
+    .course-card-summary {
+        font-size: 12.5px !important;
+        line-height: 1.5 !important;
+        color: $text-muted !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 38px;
+    }
+
+    .accees-cbe-box {
+        background-color: $bg-subtle !important;
+        border: 1px solid $border-default !important;
+        border-radius: $radius-md !important;
+        font-size: 11.5px !important;
+    }
+}
+
+// 4. Category Filter Pills (Frontpage & Catalog)
+#accees-category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 4px 0;
+
+    @media (max-width: 991px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+
+        &::-webkit-scrollbar {
+            height: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #CBD5E1;
+            border-radius: 4px;
+        }
+    }
+}
+
+.accees-cat-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: $radius-pill;
+    border: 1px solid $border-strong;
+    background-color: $bg-surface;
+    color: $text-secondary;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    line-height: 1.3;
+
+    .cat-count-pill {
+        background-color: $bg-page;
+        color: $text-secondary;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: $radius-pill;
+    }
+
+    &:hover {
+        border-color: $brand-primary;
+        color: $brand-primary;
+        background-color: $brand-primary-tint;
+    }
+
+    &.active {
+        background-color: $brand-primary !important;
+        border-color: $brand-primary !important;
+        color: #FFFFFF !important;
+        font-weight: 700;
+
+        .cat-count-pill {
+            background-color: rgba(255, 255, 255, 0.22);
+            color: #FFFFFF;
+        }
+    }
+}
+

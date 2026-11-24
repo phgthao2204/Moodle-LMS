@@ -1,0 +1,7 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+}
+
+tasks.named("compileJava") {
+    dependsOn ":modules:accees-tms-core:tms-core-service:buildService"
+}

@@ -1,0 +1,271 @@
+{
+  "info": {
+    "_postman_id": "a4f3b921-2026-4d1c-8e9a-112233445566",
+    "name": "MEKO-DLE API Collection (21 Endpoints)",
+    "description": "Bo Postman Collection day du 21 API & Commands cho MEKO-LMS (6 Moodle WS) va MEKO-TMS (2 REST + 13 Portlet Commands). Ho tro doi baseUrl giua http://meko.localhost va Mock Server http://127.0.0.1:8099.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:8099" },
+    { "key": "moodleToken", "value": "replace-with-moodle-ws-token" },
+    { "key": "hmacSignature", "value": "sha256=replace-with-hmac-hex" }
+  ],
+  "item": [
+    {
+      "name": "01 - MEKO-LMS (6 Moodle External WS)",
+      "item": [
+        {
+          "name": "01. Export Course IMSCC (local_meko_imscp_export_course)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "url": "{{baseUrl}}/lms/webservice/rest/server.php?wstoken={{moodleToken}}&moodlewsrestformat=json&wsfunction=local_meko_imscp_export_course",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "courseid", "value": "8" },
+                { "key": "include_questionbank", "value": "1" },
+                { "key": "include_userdata", "value": "0" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "02. Create Course from IMSCC (local_meko_imscp_create_course)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/lms/webservice/rest/server.php?wstoken={{moodleToken}}&moodlewsrestformat=json&wsfunction=local_meko_imscp_create_course",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_code\": \"MK-2026-01\",\n  \"course_title\": \"Dong goi Hoc lieu Chuan IMS CP\",\n  \"summary\": \"Khoa hoc thuc hanh IMS CC & QTI XML\",\n  \"category_idnumber\": \"DIGCOMP_STU\",\n  \"startdate\": 1795132800,\n  \"enddate\": 1797724800,\n  \"imscc_source_type\": \"URL\",\n  \"imscc_url\": \"http://devlocal-gateway/documents/ims/nls01-ims.imscc\",\n  \"lecturer_email\": \"dien.tran@mekosoft.vn\",\n  \"competency_idnumbers\": [\"SV_C1_1_N1\", \"SV_C1_3_N1\"],\n  \"customfields\": {\n    \"accees_course_status\": \"PUBLISHED\",\n    \"accees_delivery_mode\": \"Blended Learning\",\n    \"accees_duration\": \"3 Credits - 60 Hours\",\n    \"accees_institution\": \"Mekosoft Training Hub\",\n    \"accees_is_featured\": true\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "03. Get Published Courses (local_meko_sync_get_courses)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "url": "{{baseUrl}}/lms/webservice/rest/server.php?wstoken={{moodleToken}}&moodlewsrestformat=json&wsfunction=local_meko_sync_get_courses",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "status", "value": "PUBLISHED" },
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "50" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "04. Update Course Status (local_meko_sync_update_courses)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/lms/webservice/rest/server.php?wstoken={{moodleToken}}&moodlewsrestformat=json&wsfunction=local_meko_sync_update_courses",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"moodle_course_id\": 21,\n  \"visible\": 0,\n  \"accees_course_status\": \"CLOSED\"\n}"
+            }
+          }
+        },
+        {
+          "name": "05. Enrol Users Bulk (local_meko_sync_enrol_users_bulk)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/lms/webservice/rest/server.php?wstoken={{moodleToken}}&moodlewsrestformat=json&wsfunction=local_meko_sync_enrol_users_bulk",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseid\": 21,\n  \"auth_type\": \"manual\",\n  \"users\": [\n    {\n      \"username\": \"mk2026001\",\n      \"student_code\": \"MK2026001\",\n      \"email\": \"an.nguyen@mekosoft.vn\",\n      \"firstname\": \"An\",\n      \"lastname\": \"Nguyen Van\",\n      \"organization\": \"Phong Ky thuat Phan mem\",\n      \"roleid\": 5\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "06. Get Learner Results (local_meko_sync_get_learner_results)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/lms/webservice/rest/server.php?wstoken={{moodleToken}}&moodlewsrestformat=json&wsfunction=local_meko_sync_get_learner_results",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"moodle_course_id\": 21,\n  \"moodle_user_ids\": [105],\n  \"since_timestamp\": 0\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - MEKO-TMS (2 JAX-RS REST Endpoints)",
+      "item": [
+        {
+          "name": "07. Webhook Badge Awarded (POST /o/meko-tms/api/webhooks/badge-awarded)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-MEKO-Signature", "value": "{{hmacSignature}}" }
+            ],
+            "url": "{{baseUrl}}/o/meko-tms/api/webhooks/badge-awarded",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"badge_awarded\",\n  \"timestamp\": 1795000000,\n  \"moodle_course_id\": 21,\n  \"course_shortname\": \"MK-2026-01\",\n  \"moodle_userid\": 105,\n  \"user_email\": \"an.nguyen@mekosoft.vn\",\n  \"final_grade\": 8.5,\n  \"badge\": {\n    \"id\": 12,\n    \"name\": \"Chung nhan Hoan thanh Nang luc so C1.1\",\n    \"image_url\": \"http://meko.localhost/lms/badges/badge_c11.png\",\n    \"issued_at\": 1795000000\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "08. Public Verify Certificate (GET /o/meko-tms/api/certificates/verify)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/o/meko-tms/api/certificates/verify?code=8f4a29b7c1e04d11a89c"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - MEKO-TMS (13 Portlet Commands)",
+      "item": [
+        {
+          "name": "09. Save Course Plan (/tms/plan/save)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tms/plan/save",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "planId", "value": "0" },
+                { "key": "courseTitle", "value": "Khoa hoc IMS CC Chuan hoa" },
+                { "key": "imsPackageUrl", "value": "http://meko.localhost/documents/ims/nls01.imscc" },
+                { "key": "deliveryFormat", "value": "Blended Learning" },
+                { "key": "creditHours", "value": "3" },
+                { "key": "estimatedLearners", "value": "50" },
+                { "key": "expectedStartDate", "value": "2026-11-20" },
+                { "key": "expectedEndDate", "value": "2026-12-20" },
+                { "key": "lecturerName", "value": "PGS.TS. Tran Thanh Dien" },
+                { "key": "lecturerEmail", "value": "dien.tran@mekosoft.vn" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "10. Approve Course Plan (/tms/plan/approve)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tms/plan/approve",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "planId", "value": "10" },
+                { "key": "actionType", "value": "APPROVE" },
+                { "key": "approvalNotes", "value": "Dat chuan mo lop" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "11. Save Course & Competencies (/tms/course/save)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tms/course/save",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "planId", "value": "10" },
+                { "key": "courseCode", "value": "MK-2026-01" },
+                { "key": "courseTitle", "value": "Dong goi Hoc lieu Chuan IMS CP" },
+                { "key": "startDate", "value": "2026-11-20" },
+                { "key": "endDate", "value": "2026-12-20" },
+                { "key": "maxEnrollment", "value": "50" },
+                { "key": "frameworkIds[]", "value": "14" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "12. Deploy Course to Moodle (/tms/course/deploy)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tms/course/deploy",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [{ "key": "courseId", "value": "101" }]
+            }
+          }
+        },
+        {
+          "name": "13. Get Catalog JSON (/tms/catalog/list)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/tms/catalog/list?page=1&pageSize=12" }
+        },
+        {
+          "name": "14. Self Enroll 1-Click (/tms/enroll/self)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/tms/enroll/self",
+            "body": { "mode": "raw", "raw": "{\n  \"courseId\": 101\n}" }
+          }
+        },
+        {
+          "name": "15. Excel Import Preview (/tms/enroll/excel-preview)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tms/enroll/excel-preview",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "courseId", "value": "101", "type": "text" },
+                { "key": "file", "type": "file", "src": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "16. Excel Import Confirm (/tms/enroll/excel-confirm)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/tms/enroll/excel-confirm",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseId\": 101,\n  \"rows\": [\n    {\n      \"studentCode\": \"MK2026001\",\n      \"fullName\": \"Nguyen Van An\",\n      \"email\": \"an.nguyen@mekosoft.vn\",\n      \"phone\": \"0901234567\",\n      \"organization\": \"Phong KT\"\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "17. Approve or Reject Enrollment (/tms/enroll/decide)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/tms/enroll/decide",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enrollmentIds\": [41],\n  \"decision\": \"APPROVE\",\n  \"rejectReason\": \"\"\n}"
+            }
+          }
+        },
+        {
+          "name": "18. Resend Email (/tms/logs/email-resend)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/tms/logs/email-resend",
+            "body": { "mode": "raw", "raw": "{\n  \"emailLogId\": 88\n}" }
+          }
+        },
+        {
+          "name": "19. Get Sync & Email Logs (/tms/logs/list)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/tms/logs/list?logType=EMAIL&page=1" }
+        },
+        {
+          "name": "20. Get My Profile & Progress (/tms/profile/summary)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/tms/profile/summary" }
+        },
+        {
+          "name": "21. Download Certificate PDF (/tms/profile/cert-pdf)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/tms/profile/cert-pdf?certId=18" }
+        }
+      ]
+    }
+  ]
+}

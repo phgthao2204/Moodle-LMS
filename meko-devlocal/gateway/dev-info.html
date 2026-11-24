@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MEKOSOFT DevLocal Stack — meko.localhost</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1E2F97;
+      --orange: #F57C00;
+      --green: #16A34A;
+      --dark: #0F172A;
+      --slate: #475569;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --border: #E2E8F0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--navy);
+      color: #FFFFFF;
+      padding: 28px 24px;
+      border-bottom: 4px solid var(--orange);
+    }
+    .container { max-width: 1120px; margin: 0 auto; padding: 24px; }
+    .header-inner { max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; }
+    .badge {
+      display: inline-block;
+      background: var(--orange);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    h1 { font-size: 24px; font-weight: 800; margin-top: 8px; }
+    .sub { color: #CBD5E1; font-size: 14px; }
+    .nav-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      border: 2px solid transparent;
+    }
+    .btn-primary { background: var(--orange); color: #FFFFFF; }
+    .btn-outline { background: #FFFFFF; color: var(--navy); border-color: #FFFFFF; }
+    .btn-green { background: var(--green); color: #FFFFFF; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .card h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      border-bottom: 2px solid var(--bg);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { color: var(--slate); font-weight: 600; background: #F1F5F9; }
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #F1F5F9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--dark);
+    }
+    .pill-ok { display: inline-block; background: #DCFCE7; color: #166534; font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+    .note {
+      background: #FFF7ED;
+      border-left: 4px solid var(--orange);
+      padding: 14px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    footer { text-align: center; color: var(--slate); font-size: 12px; padding: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <span class="badge">MEKOSOFT Local Dev Environment</span>
+        <h1>meko.localhost — Docker Unified Stack</h1>
+        <p class="sub">Liferay 7.4 GA132 (CMS + TMS) + Moodle 5.3 LTS (LMS) + PostgreSQL 17 + Nginx Gateway</p>
+      </div>
+      <div class="nav-btns">
+        <a class="btn btn-outline" href="/">CMS (Liferay /)</a>
+        <a class="btn btn-primary" href="/tms">Mở TMS (/tms)</a>
+        <a class="btn btn-green" href="/lms/">Mở LMS (/lms)</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="note">
+      <strong>Lưu ý khởi động lần đầu:</strong> Moodle và Nginx sẵn sàng trong ~15 giây. Liferay 7.4 GA132 cần khoảng <strong>2–3 phút</strong> để khởi tạo schema PostgreSQL và OSGi bundle lần đầu. Nếu vào <code>/</code> hoặc <code>/tms</code> thấy trang này, hãy đợi thêm 1–2 phút rồi F5.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>1. Đường dẫn Phân hệ (Routes)</h2>
+        <table>
+          <thead><tr><th>Phân hệ</th><th>URL Local</th><th>Ghi chú</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CMS / Home</strong></td><td><a href="http://meko.localhost/"><code>http://meko.localhost/</code></a></td><td>Liferay 7.4 Root Site</td></tr>
+            <tr><td><strong>TMS Portal</strong></td><td><a href="http://meko.localhost/tms"><code>http://meko.localhost/tms</code></a></td><td>Liferay Site <code>/web/tms</code></td></tr>
+            <tr><td><strong>Moodle LMS</strong></td><td><a href="http://meko.localhost/lms/"><code>http://meko.localhost/lms/</code></a></td><td>Moodle 5.3 + <code>theme_meko</code></td></tr>
+            <tr><td><strong>Mailpit UI</strong></td><td><a href="http://meko.localhost/mail/"><code>http://meko.localhost/mail/</code></a></td><td>Bắt toàn bộ email DevLocal (port 8025)</td></tr>
+            <tr><td><strong>Dev Info</strong></td><td><a href="http://meko.localhost/dev-info"><code>http://meko.localhost/dev-info</code></a></td><td>Dashboard trạng thái tĩnh</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>2. Kiến trúc Docker & Network</h2>
+        <table>
+          <thead><tr><th>Container</th><th>Image</th><th>Port</th></tr></thead>
+          <tbody>
+            <tr><td><code>devlocal-gateway</code></td><td><code>nginx:alpine</code></td><td>Host <code>80</code> → <code>80</code></td></tr>
+            <tr><td><code>devlocal-liferay</code></td><td><code>liferay/portal:7.4.3.132-ga132</code></td><td>Nội bộ <code>8080</code>, Gogo <code>11311</code></td></tr>
+            <tr><td><code>devlocal-moodle</code></td><td><code>elestio/moodle:v5.3.0</code></td><td>Nội bộ <code>80</code></td></tr>
+            <tr><td><code>devlocal-mailpit</code></td><td><code>axllent/mailpit:latest</code></td><td>Host <code>8025</code> → <code>8025</code>, SMTP <code>1025</code></td></tr>
+            <tr><td><code>devlocal-postgres</code></td><td><code>postgres:17-alpine</code></td><td>Host <code>5433</code> → <code>5432</code></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:10px;font-size:12px;color:#475569;">Bridge Network: <code>devlocal_meko_net</code> | DNS: <code>*.localhost</code> (RFC 6761 — tự phân giải 127.0.0.1, không cần sửa file hosts)</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>3. Kết nối PostgreSQL 17 dùng chung</h2>
+        <table>
+          <thead><tr><th>Hệ thống</th><th>Host / Port</th><th>Database</th><th>User / Password</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Liferay 7.4</strong></td>
+              <td>Host: <code>localhost:5433</code><br/>Docker: <code>postgres:5432</code></td>
+              <td><code>lportal</code></td>
+              <td><code>liferay</code> / <code>LiferayPass2026!@#</code></td>
+            </tr>
+            <tr>
+              <td><strong>Moodle 5.3</strong></td>
+              <td>Host: <code>localhost:5433</code><br/>Docker: <code>postgres:5432</code></td>
+              <td><code>accees_lms</code></td>
+              <td><code>lms_user</code> / <code>LmsPassword2026!@#</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>4. Tài khoản kiểm thử mặc định</h2>
+        <table>
+          <thead><tr><th>Hệ thống</th><th>Vai trò</th><th>Tài khoản</th><th>Mật khẩu</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Liferay</strong></td><td>Admin</td><td><code>test@liferay.com</code></td><td><code>test</code> <span class="pill-ok">Đổi lần đầu</span></td></tr>
+            <tr><td><strong>Moodle</strong></td><td>Admin</td><td><code>admin</code></td><td><code>AdminMoodle2026!@#</code></td></tr>
+            <tr><td><strong>Moodle</strong></td><td>Tech Lead</td><td><code>pqhuy</code></td><td><code>PqHuy2026!@#</code></td></tr>
+            <tr><td><strong>Moodle</strong></td><td>Giảng viên</td><td><code>teacher1</code> .. <code>teacher4</code></td><td><code>Teacher2026!@#</code></td></tr>
+            <tr><td><strong>Moodle</strong></td><td>Sinh viên</td><td><code>student1</code>, <code>b2204927</code></td><td><code>Student2026!@#</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>5. Lệnh thao tác nhanh cho Developer</h2>
+      <table>
+        <tbody>
+          <tr><td style="width:240px;"><strong>Xem log Liferay</strong></td><td><code>docker logs -f devlocal-liferay</code></td></tr>
+          <tr><td><strong>Deploy module Liferay</strong></td><td>Copy file <code>.jar</code> / <code>.war</code> vào thư mục <code>./liferay/deploy/</code></td></tr>
+          <tr><td><strong>Xóa cache Moodle</strong></td><td><code>docker exec devlocal-moodle php /var/www/html/admin/cli/purge_caches.php</code></td></tr>
+          <tr><td><strong>Cấu hình DNS Local</strong></td><td><code>meko.localhost</code> tự phân giải về <code>127.0.0.1</code> trên Chrome/Edge/Firefox (không cần sửa <code>hosts</code>). Nếu đổi port: <code>HTTP_PORT=8090</code> trong <code>.env</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>MEKOSOFT DevLocal Environment — Docker Desktop Unified Setup</footer>
+</body>
+</html>

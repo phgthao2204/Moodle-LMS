@@ -1,0 +1,747 @@
+{{!
+    @template theme_accees_lms_theme/course_detail
+    Course Detail Learning Hub & Interactive Solid Tiles View (UC-LMS-04).
+}}
+<main class="accees-course-detail">
+    <div class="accees-course-container">
+        <!-- Breadcrumb & Header Actions -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <nav class="accees-course-breadcrumb mb-0" aria-label="Breadcrumb">
+                <a href="{{config.wwwroot}}"><i class="fa-solid fa-house me-1"></i>{{#str}}nav_home, theme_meko{{/str}}</a>
+                <span aria-hidden="true">/</span>
+                <a href="{{categoryurl}}">{{categoryname}}</a>
+                <span aria-hidden="true">/</span>
+                <strong>{{courseshortname}}</strong>
+            </nav>
+
+            {{#hasheaderactions}}
+            <div class="d-flex align-items-center gap-2">
+                {{#headeractions}}
+                    {{{ . }}}
+                {{/headeractions}}
+            </div>
+            {{/hasheaderactions}}
+        </div>
+
+        <!-- Moodle Secondary Navigation (Course | Settings | Participants | Grades | Competencies | More) -->
+        {{#secondarymoremenu}}
+        <div class="secondary-navigation d-print-none">
+            {{> core/moremenu}}
+        </div>
+        {{/secondarymoremenu}}
+
+        <!-- Course Learning Hub Overview Card -->
+        <section class="accees-course-overview">
+            <div class="accees-course-badges">
+                {{#domain_pill}}
+                <span class="accees-course-badge accees-course-badge-category">
+                    <i class="fa-solid fa-layer-group me-1"></i>{{domain_pill}}
+                </span>
+                {{/domain_pill}}
+                {{#cbe_badge_label}}
+                <span class="accees-course-badge accees-course-badge-level" title="{{competency_level_tooltip}}">
+                    <i class="fa-solid fa-signal me-1"></i>{{cbe_badge_label}}
+                </span>
+                {{/cbe_badge_label}}
+                <span class="accees-course-badge accees-course-badge-code">
+                    <i class="fa-solid fa-hashtag me-1"></i>{{ui.lbl_course_code}} {{courseidnumber}}
+                </span>
+                {{#competency_title}}
+                <span class="accees-course-badge accees-course-badge-cbe">
+                    <i class="fa-solid fa-bullseye me-1"></i>{{ui.lbl_cbe}} {{competency_title}}
+                </span>
+                {{/competency_title}}
+                <span class="accees-course-badge accees-course-badge-format">
+                    <i class="fa-solid fa-laptop-file me-1"></i>{{delivery_mode}} · {{duration}}
+                </span>
+            </div>
+
+            <h1>{{coursefullname}}</h1>
+
+            <div class="accees-course-meta">
+                <span><i class="fa-solid fa-chalkboard-user me-1" style="color: #0000B6;"></i>{{ui.lbl_instructor}} <strong>{{teachername}}</strong></span>
+                <span><i class="fa-solid fa-calendar-check me-1" style="color: #0000B6;"></i>{{ui.lbl_startdate}} <strong>{{startdate}}</strong></span>
+                <span><i class="fa-solid fa-building-columns me-1" style="color: #0000B6;"></i>{{ui.lbl_institution}} <strong>{{institution}}</strong></span>
+                <span><i class="fa-solid fa-circle-check me-1" style="color: #39B500;"></i>{{ui.lbl_criteria}} <strong>{{passing_criteria}}</strong></span>
+            </div>
+
+            {{#hascoursesummary}}
+            <div class="accees-course-summary">
+                {{{coursesummary}}}
+            </div>
+            {{/hascoursesummary}}
+
+            <div class="accees-course-overview-panels{{^hascompetencies}} is-single-panel{{/hascompetencies}}">
+                <!-- Panel 1: Course Progress -->
+                <article class="accees-course-panel">
+                    <div class="accees-course-panel-heading">
+                        <h2><i class="fa-solid fa-chart-pie me-1" style="color: #0000B6;"></i>{{ui.lbl_progress_title}}</h2>
+                        <strong class="accees-progress-value">{{progresspercent}}%</strong>
+                    </div>
+
+                    <div class="accees-progress-track" role="progressbar" aria-valuenow="{{progresspercent}}" aria-valuemin="0" aria-valuemax="100">
+                        <span style="width: {{progresspercent}}%;"></span>
+                    </div>
+
+                    <div class="accees-progress-caption">
+                        <span>{{ui.lbl_completed_prefix}} <strong>{{completedactivities}} / {{totalactivities}}</strong> {{ui.lbl_activities_suffix}}</span>
+                        <strong>{{#completionenabled}}{{ui.lbl_tracked_auto}}{{/completionenabled}}{{^completionenabled}}{{ui.lbl_tracked_self}}{{/completionenabled}}</strong>
+                    </div>
+
+                    <p class="accees-course-note">
+                        {{ui.lbl_progress_note}}
+                    </p>
+                </article>
+
+                {{#hascompetencies}}
+                <!-- Panel 2: Linked CBE Competencies with Collapsible Matrix -->
+                <article class="accees-course-panel accees-cbe-collapsible-panel">
+                    <div class="accees-course-panel-heading accees-cbe-panel-heading">
+                        <h2><i class="fa-solid fa-sitemap me-1" style="color: #0000B6;"></i>{{ui.lbl_cbe_outcomes}}</h2>
+                        <div class="accees-cbe-panel-controls">
+                            {{#frameworkname}}
+                            <span class="accees-course-framework-badge">{{frameworkname}}</span>
+                            {{/frameworkname}}
+                            <button type="button" class="btn btn-sm btn-outline-primary accees-cbe-toggle-btn" id="btnToggleCbeMatrix" aria-expanded="false" aria-controls="cbeOutcomesCollapse">
+                                <span class="cbe-btn-text">View Details ▾</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Compact preview pills (Always visible, lightweight) -->
+                    <div class="accees-cbe-compact-pills">
+                        <span class="accees-cbe-compact-label">Certified Competencies</span>
+                        <div class="accees-cbe-compact-list">
+                        {{#competencies}}
+                        <span class="accees-cbe-compact-chip">
+                            {{competency_name}}
+                        </span>
+                        {{/competencies}}
+                        </div>
+                    </div>
+
+                    <!-- Full Competency Table (Collapsible) -->
+                    <div id="cbeOutcomesCollapse" class="accees-cbe-details-collapse" style="display: none;" hidden>
+                        <div class="accees-cbe-scroll-region" tabindex="0" aria-label="{{ui.lbl_cbe_outcomes}}">
+                            <ul class="accees-competency-list">
+                                {{#competencies}}
+                                <li class="accees-competency-item {{#hasproficient}}is-proficient{{/hasproficient}}">
+                                    <div class="accees-competency-info">
+                                        <div class="accees-competency-meta">
+                                            <span class="accees-competency-fw">{{framework_short}}</span>
+                                            {{#domain_name}}
+                                            <span class="accees-competency-domain" title="{{domain_name}}">{{domain_name}}</span>
+                                            {{/domain_name}}
+                                        </div>
+                                        <strong class="accees-competency-name">{{competency_name}}</strong>
+                                    </div>
+                                    <div class="accees-competency-levels">
+                                        {{#levels}}
+                                        <a href="{{{url}}}"
+                                           class="accees-comp-level-pill level-{{level_key}} {{#isproficient}}is-proficient{{/isproficient}}"
+                                           title="{{statuslabel}}">
+                                            {{#isproficient}}<i class="fa-solid fa-circle-check me-1"></i>{{/isproficient}}{{label}}
+                                        </a>
+                                        {{/levels}}
+                                    </div>
+                                </li>
+                                {{/competencies}}
+                            </ul>
+                        </div>
+                        <a class="accees-competency-link mt-2 d-inline-block" href="{{competencyreporturl}}">
+                            {{ui.lbl_cbe_details}} <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </article>
+                {{/hascompetencies}}
+            </div>
+        </section>
+
+        <!-- Course Sections & Solid Tiles Learning Hub -->
+        <section class="accees-course-content" id="accees-course-sections">
+            {{#istilesformat}}
+            <div class="accees-course-content-heading">
+                <div>
+                    <h2><i class="fa-solid fa-cubes me-2" style="color: #0000B6;"></i>{{ui.lbl_sections_title}}</h2>
+                    <p>{{ui.lbl_sections_desc}}</p>
+                </div>
+            </div>
+
+            <div
+                class="accees-tiles-view{{#isediting}} is-edit-mode{{/isediting}}"
+                data-accees-tiles-view
+                data-topic-prefix="{{ui.lbl_topic_prefix}}"
+                data-general-label="{{ui.lbl_general_tile}}"
+                data-ready-label="{{ui.lbl_ready}}"
+                data-highlighted-label="{{ui.lbl_highlighted}}">
+                <div class="accees-tiles-grid" role="tablist" aria-label="Course sections">
+                    {{#tilesections}}
+                    <button
+                        type="button"
+                        class="accees-tile-card {{#isactive}}is-active{{/isactive}} {{#iscomplete}}is-complete{{/iscomplete}} {{#isinprogress}}is-in-progress{{/isinprogress}} {{#ishighlighted}}is-highlighted{{/ishighlighted}}"
+                        data-section-target="{{number}}"
+                        data-section-label="{{tilelabel}}"
+                        data-section-name="{{name}}"
+                        data-native-delete-confirmation-required="{{#nativeDeleteConfirmationRequired}}true{{/nativeDeleteConfirmationRequired}}{{^nativeDeleteConfirmationRequired}}false{{/nativeDeleteConfirmationRequired}}"
+                        data-empty-section-delete-confirmation="{{ui.lbl_delete_empty_section_confirm}}"
+                        data-empty-section-delete-title="{{ui.lbl_delete_empty_section_title}}"
+                        data-delete-cancel-label="{{ui.lbl_delete_cancel}}"
+                        data-delete-confirm-label="{{ui.lbl_delete_confirm}}"
+                        aria-pressed="{{#isactive}}true{{/isactive}}{{^isactive}}false{{/isactive}}">
+                        <div class="accees-tile-card-top">
+                            <span class="accees-tile-label">{{tilelabel}}</span>
+                            <span class="accees-tile-progress">{{progresspercent}}%</span>
+                        </div>
+                        <span class="accees-tile-highlighted-badge" data-section-highlighted-badge {{^ishighlighted}}hidden{{/ishighlighted}}>{{ui.lbl_highlighted}}</span>
+                        <strong class="accees-tile-name">{{name}}</strong>
+                        <div class="accees-tile-card-bottom">
+                            <span><i class="fa-regular fa-file-lines me-1"></i>{{completedcount}} / {{activitycount}}</span>
+                            <span>{{statuslabel}}</span>
+                        </div>
+                    </button>
+                    {{/tilesections}}
+                </div>
+
+                {{#isediting}}
+                <section class="accees-tile-panel accees-edit-tile-panel is-active" data-edit-section-content>
+                    <div class="accees-course-main-content is-course-edit-mode">
+                        {{{maincontent}}}
+                    </div>
+                    <div class="accees-edit-add-section-slot" data-add-section-slot hidden></div>
+                </section>
+                {{/isediting}}
+
+                {{^isediting}}
+                {{#tilesections}}
+                <section
+                    class="accees-tile-panel {{#isactive}}is-active{{/isactive}}"
+                    data-section-panel="{{number}}"
+                    {{^isactive}}hidden{{/isactive}}>
+                    <header class="accees-tile-panel-header">
+                        <div class="accees-tile-panel-icon" aria-hidden="true">
+                            <i class="fa-solid fa-book-open-reader" style="font-size: 20px; color: #0000B6;"></i>
+                        </div>
+                        <div class="accees-tile-panel-title">
+                            <span>{{tilelabel}} · {{completedcount}}/{{activitycount}}</span>
+                            <h3>{{name}}</h3>
+                        </div>
+                        <div class="accees-tile-panel-nav">
+                            {{#hasprev}}
+                            <button type="button" data-section-target="{{prevnumber}}">
+                                <i class="fa-solid fa-arrow-left me-1"></i>{{ui.lbl_prev_section}}
+                            </button>
+                            {{/hasprev}}
+                            {{#hasnext}}
+                            <button type="button" data-section-target="{{nextnumber}}">
+                                {{ui.lbl_next_section}}<i class="fa-solid fa-arrow-right ms-1"></i>
+                            </button>
+                            {{/hasnext}}
+                        </div>
+                    </header>
+
+                    {{#hasactivities}}
+                    <div class="accees-tile-activity-list">
+                        {{#activities}}
+                        <a class="accees-tile-activity {{#iscomplete}}is-complete{{/iscomplete}}" href="{{url}}">
+                            <span class="accees-activity-icon">
+                                <img src="{{iconurl}}" alt="">
+                            </span>
+                            <span class="accees-activity-copy">
+                                <strong>{{name}}</strong>
+                                <span>{{description}}</span>
+                            </span>
+                            <span class="accees-activity-status {{#iscomplete}}is-complete{{/iscomplete}} {{^istracked}}is-neutral{{/istracked}}">
+                                {{#iscomplete}}<i class="fa-solid fa-circle-check me-1"></i>{{/iscomplete}}
+                                {{^iscomplete}}{{#istracked}}<i class="fa-regular fa-clock me-1"></i>{{/istracked}}{{/iscomplete}}
+                                {{statuslabel}}
+                            </span>
+                        </a>
+                        {{/activities}}
+                    </div>
+                    {{/hasactivities}}
+
+                    {{^hasactivities}}
+                    <p class="accees-course-empty">{{ui.lbl_empty_section}}</p>
+                    {{/hasactivities}}
+                </section>
+                {{/tilesections}}
+                <div class="d-none" aria-hidden="true">
+                    {{{maincontent}}}
+                </div>
+                {{/isediting}}
+            </div>
+            {{/istilesformat}}
+
+            {{^istilesformat}}
+            <div class="accees-course-content-heading">
+                <h2><i class="fa-solid fa-cubes me-2" style="color: #0000B6;"></i>{{ui.lbl_content_title}}</h2>
+                {{#isediting}}
+                <p>{{ui.lbl_edit_sections_desc}}</p>
+                {{/isediting}}
+                {{^isediting}}
+                <p>{{ui.lbl_content_desc}}</p>
+                {{/isediting}}
+            </div>
+            <div class="accees-course-main-content{{#isediting}} is-course-edit-mode{{/isediting}}">
+                {{#overflow}}
+                <div class="container-fluid tertiary-navigation mb-3">
+                    <div class="navitem">
+                        {{> core/url_select}}
+                    </div>
+                </div>
+                {{/overflow}}
+                {{{maincontent}}}
+            </div>
+            {{/istilesformat}}
+        </section>
+    </div>
+</main>
+
+<script>
+var updateNativeAddSectionTarget = function(tiles, sectionNumber) {
+    var addSectionAction = tiles.querySelector('[data-add-section-slot] #course-addsection [data-action="addSection"]');
+    var selectedSection = tiles.querySelector('[data-edit-section-content] #section-' + sectionNumber);
+    if (!addSectionAction) {
+        return;
+    }
+
+    var sectionId = selectedSection && selectedSection.getAttribute('data-id');
+    if (sectionId) {
+        addSectionAction.setAttribute('data-id', sectionId);
+    } else {
+        addSectionAction.removeAttribute('data-id');
+    }
+};
+
+var pendingSectionDeleteModal = false;
+var pendingSectionDeleteTimer = null;
+
+document.addEventListener('click', function(event) {
+    var deleteAction = event.target.closest('[data-action="deleteSection"]');
+    if (deleteAction && deleteAction === approvedSectionDeleteAction) {
+        approvedSectionDeleteAction = null;
+        return;
+    }
+    if (!deleteAction) {
+        return;
+    }
+
+    var section = deleteAction.closest('li.course-section[id^="section-"]');
+    var match = section && section.id.match(/^section-(\d+)$/);
+    var tiles = section && section.closest('[data-accees-tiles-view].is-edit-mode');
+    if (!match || !tiles) {
+        return;
+    }
+
+    var tile = Array.prototype.slice.call(tiles.querySelectorAll('.accees-tile-card[data-section-target]'))
+        .find(function(candidate) {
+            return candidate.getAttribute('data-section-target') === match[1];
+        });
+    if (!tile || tile.getAttribute('data-native-delete-confirmation-required') !== 'false') {
+        pendingSectionDeleteModal = true;
+        window.clearTimeout(pendingSectionDeleteTimer);
+        pendingSectionDeleteTimer = window.setTimeout(function() {
+            pendingSectionDeleteModal = false;
+        }, 5000);
+        return;
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    var overlay = document.createElement('div');
+    overlay.className = 'accees-section-delete-confirm-overlay';
+    overlay.innerHTML = '<section class="accees-section-delete-confirm" role="dialog" aria-modal="true" aria-labelledby="accees-section-delete-title" tabindex="-1">' +
+        '<header class="accees-section-delete-confirm-header"><h2 id="accees-section-delete-title"></h2></header>' +
+        '<div class="accees-section-delete-confirm-body"></div>' +
+        '<footer class="accees-section-delete-confirm-footer">' +
+            '<button type="button" class="accees-section-delete-cancel"></button>' +
+            '<button type="button" class="accees-section-delete-accept"></button>' +
+        '</footer></section>';
+
+    var dialog = overlay.querySelector('.accees-section-delete-confirm');
+    var title = overlay.querySelector('#accees-section-delete-title');
+    var body = overlay.querySelector('.accees-section-delete-confirm-body');
+    var cancelButton = overlay.querySelector('.accees-section-delete-cancel');
+    var deleteButton = overlay.querySelector('.accees-section-delete-accept');
+    title.textContent = tile.getAttribute('data-empty-section-delete-title') || '';
+    body.textContent = tile.getAttribute('data-empty-section-delete-confirmation') || '';
+    cancelButton.textContent = tile.getAttribute('data-delete-cancel-label') || '';
+    deleteButton.textContent = tile.getAttribute('data-delete-confirm-label') || '';
+
+    var closeConfirmation = function() {
+        document.removeEventListener('keydown', handleConfirmationKeydown);
+        overlay.remove();
+        deleteAction.focus();
+    };
+    var handleConfirmationKeydown = function(keyEvent) {
+        if (keyEvent.key === 'Escape') {
+            keyEvent.preventDefault();
+            closeConfirmation();
+        } else if (keyEvent.key === 'Tab') {
+            var focusable = [cancelButton, deleteButton];
+            var currentIndex = focusable.indexOf(document.activeElement);
+            if (keyEvent.shiftKey && currentIndex <= 0) {
+                keyEvent.preventDefault();
+                deleteButton.focus();
+            } else if (!keyEvent.shiftKey && currentIndex === focusable.length - 1) {
+                keyEvent.preventDefault();
+                cancelButton.focus();
+            }
+        }
+    };
+
+    cancelButton.addEventListener('click', closeConfirmation);
+    overlay.addEventListener('click', function(clickEvent) {
+        if (clickEvent.target === overlay) {
+            closeConfirmation();
+        }
+    });
+    deleteButton.addEventListener('click', function() {
+        closeConfirmation();
+        if (!deleteAction.isConnected) {
+            return;
+        }
+
+        approvedSectionDeleteAction = deleteAction;
+        deleteAction.click();
+    });
+    document.addEventListener('keydown', handleConfirmationKeydown);
+    document.body.appendChild(overlay);
+    dialog.focus();
+}, true);
+
+var approvedSectionDeleteAction = null;
+document.addEventListener('show.bs.modal', function(event) {
+    if (!pendingSectionDeleteModal || !event.target.matches('.modal')) {
+        return;
+    }
+
+    event.target.classList.add('accees-section-delete-modal');
+    var modalDialog = event.target.querySelector('.modal-dialog');
+    if (modalDialog) {
+        modalDialog.classList.add('modal-dialog-centered');
+    }
+    pendingSectionDeleteModal = false;
+    window.clearTimeout(pendingSectionDeleteTimer);
+}, true);
+
+document.addEventListener('click', function(event) {
+    var cbeBtn = event.target.closest('#btnToggleCbeMatrix');
+    if (cbeBtn) {
+        event.preventDefault();
+        var collapse = document.getElementById('cbeOutcomesCollapse');
+        if (collapse) {
+            var btnText = cbeBtn.querySelector('.cbe-btn-text');
+            var isExpanded = cbeBtn.getAttribute('aria-expanded') === 'true';
+            var panel = cbeBtn.closest('.accees-cbe-collapsible-panel');
+            if (!isExpanded) {
+                collapse.hidden = false;
+                collapse.style.display = 'block';
+                cbeBtn.setAttribute('aria-expanded', 'true');
+                if (panel) panel.classList.add('is-details-open');
+                if (btnText) btnText.textContent = 'Hide Details ▴';
+            } else {
+                collapse.hidden = true;
+                collapse.style.display = 'none';
+                cbeBtn.setAttribute('aria-expanded', 'false');
+                if (panel) panel.classList.remove('is-details-open');
+                if (btnText) btnText.textContent = 'View Details ▾';
+            }
+        }
+        return;
+    }
+
+    var target = event.target.closest('.accees-tile-card[data-section-target], [data-section-panel] [data-section-target]');
+    if (!target) {
+        return;
+    }
+
+    var tiles = target.closest('[data-accees-tiles-view]');
+    if (!tiles) {
+        return;
+    }
+
+    var sectionNumber = target.getAttribute('data-section-target');
+    if (!sectionNumber) {
+        return;
+    }
+
+    event.preventDefault();
+
+    var isEditMode = tiles.classList.contains('is-edit-mode');
+    var buttons = tiles.querySelectorAll('.accees-tile-card[data-section-target]');
+    buttons.forEach(function(button) {
+        if (button.getAttribute('data-section-target') === sectionNumber) {
+            button.classList.add('is-active');
+            button.setAttribute('aria-pressed', 'true');
+        } else {
+            button.classList.remove('is-active');
+            button.setAttribute('aria-pressed', 'false');
+        }
+    });
+
+    if (isEditMode) {
+        updateNativeAddSectionTarget(tiles, sectionNumber);
+        var selectedButton = tiles.querySelector('.accees-tile-card[data-section-target="' + sectionNumber + '"]');
+        var content = tiles.querySelector('[data-edit-section-content]');
+        if (selectedButton && content) {
+            var nativeSections = content.querySelectorAll('.course-content ul.topics > li.course-section, .course-content ul.weeks > li.course-section');
+            var hasSelectedSection = false;
+            nativeSections.forEach(function(section) {
+                var match = (section.id || '').match(/^section-(\d+)$/);
+                var isSelected = match && match[1] === sectionNumber;
+                section.classList.toggle('is-tile-selected', Boolean(isSelected));
+                if (isSelected) {
+                    hasSelectedSection = true;
+                    section.setAttribute('aria-current', 'location');
+                } else {
+                    section.removeAttribute('aria-current');
+                }
+            });
+            content.classList.toggle('has-active-tile-section', hasSelectedSection);
+        }
+        return;
+    }
+
+    var panels = tiles.querySelectorAll('[data-section-panel]');
+    panels.forEach(function(panel) {
+        if (panel.getAttribute('data-section-panel') === sectionNumber) {
+            panel.classList.add('is-active');
+            panel.removeAttribute('hidden');
+        } else {
+            panel.classList.remove('is-active');
+            panel.setAttribute('hidden', 'hidden');
+        }
+    });
+});
+
+var lastSectionPageScroll = window.scrollY;
+var restoringSectionPageScroll = false;
+
+window.addEventListener('scroll', function() {
+    if (!restoringSectionPageScroll) {
+        lastSectionPageScroll = window.scrollY;
+    }
+}, {passive: true});
+
+document.querySelectorAll('[data-accees-tiles-view].is-edit-mode').forEach(function(tiles) {
+    var addSectionSlot = tiles.querySelector('[data-add-section-slot]');
+    var editContent = tiles.querySelector('[data-edit-section-content]');
+    var nativeAddSection = editContent && editContent.querySelector('#course-addsection');
+    if (addSectionSlot && nativeAddSection) {
+        addSectionSlot.appendChild(nativeAddSection);
+        addSectionSlot.hidden = false;
+    }
+
+    var initialTile = tiles.querySelector('.accees-tile-card.is-active[data-section-target]');
+    if (initialTile) {
+        initialTile.click();
+    }
+
+    var courseContent = editContent && editContent.querySelector('.course-content');
+    var sectionList = courseContent && courseContent.querySelector('ul.topics, ul.weeks');
+    if (!sectionList) {
+        return;
+    }
+
+    var getSectionName = function(section, sectionNumber) {
+        var sectionNameElement = section.querySelector('.sectionname');
+        if (sectionNameElement && !sectionNameElement.querySelector('input, textarea')) {
+            var cleanName = sectionNameElement.cloneNode(true);
+            cleanName.querySelectorAll('.accesshide, .visually-hidden, .editsection, button, .icon').forEach(function(element) {
+                element.remove();
+            });
+            var visibleName = cleanName.textContent.trim();
+            if (visibleName) {
+                return visibleName;
+            }
+        }
+
+        var storedName = section.getAttribute('data-sectionname');
+        return storedName
+            ? storedName.trim()
+            : (tiles.getAttribute('data-topic-prefix') || 'TOPIC ') + String(sectionNumber).padStart(2, '0');
+    };
+
+    var syncSectionTile = function(section) {
+        var match = (section.id || '').match(/^section-(\d+)$/);
+        if (!match) {
+            return null;
+        }
+
+        var sectionNumber = match[1];
+        var existingTile = tiles.querySelector('.accees-tile-card[data-section-target="' + sectionNumber + '"]');
+
+        var sectionName = getSectionName(section, sectionNumber);
+        var topicPrefix = tiles.getAttribute('data-topic-prefix') || 'TOPIC ';
+        var sectionLabel = Number(sectionNumber) === 0
+            ? (tiles.getAttribute('data-general-label') || 'INTRODUCTION')
+            : topicPrefix + String(sectionNumber).padStart(2, '0');
+        var readyLabel = tiles.getAttribute('data-ready-label') || 'Ready';
+        var highlightBadge = section.querySelector('.sectionbadges [data-type="iscurrent"]');
+        var isHighlighted = Boolean(highlightBadge && !highlightBadge.classList.contains('d-none') && !highlightBadge.hidden);
+        var tile = existingTile || document.createElement('button');
+        var isNewTile = !existingTile;
+        var tileName;
+
+        tile.classList.toggle('is-highlighted', isHighlighted);
+        var tileHighlightBadge = tile.querySelector('[data-section-highlighted-badge]');
+        if (tileHighlightBadge) {
+            tileHighlightBadge.hidden = !isHighlighted;
+        }
+
+        if (!isNewTile) {
+            tile.setAttribute('data-section-name', sectionName);
+            tileName = tile.querySelector('.accees-tile-name');
+            if (tileName) {
+                tileName.textContent = sectionName;
+            }
+            return tile;
+        }
+
+        var tileTop = document.createElement('div');
+        var tileLabel = document.createElement('span');
+        var highlightLabel = document.createElement('span');
+        var progress = document.createElement('span');
+        var tileBottom = document.createElement('div');
+        var counts = document.createElement('span');
+        var status = document.createElement('span');
+        var paddedNumber = String(sectionNumber).padStart(2, '0');
+
+        tile.type = 'button';
+        tile.className = 'accees-tile-card' + (isHighlighted ? ' is-highlighted' : '');
+        tile.setAttribute('data-section-target', sectionNumber);
+        tile.setAttribute('data-section-label', sectionLabel);
+        tile.setAttribute('data-section-name', sectionName || sectionLabel);
+        tile.setAttribute('aria-pressed', 'false');
+
+        tileTop.className = 'accees-tile-card-top';
+        tileLabel.className = 'accees-tile-label';
+        tileLabel.textContent = sectionLabel;
+        highlightLabel.className = 'accees-tile-highlighted-badge';
+        highlightLabel.setAttribute('data-section-highlighted-badge', '');
+        highlightLabel.textContent = tiles.getAttribute('data-highlighted-label') || 'Highlighted';
+        highlightLabel.hidden = !isHighlighted;
+        progress.className = 'accees-tile-progress';
+        progress.textContent = '0%';
+        tileTop.appendChild(tileLabel);
+        tileTop.appendChild(highlightLabel);
+        tileTop.appendChild(progress);
+
+        tileName = document.createElement('strong');
+        tileName.className = 'accees-tile-name';
+        tileName.textContent = sectionName || sectionLabel;
+
+        tileBottom.className = 'accees-tile-card-bottom';
+        counts.textContent = '0 / 0';
+        status.textContent = readyLabel;
+        tileBottom.appendChild(counts);
+        tileBottom.appendChild(status);
+
+        tile.appendChild(tileTop);
+        tile.appendChild(highlightLabel);
+        tile.appendChild(tileName);
+        tile.appendChild(tileBottom);
+
+        var grid = tiles.querySelector('.accees-tiles-grid');
+        var followingTile = Array.prototype.slice.call(grid.querySelectorAll('.accees-tile-card[data-section-target]'))
+            .find(function(candidate) {
+                return Number(candidate.getAttribute('data-section-target')) > Number(sectionNumber);
+            });
+        grid.insertBefore(tile, followingTile || null);
+            return tile;
+    };
+
+    var reconcileSectionTiles = function(preferredSectionNumber) {
+            var currentSectionList = courseContent.querySelector('ul.topics, ul.weeks');
+            if (!currentSectionList) {
+                return;
+            }
+            var activeTile = tiles.querySelector('.accees-tile-card.is-active[data-section-target]');
+            var previousSectionNumber = activeTile && activeTile.getAttribute('data-section-target');
+            var previousTileIndex = activeTile
+                ? Array.prototype.indexOf.call(tiles.querySelectorAll('.accees-tile-card[data-section-target]'), activeTile)
+                : 0;
+            var sections = Array.prototype.slice.call(currentSectionList.querySelectorAll('li.course-section[id^="section-"]'));
+            var liveSectionNumbers = new Set(sections.map(function(section) {
+                return (section.id.match(/^section-(\d+)$/) || [])[1];
+            }));
+
+            Array.prototype.slice.call(tiles.querySelectorAll('.accees-tile-card[data-section-target]')).forEach(function(tile) {
+                if (!liveSectionNumbers.has(tile.getAttribute('data-section-target'))) {
+                    tile.remove();
+            }
+        });
+
+            sections.forEach(function(section) {
+                syncSectionTile(section);
+            });
+
+            var remainingTiles = Array.prototype.slice.call(tiles.querySelectorAll('.accees-tile-card[data-section-target]'));
+            if (!remainingTiles.length) {
+                return;
+            }
+
+            var nextSelectedTile = preferredSectionNumber
+                ? tiles.querySelector('.accees-tile-card[data-section-target="' + preferredSectionNumber + '"]')
+                : tiles.querySelector('.accees-tile-card[data-section-target="' + previousSectionNumber + '"]');
+            if (!nextSelectedTile) {
+                nextSelectedTile = remainingTiles[Math.min(previousTileIndex, remainingTiles.length - 1)];
+            }
+            if (nextSelectedTile && !nextSelectedTile.classList.contains('is-active')) {
+                nextSelectedTile.click();
+            }
+    };
+
+    reconcileSectionTiles();
+
+    var sectionObserver = new MutationObserver(function(records) {
+            var preferredSectionNumber = null;
+            var deletedSection = false;
+            records.forEach(function(record) {
+                if (record.type !== 'childList') {
+                    return;
+                }
+                Array.prototype.slice.call(record.removedNodes).forEach(function(node) {
+                    var element = node.nodeType === 1 ? node : null;
+                    if (element && (element.matches('li.course-section[id^="section-"]')
+                        || element.querySelector('li.course-section[id^="section-"]'))) {
+                        deletedSection = true;
+                    }
+                });
+                Array.prototype.slice.call(record.addedNodes).some(function(node) {
+                    var element = node.nodeType === 1 ? node : node.parentElement;
+                    var addedSection = element && (element.matches('li.course-section[id^="section-"]')
+                        ? element
+                        : element.querySelector('li.course-section[id^="section-"]'));
+                    var match = addedSection && (addedSection.id || '').match(/^section-(\d+)$/);
+                    if (match) {
+                        preferredSectionNumber = match[1];
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            reconcileSectionTiles(preferredSectionNumber);
+            if (deletedSection) {
+                var scrollPosition = lastSectionPageScroll;
+                restoringSectionPageScroll = true;
+                window.requestAnimationFrame(function() {
+                    window.scrollTo(0, scrollPosition);
+                    window.requestAnimationFrame(function() {
+                        lastSectionPageScroll = window.scrollY;
+                        restoringSectionPageScroll = false;
+                    });
+                });
+            }
+    });
+    sectionObserver.observe(courseContent, {
+        attributes: true,
+        attributeFilter: ['class', 'hidden', 'id', 'data-sectionname'],
+        childList: true,
+        characterData: true,
+        subtree: true
+    });
+});
+</script>

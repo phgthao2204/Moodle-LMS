@@ -1,0 +1,47 @@
+name: CI - MEKO TMS (Liferay 7.4 GA132)
+on:
+  pull_request:
+    branches: [develop, staging]
+    paths: ['meko-tms/**', '.github/workflows/ci-tms.yml']
+jobs:
+  check-standards-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: meko-tms/themes/accees-tms-theme/package-lock.json
+      - name: Check Zero Emoji & No Gradients
+        run: |
+          python3 -c "
+          import glob, pathlib, re, sys
+          bad = []
+          for p in glob.glob('meko-tms/**/*.*', recursive=True):
+              if any(part in pathlib.Path(p).parts for part in ('node_modules', 'build', '.cache', '.gradle')):
+                  continue
+              if p.endswith(('.java', '.jsp', '.ftl', '.ts', '.tsx', '.css', '.scss')):
+                  s = open(p, encoding='utf-8', errors='ignore').read()
+                  if re.search(r'[🌀-🫿]', s): bad.append((p, 'emoji'))
+                  if re.search(r'linear-gradient|radial-gradient', s, re.I): bad.append((p, 'gradient'))
+          if bad:
+              print('ERRORS:', bad); sys.exit(1)
+          "
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Clean build and test Liferay Workspace
+        working-directory: meko-tms
+        run: |
+          chmod +x gradlew
+          ./gradlew clean build --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tms-workspace
+          path: |
+            meko-tms/themes/**/build/libs/*.war
+            meko-tms/modules/**/build/libs/*.jar
+            meko-tms/modules/**/build/test-results/**/*.xml

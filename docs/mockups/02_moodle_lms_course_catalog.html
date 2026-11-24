@@ -1,0 +1,2463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh Mục Khóa Học Theo Chuẩn Đầu Ra Năng Lực Số & Lĩnh Vực | MEKO LMS (Moodle 5.3 LTS)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --meko-primary: #0000B6;      /* Primary Blue - 100% Solid Color */
+      --meko-primary-dark: #000085;
+      --meko-navy: #182B89;         /* Navy */
+      --meko-success: #39B500;      /* Accent Green */
+      --meko-warning: #EA6400;      /* Accent Orange */
+      --neutral-bg: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --text-main: #1F2937;
+      --text-muted: #4B5563;
+      --text-light: #9CA3AF;
+      --border-color: #E5E7EB;
+      --font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Solid Colors for Level Badges */
+      --lvl-n1-bg: #EEF2FF;
+      --lvl-n1-text: #0000B6;
+      --lvl-n1-border: #C7D2FE;
+
+      --lvl-n2-bg: #ECFDF5;
+      --lvl-n2-text: #047857;
+      --lvl-n2-border: #A7F3D0;
+
+      --lvl-n3-bg: #F5F3FF;
+      --lvl-n3-text: #6D28D9;
+      --lvl-n3-border: #DDD6FE;
+
+      --lvl-n4-bg: #FFF7ED;
+      --lvl-n4-text: #C2410C;
+      --lvl-n4-border: #FED7AA;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family);
+      background-color: var(--neutral-bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Browser Mockup Header / Address Bar */
+    .browser-mock-bar {
+      background-color: #0F172A;
+      color: #94A3B8;
+      padding: 10px 20px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #1E293B;
+    }
+    .browser-dots { display: flex; gap: 6px; }
+    .browser-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot-red { background-color: #EF4444; }
+    .dot-yellow { background-color: #F59E0B; }
+    .dot-green { background-color: #10B981; }
+    .browser-url-box {
+      flex: 1;
+      background-color: #1E293B;
+      padding: 6px 14px;
+      border-radius: 6px;
+      color: #E2E8F0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .url-param-highlight { color: #38BDF8; font-weight: 700; }
+    .url-badge {
+      background: var(--meko-primary);
+      color: #FFF;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    /* Top Strip & Navbar */
+    .top-lang-strip {
+      background-color: #F1F5F9;
+      border-bottom: 1px solid var(--border-color);
+      padding: 4px 0;
+      font-size: 11.5px;
+    }
+    .top-lang-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .lang-btn {
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .lang-btn.active {
+      background-color: var(--meko-primary);
+      color: #FFFFFF;
+    }
+
+    .navbar-wrapper {
+      background-color: #FFFFFF;
+      border-bottom: 2px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+    .navbar-content {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-badge {
+      background: var(--meko-primary);
+      color: #FFF;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+    .nav-link { color: var(--text-muted); padding: 8px 4px; }
+    .nav-link:hover, .nav-link.active {
+      color: var(--meko-primary);
+      border-bottom: 2px solid var(--meko-primary);
+    }
+    .btn-login {
+      background: var(--meko-navy);
+      color: #FFF;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Preset Test Scenarios Bar */
+    .demo-selector-bar {
+      background: #FFFFFF;
+      border: 1px solid #D6E4FF;
+      border-left: 4px solid var(--meko-primary);
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin: 16px 0 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .demo-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--meko-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .demo-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .demo-pill-btn {
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .demo-pill-btn:hover {
+      background: #E2E8F0;
+      color: #0F172A;
+    }
+    .demo-pill-btn.active {
+      background: var(--meko-primary);
+      color: #FFFFFF;
+      border-color: var(--meko-primary);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb-bar {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .breadcrumb-bar a { color: var(--text-muted); }
+    .breadcrumb-bar a:hover { color: var(--meko-primary); text-decoration: underline; }
+
+    /* Multi-facet Active Filters Chips Strip */
+    .active-filters-strip {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .active-filters-left {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .filter-label-icon {
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+    }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .chip-category {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FCD34D;
+    }
+    .chip-framework {
+      background: #F1F5F9;
+      color: #334155;
+      border: 1px solid #CBD5E1;
+    }
+    .chip-competency {
+      background: #EEF2FF;
+      color: #0000B6;
+      border: 1px solid #C7D2FE;
+    }
+    .chip-remove-btn {
+      background: transparent;
+      border: none;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      color: inherit;
+      opacity: 0.7;
+      padding: 0 2px;
+      line-height: 1;
+    }
+    .chip-remove-btn:hover { opacity: 1; transform: scale(1.15); }
+    .btn-clear-all {
+      font-size: 12px;
+      font-weight: 700;
+      color: #DC2626;
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-clear-all:hover {
+      background: #DC2626;
+      color: #FFFFFF;
+    }
+
+    /* 2-Column Catalog Layout */
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .catalog-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar Styles */
+    .catalog-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sidebar-widget {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .widget-header {
+      background: #FAFAFC;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--meko-navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .widget-body { padding: 14px 16px; }
+
+    /* Framework Tab Switcher within Sidebar */
+    .framework-tabs-switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      background: #F1F5F9;
+      padding: 4px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+    }
+    .framework-tab-btn {
+      padding: 7px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background: transparent;
+      color: #475569;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .framework-tab-btn.active {
+      background: #FFFFFF;
+      color: var(--meko-primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* Competency Search in Sidebar */
+    .sidebar-search-box {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .sidebar-search-input {
+      width: 100%;
+      padding: 7px 10px 7px 28px;
+      font-size: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: #F9FAFB;
+      outline: none;
+    }
+    .sidebar-search-input:focus {
+      border-color: var(--meko-primary);
+      background: #FFFFFF;
+    }
+    .sidebar-search-icon {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+    /* Collapsible Competency Tree in Sidebar */
+    .comp-tree-list {
+      list-style: none;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .comp-tree-domain {
+      margin-bottom: 8px;
+      border: 1px solid #EEF2F6;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .domain-title-bar {
+      background: #F8FAFC;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .domain-title-bar:hover { background: #F1F5F9; }
+    .domain-comp-list {
+      list-style: none;
+      padding: 6px 8px;
+      background: #FFFFFF;
+    }
+    .comp-item-block {
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #F1F5F9;
+    }
+    .comp-item-block:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .comp-item-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .comp-levels-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .comp-level-btn {
+      padding: 3px 7px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: #F1F5F9;
+      color: #475569;
+      transition: all 0.15s;
+    }
+    .comp-level-btn:hover { background: #E2E8F0; }
+    .comp-level-btn.active {
+      background: var(--meko-primary);
+      color: #FFFFFF;
+      border-color: var(--meko-primary);
+    }
+
+    /* Category Tree in Sidebar */
+    .cat-tree-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .cat-tree-item a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      border-radius: 6px;
+      color: #374151;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .cat-tree-item a:hover {
+      background-color: #F3F4F6;
+      color: var(--meko-primary);
+    }
+    .cat-tree-item.active a {
+      background-color: var(--meko-primary);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+    .cat-count-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: #E5E7EB;
+      color: #4B5563;
+    }
+    .cat-tree-item.active .cat-count-badge {
+      background: #FFFFFF;
+      color: var(--meko-primary);
+    }
+
+    .btn-open-picker-modal {
+      width: 100%;
+      background: #EEF2FF;
+      color: var(--meko-primary);
+      border: 1px solid #C7D2FE;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      transition: all 0.15s;
+    }
+    .btn-open-picker-modal:hover {
+      background: #E0E7FF;
+    }
+
+    /* Main Area (Cột phải) */
+    .catalog-main {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Competency Banner */
+    .competency-filter-banner {
+      background-color: #FFFFFF;
+      border-left: 5px solid var(--meko-primary);
+      border-radius: 8px;
+      border-top: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 20px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .banner-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .banner-hierarchy-path {
+      font-size: 11.5px;
+      color: #64748B;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag-tier {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .tag-tier-domain { background: #F1F5F9; color: #475569; }
+    .tag-tier-comp { background: #EEF2FF; color: var(--meko-primary); }
+    .tag-tier-level { background: #ECFDF5; color: #047857; }
+
+    .banner-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      line-height: 1.35;
+    }
+    .banner-level-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .banner-level-badge.n1 { background: var(--lvl-n1-bg); color: var(--lvl-n1-text); border: 1px solid var(--lvl-n1-border); }
+    .banner-level-badge.n2 { background: var(--lvl-n2-bg); color: var(--lvl-n2-text); border: 1px solid var(--lvl-n2-border); }
+    .banner-level-badge.n3 { background: var(--lvl-n3-bg); color: var(--lvl-n3-text); border: 1px solid var(--lvl-n3-border); }
+    .banner-level-badge.n4 { background: var(--lvl-n4-bg); color: var(--lvl-n4-text); border: 1px solid var(--lvl-n4-border); }
+
+    .banner-id-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: #F1F5F9;
+      color: #334155;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-tree-link {
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .btn-tree-link:hover { background: #E2E8F0; }
+    .btn-modal-trigger {
+      background: var(--meko-primary);
+      color: #FFFFFF;
+      border: 1px solid var(--meko-primary);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-modal-trigger:hover { background: var(--meko-primary-dark); }
+
+    .banner-statement-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .banner-statement-box strong { color: var(--meko-primary); }
+
+    .banner-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid #F1F5F9;
+      padding-top: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Course Controls Toolbar */
+    .course-control-toolbar {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .search-within-box {
+      position: relative;
+      flex: 1;
+      max-width: 440px;
+    }
+    .search-within-input {
+      width: 100%;
+      padding: 8px 12px 8px 34px;
+      font-size: 13px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: #FFF;
+      outline: none;
+    }
+    .search-within-input:focus { border-color: var(--meko-primary); }
+    .search-within-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #9CA3AF;
+    }
+    .results-count-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    /* Courses Grid */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* Course Card */
+    .course-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .course-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .card-top-bar {
+      height: 4px;
+      background: var(--meko-primary);
+    }
+    .card-body {
+      padding: 16px 18px 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 11px;
+    }
+    .card-domain-badge {
+      background: #EEF2FF;
+      color: var(--meko-primary);
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+    .card-code-badge {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: #6B7280;
+    }
+    .course-title {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #111827;
+      margin-bottom: 8px;
+      flex: 1;
+    }
+    .course-title a:hover { color: var(--meko-primary); }
+    .course-summary {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* CBE Target Level Tag on Course Card */
+    .course-level-tag {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+      font-size: 11.5px;
+    }
+    .level-tag-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .level-tag-name { font-weight: 700; color: var(--meko-primary); }
+    .level-tag-rule { font-size: 10.5px; color: #475569; }
+
+    .card-meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11.5px;
+      color: #6B7280;
+      border-top: 1px solid #F3F4F6;
+      padding-top: 8px;
+    }
+    .meta-row { display: flex; justify-content: space-between; }
+    .meta-val { font-weight: 600; color: #374151; }
+
+    .card-footer {
+      background: #FAFAFC;
+      border-top: 1px solid var(--border-color);
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge-cbe-auto {
+      font-size: 11px;
+      color: #047857;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-view-course {
+      background: var(--meko-navy);
+      color: #FFF;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-view-course:hover { background: var(--meko-primary); }
+
+    /* Intelligent Empty State */
+    .empty-state-card {
+      background: #FFF;
+      border: 1.5px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 42px 24px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .empty-icon { font-size: 38px; margin-bottom: 12px; }
+    .empty-title { font-size: 17px; font-weight: 800; color: #111827; margin-bottom: 6px; }
+    .empty-desc { font-size: 13.5px; max-width: 520px; margin: 0 auto 18px; line-height: 1.55; }
+    .empty-actions-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-relax-filter {
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1E293B;
+      cursor: pointer;
+    }
+    .btn-relax-filter:hover { background: #E2E8F0; }
+
+    /* Modal / Drawer "Bộ Chọn Chuẩn Năng Lực Nhanh" */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+    }
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .picker-modal {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 860px;
+      max-height: 85vh;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      transform: scale(0.96);
+      transition: transform 0.2s ease-in-out;
+    }
+    .modal-overlay.active .picker-modal {
+      transform: scale(1);
+    }
+    .modal-header {
+      padding: 16px 20px;
+      background: #FAFAFC;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--meko-navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: #64748B;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+    }
+    .modal-subbar {
+      padding: 12px 20px;
+      background: #FFFFFF;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-search-box {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+    .modal-search-input {
+      width: 100%;
+      padding: 8px 12px 8px 34px;
+      font-size: 13px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+    }
+    .modal-search-input:focus { border-color: var(--meko-primary); }
+    .modal-body-scroll {
+      padding: 16px 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Modal Competency Grid Item */
+    .modal-domain-section {
+      margin-bottom: 20px;
+    }
+    .modal-domain-heading {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--meko-primary);
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #EEF2FF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .modal-comp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 10px;
+    }
+    .modal-comp-card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      transition: border-color 0.15s;
+    }
+    .modal-comp-card:hover { border-color: #CBD5E1; }
+    .modal-comp-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 6px;
+    }
+    .modal-comp-statement-sample {
+      font-size: 11px;
+      color: #64748B;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .modal-levels-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .btn-select-level {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: #FFFFFF;
+      color: #334155;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.15s;
+    }
+    .btn-select-level:hover {
+      background: var(--meko-primary);
+      color: #FFFFFF;
+    }
+    .btn-select-level.active {
+      background: var(--meko-primary);
+      color: #FFFFFF;
+      border-color: var(--meko-primary);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: #0E1726;
+      border-top: 3px solid var(--meko-primary);
+      color: #D1D5DB;
+      padding: 36px 0 20px;
+      margin-top: 50px;
+      font-size: 13.5px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 36px; margin-bottom: 24px; }
+    .footer-heading { color: #FFF; font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    .footer-bottom { border-top: 1px solid #1F2937; padding-top: 16px; text-align: center; font-size: 12px; color: #9CA3AF; }
+  
+    /* ==========================================================================
+       UNIFIED MASTER 1-LINE HEADER NAVBAR (MEKO-LMS SPEC)
+       ========================================================================== */
+    .navbar-header {
+      background-color: #FFFFFF;
+      border-bottom: 1px solid #E5E7EB;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      height: 58px;
+    }
+    .navbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+    .navbar-left { justify-self: start; display: flex; align-items: center; }
+    .navbar-center { justify-self: center; display: flex; align-items: center; }
+    .navbar-right { justify-self: end; display: flex; align-items: center; gap: 16px; }
+
+    .brand-logo-wrap { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+    .brand-logo-svg { height: 36px; width: auto; }
+    .brand-sub-badge {
+      background-color: #EEF2FF; color: var(--meko-primary);
+      font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 12px;
+      letter-spacing: 0.5px; border: 1px solid #D6E4FF;
+    }
+    .nav-links-menu { display: flex; align-items: center; list-style: none; gap: 22px; margin: 0; padding: 0; }
+    .nav-link-item { position: relative; }
+    .nav-link-anchor {
+      font-size: 14.5px; font-weight: 500; color: #374151;
+      display: inline-flex; align-items: center; gap: 5px; padding: 8px 2px;
+      text-decoration: none; transition: color 0.15s ease;
+    }
+    .nav-link-anchor:hover { color: var(--meko-primary); }
+    .nav-link-item.active .nav-link-anchor { color: #111827; font-weight: 700; border-bottom: 2px solid var(--meko-primary); }
+    .nav-link-anchor .chevron-icon { width: 12px; height: 12px; stroke: #6B7280; transition: transform 0.2s, stroke 0.15s; }
+    .nav-link-item:hover .nav-link-anchor .chevron-icon { transform: rotate(180deg); stroke: var(--meko-primary); }
+
+    .dropdown-container {
+      position: absolute; top: 100%; left: 0; background-color: #FFFFFF; min-width: 285px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px; border: 1px solid var(--border-color);
+      list-style: none; display: none; z-index: 1100; padding: 8px 0; margin-top: 6px;
+    }
+    .nav-link-item:hover .dropdown-container { display: block; }
+    .dropdown-container li a {
+      display: block; padding: 9px 18px; font-size: 13.5px; color: #4B5563; font-weight: 500;
+      text-decoration: none; transition: all 0.15s ease;
+    }
+    .dropdown-container li a:hover { background-color: #F8FAFC; color: var(--meko-primary); padding-left: 22px; }
+
+    .lang-switch-cluster { display: flex; align-items: center; gap: 5px; margin-left: 6px; }
+    .lang-circle-btn {
+      width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #64748B; background-color: #F3F4F6; border: none; cursor: pointer; text-decoration: none;
+    }
+    .lang-circle-btn.active { background-color: var(--meko-navy); color: #FFFFFF; }
+    .nav-login-link { color: var(--meko-primary); font-size: 14.5px; font-weight: 600; text-decoration: none; padding: 6px 4px; }
+    .nav-login-link:hover { text-decoration: underline; }
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ============================================== -->
+  <!-- 1. BROWSER ADDRESS BAR MOCKUP                  -->
+  <!-- ============================================== -->
+  <div class="browser-mock-bar">
+    <div class="browser-dots">
+      <div class="browser-dot dot-red"></div>
+      <div class="browser-dot dot-yellow"></div>
+      <div class="browser-dot dot-green"></div>
+    </div>
+    <div class="browser-url-box">
+      <span>https://lms.mekosoft.vn/course/index.php?</span>
+      <span class="url-param-highlight" id="mockBrowserUrl">categoryid=1&amp;framework=students&amp;competencyid=SV_C1_1_N1</span>
+    </div>
+    <div style="font-size: 11px; color: #64748B;">Moodle 5.3 LTS Core • Multi-Facet Compound Filter</div>
+  </div>
+
+    <!-- ==========================================================================
+       MAIN NAVBAR: 1 DÒNG DUY NHẤT CHUẨN XÁC THEO MASTER DESIGN SPEC
+       ========================================================================== -->
+  <header class="navbar-header">
+    <div class="navbar-inner">
+      
+      <!-- 1. BÊN TRÁI: Logo MEKO Ribbon + Pill Badge LMS -->
+      <div class="navbar-left">
+        <a href="01_moodle_lms_homepage.html" class="brand-logo-wrap" title="Trang chủ MEKO-LMS">
+          <svg class="brand-logo-svg" viewBox="0 0 180 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="meko-mark">
+              <path d="M4 31V7L14 19L24 7V31H18V16L14 21L10 16V31H4Z" fill="#0000B6"/>
+              <circle cx="14" cy="5" r="2.5" fill="#EA6400"/>
+              <rect x="25" y="27" width="5" height="4" rx="1" fill="#39B500"/>
+            </g>
+            <text x="36" y="26" font-family="'Be Vietnam Pro', -apple-system, sans-serif" font-size="21" font-weight="800" fill="#0000B6" letter-spacing="0.5">MEKO<tspan fill="#EA6400">SOFT</tspan></text>
+          </svg>
+          <span class="brand-sub-badge">LMS</span>
+        </a>
+      </div>
+
+      <!-- 2. Ở GIỮA: Navigation Menu Links NẰM CHÍNH GIỮA (Khách chưa đăng nhập) -->
+      <nav class="navbar-center" aria-label="Main Navigation">
+        <ul class="nav-links-menu" id="mainNavMenu">
+          <li class="nav-link-item" id="menuItemHome">
+            <a href="01_moodle_lms_homepage.html" class="nav-link-anchor">Trang chủ</a>
+          </li>
+          <li class="nav-link-item active" id="menuItemCourses">
+            <a href="02_moodle_lms_course_catalog.html" class="nav-link-anchor">Danh mục khóa học</a>
+          </li>
+          <li class="nav-link-item dropdown" id="menuItemCompetencies">
+            <a href="04_moodle_lms_competencies.html" class="nav-link-anchor">
+              <span class="nav-text">Khung năng lực số</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <ul class="dropdown-container">
+              <li><a href="04_moodle_lms_competencies.html">Tất cả khung năng lực (/dig-comp) &rarr;</a></li>
+              <li style="border-top: 1px solid var(--border-color); margin: 4px 0;"></li>
+              <li><a href="04_moodle_lms_competencies.html?tab=lecturer">Khung năng lực Giảng viên (/dig-comp-lecturer)</a></li>
+              <li><a href="04_moodle_lms_competencies.html?tab=student">Khung năng lực Sinh viên (/dig-comp-student)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- 3. BÊN PHẢI: Language Switcher + Đăng nhập -->
+      <div class="navbar-right">
+        <div class="lang-switch-cluster">
+          <button type="button" class="lang-circle-btn active" title="Tiếng Việt">VI</button>
+          <button type="button" class="lang-circle-btn" title="English">EN</button>
+          <button type="button" class="lang-circle-btn" title="Français">FR</button>
+        </div>
+        <div class="auth-action-cluster">
+          <a href="06_moodle_lms_login_sso.html" class="nav-login-link">Đăng nhập</a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+  </div>
+
+  <div class="container">
+    
+    <!-- Presets Bar for Instant Multi-Facet Testing -->
+    <div class="demo-selector-bar">
+      <div class="demo-label">
+        <span>Thử nghiệm kịch bản Lọc kép (Category + Framework + Competency):</span>
+      </div>
+      <div class="demo-pills">
+        <button class="demo-pill-btn active" onclick="loadScenario('SV_C1_1_N1', 1, 'students')">
+          SV: C1.1 N1 + Lĩnh vực 01: Dữ liệu (2 khóa)
+        </button>
+        <button class="demo-pill-btn" onclick="loadScenario('SV_C1_1_N1', null, 'students')">
+          SV: C1.1 N1 + Tất cả lĩnh vực (3 khóa)
+        </button>
+        <button class="demo-pill-btn" onclick="loadScenario('SV_C4_1_N2', 5, 'students')">
+          SV: C4.1 N2 + Lĩnh vực 05: An toàn (1 khóa)
+        </button>
+        <button class="demo-pill-btn" onclick="loadScenario('GV_4_1_INTERMEDIATE', 4, 'faculty')">
+          GV: 4.1 Khảo thí + Lĩnh vực 04: Đánh giá (2 khóa)
+        </button>
+        <button class="demo-pill-btn" onclick="loadScenario('GV_A_1_BASIC', 6, 'faculty')">
+          GV: A.1 Trí tuệ nhân tạo (AI) + Lĩnh vực 06: AI (2 khóa)
+        </button>
+        <button class="demo-pill-btn" onclick="loadScenario('SV_C1_1_N4', 6, 'students')">
+          Kịch bản Lọc kép Rỗng (Empty State - 0 khóa)
+        </button>
+      </div>
+    </div>
+
+    <!-- Breadcrumbs Bar -->
+    <div class="breadcrumb-bar" id="breadcrumbBar">
+      <a href="01_moodle_lms_homepage.html">Trang chủ</a> &nbsp;&gt;&nbsp; 
+      <a href="javascript:void(0)" onclick="clearAllFilters()">Danh mục khóa học</a> &nbsp;&gt;&nbsp; 
+      <span id="bcCategoryText">Lĩnh vực 01: Dữ liệu &amp; Nội dung số</span> &nbsp;&gt;&nbsp; 
+      <span id="bcDomainText">D1. Thông tin và dữ liệu số</span> &nbsp;&gt;&nbsp; 
+      <strong id="bcLevelText">C1.1 [Bậc N1 - Cơ bản]</strong>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 2. THANH BỘ LỌC ĐANG ÁP DỤNG (MULTI-FACET CHIPS)-->
+    <!-- ============================================== -->
+    <div class="active-filters-strip" id="activeFiltersStrip">
+      <div class="active-filters-left">
+        <span class="filter-label-icon">Đang áp dụng bộ lọc:</span>
+        
+        <!-- Category Chip -->
+        <span class="filter-chip chip-category" id="chipCategory" style="display: inline-flex;">
+          <span>Lĩnh vực: <strong id="chipCategoryName">Lĩnh vực 01: Dữ liệu &amp; Nội dung số</strong></span>
+          <button class="chip-remove-btn" onclick="clearCategory()" title="Bỏ lọc lĩnh vực này"><i class="fa-solid fa-xmark"></i></button>
+        </span>
+
+        <!-- Framework Chip -->
+        <span class="filter-chip chip-framework" id="chipFramework" style="display: inline-flex;">
+          <span>Khung: <strong id="chipFrameworkName">Sinh viên (DigComp 2.2)</strong></span>
+        </span>
+
+        <!-- Competency Chip -->
+        <span class="filter-chip chip-competency" id="chipCompetency" style="display: inline-flex;">
+          <span>Chuẩn: <strong id="chipCompetencyName">SV_C1_1_N1</strong> (<span id="chipCompetencyLevel">Bậc N1</span>)</span>
+          <button class="chip-remove-btn" onclick="clearCompetency()" title="Bỏ lọc chuẩn đầu ra này"><i class="fa-solid fa-xmark"></i></button>
+        </span>
+      </div>
+
+      <div>
+        <button class="btn-clear-all" onclick="clearAllFilters()"><i class="fa-solid fa-xmark"></i> Xóa tất cả bộ lọc</button>
+      </div>
+    </div>
+
+    <!-- Main Layout: 2 Columns (Sidebar + Courses Catalog) -->
+    <div class="catalog-layout">
+
+      <!-- ============================================== -->
+      <!-- CỘT TRÁI: SIDEBAR BỘ LỌC ĐA CHIỀU (MULTI-FACET) -->
+      <!-- ============================================== -->
+      <aside class="catalog-sidebar">
+        
+        <!-- Widget 1: CHUẨN ĐẦU RA NĂNG LỰC SỐ (CÓ SWITCHER KHUNG & CÂY DUYỆT TẤT CẢ) -->
+        <div class="sidebar-widget">
+          <div class="widget-header">
+            <span>CHUẨN ĐẦU RA NĂNG LỰC SỐ</span>
+            <span style="font-size: 11px; color: var(--meko-primary);" id="sidebarFrameworkCount">18 Năng lực</span>
+          </div>
+          <div class="widget-body">
+            
+            <!-- Framework Switcher Tab (Sinh viên vs Giảng viên) -->
+            <div class="framework-tabs-switcher">
+              <button class="framework-tab-btn active" id="tabBtnStudents" onclick="switchFramework('students')">
+                Sinh viên
+              </button>
+              <button class="framework-tab-btn" id="tabBtnFaculty" onclick="switchFramework('faculty')">
+                 Giảng viên
+              </button>
+            </div>
+
+            <!-- Search within competencies tree -->
+            <div class="sidebar-search-box">
+              <span class="sidebar-search-icon"></span>
+              <input type="text" class="sidebar-search-input" placeholder="Tìm năng lực, mã số..." oninput="handleSidebarCompSearch(this.value)">
+            </div>
+
+            <!-- Collapsible Competency Tree -->
+            <ul class="comp-tree-list" id="compTreeList">
+              <!-- Rendered dynamically by JS -->
+            </ul>
+
+            <!-- Button to open Quick Selector Modal -->
+            <button class="btn-open-picker-modal" onclick="openCompetencyModal()">
+              <span>Mở bộ chọn nhanh toàn bộ khung</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Widget 2: CÂY DANH MỤC 6 LĨNH VỰC ĐÀO TẠO GỐC MOODLE -->
+        <div class="sidebar-widget">
+          <div class="widget-header">
+            <span>LĨNH VỰC ĐÀO TẠO (CATEGORIES)</span>
+            <span style="font-size: 11px; color: #6B7280;">6 Lĩnh vực</span>
+          </div>
+          <div class="widget-body">
+            <ul class="cat-tree-list" id="catTreeList">
+              <!-- Rendered dynamically by JS -->
+            </ul>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ============================================== -->
+      <!-- CỘT PHẢI: KHU VỰC HIỂN THỊ KHÓA HỌC & BANNER    -->
+      <!-- ============================================== -->
+      <main class="catalog-main">
+
+        <!-- 1. BANNER LỌC THEO BẬC NĂNG LỰC SỐ -->
+        <section class="competency-filter-banner" id="bannerFilter">
+          <div class="banner-top-row">
+            <div>
+              <div class="banner-hierarchy-path">
+                <span class="tag-tier tag-tier-domain" id="bannerTierDomain">MIỀN 1</span>
+                <span id="bannerDomainName">D1. Thông tin và dữ liệu số</span> &nbsp;&gt;&nbsp; 
+                <span class="tag-tier tag-tier-comp" id="bannerTierComp">NĂNG LỰC</span>
+                <span id="bannerCompName">C1.1. Tìm kiếm thông tin và dữ liệu</span>
+              </div>
+              <h1 class="banner-title">
+                <span class="tag-tier tag-tier-level" id="bannerTierLevel">BẬC MỤC TIÊU</span>
+                <span id="bannerLevelTitle">Bậc N1 - Cơ bản (Basic)</span>
+                <span class="banner-level-badge n1" id="bannerLevelBadge">N1</span>
+                <span class="banner-id-tag" id="bannerIdTag">SV_C1_1_N1</span>
+              </h1>
+            </div>
+
+            <div class="banner-actions">
+              <button class="btn-modal-trigger" onclick="openCompetencyModal()" title="Chọn sang một chuẩn năng lực khác">
+                <span>Đổi chuẩn năng lực</span>
+              </button>
+              <button class="btn-tree-link" onclick="clearCompetency()" title="Bỏ lọc chuẩn năng lực">
+                <i class="fa-solid fa-xmark"></i> Xóa lọc năng lực
+              </button>
+            </div>
+          </div>
+
+          <!-- Specific Statement Box -->
+          <div class="banner-statement-box">
+            <strong>Yêu cầu chuẩn đầu ra Bậc mục tiêu:</strong>
+            <span id="bannerStatementText">
+              Thực hiện tìm kiếm đơn giản bằng cách dùng các từ khóa đơn lẻ trên công cụ tìm kiếm, thường theo chỉ dẫn. Dựa vào kết quả mặc định mà không lọc hay kiểm tra độ tin cậy.
+            </span>
+          </div>
+
+          <!-- Banner Footer -->
+          <div class="banner-footer-row">
+            <div class="banner-count-text">
+              Khung: <strong id="bannerFrameworkName">DigComp MEKO Students v1.0</strong> • 
+              <span id="bannerIntersectionText">Đang lọc theo <strong>Lĩnh vực 01: Dữ liệu &amp; Nội dung số</strong>: hiển thị <strong id="bannerCourseCount">02</strong> khóa học đạt chuẩn</span>
+            </div>
+            <div style="font-size: 11.5px; color: #047857; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+              <span><i class="fa-solid fa-check"></i> Tự động công nhận chuẩn CBE khi hoàn thành khóa</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. TOOLBAR TÌM KIẾM TRONG KẾT QUẢ & SẮP XẾP -->
+        <div class="course-control-toolbar">
+          <div class="search-within-box">
+            <span class="search-within-icon"></span>
+            <input type="text" class="search-within-input" placeholder="Tìm kiếm trong danh sách khóa học này..." oninput="handleCourseSearch(this.value)">
+          </div>
+          <div class="results-count-text">
+            <span>Tìm thấy: <strong id="resultsCount">02</strong> khóa học</span>
+          </div>
+        </div>
+
+        <!-- 3. LƯỚI KHÓA HỌC ĐẠT CHUẨN ĐẦU RA BẬC NÀY -->
+        <div class="courses-grid" id="coursesGrid">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- 4. INTELLIGENT EMPTY STATE (GỢI Ý NỚI LỎNG BỘ LỌC) -->
+        <div class="empty-state-card" id="emptyStateCard" style="display: none;">
+          <div class="empty-icon"></div>
+          <h3 class="empty-title">Không Tìm Thấy Khóa Học Phù Hợp Bộ Lọc Kết Hợp Này</h3>
+          <p class="empty-desc" id="emptyDescText">
+            Hiện tại chưa có khóa học nào thuộc <strong id="emptyCatName">Lĩnh vực đã chọn</strong> đáp ứng chuẩn đầu ra <strong id="emptyCompName">Bậc năng lực này</strong>. Bạn có thể nới lỏng bộ lọc để tiếp tục:
+          </p>
+          <div class="empty-actions-row">
+            <button class="btn-relax-filter" id="btnRelaxCategory" onclick="clearCategory()">
+              Xem khóa học đạt chuẩn này ở TẤT CẢ lĩnh vực
+            </button>
+            <button class="btn-relax-filter" id="btnRelaxComp" onclick="clearCompetency()">
+              Xem tất cả khóa học của lĩnh vực này
+            </button>
+            <button class="btn-relax-filter" onclick="clearAllFilters()">
+              <i class="fa-solid fa-xmark"></i> Xóa tất cả bộ lọc
+            </button>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL / DRAWER: BỘ CHỌN CHUẨN NĂNG LỰC NHANH   -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="competencyModal" onclick="closeCompetencyModalOnBackdrop(event)">
+    <div class="picker-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>BỘ CHỌN CHUẨN ĐẦU RA NĂNG LỰC SỐ (MEKO CBE)</span>
+        </div>
+        <button class="btn-close-modal" onclick="closeCompetencyModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-subbar">
+        <!-- Modal Framework Switcher -->
+        <div class="framework-tabs-switcher" style="margin-bottom: 0; min-width: 260px;">
+          <button class="framework-tab-btn active" id="modalTabBtnStudents" onclick="switchFramework('students')">
+            Khung Sinh viên (18 NL)
+          </button>
+          <button class="framework-tab-btn" id="modalTabBtnFaculty" onclick="switchFramework('faculty')">
+             Khung Giảng viên (28 NL)
+          </button>
+        </div>
+
+        <!-- Modal Search Box -->
+        <div class="modal-search-box">
+          <span class="search-within-icon"></span>
+          <input type="text" class="modal-search-input" id="modalSearchInput" placeholder="Tìm kiếm năng lực (ví dụ: tìm kiếm, AI, an ninh, trích dẫn, C2.1)..." oninput="handleModalSearch(this.value)">
+        </div>
+      </div>
+
+      <div class="modal-body-scroll" id="modalBodyScroll">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div style="font-size: 1.3rem; font-weight: 800; color: #FFF; margin-bottom: 8px;">MEKO LMS</div>
+        <p style="line-height: 1.6; font-size: 13px;">
+          Hệ sinh thái Đào tạo Số MEKO (MEKO-DLE) do Tập đoàn MEKOSOFT phát triển và làm chủ công nghệ, cung cấp nền tảng quản lý đào tạo dựa trên năng lực (CBE). chương trình MEKOSOFT của Tập đoàn Công nghệ MEKOSOFT.<br>
+          Cơ quan điều phối: <strong>Tập đoàn Công nghệ MEKOSOFT</strong>.
+        </p>
+      </div>
+      <div>
+        <div class="footer-heading">Hệ sinh thái số MEKO</div>
+        <p style="font-size: 13px; line-height: 1.8;">
+          • <a href="https://repo.mekosoft.vn" target="_blank">Kho học liệu số DLRP &rarr;</a><br>
+          • <a href="https://tms.mekosoft.vn" target="_blank">Quản lý đào tạo TMS &rarr;</a><br>
+          • <a href="06_moodle_lms_login_sso.html">Đăng nhập một lần SSO &rarr;</a><br>
+          • <a href="https://mekosoft.vn" target="_blank">Cổng thông tin dự án MEKOSOFT &rarr;</a>
+        </p>
+      </div>
+      <div>
+        <div class="footer-heading">Tiêu chuẩn năng lực</div>
+        <p style="font-size: 13px; line-height: 1.8;">
+          • <a href="04_moodle_lms_competencies.html?tab=student" style="color:#93C5FD;">DigComp Students v1.0 (/dig-comp-student)</a><br>
+          • <a href="04_moodle_lms_competencies.html?tab=lecturer" style="color:#93C5FD;">DigComp Faculty v1.0 (/dig-comp-lecturer)</a><br>
+          • Moodle 5.3 LTS CBE Option A (Compound Filter)<br>
+          • Open Badges 3.0 W3C VC
+        </p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      © 2026 Bản quyền thuộc về Hệ sinh thái MEKO (MEKOSOFT). Tài liệu được cấp phép theo Giấy phép Creative Commons CC-BY-NC 4.0.
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- JAVASCRIPT: LOGIC LỌC ĐA CHIỀU & MOCK DATA      -->
+  <!-- ============================================== -->
+  <script>
+    // 1. DANH MỤC 6 LĨNH VỰC ĐÀO TẠO GỐC MOODLE
+    const CATEGORIES = [
+      { id: 1, name: 'Lĩnh vực 01: Dữ liệu & Nội dung số' },
+      { id: 2, name: 'Lĩnh vực 02: Giao tiếp & Bản quyền số' },
+      { id: 3, name: 'Lĩnh vực 03: Sư phạm số & Giảng dạy' },
+      { id: 4, name: 'Lĩnh vực 04: Đánh giá & Khảo thí số' },
+      { id: 5, name: 'Lĩnh vực 05: An toàn & Bảo mật thông tin' },
+      { id: 6, name: 'Lĩnh vực 06: Trí tuệ nhân tạo (AI) trong GD' }
+    ];
+
+    // 2. KHUNG NĂNG LỰC SỐ (SINH VIÊN & GIẢNG VIÊN)
+    const FRAMEWORKS_DATA = {
+      'students': {
+        key: 'students',
+        name: 'DigComp MEKO Students v1.0',
+        shortname: 'Sinh viên (DigComp 2.2)',
+        domains: [
+          {
+            code: 'D1',
+            name: 'D1. Thông tin và dữ liệu số',
+            competencies: [
+              {
+                code: 'C1.1',
+                name: 'Tìm kiếm thông tin và dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C1_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Thực hiện tìm kiếm đơn giản bằng cách dùng các từ khóa đơn lẻ trên công cụ tìm kiếm, thường theo chỉ dẫn. Dựa vào kết quả mặc định mà không lọc hay kiểm tra độ tin cậy.' },
+                  { code: 'N2', idnumber: 'SV_C1_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tìm kiếm độc lập, chọn từ khóa phù hợp và sử dụng các bộ lọc có sẵn (thời gian, định dạng file, nguồn dữ liệu) để tìm thông tin đáp ứng nhu cầu cá nhân.' },
+                  { code: 'N3', idnumber: 'SV_C1_1_N3', title: 'Bậc N3: Nâng cao', badge_class: 'n3', statement: 'Áp dụng kỹ thuật tìm kiếm nâng cao (toán tử Boolean AND/OR/NOT, dấu ngoặc kép, CSDL học thuật, công cụ AI) trên nhiều nền tảng.' },
+                  { code: 'N4', idnumber: 'SV_C1_1_N4', title: 'Bậc N4: Chuyên sâu', badge_class: 'n4', statement: 'Thiết kế và tối ưu chiến lược tìm kiếm trong các CSDL chuyên ngành, xây dựng thư viện trích dẫn có cấu trúc (Zotero, Mendeley).' }
+                ]
+              },
+              {
+                code: 'C1.2',
+                name: 'Đánh giá thông tin và dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C1_2_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Nhận biết các dấu hiệu tin cậy rõ ràng (trang web uy tín, tên tác giả), nhưng vẫn chủ yếu dựa vào sự hướng dẫn của giảng viên.' },
+                  { code: 'N2', idnumber: 'SV_C1_2_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tự đánh giá tính xác thực của nguồn tin bằng cách so sánh nhiều kết quả; kiểm tra ngày xuất bản và tính khách quan.' }
+                ]
+              },
+              {
+                code: 'C1.3',
+                name: 'Lưu trữ và sắp xếp dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C1_3_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Lưu trữ tệp tin trên máy tính theo cấu trúc đơn giản, biết sử dụng USB hoặc Google Drive theo chỉ dẫn.' },
+                  { code: 'N2', idnumber: 'SV_C1_3_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tổ chức tệp tin theo thư mục môn học, đặt tên file có quy tắc, đồng bộ dữ liệu đám mây đa thiết bị.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D2',
+            name: 'D2. Giao tiếp và hợp tác số',
+            competencies: [
+              {
+                code: 'C2.1',
+                name: 'Tương tác qua công nghệ số',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C2_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Sử dụng các công cụ kỹ thuật số cơ bản (Email, tin nhắn LMS) để trao đổi thông tin theo chỉ dẫn.' },
+                  { code: 'N2', idnumber: 'SV_C2_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tham gia vào các cuộc trao đổi trực tuyến trong nhóm học tập (Teams, Zoom, Moodle Forum) một cách chủ động.' }
+                ]
+              },
+              {
+                code: 'C2.2',
+                name: 'Chia sẻ và xuất bản nội dung',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C2_2_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Chia sẻ tệp tin và liên kết tài liệu theo chỉ dẫn của giảng viên.' },
+                  { code: 'N2', idnumber: 'SV_C2_2_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Chia sẻ tài liệu học tập với bạn cùng lớp qua đám mây, tuân thủ quyền truy cập.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D3',
+            name: 'D3. Sáng tạo nội dung số',
+            competencies: [
+              {
+                code: 'C3.1',
+                name: 'Phát triển nội dung số',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C3_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Tạo văn bản và trang trình chiếu đơn giản bằng Word, PowerPoint, Canva.' },
+                  { code: 'N2', idnumber: 'SV_C3_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Thiết kế báo cáo học tập đa phương tiện (infographic, slide thuyết trình tương tác, video ngắn).' },
+                  { code: 'N3', idnumber: 'SV_C3_1_N3', title: 'Bậc N3: Nâng cao', badge_class: 'n3', statement: 'Tạo tài nguyên số phức hợp, ứng dụng công cụ GenAI hỗ trợ viết học thuật và minh họa.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D4',
+            name: 'D4. An toàn và an ninh mạng',
+            competencies: [
+              {
+                code: 'C4.1',
+                name: 'Bảo vệ thiết bị và dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C4_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Đặt mật khẩu cơ bản cho tài khoản trường, không chia sẻ mật khẩu cho người khác.' },
+                  { code: 'N2', idnumber: 'SV_C4_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Bật xác thực 2 yếu tố (2FA), nhận biết email giả mạo (phishing) và link độc hại.' },
+                  { code: 'N3', idnumber: 'SV_C4_1_N3', title: 'Bậc N3: Nâng cao', badge_class: 'n3', statement: 'Cấu hình bảo mật nâng cao trên thiết bị, sử dụng trình quản lý mật khẩu và mã hóa ổ đĩa.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D5',
+            name: 'D5. Giải quyết vấn đề số',
+            competencies: [
+              {
+                code: 'C5.1',
+                name: 'Xử lý sự cố kỹ thuật',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C5_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Khắc phục các sự cố kết nối mạng hoặc lỗi nộp bài cơ bản trên LMS.' },
+                  { code: 'N2', idnumber: 'SV_C5_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tự tìm kiếm giải pháp kỹ thuật trên diễn đàn hỗ trợ khi phần mềm học tập gặp lỗi.' }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      'faculty': {
+        key: 'faculty',
+        name: 'DigComp MEKO Faculty v1.0',
+        shortname: 'Giảng viên (DigCompEdu)',
+        domains: [
+          {
+            code: 'Miền 1',
+            name: 'Miền 1: Môi trường nghề nghiệp số',
+            competencies: [
+              {
+                code: 'GV_1_1',
+                name: 'Giao tiếp trong tổ chức giáo dục',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_1_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Sử dụng các kênh số của trường để thông báo lịch học và chia sẻ quy chế đào tạo.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_1_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Thiết lập các kênh tương tác số đa chiều giữa giảng viên và người học.' },
+                  { code: 'ADVANCED', idnumber: 'GV_1_1_ADVANCED', title: 'Bậc Nâng cao', badge_class: 'n3', statement: 'Dẫn dắt chiến lược truyền thông và hợp tác số trong khoa/trường.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'Miền 3',
+            name: 'Miền 3: Dạy và học số',
+            competencies: [
+              {
+                code: 'GV_3_1',
+                name: 'Tổ chức giảng dạy trực tuyến',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_3_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Sử dụng Moodle để đăng tải giáo trình và tạo bài kiểm tra trắc nghiệm đơn giản.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_3_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Thiết kế khóa học kết hợp (Blended Learning) với lộ trình năng lực số rõ ràng.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'Miền 4',
+            name: 'Miền 4: Đánh giá và kiểm tra số',
+            competencies: [
+              {
+                code: 'GV_4_1',
+                name: 'Chiến lược đánh giá năng lực số (CBE)',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_4_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Áp dụng quiz online chấm điểm tự động để đánh giá mức độ ghi nhớ kiến thức.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_4_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Thiết lập Rubric đánh giá năng lực số đa tiêu chí gắn với thang chuẩn CBE.' },
+                  { code: 'ADVANCED', idnumber: 'GV_4_1_ADVANCED', title: 'Bậc Nâng cao', badge_class: 'n3', statement: 'Xây dựng ngân hàng câu hỏi thích ứng (Adaptive Testing) dựa trên dữ liệu học tập.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'Miền A',
+            name: 'Miền A: Trí tuệ nhân tạo (AI) trong Giáo dục',
+            competencies: [
+              {
+                code: 'GV_A_1',
+                name: 'Ứng dụng GenAI trong thiết kế bài giảng',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_A_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Sử dụng prompt cơ bản với ChatGPT/Claude để gợi ý ý tưởng xây dựng đề cương môn học.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_A_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Tối ưu prompt đa bước để tạo case study, rubric và kịch bản thực hành cho sinh viên.' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    };
+
+    // 3. MOCK DATABASE KHÓA HỌC (GẮN CATEGORY VÀ COMPETENCIES)
+    const COURSES_DB = [
+      {
+        id: 101,
+        code: 'DS101-SEARCH-BASIC',
+        title: 'Kỹ Năng Tìm Kiếm Thông Tin Và Khai Thác CSDL Số Cơ Bản',
+        category_id: 1,
+        category_name: 'Lĩnh vực 01: Dữ liệu & Nội dung số',
+        competencies: ['SV_C1_1_N1'],
+        teacher: 'TS. Nguyễn Văn A (MEKOSOFT)',
+        startdate: '15/11/2026',
+        summary: 'Khóa học hướng dẫn sinh viên làm quen với các công cụ tìm kiếm học thuật, sử dụng từ khóa chuẩn hóa và khai thác kho học liệu số trường ĐH.',
+        quiz_info: 'Quiz Cuối Khóa: Grade to pass 8.0/10'
+      },
+      {
+        id: 102,
+        code: 'DS102-LMS-PORTAL',
+        title: 'Khai Thác Cổng Thông Tin Thư Viện Số & CSDL Khoa Học',
+        category_id: 1,
+        category_name: 'Lĩnh vực 01: Dữ liệu & Nội dung số',
+        competencies: ['SV_C1_1_N1', 'SV_C1_2_N1'],
+        teacher: 'ThS. Trần Thị B (MEKOSOFT)',
+        startdate: '20/11/2026',
+        summary: 'Hướng dẫn sử dụng tài khoản trường để tra cứu giáo trình điện tử, luận văn và các tạp chí khoa học có bản quyền.',
+        quiz_info: 'Hoàn thành 100% video bài giảng và bài tập thực hành'
+      },
+      {
+        id: 103,
+        code: 'IT103-ADV-SEARCH',
+        title: 'Kỹ Thuật Tìm Kiếm Thông Tin Nâng Cao Trong Môi Trường Số',
+        category_id: 2,
+        category_name: 'Lĩnh vực 02: Giao tiếp & Bản quyền số',
+        competencies: ['SV_C1_1_N1', 'SV_C1_1_N2'],
+        teacher: 'ThS. Lê Hoàng C (ĐH Bách Khoa ĐHQG-HCM)',
+        startdate: '01/12/2026',
+        summary: 'Sử dụng toán tử tìm kiếm, lọc theo thời gian, định dạng tài nguyên và phương pháp xác thực thông tin nhanh.',
+        quiz_info: 'Bài tập tình huống tìm kiếm thực tế: Đạt 85% điểm'
+      },
+      {
+        id: 104,
+        code: 'DS104-EVAL-DATA',
+        title: 'Đánh Giá Độ Tin Cậy & Tính Xác Thực Của Thông Tin Trên Mạng',
+        category_id: 1,
+        category_name: 'Lĩnh vực 01: Dữ liệu & Nội dung số',
+        competencies: ['SV_C1_2_N1', 'SV_C1_2_N2'],
+        teacher: 'TS. Phạm Thanh D (ĐH Sư phạm Hà Nội)',
+        startdate: '10/12/2026',
+        summary: 'Phương pháp phân biệt tin giả (fake news), nhận diện nguồn tin học thuật uy tín và kiểm chứng số liệu.',
+        quiz_info: 'Quiz đánh giá 10 nguồn tin thực nghiệm'
+      },
+      {
+        id: 105,
+        code: 'DS105-MULTIMEDIA-DEV',
+        title: 'Thiết Kế Báo Cáo Học Tập Đa Phương Tiện & Infographic',
+        category_id: 1,
+        category_name: 'Lĩnh vực 01: Dữ liệu & Nội dung số',
+        competencies: ['SV_C3_1_N2'],
+        teacher: 'ThS. Vũ Quang E (ĐH Mỹ thuật Công nghiệp)',
+        startdate: '15/12/2026',
+        summary: 'Sử dụng Canva và các công cụ trực quan hóa dữ liệu để trình bày báo cáo nghiên cứu và bài tập lớn.',
+        quiz_info: 'Nộp sản phẩm Infographic đạt chuẩn Rubric'
+      },
+      {
+        id: 106,
+        code: 'DS106-DATA-STORYTELLING',
+        title: 'Trực Quan Hóa Dữ Liệu & Thuyết Trình Số Chuyên Nghiệp',
+        category_id: 1,
+        category_name: 'Lĩnh vực 01: Dữ liệu & Nội dung số',
+        competencies: ['SV_C3_1_N2', 'SV_C3_1_N3'],
+        teacher: 'TS. Đặng Minh F (ĐH Kinh tế Quốc dân)',
+        startdate: '18/12/2026',
+        summary: 'Kỹ thuật kể chuyện bằng số liệu (Data Storytelling), tạo dashboard trực quan phục vụ bài bảo vệ khóa luận.',
+        quiz_info: 'Bảo vệ bài thuyết trình trước hội đồng chuyên môn'
+      },
+      {
+        id: 107,
+        code: 'SEC107-CYBER-HYGIENE',
+        title: 'An Toàn Số & Phòng Chống Lừa Đảo Trực Tuyến Cho Sinh Viên',
+        category_id: 5,
+        category_name: 'Lĩnh vực 05: An toàn & Bảo mật thông tin',
+        competencies: ['SV_C4_1_N2'],
+        teacher: 'ThS. Bùi Tuấn G (Trung tâm An ninh Mạng)',
+        startdate: '05/01/2027',
+        summary: 'Nhận biết các hình thức lừa đảo qua mạng xã hội, thiết lập bảo mật 2 lớp cho tài khoản email trường và bảo vệ danh tính số.',
+        quiz_info: 'Quiz Mô phỏng Phishing đạt 100%'
+      },
+      {
+        id: 108,
+        code: 'FAC201-RUBRIC-CBE',
+        title: 'Thiết Kế Rubric & Đánh Giá Năng Lực Người Học Chuẩn CBE',
+        category_id: 4,
+        category_name: 'Lĩnh vực 04: Đánh giá & Khảo thí số',
+        competencies: ['GV_4_1_INTERMEDIATE'],
+        teacher: 'PGS. TS. Trần Văn H (MEKOSOFT)',
+        startdate: '10/01/2027',
+        summary: 'Hướng dẫn giảng viên xây dựng ma trận chuẩn đầu ra và thiết lập bảng tiêu chí Rubric đánh giá trên Moodle LMS.',
+        quiz_info: 'Nộp ma trận Rubric cho một học phần thực tế'
+      },
+      {
+        id: 109,
+        code: 'FAC202-ITEM-BANK',
+        title: 'Xây Dựng Ngân Hàng Câu Hỏi Khảo Thí Trực Tuyến Thích Ứng',
+        category_id: 4,
+        category_name: 'Lĩnh vực 04: Đánh giá & Khảo thí số',
+        competencies: ['GV_4_1_INTERMEDIATE', 'GV_4_1_ADVANCED'],
+        teacher: 'TS. Nguyễn Thị K (Viện Khảo thí Quốc gia)',
+        startdate: '15/01/2027',
+        summary: 'Kỹ thuật biên soạn câu hỏi trắc nghiệm khách quan đa mức độ nhận thức gắn với chuẩn đầu ra Bloom.',
+        quiz_info: 'Xây dựng ngân hàng 50 câu hỏi đạt chuẩn độ phân cách'
+      },
+      {
+        id: 110,
+        code: 'FAC301-GENAI-LESSON',
+        title: 'Ứng Dụng GenAI Tối Ưu Hóa Thiết Kế Kế Hoạch Bài Dạy',
+        category_id: 6,
+        category_name: 'Lĩnh vực 06: Trí tuệ nhân tạo (AI) trong GD',
+        competencies: ['GV_A_1_BASIC', 'GV_A_1_INTERMEDIATE'],
+        teacher: 'TS. Hoàng Đức L (Chuyên gia EdTech MEKO)',
+        startdate: '20/01/2027',
+        summary: 'Khai thác prompt engineering để tạo tài liệu giảng dạy, tình huống thảo luận và slide bài giảng với sự hỗ trợ của AI.',
+        quiz_info: 'Nộp kế hoạch bài dạy tích hợp tài nguyên AI'
+      },
+      {
+        id: 111,
+        code: 'FAC302-AI-ETHICS',
+        title: 'Đạo Đức Trí Tuệ Nhân Tạo & Phòng Ngừa Vi Phạm Bản Quyền',
+        category_id: 6,
+        category_name: 'Lĩnh vực 06: Trí tuệ nhân tạo (AI) trong GD',
+        competencies: ['GV_A_1_BASIC'],
+        teacher: 'ThS. Chu Kim M (Khoa Luật - MEKOSOFT)',
+        startdate: '25/01/2027',
+        summary: 'Nguyên tắc liêm chính học thuật trong thời đại AI, chính sách sử dụng AI cho sinh viên và cách trích dẫn nguồn AI.',
+        quiz_info: 'Case study giải quyết xung đột liêm chính học thuật'
+      }
+    ];
+
+    // ==============================================
+    // TRẠNG THÁI TOÀN CỤC BỘ LỌC (GLOBAL FILTER STATE)
+    // ==============================================
+    let currentFrameworkKey = 'students';   // 'students' | 'faculty'
+    let currentCategoryId = 1;              // null (Tất cả) | 1..6
+    let currentCompetencyId = 'SV_C1_1_N1'; // null (Không lọc) | 'SV_C1_1_N1'...
+    let currentSearchQuery = '';
+
+    // Khởi tạo trang
+    window.addEventListener('DOMContentLoaded', () => {
+      // Đọc tham số URL nếu được điều hướng từ trang Khung năng lực hoặc trang khác
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('competencyid')) {
+        const compId = params.get('competencyid');
+        currentCompetencyId = compId;
+        if (compId.startsWith('GV_')) {
+          currentFrameworkKey = 'faculty';
+        } else {
+          currentFrameworkKey = 'students';
+        }
+      }
+      if (params.has('categoryid')) {
+        currentCategoryId = parseInt(params.get('categoryid'));
+      }
+      renderAll();
+    });
+
+    // Hàm chuyển đổi Kịch bản Demo nhanh
+    function loadScenario(compId, catId, fwKey) {
+      currentCompetencyId = compId;
+      currentCategoryId = catId;
+      currentFrameworkKey = fwKey;
+      currentSearchQuery = '';
+      
+      // Update pills active state
+      document.querySelectorAll('.demo-pill-btn').forEach(btn => btn.classList.remove('active'));
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+      }
+
+      renderAll();
+    }
+
+    // Chuyển đổi Khung Năng Lực (Framework)
+    function switchFramework(fwKey) {
+      if (currentFrameworkKey === fwKey) return;
+      currentFrameworkKey = fwKey;
+
+      // Nếu competency hiện tại không thuộc khung mới, đổi sang competency mặc định của khung mới
+      const compObj = findCompetencyInFramework(currentCompetencyId, fwKey);
+      if (!compObj) {
+        if (fwKey === 'students') {
+          currentCompetencyId = 'SV_C1_1_N1';
+        } else {
+          currentCompetencyId = 'GV_4_1_INTERMEDIATE';
+        }
+      }
+
+      renderAll();
+    }
+
+    // Chọn Lĩnh vực (Category)
+    function setCategory(catId) {
+      currentCategoryId = catId;
+      renderAll();
+    }
+
+    function clearCategory() {
+      currentCategoryId = null;
+      renderAll();
+    }
+
+    // Chọn Chuẩn đầu ra (Competency)
+    function setCompetency(compId) {
+      currentCompetencyId = compId;
+      // Tự động kiểm tra xem competency này thuộc khung nào
+      if (compId.startsWith('GV_')) {
+        currentFrameworkKey = 'faculty';
+      } else if (compId.startsWith('SV_')) {
+        currentFrameworkKey = 'students';
+      }
+      closeCompetencyModal();
+      renderAll();
+    }
+
+    function clearCompetency() {
+      currentCompetencyId = null;
+      renderAll();
+    }
+
+    function clearAllFilters() {
+      currentCategoryId = null;
+      currentCompetencyId = null;
+      currentSearchQuery = '';
+      renderAll();
+    }
+
+    // Tìm kiếm thông tin năng lực
+    function findCompetencyInFramework(compId, fwKey) {
+      if (!compId) return null;
+      const fw = FRAMEWORKS_DATA[fwKey];
+      if (!fw) return null;
+
+      for (const d of fw.domains) {
+        for (const c of d.competencies) {
+          for (const lvl of c.levels) {
+            if (lvl.idnumber === compId) {
+              return {
+                domain: d,
+                competency: c,
+                level: lvl,
+                framework: fw
+              };
+            }
+          }
+        }
+      }
+      return null;
+    }
+
+    // Tìm kiếm trong toàn bộ các khung
+    function findCompetencyAnywhere(compId) {
+      return findCompetencyInFramework(compId, 'students') || findCompetencyInFramework(compId, 'faculty');
+    }
+
+    // ==============================================
+    // MAIN RENDER CONTROLLER
+    // ==============================================
+    function renderAll() {
+      updateMockUrl();
+      renderBreadcrumbs();
+      renderActiveChips();
+      renderSidebarCompetencyTree();
+      renderSidebarCategoryTree();
+      renderBanner();
+      renderCoursesGrid();
+      updateModalTabs();
+    }
+
+    // 1. Cập nhật URL trong thanh Browser Mockup
+    function updateMockUrl() {
+      const params = [];
+      if (currentCategoryId !== null) {
+        params.push(`categoryid=${currentCategoryId}`);
+      }
+      if (currentCompetencyId !== null) {
+        params.push(`framework=${currentFrameworkKey}`);
+        params.push(`competencyid=${currentCompetencyId}`);
+      }
+
+      const queryString = params.length > 0 ? params.join('&') : '';
+      document.getElementById('mockBrowserUrl').innerText = queryString ? queryString : 'index.php (Tất cả khóa học)';
+    }
+
+    // 2. Render Breadcrumbs
+    function renderBreadcrumbs() {
+      const bcCat = document.getElementById('bcCategoryText');
+      const bcDom = document.getElementById('bcDomainText');
+      const bcLvl = document.getElementById('bcLevelText');
+
+      if (currentCategoryId !== null) {
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        bcCat.style.display = 'inline';
+        bcCat.innerText = cat ? cat.name : 'Lĩnh vực';
+      } else {
+        bcCat.style.display = 'none';
+      }
+
+      const compData = findCompetencyAnywhere(currentCompetencyId);
+      if (compData) {
+        bcDom.style.display = 'inline';
+        bcDom.innerText = compData.domain.name;
+        bcLvl.style.display = 'inline';
+        bcLvl.innerText = `${compData.competency.code} [${compData.level.title}]`;
+      } else {
+        bcDom.style.display = 'none';
+        bcLvl.style.display = 'none';
+      }
+    }
+
+    // 3. Render Active Chips
+    function renderActiveChips() {
+      const strip = document.getElementById('activeFiltersStrip');
+      const chipCat = document.getElementById('chipCategory');
+      const chipFw = document.getElementById('chipFramework');
+      const chipComp = document.getElementById('chipCompetency');
+
+      const hasCat = currentCategoryId !== null;
+      const hasComp = currentCompetencyId !== null;
+
+      if (!hasCat && !hasComp) {
+        strip.style.display = 'none';
+        return;
+      }
+      strip.style.display = 'flex';
+
+      // Chip Category
+      if (hasCat) {
+        chipCat.style.display = 'inline-flex';
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('chipCategoryName').innerText = cat ? cat.name : `Lĩnh vực ${currentCategoryId}`;
+      } else {
+        chipCat.style.display = 'none';
+      }
+
+      // Chip Framework & Competency
+      if (hasComp) {
+        chipFw.style.display = 'inline-flex';
+        document.getElementById('chipFrameworkName').innerText = FRAMEWORKS_DATA[currentFrameworkKey].shortname;
+
+        chipComp.style.display = 'inline-flex';
+        const compData = findCompetencyAnywhere(currentCompetencyId);
+        if (compData) {
+          document.getElementById('chipCompetencyName').innerText = compData.level.idnumber;
+          document.getElementById('chipCompetencyLevel').innerText = compData.level.code;
+        }
+      } else {
+        chipFw.style.display = 'none';
+        chipComp.style.display = 'none';
+      }
+    }
+
+    // 4. Render Sidebar Competency Tree
+    function renderSidebarCompetencyTree() {
+      const fw = FRAMEWORKS_DATA[currentFrameworkKey];
+      document.getElementById('sidebarFrameworkCount').innerText = `${fw.domains.reduce((sum, d) => sum + d.competencies.length, 0)} Năng lực`;
+
+      // Tabs active
+      document.getElementById('tabBtnStudents').className = `framework-tab-btn ${currentFrameworkKey === 'students' ? 'active' : ''}`;
+      document.getElementById('tabBtnFaculty').className = `framework-tab-btn ${currentFrameworkKey === 'faculty' ? 'active' : ''}`;
+
+      const treeContainer = document.getElementById('compTreeList');
+      let html = '';
+
+      fw.domains.forEach(d => {
+        // Kiểm tra xem competency hiện tại có nằm trong domain này không
+        const isCurrentDomain = d.competencies.some(c => c.levels.some(l => l.idnumber === currentCompetencyId));
+
+        html += `
+          <li class="comp-tree-domain">
+            <div class="domain-title-bar" onclick="toggleDomainCollapse(this)">
+              <span>${d.name}</span>
+              <span style="font-size: 11px;">${isCurrentDomain ? '▾' : '▸'}</span>
+            </div>
+            <ul class="domain-comp-list" style="display: ${isCurrentDomain ? 'block' : 'none'};">
+        `;
+
+        d.competencies.forEach(c => {
+          html += `
+            <li class="comp-item-block">
+              <div class="comp-item-title">
+                <span>${c.code}. ${c.name}</span>
+              </div>
+              <div class="comp-levels-pills">
+          `;
+
+          c.levels.forEach(lvl => {
+            const isActive = lvl.idnumber === currentCompetencyId;
+            html += `
+              <button class="comp-level-btn ${isActive ? 'active' : ''}" onclick="setCompetency('${lvl.idnumber}')" title="${lvl.title}">
+                ${lvl.code}
+              </button>
+            `;
+          });
+
+          html += `
+              </div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </li>
+        `;
+      });
+
+      treeContainer.innerHTML = html;
+    }
+
+    function toggleDomainCollapse(el) {
+      const list = el.nextElementSibling;
+      const arrow = el.querySelector('span:last-child');
+      if (list.style.display === 'none') {
+        list.style.display = 'block';
+        arrow.innerText = '▾';
+      } else {
+        list.style.display = 'none';
+        arrow.innerText = '▸';
+      }
+    }
+
+    // 5. Render Sidebar Category Tree
+    function renderSidebarCategoryTree() {
+      const listEl = document.getElementById('catTreeList');
+      let html = '';
+
+      // Item "Tất cả lĩnh vực"
+      const isAllActive = currentCategoryId === null;
+      html += `
+        <li class="cat-tree-item ${isAllActive ? 'active' : ''}">
+          <a href="javascript:void(0)" onclick="clearCategory()">
+            <span>Tất cả lĩnh vực</span>
+            <span class="cat-count-badge">${COURSES_DB.length}</span>
+          </a>
+        </li>
+      `;
+
+      CATEGORIES.forEach(cat => {
+        const isActive = cat.id === currentCategoryId;
+        // Đếm số khóa học thuộc lĩnh vực này (có tính cả competency nếu đang chọn)
+        const count = COURSES_DB.filter(c => {
+          if (c.category_id !== cat.id) return false;
+          if (currentCompetencyId && !c.competencies.includes(currentCompetencyId)) return false;
+          return true;
+        }).length;
+
+        html += `
+          <li class="cat-tree-item ${isActive ? 'active' : ''}">
+            <a href="javascript:void(0)" onclick="setCategory(${cat.id})">
+              <span>${cat.name}</span>
+              <span class="cat-count-badge">${count}</span>
+            </a>
+          </li>
+        `;
+      });
+
+      listEl.innerHTML = html;
+    }
+
+    // 6. Render Banner
+    function renderBanner() {
+      const banner = document.getElementById('bannerFilter');
+      const compData = findCompetencyAnywhere(currentCompetencyId);
+
+      if (!compData) {
+        // Khi không lọc theo competency: hiển thị banner giới thiệu danh mục
+        banner.style.borderLeftColor = 'var(--meko-navy)';
+        document.getElementById('bannerTierDomain').innerText = 'LĨNH VỰC';
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('bannerDomainName').innerText = cat ? cat.name : 'Tất cả lĩnh vực đào tạo';
+        document.getElementById('bannerTierComp').innerText = 'CHẾ ĐỘ';
+        document.getElementById('bannerCompName').innerText = 'Xem tổng quan khóa học';
+        document.getElementById('bannerTierLevel').innerText = 'TRẠNG THÁI';
+        document.getElementById('bannerLevelTitle').innerText = 'Chưa lọc theo Chuẩn đầu ra';
+        document.getElementById('bannerLevelBadge').style.display = 'none';
+        document.getElementById('bannerIdTag').innerText = 'Tất cả chuẩn CBE';
+        document.getElementById('bannerStatementText').innerText = 'Bạn có thể chọn một chuẩn đầu ra ở cột bên trái hoặc bấm nút "Đổi chuẩn năng lực" để lọc các khóa học đáp ứng chuẩn đầu ra tương ứng.';
+        document.getElementById('bannerFrameworkName').innerText = FRAMEWORKS_DATA[currentFrameworkKey].name;
+        document.getElementById('bannerIntersectionText').innerText = `Đang hiển thị toàn bộ khóa học`;
+        return;
+      }
+
+      banner.style.borderLeftColor = 'var(--meko-primary)';
+      document.getElementById('bannerTierDomain').innerText = 'TẦNG 1';
+      document.getElementById('bannerDomainName').innerText = compData.domain.name;
+      document.getElementById('bannerTierComp').innerText = 'TẦNG 2';
+      document.getElementById('bannerCompName').innerText = `${compData.competency.code}. ${compData.competency.name}`;
+      document.getElementById('bannerTierLevel').innerText = 'TẦNG 3';
+      document.getElementById('bannerLevelTitle').innerText = compData.level.title;
+      
+      const badge = document.getElementById('bannerLevelBadge');
+      badge.style.display = 'inline-flex';
+      badge.className = `banner-level-badge ${compData.level.badge_class}`;
+      badge.innerText = compData.level.code;
+
+      document.getElementById('bannerIdTag').innerText = compData.level.idnumber;
+      document.getElementById('bannerStatementText').innerText = compData.level.statement;
+      document.getElementById('bannerFrameworkName').innerText = compData.framework.name;
+
+      if (currentCategoryId !== null) {
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('bannerIntersectionText').innerHTML = `Đang lọc kép: thuộc <strong>${cat ? cat.name : ''}</strong>`;
+      } else {
+        document.getElementById('bannerIntersectionText').innerHTML = `Đang lọc trên <strong>Toàn bộ lĩnh vực</strong>`;
+      }
+    }
+
+    // 7. Render Courses Grid (Lọc đồng thời Category + Competency)
+    function renderCoursesGrid() {
+      const grid = document.getElementById('coursesGrid');
+      const emptyState = document.getElementById('emptyStateCard');
+
+      // Filter logic:
+      let filtered = COURSES_DB.filter(c => {
+        // Filter by Category
+        if (currentCategoryId !== null && c.category_id !== currentCategoryId) {
+          return false;
+        }
+        // Filter by Competency
+        if (currentCompetencyId !== null && !c.competencies.includes(currentCompetencyId)) {
+          return false;
+        }
+        // Filter by Search Query
+        if (currentSearchQuery) {
+          const q = currentSearchQuery.toLowerCase();
+          const match = c.title.toLowerCase().includes(q) ||
+                        c.code.toLowerCase().includes(q) ||
+                        c.teacher.toLowerCase().includes(q) ||
+                        c.summary.toLowerCase().includes(q);
+          if (!match) return false;
+        }
+        return true;
+      });
+
+      // Update Counts
+      const countStr = String(filtered.length).padStart(2, '0');
+      document.getElementById('resultsCount').innerText = countStr;
+      const bannerCountEl = document.getElementById('bannerCourseCount');
+      if (bannerCountEl) bannerCountEl.innerText = countStr;
+
+      // Handle Empty State
+      if (filtered.length === 0) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('emptyCatName').innerText = cat ? `Lĩnh vực "${cat.name}"` : 'lĩnh vực đã chọn';
+        document.getElementById('emptyCompName').innerText = currentCompetencyId ? `"${currentCompetencyId}"` : 'chuẩn đầu ra này';
+
+        // Toggle relax buttons
+        document.getElementById('btnRelaxCategory').style.display = currentCategoryId !== null ? 'inline-block' : 'none';
+        document.getElementById('btnRelaxComp').style.display = currentCompetencyId !== null ? 'inline-block' : 'none';
+        return;
+      }
+
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+
+      let html = '';
+      filtered.forEach(c => {
+        html += `
+          <div class="course-card">
+            <div class="card-top-bar"></div>
+            <div class="card-body">
+              <div class="card-badge-row">
+                <span class="card-domain-badge">${c.category_name.split(':')[0]}</span>
+                <span class="card-code-badge">${c.code}</span>
+              </div>
+              <h3 class="course-title">
+                <a href="05_moodle_lms_course_view_tiles.html?id=${c.id}">${c.title}</a>
+              </h3>
+              <p class="course-summary">${c.summary}</p>
+
+              <!-- CBE Target Level Tag -->
+              <div class="course-level-tag">
+                <div class="level-tag-header">
+                  <span class="level-tag-name">Chuẩn đầu ra: ${currentCompetencyId ? currentCompetencyId : c.competencies[0]}</span>
+                  <span style="font-weight: 700; color: #047857; font-size: 11px;">Đạt chuẩn CBE</span>
+                </div>
+                <div class="level-tag-rule">${c.quiz_info}</div>
+              </div>
+
+              <div class="card-meta-list">
+                <div class="meta-row"><span>Giảng viên:</span> <span class="meta-val">${c.teacher}</span></div>
+                <div class="meta-row"><span>Khai giảng:</span> <span class="meta-val">${c.startdate}</span></div>
+                <div class="meta-row"><span>Lĩnh vực:</span> <span class="meta-val">${c.category_name.split(':')[1] || c.category_name}</span></div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="badge-cbe-auto">
+                <span>Open Badges 3.0</span>
+              </div>
+              <a href="05_moodle_lms_course_view_tiles.html?id=${c.id}" class="btn-view-course">
+                <span>Vào học</span> &rarr;
+              </a>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    function handleCourseSearch(val) {
+      currentSearchQuery = val.trim();
+      renderCoursesGrid();
+    }
+
+    // ==============================================
+    // MODAL PICKER CONTROLLER
+    // ==============================================
+    function openCompetencyModal() {
+      document.getElementById('competencyModal').classList.add('active');
+      renderModalBody('');
+    }
+
+    function closeCompetencyModal() {
+      document.getElementById('competencyModal').classList.remove('active');
+    }
+
+    function closeCompetencyModalOnBackdrop(e) {
+      if (e.target.id === 'competencyModal') {
+        closeCompetencyModal();
+      }
+    }
+
+    function updateModalTabs() {
+      const btnSv = document.getElementById('modalTabBtnStudents');
+      const btnGv = document.getElementById('modalTabBtnFaculty');
+      if (btnSv) btnSv.className = `framework-tab-btn ${currentFrameworkKey === 'students' ? 'active' : ''}`;
+      if (btnGv) btnGv.className = `framework-tab-btn ${currentFrameworkKey === 'faculty' ? 'active' : ''}`;
+    }
+
+    function handleModalSearch(query) {
+      renderModalBody(query.trim().toLowerCase());
+    }
+
+    function renderModalBody(q) {
+      const container = document.getElementById('modalBodyScroll');
+      const fw = FRAMEWORKS_DATA[currentFrameworkKey];
+      let html = '';
+
+      fw.domains.forEach(d => {
+        let matchingComp = d.competencies;
+        if (q) {
+          matchingComp = d.competencies.filter(c => {
+            const inName = c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q);
+            const inLevels = c.levels.some(l => l.title.toLowerCase().includes(q) || l.statement.toLowerCase().includes(q) || l.idnumber.toLowerCase().includes(q));
+            return inName || inLevels;
+          });
+        }
+
+        if (matchingComp.length === 0) return;
+
+        html += `
+          <div class="modal-domain-section">
+            <div class="modal-domain-heading">
+              <span>${d.name}</span>
+            </div>
+            <div class="modal-comp-grid">
+        `;
+
+        matchingComp.forEach(c => {
+          html += `
+            <div class="modal-comp-card">
+              <div class="modal-comp-header">
+                <strong>${c.code}. ${c.name}</strong>
+              </div>
+              <div class="modal-comp-statement-sample">
+                ${c.levels[0] ? c.levels[0].statement.substring(0, 85) + '...' : ''}
+              </div>
+              <div class="modal-levels-row">
+          `;
+
+          c.levels.forEach(lvl => {
+            const isSelected = lvl.idnumber === currentCompetencyId;
+            html += `
+              <button class="btn-select-level ${isSelected ? 'active' : ''}" onclick="setCompetency('${lvl.idnumber}')" title="${lvl.statement}">
+                ${lvl.title} (${lvl.code})
+              </button>
+            `;
+          });
+
+          html += `
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      if (!html) {
+        html = `
+          <div style="text-align: center; padding: 40px; color: #94A3B8;">
+            <div style="font-size: 28px; margin-bottom: 8px;"></div>
+            <p>Không tìm thấy chuẩn năng lực nào khớp với từ khóa "<strong>${q}</strong>".</p>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    function handleSidebarCompSearch(q) {
+      const query = q.trim().toLowerCase();
+      const fw = FRAMEWORKS_DATA[currentFrameworkKey];
+      const treeContainer = document.getElementById('compTreeList');
+
+      if (!query) {
+        renderSidebarCompetencyTree();
+        return;
+      }
+
+      let html = '';
+      fw.domains.forEach(d => {
+        const matchingComp = d.competencies.filter(c => {
+          return c.name.toLowerCase().includes(query) ||
+                 c.code.toLowerCase().includes(query) ||
+                 c.levels.some(l => l.idnumber.toLowerCase().includes(query) || l.code.toLowerCase().includes(query));
+        });
+
+        if (matchingComp.length === 0) return;
+
+        html += `
+          <li class="comp-tree-domain">
+            <div class="domain-title-bar" style="background: #EEF2FF; color: var(--meko-primary);">
+              <span>${d.name}</span>
+              <span style="font-size: 11px;">▾</span>
+            </div>
+            <ul class="domain-comp-list" style="display: block;">
+        `;
+
+        matchingComp.forEach(c => {
+          html += `
+            <li class="comp-item-block">
+              <div class="comp-item-title">
+                <span>${c.code}. ${c.name}</span>
+              </div>
+              <div class="comp-levels-pills">
+          `;
+
+          c.levels.forEach(lvl => {
+            const isActive = lvl.idnumber === currentCompetencyId;
+            html += `
+              <button class="comp-level-btn ${isActive ? 'active' : ''}" onclick="setCompetency('${lvl.idnumber}')">
+                ${lvl.code}
+              </button>
+            `;
+          });
+
+          html += `
+              </div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </li>
+        `;
+      });
+
+      treeContainer.innerHTML = html || '<li style="padding: 12px; text-align: center; color: #94A3B8; font-size: 12px;">Không tìm thấy</li>';
+    }
+  </script>
+
+</body>
+</html>

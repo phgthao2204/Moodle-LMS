@@ -1,0 +1,117 @@
+{{!
+    @template theme_accees/core_course/course_card
+    Thẻ khóa học chuẩn ACCEES LMS - STYLE 1: MODERN EDTECH (COURSERA / EDX STANDARD)
+    Bao gồm Thumbnail Cover 16:9 sắc nét, Domain Badge nổi, CBE Level nổi, Avatar Giảng viên tròn, 0% icon vụn vặt.
+}}
+<div class="card h-100 course-card-unit accees-course-card d-flex flex-column justify-content-between position-relative" style="border: 1px solid #E2E8F0; border-radius: 10px; overflow: hidden; background: #FFFFFF; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;">
+    
+    {{! VÙNG 1: THUMBNAIL ẢNH BÌA 16:9 + CHIP NỔI MIỀN NĂNG LỰC & BẬC CBE }}
+    <div class="course-thumbnail-area position-relative" style="height: 168px; width: 100%; overflow: hidden; background-color: #0F172A;">
+        <a href="{{{ viewurl }}}" class="d-block w-100 h-100" title="{{ fullname }}" tabindex="-1">
+            <img src="{{ course_image }}" alt="{{ fullname }}" class="w-100 h-100 course-cover-img" style="object-fit: cover; transition: transform 0.35s ease;" loading="lazy">
+        </a>
+        <div class="position-absolute d-flex align-items-start justify-content-between" style="top: 10px; left: 10px; right: 10px; gap: 6px; pointer-events: none;">
+            {{#domain_pill}}
+            <span class="badge" title="{{ domain_pill }}" style="min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(4px); color: #38BDF8; font-size: 10.5px; font-weight: 700; padding: 4px 9px; border-radius: 5px; border: 1px solid rgba(56, 189, 248, 0.35); text-transform: uppercase; letter-spacing: 0.4px; pointer-events: auto;">
+                {{ domain_pill }}
+            </span>
+            {{/domain_pill}}
+            {{#cbe_badge_label}}
+            <span class="badge flex-shrink-0 ms-auto" title="{{ competency_level_tooltip }}" data-bs-toggle="tooltip" style="background: #0000B6; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); white-space: nowrap; pointer-events: auto;">
+                {{ cbe_badge_label }}
+            </span>
+            {{/cbe_badge_label}}
+        </div>
+    </div>
+
+    {{! VÙNG 2: THÂN THẺ (NỘI DUNG CHUẨN MỰC, DỄ ĐỌC) }}
+    <div class="card-body-content p-3 d-flex flex-column flex-grow-1">
+        
+        {{! HÀNG 1: Mã môn học & Thời lượng / Tín chỉ }}
+        <div class="d-flex align-items-center justify-content-between mb-1 text-uppercase fw-bold" style="font-size: 11px; color: #64748B; letter-spacing: 0.3px;">
+            <span>{{ shortname }}</span>
+            {{#duration}}<span class="text-nowrap" style="color: #64748B;">{{ duration }}</span>{{/duration}}
+        </div>
+
+        {{! HÀNG 2: Tên khóa học (Font H4 15.5px, Bold 700, #0F172A, tối đa 2 dòng) }}
+        <h4 class="course-card-title mb-2" style="font-size: 15.5px; font-weight: 700; line-height: 1.4; min-height: 44px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            <a href="{{{ viewurl }}}" class="text-decoration-none" title="{{ fullname }}" style="color: #0F172A !important;">
+                {{{ fullname }}}
+            </a>
+        </h4>
+
+        {{! HÀNG 3: Mô tả tóm tắt (13px, 2 dòng, #475569) }}
+        <p class="course-card-summary mb-3" title="{{ summary_full }}" data-bs-toggle="tooltip" style="font-size: 13px; line-height: 1.5; color: #475569 !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 38px; cursor: default;">
+            {{{ summary }}}
+        </p>
+
+        <div class="course-card-meta-group">
+            {{! HÀNG 4: Giảng viên với Avatar Tròn Viết Tắt (Chuẩn quốc tế, 0% icon) }}
+            <div class="course-card-teacher d-flex align-items-center mb-2" style="gap: 10px;">
+                <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width: 32px; height: 32px; background-color: #EEF2FF; color: #0000B6; font-size: 12px; border: 1.5px solid #C7D2FE;">
+                    {{ teacher_initials }}
+                </div>
+                <div class="d-flex flex-column text-truncate" style="min-width: 0;">
+                    <span class="fw-semibold text-truncate" style="font-size: 12.5px; color: #0F172A;" title="{{ teacher_name }}">{{ teacher_name }}</span>
+                    <span class="text-truncate" style="font-size: 11px; color: #64748B;">{{ teacher_institution }}</span>
+                </div>
+            </div>
+
+            {{! HÀNG 5: Chuẩn đầu ra CBE Nổi bật (Độc lập, rõ ràng, dễ đọc) }}
+            {{#competency_title}}
+            <div class="course-card-cbe-row mb-2">
+                <div class="badge w-100 d-flex align-items-center text-truncate text-start" style="background-color: #EEF2FF; color: #0000B6; border: 1px solid #C7D2FE; font-weight: 600; padding: 6px 9px; border-radius: 6px; font-size: 12px; gap: 6px;" title="{{ competency_tooltip }}" data-bs-toggle="tooltip">
+                    <i class="fa-solid fa-bullseye flex-shrink-0" style="font-size: 11px; color: #0000B6;" aria-hidden="true"></i>
+                    <span class="text-truncate flex-grow-1" style="letter-spacing: 0.2px;">{{ competency_title }}</span>
+                </div>
+            </div>
+            {{/competency_title}}
+
+            {{! HÀNG 5B: Khai giảng & Chi tiết phụ }}
+            <div class="course-card-meta-row d-flex align-items-center justify-content-between pt-1 mb-3 {{^competency_title}}border-top pt-2{{/competency_title}}" style="font-size: 11.5px; color: #64748B;">
+                <span class="d-inline-flex align-items-center gap-1">
+                    <i class="fa-solid fa-calendar-days" style="font-size: 10.5px; color: #94A3B8;" aria-hidden="true"></i>
+                    <span>{{ label_startdate }}</span>
+                </span>
+                <span class="text-nowrap fw-semibold" style="color: #475569;">{{ startdate_formatted }}</span>
+            </div>
+        </div>
+
+        {{! HÀNG 6 (FOOTER): Tiến độ % hoặc Nút Hành Động }}
+        <div class="course-card-footer mt-auto pt-1">
+            {{#is_enrolled}}
+                <div class="course-card-progress-block">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                        <span class="small" style="font-size: 11.5px; color: #64748B;">{{ label_progress }}</span>
+                        <span class="badge" style="font-size: 11px; font-weight: 700; {{#is_completed}}background-color: #DCFCE7; color: #166534; border: 1px solid #BBF7D0;{{/is_completed}}{{^is_completed}}background-color: #EEF2FF; color: #0000B6; border: 1px solid #C7D2FE;{{/is_completed}}">
+                            {{#is_completed}}100%{{/is_completed}}{{^is_completed}}{{ progress }}%{{/is_completed}}
+                        </span>
+                    </div>
+                    <div class="progress mb-2" style="height: 6px; background-color: #E2E8F0; border-radius: 3px;">
+                        <div class="progress-bar" role="progressbar" style="width: {{ progress }}%; background-color: {{#is_completed}}#16A34A{{/is_completed}}{{^is_completed}}#0000B6{{/is_completed}};" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="course-card-action-block d-flex align-items-center" style="gap: 8px;">
+                    <a href="{{{ viewurl }}}" class="btn flex-grow-1 text-center fw-bold py-2 text-decoration-none shadow-none text-white course-card-btn-action" style="background-color: #0000B6; border-radius: 6px; font-size: 13px; transition: background-color 0.15s ease;">
+                        {{ label_enter_course }}
+                    </a>
+                    {{#is_completed}}
+                        {{#badgesurl}}
+                        <a href="{{{ badgesurl }}}" class="btn text-center fw-bold py-2 px-3 text-decoration-none shadow-none course-card-btn-badge" title="Xem Digital Badge chứng nhận năng lực số" data-bs-toggle="tooltip" style="background-color: #F0FDF4; color: #166534; border: 1.5px solid #BBF7D0; border-radius: 6px; font-size: 12.5px; white-space: nowrap;">
+                            Badge
+                        </a>
+                        {{/badgesurl}}
+                    {{/is_completed}}
+                </div>
+            {{/is_enrolled}}
+            {{^is_enrolled}}
+                <div class="course-card-action-block w-100">
+                    <a href="{{{ viewurl }}}" class="btn text-center text-white fw-bold py-2 text-decoration-none shadow-none w-100 course-card-btn-action" style="background-color: #0000B6; border-radius: 6px; font-size: 13px; transition: background-color 0.15s ease;">
+                        {{ label_enroll_now }}
+                    </a>
+                </div>
+            {{/is_enrolled}}
+        </div>
+
+    </div>
+</div>

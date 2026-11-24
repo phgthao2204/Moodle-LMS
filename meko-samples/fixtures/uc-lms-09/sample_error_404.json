@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "COURSE_NOT_FOUND",
+    "message": "Course with id 999999 not found",
+    "details": {
+      "courseid": 999999
+    }
+  }
+}

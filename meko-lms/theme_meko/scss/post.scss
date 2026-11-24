@@ -1,0 +1,19 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - MASTER MODULAR SCSS ENTRYPOINT
+// Compiled automatically by Moodle SCSS Compiler via theme_accees_lms_theme
+// ==============================================================================
+
+@import "variables";
+@import "base";
+@import "components";
+@import "core/navbar";
+@import "core/footer";
+@import "pages/frontpage";
+@import "pages/catalog";
+@import "pages/competencies";
+@import "pages/competencies_tree_explorer";
+@import "pages/mycourses";
+@import "pages/course_detail";
+@import "pages/enrol";
+@import "pages/login";
+@import "pages/course_admin";

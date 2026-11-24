@@ -1,0 +1,92 @@
+{{!
+    @template local_meko_competencies/competency_tree_explorer
+    Competency Tree Explorer content within the existing page shell.
+}}
+
+<div class="competency-framework-page-wrapper" data-framework-key="{{ framework_key }}">
+    <div class="comp-page-shell">
+        <div class="comp-breadcrumb-bar">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{{ config.wwwroot }}}/">{{#str}} home, local_meko_competencies {{/str}}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{{ config.wwwroot }}}/local/meko_competencies/index.php">{{#str}} competencies, local_meko_competencies {{/str}}</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ framework_title }}</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="comp-hero-banner">
+            <div class="comp-hero-grid">
+                <div class="comp-hero-copy">
+                    <span class="comp-hero-pill">
+                        <i class="fa fa-shield-halved"></i> {{#str}} hero_pill_badge, local_meko_competencies {{/str}}
+                    </span>
+                    <h1 class="comp-hero-title">{{ framework_title }}</h1>
+                    <div class="comp-hero-desc">{{{ framework_desc }}}</div>
+                </div>
+
+                <div class="comp-metrics-grid">
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val">{{ domains_count }}</div>
+                        <div class="comp-metric-label">{{#str}} domains, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val">{{ competencies_count }}</div>
+                        <div class="comp-metric-label">{{#str}} parent_competencies, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val metric-green">{{ levels_count }}</div>
+                        <div class="comp-metric-label">{{#str}} target_levels, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val metric-orange">{{ mapped_courses_count }}</div>
+                        <div class="comp-metric-label">{{#str}} mapped_courses_metric, local_meko_competencies {{/str}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="competency-tree-page competency-tree-embedded" aria-label="Competency Tree Explorer">
+            <div class="competency-tree-explorer">
+                <aside class="competency-tree-sidebar" aria-label="Điều hướng khung năng lực">
+                    <div class="competency-tree-controls">
+                        <div class="competency-framework-switch" role="group" aria-label="Chọn khung năng lực">
+                            <a class="competency-framework-button{{#is_faculty}} is-active{{/is_faculty}}"
+                               href="{{{ faculty_url }}}"{{#is_faculty}} aria-current="page"{{/is_faculty}}>
+                                Faculty ({{ faculty_competencies_count }})
+                            </a>
+                            <a class="competency-framework-button{{#is_students}} is-active{{/is_students}}"
+                               href="{{{ students_url }}}"{{#is_students}} aria-current="page"{{/is_students}}>
+                                Students ({{ students_competencies_count }})
+                            </a>
+                        </div>
+                        <div class="competency-tree-search-row">
+                            <label class="competency-tree-search">
+                                <span class="sr-only">Tìm năng lực</span>
+                                <input id="competencyTreeSearch" type="search" placeholder="Tìm năng lực..." autocomplete="off">
+                            </label>
+                            <button type="button"
+                                    class="competency-tree-toggle"
+                                    data-tree-action="toggle"
+                                    aria-label="Mở rộng tất cả"
+                                    title="Mở rộng tất cả">+</button>
+                        </div>
+                    </div>
+                    <div id="competencyTree" class="competency-tree" role="tree" aria-label="Cây năng lực"></div>
+                </aside>
+
+                <section id="competencyDetails" class="competency-tree-details" aria-live="polite">
+                    <div class="competency-tree-empty">Đang tải dữ liệu khung năng lực...</div>
+                </section>
+            </div>
+            <script type="application/json"
+                    id="competencyTreeData"
+                    data-framework-key="{{ framework_key }}">{{{ competency_tree_json }}}</script>
+            <script src="{{{ competency_tree_js_url }}}" defer></script>
+        </section>
+    </div>
+</div>

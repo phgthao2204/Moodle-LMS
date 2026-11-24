@@ -1,0 +1,22 @@
+plugins { id "base" }
+
+tasks.register("npmCi", Exec) {
+    inputs.files("package.json", "package-lock.json")
+    outputs.dir("node_modules")
+    commandLine(System.getProperty("os.name").toLowerCase().contains("windows") ? ["cmd", "/c", "npm", "ci"] : ["npm", "ci"])
+}
+
+tasks.register("buildTheme", Exec) {
+    dependsOn "npmCi"
+    inputs.files(fileTree("src"), fileTree("fixtures"), fileTree("scripts"))
+    outputs.file(layout.buildDirectory.file("libs/accees-tms-theme.war"))
+    commandLine "node", "scripts/build.mjs"
+}
+
+tasks.register("testTheme", Exec) {
+    dependsOn "buildTheme"
+    commandLine "node", "--test", "tests/build.test.mjs"
+}
+
+tasks.named("assemble") { dependsOn "buildTheme" }
+tasks.named("check") { dependsOn "testTheme" }

@@ -1,0 +1,1654 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - TEACHER & COURSE ADMINISTRATION STYLING
+// Covers /course/edit.php, /admin/tool/lp/coursecompetencies.php, /course/participants.php
+// 100% Solid Color System, High Accessibility, 0% Gradient, 0% Emoji Clutter
+// ==============================================================================
+
+// 1. Course Edit Settings Form (/course/edit.php)
+#page-course-edit {
+    @include media-breakpoint-up(lg) {
+        #theme_boost-drawers-courseindex.drawer-left.show {
+            left: 0;
+            right: auto;
+        }
+
+        &:has(#theme_boost-drawers-courseindex.show) #page.drawers {
+            margin-left: calc(#{$drawer-left-width} + 1rem) !important;
+            width: calc(100% - #{$drawer-left-width} - 1rem) !important;
+        }
+    }
+
+    #page.drawers .drawer-toggles {
+        justify-content: space-between;
+
+        .drawer-toggler {
+            position: static;
+            margin-bottom: 0.5rem;
+        }
+
+        .drawer-right-toggle {
+            margin-inline-start: auto;
+        }
+    }
+
+    .mform {
+        fieldset {
+            background-color: #FFFFFF !important;
+            border: 1px solid $border-default !important;
+            border-radius: $radius-lg !important;
+            padding: 24px 28px !important;
+            margin-bottom: 24px !important;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+
+            legend {
+                font-size: 16px !important;
+                font-weight: 700 !important;
+                color: $brand-navy !important;
+                border-bottom: 2px solid $bg-subtle !important;
+                padding-bottom: 12px !important;
+                margin-bottom: 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px;
+
+                a {
+                    color: $brand-navy !important;
+                    text-decoration: none !important;
+
+                    &:hover {
+                        color: $brand-primary !important;
+                    }
+                }
+            }
+        }
+
+        .form-label,
+        .col-form-label {
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            color: $text-main !important;
+        }
+
+        .form-control,
+        .custom-select,
+        select,
+        input[type="text"],
+        input[type="password"] {
+            border-radius: $radius-md !important;
+            border: 1px solid $border-default !important;
+            padding: 8px 14px !important;
+            font-size: 14px !important;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+            &:focus {
+                border-color: $brand-primary !important;
+                box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                outline: none !important;
+            }
+        }
+
+        // Action Buttons Bar
+        #fgroup_id_buttonar,
+        .fitem_actionbuttons {
+            background-color: #FFFFFF !important;
+            border: 1px solid $border-default !important;
+            border-radius: $radius-lg !important;
+            padding: 20px 28px !important;
+            margin-top: 24px !important;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+
+            input[type="submit"][name="saveanddisplay"],
+            #id_saveanddisplay {
+                background-color: $brand-primary !important;
+                border: 1px solid $brand-primary !important;
+                color: #FFFFFF !important;
+                font-weight: 700 !important;
+                font-size: 14px !important;
+                padding: 10px 24px !important;
+                border-radius: $radius-md !important;
+                margin-right: 12px !important;
+                cursor: pointer;
+                transition: background-color 0.15s ease;
+
+                &:hover {
+                    background-color: $brand-primary-hover !important;
+                }
+            }
+
+            input[type="submit"][name="cancel"],
+            #id_cancel {
+                background-color: $bg-subtle !important;
+                border: 1px solid $border-default !important;
+                color: $text-secondary !important;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                padding: 10px 20px !important;
+                border-radius: $radius-md !important;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $border-default !important;
+                    color: $text-main !important;
+                }
+            }
+        }
+    }
+}
+
+// 2. Course Competencies Management (/admin/tool/lp/coursecompetencies.php)
+#page-admin-tool-lp-coursecompetencies {
+    #page-header {
+        .page-context-header {
+
+            h1,
+            .h2 {
+                font-size: 24px !important;
+                font-weight: 800 !important;
+                color: $text-main !important;
+                line-height: 1.3 !important;
+            }
+        }
+    }
+
+    #region-main {
+        background-color: $bg-surface !important;
+        border: 1px solid $border-default !important;
+        border-radius: $radius-xl !important;
+        padding: 24px 28px !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+
+        @media (max-width: 768px) {
+            padding: 18px 16px !important;
+        }
+
+        // Top Filter Box (tool_lp/module_navigation)
+        [role="main"]>.float-end {
+            border: none !important;
+            padding: 0 !important;
+            margin-bottom: 12px !important;
+            background: transparent !important;
+
+            @media (max-width: 768px) {
+                float: none !important;
+                width: 100% !important;
+            }
+        }
+
+        .user-competency-course-navigation {
+            position: relative !important;
+            width: 360px;
+            max-width: 100%;
+
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+
+            .form-autocomplete-selection {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: flex-end !important;
+                gap: 6px !important;
+                min-height: 28px !important;
+                margin-bottom: 6px !important;
+                box-shadow: none !important;
+                outline: none !important;
+
+                @media (max-width: 768px) {
+                    justify-content: flex-start !important;
+                }
+
+                .badge,
+                [role="option"],
+                [data-active-selection="true"] {
+                    background-color: $brand-primary-tint !important;
+                    color: $brand-primary !important;
+                    border: 1px solid $brand-primary-border !important;
+                    font-size: 12px !important;
+                    font-weight: 600 !important;
+                    padding: 4px 10px !important;
+                    border-radius: $radius-pill !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 4px !important;
+                    text-shadow: none !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+                }
+            }
+
+            .form-autocomplete-input {
+                display: block !important;
+                width: 100% !important;
+                margin-right: 0 !important;
+                border: none !important;
+                padding: 0 !important;
+                background: transparent !important;
+
+                > input.form-control {
+                    width: 100% !important;
+                    min-width: 0 !important;
+                    height: 38px !important;
+                    border-radius: $radius-md !important;
+                    border: 1px solid $border-strong !important;
+                    font-size: 13.5px !important;
+                    padding: 7px 34px 7px 12px !important;
+                    color: $text-main !important;
+                    background-color: $bg-surface !important;
+                    box-shadow: none !important;
+
+                    &:focus {
+                        border-color: $brand-primary !important;
+                        box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                        outline: none !important;
+                    }
+                }
+
+                .form-autocomplete-downarrow {
+                    top: 50% !important;
+                    right: 10px !important;
+                    transform: translateY(-50%) !important;
+                    color: $text-muted !important;
+                    padding: 0 4px !important;
+                    line-height: 1 !important;
+                }
+            }
+
+            .form-autocomplete-suggestions {
+                width: 360px !important;
+                min-width: 220px !important;
+                max-width: calc(100vw - 32px) !important;
+                box-sizing: border-box !important;
+                background-color: $bg-surface !important;
+                border: 1px solid $border-strong !important;
+                border-radius: $radius-md !important;
+                box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12) !important;
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+                color: $text-muted !important;
+                z-index: 1050 !important;
+
+                &[aria-hidden="true"] {
+                    display: none !important;
+                }
+
+                li {
+                    border-radius: $radius-sm !important;
+                    padding: 8px 10px !important;
+                    font-size: 13.5px !important;
+                    color: $text-main !important;
+
+                    &:empty {
+                        display: none !important;
+                    }
+
+                    &:hover,
+                    &:focus,
+                    &[aria-selected="true"] {
+                        background-color: $brand-primary-tint !important;
+                        color: $brand-primary !important;
+                        font-weight: 600 !important;
+                        box-shadow: none !important;
+                    }
+                }
+            }
+        }
+
+        h2:first-of-type {
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            color: $brand-navy !important;
+            margin: 0 0 14px !important;
+        }
+
+        // Top Action Bar (Add competencies to course)
+        [data-region="coursecompetenciespage"]>[data-region="actions"] {
+            margin-bottom: 20px !important;
+
+            button,
+            .btn {
+                background-color: $brand-primary !important;
+                border: 1px solid $brand-primary !important;
+                color: #FFFFFF !important;
+                font-weight: 700 !important;
+                font-size: 13.5px !important;
+                padding: 9px 20px !important;
+                border-radius: $radius-md !important;
+                transition: background-color 0.15s ease;
+
+                &:hover {
+                    background-color: $brand-primary-hover !important;
+                }
+            }
+        }
+
+        // Notice Banner ("Competency ratings in this course are updated immediately...")
+        [data-region="configurecoursecompetencies"] p.alert {
+            background-color: $brand-primary-tint !important;
+            border: 1px solid $brand-primary-border !important;
+            border-left: 4px solid $brand-primary !important;
+            border-radius: $radius-lg !important;
+            color: $text-main !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            padding: 12px 16px !important;
+            margin-bottom: 18px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+
+            a[data-action="configure-course-competency-settings"] {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px 8px;
+                border-radius: $radius-sm;
+                color: $brand-primary !important;
+                flex-shrink: 0;
+                outline: none !important;
+                box-shadow: none !important;
+
+                &:hover {
+                    background-color: $brand-primary-border !important;
+                }
+
+                &:focus,
+                &:focus-visible {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+            }
+        }
+
+        // Progress & Least Proficient Summary Card
+        [data-region="coursecompetencystatistics"] {
+            background-color: $bg-surface !important;
+            border: 1px solid $border-default !important;
+            border-radius: $radius-lg !important;
+            padding: 18px 20px !important;
+            margin-bottom: 22px !important;
+
+            [id^="progress-"] {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+                color: $text-main !important;
+                margin-bottom: 10px !important;
+            }
+
+            progress.progress {
+                appearance: none !important;
+                -webkit-appearance: none !important;
+                width: 100% !important;
+                height: 12px !important;
+                border: 1px solid $border-strong !important;
+                border-radius: $radius-pill !important;
+                background-color: $border-default !important;
+                overflow: hidden !important;
+                margin: 0 0 16px !important;
+                display: block !important;
+
+                &::-webkit-progress-bar {
+                    background-color: $border-default !important;
+                    border-radius: $radius-pill !important;
+                }
+
+                &::-webkit-progress-value {
+                    background-color: $brand-success !important;
+                    border-radius: $radius-pill !important;
+                    transition: width 0.3s ease;
+                }
+
+                &::-moz-progress-bar {
+                    background-color: $brand-success !important;
+                    border-radius: $radius-pill !important;
+                }
+            }
+
+            >div>div:first-child p {
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                color: $text-secondary !important;
+                margin-bottom: 8px !important;
+            }
+
+            >div>div:last-child {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+
+                a[href^="#competency-info-link-"] {
+                    display: block !important;
+                    text-decoration: none !important;
+                    padding: 7px 12px !important;
+                    border-radius: $radius-md !important;
+                    background-color: $bg-subtle !important;
+                    border: 1px solid $border-default !important;
+                    color: $brand-primary !important;
+                    font-size: 13px !important;
+                    font-weight: 600 !important;
+                    transition: border-color 0.15s ease, background-color 0.15s ease;
+
+                    p {
+                        margin: 0 !important;
+                        color: inherit !important;
+                        font-size: inherit !important;
+                        line-height: 1.45 !important;
+                    }
+
+                    em {
+                        font-style: normal !important;
+                        font-family: $font-family-mono !important;
+                        font-size: 11px !important;
+                        font-weight: 600 !important;
+                        background-color: $brand-primary-tint !important;
+                        color: $brand-primary !important;
+                        padding: 1px 6px !important;
+                        border-radius: $radius-sm !important;
+                        margin-left: 6px !important;
+                    }
+
+                    &:hover {
+                        border-color: $brand-primary !important;
+                        background-color: $brand-primary-tint !important;
+                    }
+                }
+            }
+        }
+
+        // Competencies Table transformed into Clean Solid Surface Cards
+        table.managecompetencies,
+        .managecompetencies {
+            border-collapse: separate !important;
+            border-spacing: 0 16px !important;
+            background: transparent !important;
+            border: none !important;
+            width: 100% !important;
+            margin-bottom: 8px !important;
+
+            tbody tr,
+            tr {
+                background: transparent !important;
+
+                td {
+                    position: relative !important;
+                    display: block !important;
+                    background-color: $bg-surface !important;
+                    padding: 20px 24px !important;
+                    border: 1px solid $border-default !important;
+                    border-left: 5px solid $brand-primary !important;
+                    border-radius: $radius-lg !important;
+                    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+                    transition: box-shadow 0.2s ease;
+
+                    &:hover {
+                        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
+                    }
+
+                    .clearfix {
+                        display: none !important;
+                    }
+
+                    .drag-handlecontainer {
+                        position: absolute !important;
+                        top: 20px !important;
+                        left: 20px !important;
+                        float: none !important;
+                        cursor: grab;
+                        color: $text-muted !important;
+                        z-index: 2;
+                    }
+
+                    >.float-sm-end {
+                        position: absolute !important;
+                        top: 16px !important;
+                        right: 16px !important;
+                        float: none !important;
+                        z-index: 2;
+                    }
+
+                    // Delete icon
+                    a[data-action="delete-competency-link"] {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 32px;
+                        height: 32px;
+                        color: #DC2626 !important;
+                        font-size: 15px;
+                        border-radius: $radius-md;
+                        text-decoration: none !important;
+                        transition: background-color 0.15s ease;
+
+                        &:hover {
+                            background-color: #FEE2E2 !important;
+                        }
+                    }
+
+                    // Competency Main Title Link
+                    a[id^="competency-info-link-"] {
+                        display: block !important;
+                        width: auto !important;
+                        padding-left: 28px !important;
+                        padding-right: 40px !important;
+                        margin-bottom: 10px !important;
+                        text-decoration: none !important;
+
+                        p,
+                        strong {
+                            font-size: 16px !important;
+                            font-weight: 700 !important;
+                            color: $brand-navy !important;
+                            line-height: 1.45 !important;
+                            margin: 0 !important;
+                        }
+
+                        em {
+                            font-style: normal !important;
+                            font-family: $font-family-mono !important;
+                            font-size: 11.5px !important;
+                            font-weight: 600 !important;
+                            background-color: $brand-primary-tint !important;
+                            color: $brand-primary !important;
+                            border: 1px solid $brand-primary-border !important;
+                            padding: 2px 8px !important;
+                            border-radius: $radius-sm !important;
+                            margin-left: 8px !important;
+                            display: inline-block;
+                            vertical-align: middle;
+                        }
+
+                        &:hover p,
+                        &:hover strong {
+                            color: $brand-primary !important;
+                            text-decoration: underline !important;
+                        }
+                    }
+
+                    // Description Paragraphs
+                    >p {
+                        display: block !important;
+                        width: 100% !important;
+                        color: $text-secondary !important;
+                        font-size: 13.5px !important;
+                        line-height: 1.6 !important;
+                        margin-bottom: 8px !important;
+
+                        &:last-of-type {
+                            margin-bottom: 10px !important;
+                        }
+                    }
+
+                    &::after {
+                        content: "";
+                        display: table;
+                        clear: both;
+                    }
+
+                    // Competency Path Bar ("Path: Framework / Domain / Competency")
+                    >span.float-sm-start {
+                        float: left !important;
+                        display: inline-block !important;
+                        font-size: 12.5px !important;
+                        font-weight: 700 !important;
+                        color: $text-muted !important;
+                        margin: 2px 6px 14px 0 !important;
+                        padding: 0 !important;
+                        background: transparent !important;
+                        border: none !important;
+                        line-height: 1.5;
+                    }
+
+                    >nav[id^="competency-path-"] {
+                        display: block !important;
+                        overflow: hidden !important;
+                        font-size: 12.5px !important;
+                        margin: 2px 0 14px !important;
+                        padding: 0 !important;
+                        background: transparent !important;
+                        border: none !important;
+                        line-height: 1.5;
+
+                        small {
+                            font-size: 12.5px !important;
+                            color: $text-secondary !important;
+                        }
+
+                        a {
+                            font-size: 12.5px !important;
+                            font-weight: 600 !important;
+                            color: $brand-primary !important;
+                            text-decoration: none !important;
+
+                            &:hover {
+                                text-decoration: underline !important;
+                            }
+                        }
+                    }
+
+                    // Bottom 3-Column Metadata Row (Completion Rule / Activities / Learning Plans)
+                    >[data-region="coursecompetency-ruleoutcome"],
+                    >nav[id^="competency-path-"]+[data-region="coursecompetencyactivities"] {
+                        clear: both !important;
+                    }
+
+                    >[data-region="coursecompetency-ruleoutcome"],
+                    >[data-region="coursecompetencyactivities"],
+                    >[data-region="learningplans"] {
+                        float: left !important;
+                        width: 33.333% !important;
+                        margin: 0 !important;
+                        padding: 14px 16px 0 0 !important;
+                        border-top: 1px solid $border-default !important;
+                        box-sizing: border-box !important;
+
+                        &:last-child {
+                            padding-right: 0 !important;
+                        }
+
+                        @media (max-width: 768px) {
+                            float: none !important;
+                            display: block !important;
+                            width: 100% !important;
+                            padding: 12px 0 0 !important;
+                            margin-top: 12px !important;
+                        }
+                    }
+
+                    [data-region="coursecompetency-ruleoutcome"] {
+                        label {
+                            display: block !important;
+                            font-size: 11.5px !important;
+                            font-weight: 700 !important;
+                            color: $text-muted !important;
+                            text-transform: uppercase;
+                            letter-spacing: 0.3px;
+                            margin: 0 !important;
+                        }
+
+                        select[data-field="ruleoutcome"] {
+                            appearance: menulist !important;
+                            -webkit-appearance: menulist !important;
+                            width: 100% !important;
+                            max-width: 240px !important;
+                            height: 36px !important;
+                            padding: 6px 12px !important;
+                            margin-top: 6px !important;
+                            display: block !important;
+                            font-size: 13px !important;
+                            font-weight: 600 !important;
+                            color: $text-main !important;
+                            background-color: $bg-subtle !important;
+                            border: 1px solid $border-strong !important;
+                            border-radius: $radius-md !important;
+                            cursor: pointer;
+
+                            &:focus {
+                                border-color: $brand-primary !important;
+                                outline: none !important;
+                                box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                            }
+                        }
+                    }
+
+                    [data-region="coursecompetencyactivities"],
+                    [data-region="learningplans"] {
+                        p {
+                            margin: 0 0 4px !important;
+                            line-height: 1.4 !important;
+                        }
+
+                        strong {
+                            display: block !important;
+                            font-size: 11.5px !important;
+                            font-weight: 700 !important;
+                            color: $text-muted !important;
+                            text-transform: uppercase;
+                            letter-spacing: 0.3px;
+                            margin-bottom: 6px !important;
+                        }
+
+                        ul.list-inline {
+                            padding: 0 !important;
+                            margin: 0 !important;
+                            font-size: 13px !important;
+                            color: $text-secondary !important;
+
+                            li.list-inline-item {
+                                margin-bottom: 4px !important;
+                            }
+
+                            a {
+                                color: $brand-primary !important;
+                                font-weight: 600 !important;
+                                text-decoration: none !important;
+
+                                &:hover {
+                                    text-decoration: underline !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // YUI Dialogues & Modals on Course Competencies Page (Competency Picker & Settings)
+    .moodle-dialogue-base {
+        .moodle-dialogue,
+        .moodle-dialogue-wrap,
+        .moodle-dialogue-content {
+            outline: none !important;
+
+            &:focus,
+            &:focus-visible {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .moodle-dialogue-wrap {
+            border-radius: $radius-xl !important;
+            border: 1px solid $border-default !important;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16) !important;
+            overflow: hidden;
+
+            .moodle-dialogue-hd {
+                background-color: $bg-surface !important;
+                border-bottom: 1px solid $border-default !important;
+                padding: 16px 22px !important;
+
+                h5,
+                .h5 {
+                    font-size: 18px !important;
+                    font-weight: 700 !important;
+                    color: $brand-navy !important;
+                    margin: 0 !important;
+                }
+
+                .closebutton,
+                .btn-close,
+                .close,
+                button {
+                    border-radius: $radius-md !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+
+                    &.focus,
+                    &:focus,
+                    &:focus-visible,
+                    &:active {
+                        box-shadow: none !important;
+                        outline: none !important;
+                    }
+                }
+            }
+
+            .moodle-dialogue-bd {
+                padding: 20px 22px !important;
+            }
+        }
+    }
+
+    // Modals on Course Competencies Page (Fallback for BS Modals)
+    .modal-dialog {
+        .modal-content {
+            border-radius: $radius-xl !important;
+            border: 1px solid $border-default !important;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16) !important;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background-color: $bg-surface !important;
+            border-bottom: 1px solid $border-default !important;
+            padding: 16px 22px !important;
+
+            .modal-title {
+                font-size: 18px !important;
+                font-weight: 700 !important;
+                color: $brand-navy !important;
+            }
+
+            .btn-close,
+            .close {
+                border-radius: $radius-md !important;
+                box-shadow: none !important;
+                outline: none !important;
+
+                &.focus,
+                &:focus,
+                &:focus-visible,
+                &:active {
+                    box-shadow: none !important;
+                    outline: none !important;
+                }
+            }
+        }
+
+        .modal-body {
+            padding: 20px 22px !important;
+        }
+
+        .modal-footer {
+            border-top: 1px solid $border-default !important;
+            padding: 14px 22px !important;
+
+            .btn-primary {
+                background-color: $brand-primary !important;
+                border: 1px solid $brand-primary !important;
+                color: #FFFFFF !important;
+                font-weight: 700 !important;
+                border-radius: $radius-md !important;
+            }
+
+            .btn-secondary {
+                background-color: $bg-surface !important;
+                border: 1px solid $border-strong !important;
+                color: $text-secondary !important;
+                font-weight: 600 !important;
+                border-radius: $radius-md !important;
+            }
+        }
+    }
+
+    // Configure Course Competencies Settings Modal Form
+    form[data-region="coursecompetencysettings"] {
+        fieldset:first-of-type {
+            p {
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                color: $text-main !important;
+                margin-bottom: 14px !important;
+                line-height: 1.5 !important;
+            }
+
+            label {
+                display: flex !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+                padding: 10px 14px !important;
+                margin-bottom: 10px !important;
+                border: 1px solid $border-default !important;
+                border-radius: $radius-md !important;
+                background-color: $bg-subtle !important;
+                font-size: 13.5px !important;
+                color: $text-main !important;
+                line-height: 1.45 !important;
+                cursor: pointer;
+                transition: border-color 0.15s ease, background-color 0.15s ease;
+
+                &:has(input:checked) {
+                    background-color: $brand-primary-tint !important;
+                    border-color: $brand-primary-border !important;
+                    color: $brand-navy !important;
+                    font-weight: 600 !important;
+                }
+
+                input[type="radio"] {
+                    margin-top: 3px !important;
+                    accent-color: $brand-primary !important;
+                    flex-shrink: 0 !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+
+                    &:focus,
+                    &:focus-visible {
+                        box-shadow: none !important;
+                        outline: none !important;
+                    }
+                }
+            }
+        }
+
+        fieldset.float-sm-end {
+            float: none !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+            gap: 10px !important;
+            margin-top: 16px !important;
+            padding-top: 14px !important;
+            border-top: 1px solid $border-default !important;
+
+            .btn-primary,
+            [data-action="save"] {
+                background-color: $brand-primary !important;
+                border: 1px solid $brand-primary !important;
+                color: #FFFFFF !important;
+                font-weight: 700 !important;
+                font-size: 13.5px !important;
+                padding: 8px 20px !important;
+                border-radius: $radius-md !important;
+
+                &:hover {
+                    background-color: $brand-primary-hover !important;
+                }
+            }
+
+            .btn-secondary,
+            [data-action="cancel"] {
+                background-color: $bg-surface !important;
+                border: 1px solid $border-strong !important;
+                color: $text-secondary !important;
+                font-weight: 600 !important;
+                font-size: 13.5px !important;
+                padding: 8px 18px !important;
+                border-radius: $radius-md !important;
+
+                &:hover {
+                    background-color: $bg-subtle !important;
+                    color: $text-main !important;
+                }
+            }
+        }
+    }
+
+    [data-region="competencylinktree"] {
+        h3 {
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+            color: $text-main !important;
+            margin: 0 0 8px !important;
+
+            &.mt-1 {
+                margin-top: 16px !important;
+            }
+        }
+
+        select[data-action="chooseframework"] {
+            appearance: menulist !important;
+            -webkit-appearance: menulist !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 40px !important;
+            padding: 8px 12px !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            color: $text-main !important;
+            background-color: $bg-surface !important;
+            border: 1px solid $border-strong !important;
+            border-radius: $radius-md !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+
+            &:focus {
+                border-color: $brand-primary !important;
+                box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                outline: none !important;
+            }
+        }
+
+        form[data-region="filtercompetencies"] {
+            width: 100% !important;
+
+            >div {
+                width: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                margin-bottom: 12px !important;
+            }
+
+            input.form-control {
+                margin-left: 0 !important;
+                flex: 1 1 auto !important;
+                height: 38px !important;
+                font-size: 13.5px !important;
+                border: 1px solid $border-strong !important;
+                border-radius: $radius-md !important;
+                padding: 7px 12px !important;
+
+                &:focus {
+                    border-color: $brand-primary !important;
+                    box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                    outline: none !important;
+                }
+            }
+
+            button.btn-secondary {
+                background-color: $bg-subtle !important;
+                border: 1px solid $border-strong !important;
+                color: $text-main !important;
+                width: 42px !important;
+                height: 38px !important;
+                margin-left: 0 !important;
+                padding: 0 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: $radius-md !important;
+                flex-shrink: 0 !important;
+
+                i,
+                .icon {
+                    color: inherit !important;
+                    margin: 0 !important;
+                }
+
+                &:hover {
+                    background-color: $brand-primary-tint !important;
+                    border-color: $brand-primary !important;
+                    color: $brand-primary !important;
+                }
+            }
+        }
+
+        ul[data-enhance="linktree"] {
+            margin: 0 !important;
+            padding: 12px 14px !important;
+            height: 340px !important;
+            border: 1px solid $border-default !important;
+            border-radius: $radius-lg !important;
+            background-color: $bg-subtle !important;
+            box-shadow: none !important;
+
+            li {
+                margin: 2px 0;
+
+                >span {
+                    display: inline-block;
+                    padding: 4px 8px !important;
+                    border-radius: $radius-sm !important;
+                    font-size: 13.5px !important;
+                    line-height: 1.5 !important;
+                    color: $text-main !important;
+                    transition: background-color 0.12s ease;
+
+                    &:hover {
+                        background-color: $bg-surface;
+                    }
+                }
+            }
+
+            [aria-selected="true"]>span {
+                background-color: $brand-primary-tint !important;
+                color: $brand-primary !important;
+                font-weight: 700 !important;
+            }
+
+            [tabindex="0"]>span {
+                border: 1.5px solid $brand-primary !important;
+                outline: none !important;
+            }
+        }
+
+        [data-region="link-buttons"] {
+            float: none !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+            gap: 10px !important;
+            margin-top: 16px !important;
+            padding-top: 14px !important;
+            border-top: 1px solid $border-default !important;
+            text-align: right !important;
+
+            [data-action="add"] {
+                background-color: $brand-primary !important;
+                border: 1px solid $brand-primary !important;
+                color: #FFFFFF !important;
+                font-weight: 700 !important;
+                font-size: 13.5px !important;
+                padding: 8px 22px !important;
+                border-radius: $radius-md !important;
+
+                &:hover {
+                    background-color: $brand-primary-hover !important;
+                }
+            }
+
+            [data-action="cancel"] {
+                background-color: $bg-surface !important;
+                border: 1px solid $border-strong !important;
+                color: $text-secondary !important;
+                font-weight: 600 !important;
+                font-size: 13.5px !important;
+                padding: 8px 18px !important;
+                border-radius: $radius-md !important;
+
+                &:hover {
+                    background-color: $bg-subtle !important;
+                    color: $text-main !important;
+                }
+            }
+        }
+    }
+}
+
+// 3. User Competency in Course (/admin/tool/lp/user_competency_in_course.php)
+#page-admin-tool-lp-user_competency_in_course {
+    #region-main {
+        background-color: $bg-surface !important;
+        border: 1px solid $border-default !important;
+        border-radius: $radius-xl !important;
+        padding: 24px 28px !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+
+        @media (max-width: 768px) {
+            padding: 18px 16px !important;
+        }
+
+        // User Header (Avatar + Name + Message action)
+        [role="main"] > .page-context-header {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding-bottom: 16px !important;
+            margin-bottom: 20px !important;
+            border-bottom: 1px solid $border-default !important;
+
+            .page-header-headings h2 {
+                font-size: 20px !important;
+                font-weight: 800 !important;
+                color: $text-main !important;
+                margin: 0 !important;
+            }
+
+            .header-button-group {
+                .btn,
+                a.btn {
+                    background-color: $bg-surface !important;
+                    border: 1px solid $border-strong !important;
+                    border-radius: $radius-md !important;
+                    color: $text-secondary !important;
+                    font-size: 13px !important;
+                    font-weight: 600 !important;
+                    padding: 6px 12px !important;
+                    box-shadow: none !important;
+
+                    &:hover {
+                        background-color: $bg-subtle !important;
+                        color: $text-main !important;
+                        border-color: $text-muted !important;
+                    }
+                }
+            }
+        }
+
+        // Right Floating Navigation Card (Jump to user / Jump to competency)
+        [role="main"] > .float-sm-end.border {
+            width: 340px !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            background-color: $bg-subtle !important;
+            border: 1px solid $border-default !important;
+            border-radius: $radius-lg !important;
+            padding: 14px 16px !important;
+            margin: 0 0 18px 24px !important;
+
+            @media (max-width: 991.98px) {
+                float: none !important;
+                width: 100% !important;
+                margin: 0 0 20px 0 !important;
+            }
+
+            > p {
+                margin-bottom: 12px !important;
+                font-size: 13px !important;
+                color: $text-secondary !important;
+
+                &:empty {
+                    display: none !important;
+                }
+
+                select {
+                    appearance: menulist !important;
+                    -webkit-appearance: menulist !important;
+                    border-radius: $radius-md !important;
+                    border: 1px solid $border-strong !important;
+                    background-color: $bg-surface !important;
+                    color: $text-main !important;
+                    font-size: 13px !important;
+                    padding: 5px 10px !important;
+                    max-width: 100% !important;
+                }
+            }
+        }
+
+        .user-competency-course-navigation {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 14px !important;
+            width: 100% !important;
+
+            br {
+                display: none !important;
+            }
+
+            // Override core tool_lp "span { overflow: hidden; }" so dropdowns & wrapped chips stay intact
+            > span {
+                display: block !important;
+                position: relative !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: visible !important;
+            }
+
+            .form-autocomplete-selection {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                width: 100% !important;
+                min-height: 0 !important;
+                margin: 0 0 8px 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                outline: none !important;
+
+                .badge,
+                [role="option"],
+                [data-active-selection="true"] {
+                    display: inline-block !important;
+                    max-width: 100% !important;
+                    margin: 0 !important;
+                    white-space: normal !important;
+                    word-break: break-word !important;
+                    overflow-wrap: anywhere !important;
+                    text-align: left !important;
+                    line-height: 1.45 !important;
+                    background-color: $brand-primary-tint !important;
+                    color: $brand-primary !important;
+                    border: 1px solid $brand-primary-border !important;
+                    border-radius: $radius-md !important;
+                    font-size: 12.5px !important;
+                    font-weight: 600 !important;
+                    padding: 5px 10px !important;
+                    text-shadow: none !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+                    cursor: pointer !important;
+                    transition: background-color 0.15s ease, border-color 0.15s ease;
+
+                    &:hover,
+                    &:focus,
+                    &:focus-visible,
+                    &.active {
+                        background-color: #E0E7FF !important;
+                        border-color: #A5B4FC !important;
+                        color: $brand-primary !important;
+                        box-shadow: none !important;
+                        outline: none !important;
+                    }
+                }
+            }
+
+            .form-autocomplete-input {
+                display: block !important;
+                position: relative !important;
+                width: 100% !important;
+                margin-right: 0 !important;
+                border: none !important;
+                padding: 0 !important;
+                background: transparent !important;
+
+                > input.form-control {
+                    width: 100% !important;
+                    min-width: 0 !important;
+                    height: 36px !important;
+                    border-radius: $radius-md !important;
+                    border: 1px solid $border-strong !important;
+                    font-size: 13px !important;
+                    padding: 6px 32px 6px 12px !important;
+                    color: $text-main !important;
+                    background-color: $bg-surface !important;
+                    box-shadow: none !important;
+
+                    &::placeholder {
+                        color: $text-muted !important;
+                    }
+
+                    &:focus {
+                        border-color: $brand-primary !important;
+                        box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                        outline: none !important;
+                    }
+                }
+
+                .form-autocomplete-downarrow {
+                    top: 50% !important;
+                    right: 10px !important;
+                    transform: translateY(-50%) !important;
+                    color: $text-muted !important;
+                    padding: 0 4px !important;
+                    line-height: 1 !important;
+
+                    &:hover {
+                        color: $brand-primary !important;
+                    }
+                }
+            }
+
+            .form-autocomplete-suggestions {
+                width: 100% !important;
+                min-width: 220px !important;
+                max-width: calc(100vw - 32px) !important;
+                box-sizing: border-box !important;
+                background-color: $bg-surface !important;
+                border: 1px solid $border-strong !important;
+                border-radius: $radius-md !important;
+                box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12) !important;
+                padding: 6px !important;
+                font-size: 13px !important;
+                color: $text-muted !important;
+                z-index: 1050 !important;
+
+                &[aria-hidden="true"] {
+                    display: none !important;
+                }
+
+                li {
+                    border-radius: $radius-sm !important;
+                    padding: 7px 10px !important;
+                    font-size: 13px !important;
+                    color: $text-main !important;
+                    white-space: normal !important;
+                    word-break: break-word !important;
+                    line-height: 1.4 !important;
+
+                    &:empty {
+                        display: none !important;
+                    }
+
+                    &:hover,
+                    &:focus,
+                    &[aria-selected="true"] {
+                        background-color: $brand-primary-tint !important;
+                        color: $brand-primary !important;
+                    }
+                }
+            }
+        }
+
+        // Left Competency Summary & Metadata
+        [data-region="user-competency-full-info"] {
+            [data-region="competency-summary"] {
+                .competency-heading {
+                    margin-bottom: 10px !important;
+
+                    h4 {
+                        font-size: 19px !important;
+                        font-weight: 800 !important;
+                        color: $brand-navy !important;
+                        line-height: 1.35 !important;
+                        margin-bottom: 4px !important;
+
+                        small a {
+                            font-family: $font-family-mono !important;
+                            font-size: 11.5px !important;
+                            font-weight: 600 !important;
+                            color: $brand-primary !important;
+                            background-color: $brand-primary-tint !important;
+                            border: 1px solid $brand-primary-border !important;
+                            border-radius: $radius-sm !important;
+                            padding: 2px 7px !important;
+                            text-decoration: none !important;
+                            display: inline-block !important;
+                            vertical-align: middle !important;
+                            margin-left: 6px !important;
+
+                            &:hover {
+                                background-color: #E0E7FF !important;
+                            }
+                        }
+                    }
+
+                    .competency-origin p {
+                        margin-bottom: 0 !important;
+
+                        small {
+                            font-size: 12.5px !important;
+                            font-weight: 500 !important;
+                            color: $text-muted !important;
+                        }
+                    }
+                }
+
+                > p {
+                    font-size: 13.5px !important;
+                    color: $text-secondary !important;
+                    line-height: 1.6 !important;
+                    margin-bottom: 8px !important;
+                }
+
+                > span.float-start {
+                    font-size: 12.5px !important;
+                    font-weight: 600 !important;
+                    color: $text-muted !important;
+                    line-height: 1.6 !important;
+                }
+
+                > nav[id^="competency-path-"] {
+                    overflow: hidden !important;
+                    font-size: 12.5px !important;
+                    color: $text-muted !important;
+                    line-height: 1.6 !important;
+                    margin-bottom: 12px !important;
+
+                    a {
+                        color: $brand-primary !important;
+                        font-weight: 600 !important;
+                        text-decoration: none !important;
+
+                        &:hover {
+                            text-decoration: underline !important;
+                        }
+                    }
+                }
+            }
+
+            dl {
+                clear: left;
+                margin-top: 16px !important;
+                margin-bottom: 16px !important;
+
+                dt {
+                    font-size: 11.5px !important;
+                    font-weight: 700 !important;
+                    text-transform: uppercase !important;
+                    letter-spacing: 0.4px !important;
+                    color: $text-muted !important;
+                    margin-top: 14px !important;
+                    margin-bottom: 6px !important;
+                    padding-top: 14px !important;
+                    border-top: 1px solid $border-default !important;
+                }
+
+                dd {
+                    font-size: 13.5px !important;
+                    color: $text-main !important;
+                    margin-left: 0 !important;
+                    margin-bottom: 4px !important;
+
+                    p,
+                    ul.inline,
+                    ul.list-inline {
+                        margin-bottom: 0 !important;
+                        padding-left: 0 !important;
+                    }
+                }
+            }
+
+            dd[data-region="coursecompetencyactivities"] span.alert {
+                display: inline !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                border: none !important;
+                background: transparent !important;
+                color: $text-muted !important;
+                font-size: 13.5px !important;
+            }
+
+            dd > .badge.float-start {
+                float: none !important;
+                display: inline-block !important;
+                font-size: 12px !important;
+                font-weight: 700 !important;
+                padding: 4px 11px !important;
+                border-radius: $radius-pill !important;
+            }
+
+            button[id^="rate_"].btn-secondary {
+                background-color: $brand-primary !important;
+                border: 1px solid $brand-primary !important;
+                color: #FFFFFF !important;
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                padding: 5px 14px !important;
+                border-radius: $radius-md !important;
+                margin-left: 8px !important;
+                box-shadow: none !important;
+
+                &:hover {
+                    background-color: $brand-primary-hover !important;
+                    border-color: $brand-primary-hover !important;
+                }
+            }
+
+            dl[data-region="evidence-listing"] {
+                .evidence {
+                    background-color: $bg-subtle !important;
+                    border: 1px solid $border-default !important;
+                    border-radius: $radius-lg !important;
+                    padding: 14px 16px !important;
+                    margin-bottom: 10px !important;
+
+                    .badge {
+                        background-color: $brand-primary-tint !important;
+                        color: $brand-primary !important;
+                        border: 1px solid $brand-primary-border !important;
+                        border-radius: $radius-pill !important;
+                        font-size: 12px !important;
+                        font-weight: 600 !important;
+                        padding: 3px 9px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    // Inline Rate Modal (YUI dialogue wrapping tool_lp/competency_grader)
+    .moodle-dialogue-base {
+        .moodle-dialogue {
+            max-width: 480px !important;
+        }
+
+        .moodle-dialogue-wrap {
+            background-color: $bg-surface !important;
+            border: 1px solid $border-default !important;
+            border-radius: $radius-xl !important;
+            box-shadow: 0 20px 44px rgba(15, 23, 42, 0.16) !important;
+            overflow: hidden !important;
+
+            .moodle-dialogue-hd {
+                background-color: $bg-surface !important;
+                border-bottom: 1px solid $border-default !important;
+                padding: 16px 22px !important;
+
+                h1,
+                h3,
+                .moodle-dialogue-title {
+                    font-size: 17px !important;
+                    font-weight: 800 !important;
+                    color: $brand-navy !important;
+                    margin: 0 !important;
+                }
+
+                .closebutton {
+                    box-shadow: none !important;
+                    outline: none !important;
+                }
+            }
+
+            .moodle-dialogue-bd {
+                padding: 18px 22px 20px !important;
+            }
+        }
+    }
+
+    .competency-grader[data-region="competency-grader"] {
+        label {
+            display: block !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            color: $text-main !important;
+            margin-bottom: 6px !important;
+        }
+
+        select.form-select {
+            appearance: menulist !important;
+            -webkit-appearance: menulist !important;
+            width: 100% !important;
+            height: 38px !important;
+            border-radius: $radius-md !important;
+            border: 1px solid $border-strong !important;
+            padding: 6px 10px !important;
+            font-size: 13.5px !important;
+            color: $text-main !important;
+            background-color: $bg-surface !important;
+            margin-bottom: 12px !important;
+
+            &:focus {
+                border-color: $brand-primary !important;
+                box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                outline: none !important;
+            }
+        }
+
+        textarea.form-control {
+            border-radius: $radius-md !important;
+            border: 1px solid $border-strong !important;
+            font-size: 13.5px !important;
+            padding: 8px 12px !important;
+            min-height: 84px !important;
+
+            &:focus {
+                border-color: $brand-primary !important;
+                box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                outline: none !important;
+            }
+        }
+
+        [data-region="footer"] {
+            margin-top: 16px !important;
+            padding-top: 14px !important;
+            border-top: 1px solid $border-default !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+            gap: 8px !important;
+            float: none !important;
+
+            [data-action="rate"] {
+                background-color: $brand-primary !important;
+                border: 1px solid $brand-primary !important;
+                color: #FFFFFF !important;
+                font-weight: 700 !important;
+                font-size: 13.5px !important;
+                padding: 8px 20px !important;
+                border-radius: $radius-md !important;
+
+                &:hover {
+                    background-color: $brand-primary-hover !important;
+                }
+            }
+
+            [data-action="cancel"] {
+                background-color: $bg-surface !important;
+                border: 1px solid $border-strong !important;
+                color: $text-secondary !important;
+                font-weight: 600 !important;
+                font-size: 13.5px !important;
+                padding: 8px 16px !important;
+                border-radius: $radius-md !important;
+
+                &:hover {
+                    background-color: $bg-subtle !important;
+                    color: $text-main !important;
+                }
+            }
+        }
+    }
+}

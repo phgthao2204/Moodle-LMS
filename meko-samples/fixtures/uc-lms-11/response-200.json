@@ -1,0 +1,18 @@
+{
+  "id": 18,
+  "shortname": "UC11-QA-233ba73e",
+  "updated_fields": [
+    "fullname",
+    "custom_fields.accees_duration",
+    "custom_fields.accees_institution",
+    "custom_fields.accees_is_featured"
+  ],
+  "custom_fields": {
+    "accees_duration": "45",
+    "accees_institution": "CTU",
+    "accees_is_featured": true,
+    "accees_course_status": null,
+    "accees_delivery_mode": null
+  },
+  "timemodified": 1794902300
+}

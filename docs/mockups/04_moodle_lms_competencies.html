@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khung Chuẩn Năng Lực Ngoại Ngữ & Năng Lực Số MEKO | MEKO-LMS 5.3 LTS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --meko-navy: #0000B6;
+      --meko-blue: #0044FF;
+      --meko-primary: #0044FF;
+      --meko-primary-dark: #0000B6;
+      --meko-primary-light: #EBF2FF;
+      --meko-success: #39B500;
+      --meko-success-light: #F0FDF4;
+      --meko-warning: #EA6400;
+      --meko-warning-light: #FFF7ED;
+      --meko-info: #0284C7;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-light: #94A3B8;
+      --bg-light: #F8FAFC;
+      --border-color: #E2E8F0;
+      --border-subtle: #F1F5F9;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+      --font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family);
+      background-color: #F8FAFC;
+      color: var(--text-main);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .container { max-width: 1320px; margin: 0 auto; padding: 0 20px; }
+
+    /* HEADER NAVBAR CHUẨN MEKO-LMS (1 DÒNG, ĐỒNG BỘ 01-05) */
+    .navbar-header { background-color: #FFFFFF; border-bottom: 1px solid #E5E7EB; position: sticky; top: 0; z-index: 1000; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); height: 58px; }
+    .navbar-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; height: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+    .navbar-left { justify-self: start; display: flex; align-items: center; }
+    .brand-logo-wrap { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+    .brand-logo-svg { height: 36px; width: auto; }
+    .brand-sub-badge { background-color: #EEF2FF; color: #0000B6; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 12px; letter-spacing: 0.5px; border: 1px solid #D6E4FF; }
+    .navbar-center { justify-self: center; display: flex; align-items: center; }
+    .nav-links-menu { display: flex; align-items: center; list-style: none; gap: 22px; margin: 0; padding: 0; }
+    .nav-link-item { position: relative; }
+    .nav-link-anchor { font-size: 14.5px; font-weight: 500; color: #374151; display: inline-flex; align-items: center; gap: 5px; padding: 8px 2px; text-decoration: none; position: relative; }
+    .nav-link-anchor:hover { color: #0000B6; }
+    .nav-link-item.active .nav-link-anchor { color: #0000B6; font-weight: 700; }
+    .nav-link-item.active .nav-link-anchor::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 100%; height: 3px; background-color: #0000B6; border-radius: 3px 3px 0 0; }
+    .chevron-icon { width: 12px; height: 12px; stroke: #6B7280; }
+    .dropdown-container { position: absolute; top: 100%; left: 0; background-color: #FFFFFF; min-width: 285px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px; border: 1px solid #E5E7EB; list-style: none; display: none; z-index: 1100; padding: 8px 0; margin-top: 6px; }
+    .nav-link-item:hover .dropdown-container { display: block; }
+    .dropdown-container li a { display: block; padding: 9px 18px; font-size: 13.5px; color: #4B5563; font-weight: 500; text-decoration: none; }
+    .dropdown-container li a:hover { background-color: #F8FAFC; color: #0000B6; padding-left: 22px; }
+    .navbar-right { justify-self: end; display: flex; align-items: center; gap: 16px; }
+    .lang-switch-cluster { display: flex; align-items: center; gap: 5px; }
+    .lang-circle-btn { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #64748B; background-color: #F3F4F6; border: none; cursor: pointer; }
+    .lang-circle-btn.active { background-color: #182B89; color: #FFFFFF; }
+    .nav-login-link { color: #0000B6; font-size: 14.5px; font-weight: 600; text-decoration: none; padding: 6px 4px; }
+    .nav-login-link:hover { text-decoration: underline; }
+
+    /* BREADCRUMB */
+    .breadcrumb-bar {
+      padding: 14px 0 10px 0;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .breadcrumb-bar a {
+      color: var(--meko-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* HERO BANNER */
+    .hero-banner {
+      background: #0000B6;
+      color: #FFFFFF;
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 182, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: transparent;
+      pointer-events: none;
+    }
+    .hero-pretitle {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #6EE7B7;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .hero-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #E2E8F0;
+      max-width: 900px;
+      margin-bottom: 24px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .metric-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      padding: 14px 18px;
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFF;
+      line-height: 1.1;
+      font-feature-settings: "tnum";
+    }
+    .metric-lbl {
+      font-size: 11.5px;
+      color: #CBD5E1;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* CBE ARCHITECTURE CALLOUT */
+    .cbe-callout {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--meko-success);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--card-shadow);
+    }
+    .cbe-callout h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cbe-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .cbe-step-item {
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12.5px;
+    }
+    .cbe-step-num {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      border-radius: 50%;
+      background: var(--meko-navy);
+      color: #FFF;
+      font-weight: 700;
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+    .cbe-step-title {
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    /* FRAMEWORK SWITCHER TABS & TOOLBAR */
+    .fw-toolbar {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--card-shadow);
+    }
+    .fw-tabs-cluster {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .fw-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #F8FAFC;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .fw-tab-btn:hover {
+      background: var(--meko-primary-light);
+      border-color: #BFDBFE;
+      color: var(--meko-primary);
+    }
+    .fw-tab-btn.active {
+      background: var(--meko-primary);
+      border-color: var(--meko-primary);
+      color: #FFFFFF;
+      box-shadow: 0 4px 10px rgba(0, 68, 255, 0.25);
+    }
+    .fw-tab-badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.08);
+      font-weight: 600;
+    }
+    .fw-tab-btn.active .fw-tab-badge {
+      background: rgba(255,255,255,0.25);
+      color: #FFF;
+    }
+
+    .fw-tools-cluster {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-input-wrap {
+      position: relative;
+    }
+    .search-input {
+      padding: 9px 14px 9px 36px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      width: 240px;
+      transition: all 0.2s;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--meko-primary);
+      box-shadow: 0 0 0 3px rgba(0, 68, 255, 0.15);
+      width: 280px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      font-size: 13px;
+    }
+    .select-level {
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      background: #FFF;
+      cursor: pointer;
+    }
+    .btn-tool {
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #FFF;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-tool:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+    }
+    .btn-download-csv {
+      background: #10B981;
+      color: #FFF;
+      border-color: #10B981;
+    }
+    .btn-download-csv:hover {
+      background: #059669;
+      border-color: #059669;
+      color: #FFF;
+    }
+
+    /* FRAMEWORK ACTIVE INFO HEADER */
+    .fw-active-header {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .fw-active-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--meko-navy);
+      margin-bottom: 6px;
+    }
+    .fw-active-idnumber {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 11.5px;
+      background: #F1F5F9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+    .fw-active-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* LEVEL LEGEND STRIP */
+    .levels-strip {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .level-pill {
+      flex: 1;
+      min-width: 140px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      box-shadow: var(--card-shadow);
+    }
+    .level-pill-code {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--meko-primary);
+      margin-bottom: 2px;
+    }
+    .level-pill-def {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* DOMAINS & COMPETENCIES TREE ACCORDION */
+    .domain-block {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .domain-header {
+      padding: 16px 20px;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .domain-header:hover {
+      background: #F8FAFC;
+    }
+    .domain-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .domain-badge {
+      background: var(--meko-primary-light);
+      color: var(--meko-primary);
+      font-weight: 800;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+    .domain-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .domain-meta {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-left: 6px;
+    }
+    .domain-toggle-icon {
+      font-size: 14px;
+      color: var(--text-light);
+      transition: transform 0.2s;
+    }
+    .domain-block.collapsed .domain-toggle-icon {
+      transform: rotate(-90deg);
+    }
+    .domain-block.collapsed .domain-body {
+      display: none;
+    }
+
+    .domain-body {
+      padding: 16px 20px;
+    }
+    .domain-desc-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-color);
+      font-style: italic;
+    }
+
+    /* COMPETENCIES GRID */
+    .competency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 14px;
+    }
+    .comp-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 16px;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .comp-card:hover {
+      border-color: var(--meko-primary);
+      box-shadow: 0 4px 12px rgba(0, 68, 255, 0.08);
+      transform: translateY(-2px);
+    }
+    .comp-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .comp-code {
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--meko-navy);
+      background: var(--meko-primary-light);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .comp-level-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .badge-a1 { background: #E2E8F0; color: #475569; }
+    .badge-a2 { background: #FEF3C7; color: #92400E; }
+    .badge-b1 { background: #DBEAFE; color: #1E40AF; }
+    .badge-b2 { background: #D1FAE5; color: #065F46; }
+    .badge-c1 { background: #F3E8FF; color: #6B21A8; }
+    .badge-c2 { background: #FCE7F3; color: #9D174D; }
+
+    .comp-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .comp-statement {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      flex-grow: 1;
+    }
+    .comp-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+      margin-top: 6px;
+      font-size: 11.5px;
+    }
+    .comp-rule-tag {
+      color: var(--meko-success);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-inspect {
+      background: none;
+      border: none;
+      color: var(--meko-primary);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0;
+    }
+    .btn-inspect:hover { text-decoration: underline; }
+
+    /* SAMPLE CSV LIVE PREVIEW MODAL / DRAWER */
+    .sample-csv-preview-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-top: 30px;
+      box-shadow: var(--card-shadow);
+    }
+    .sample-csv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .sample-csv-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .csv-table-wrap {
+      max-height: 280px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+    .csv-preview-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-family: monospace;
+    }
+    .csv-preview-table th {
+      background: #0F172A;
+      color: #FFF;
+      padding: 8px 12px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      font-weight: 600;
+    }
+    .csv-preview-table td {
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: #334155;
+    }
+    .csv-preview-table tr:nth-child(even) { background-color: #F8FAFC; }
+
+    /* DETAIL MODAL */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal-content {
+      background: #FFFFFF;
+      width: 90%;
+      max-width: 680px;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-header {
+      background: #0F172A;
+      color: #FFF;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 { font-size: 16px; font-weight: 700; }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: #94A3B8;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-close-btn:hover { color: #FFF; }
+    .modal-body {
+      padding: 22px;
+      max-height: 70vh;
+      overflow-y: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+    .modal-row {
+      margin-bottom: 14px;
+    }
+    .modal-label {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .modal-val-box {
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: #334155;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background: #0B132B;
+      color: #CBD5E1;
+      padding: 40px 0 24px 0;
+      margin-top: 50px;
+      border-top: 1px solid #1E293B;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .footer-col h4 {
+      color: #FFF;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .footer-col p {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #94A3B8;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 12.5px;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: #FFF; }
+    .footer-bottom {
+      border-top: 1px solid #1E293B;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748B;
+    }
+
+    @media (max-width: 900px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .cbe-steps { grid-template-columns: 1fr; }
+      .competency-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR CHUẨN MEKO-LMS (KHÁCH CÔNG KHAI) -->
+  <header class="navbar-header">
+    <div class="navbar-inner">
+      <div class="navbar-left">
+        <a href="01_moodle_lms_homepage.html" class="brand-logo-wrap" title="Trang chủ MEKO-LMS">
+          <svg class="brand-logo-svg" viewBox="0 0 180 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="meko-mark">
+              <path d="M4 31V7L14 19L24 7V31H18V16L14 21L10 16V31H4Z" fill="#0000B6"/>
+              <circle cx="14" cy="5" r="2.5" fill="#EA6400"/>
+              <rect x="25" y="27" width="5" height="4" rx="1" fill="#39B500"/>
+            </g>
+            <text x="36" y="26" font-family="'Be Vietnam Pro', -apple-system, sans-serif" font-size="21" font-weight="800" fill="#0000B6" letter-spacing="0.5">MEKO<tspan fill="#EA6400">SOFT</tspan></text>
+          </svg>
+          <span class="brand-sub-badge">LMS</span>
+        </a>
+      </div>
+
+      <nav class="navbar-center" aria-label="Main Navigation">
+        <ul class="nav-links-menu">
+          <li class="nav-link-item"><a href="01_moodle_lms_homepage.html" class="nav-link-anchor">Trang chủ</a></li>
+          <li class="nav-link-item"><a href="02_moodle_lms_course_catalog.html" class="nav-link-anchor">Danh mục khóa học</a></li>
+          <li class="nav-link-item active dropdown">
+            <a href="04_moodle_lms_competencies.html" class="nav-link-anchor">
+              <span>Khung năng lực số</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <ul class="dropdown-container">
+              <li><a href="04_moodle_lms_competencies.html">Tất cả khung năng lực (/dig-comp) &rarr;</a></li>
+              <li style="border-top: 1px solid #E5E7EB; margin: 4px 0;"></li>
+              <li><a href="04_moodle_lms_competencies.html?tab=lecturer">Khung năng lực Giảng viên (/dig-comp-lecturer)</a></li>
+              <li><a href="04_moodle_lms_competencies.html?tab=student">Khung năng lực Sinh viên (/dig-comp-student)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="navbar-right">
+        <div class="lang-switch-cluster">
+          <button type="button" class="lang-circle-btn active" title="Tiếng Việt">VI</button>
+          <button type="button" class="lang-circle-btn" title="English">EN</button>
+          <button type="button" class="lang-circle-btn" title="Français">FR</button>
+        </div>
+        <a href="06_moodle_lms_login_sso.html" class="nav-login-link">Đăng nhập</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+      <a href="01_moodle_lms_homepage.html">Trang chủ</a>
+      <span>&gt;</span>
+      <a href="04_moodle_lms_competencies.html">Quản trị năng lực (CBE)</a>
+      <span>&gt;</span>
+      <strong id="bcFrameworkName">Khung Ngoại Ngữ 6 Bậc VSTEP (Việt Nam)</strong>
+    </div>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-pretitle">TẬP ĐOÀN CÔNG NGHỆ MEKOSOFT • PHÂN HỆ COMPETENCY-BASED EDUCATION (CBE)</div>
+      <h1 class="hero-title">Hệ Thống Khung Chuẩn Năng Lực Ngoại Ngữ &amp; Năng Lực Số MEKO</h1>
+      <p class="hero-desc">
+        Nền tảng tích hợp và chuẩn hóa 3 bộ khung năng lực theo quy chuẩn Quốc gia và Quốc tế: <strong>Khung Ngoại Ngữ 6 Bậc VSTEP (Bộ GD&amp;ĐT - TT 01/2014)</strong>, <strong>Khung Sư Phạm Số DigCompEdu (Châu Âu - 6 Cấp Độ)</strong> và <strong>Khung Năng Lực Lập Trình &amp; Kỹ Thuật MEKO-IT (6 Cấp Độ)</strong>. Tất cả được nạp trực tiếp vào Moodle 5.3 LTS, tự động ánh xạ vào khóa học Tiles, đánh giá qua Quiz tự động (điểm &gt;= 70%) và cấp chứng nhận CustomCert PDF có mã QR.
+      </p>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val" id="metricFwCount">03</div>
+          <div class="metric-lbl">Khung Chuẩn Năng Lực</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val" id="metricDomains">04</div>
+          <div class="metric-lbl">Miền / Kỹ Năng Thành Phần</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val" id="metricCompetencies">24</div>
+          <div class="metric-lbl">Chuẩn Năng Lực Nạp Moodle</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">100%</div>
+          <div class="metric-lbl">Tự Động Đánh Giá Qua Quiz</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CBE Workflow Callout -->
+    <section class="cbe-callout">
+      <h3>
+        <span><i class="fa-solid fa-gear"></i></span>
+        <span>Quy Trình Khép Kín Đánh Giá Năng Lực &amp; Cấp Chứng Nhận Trong MEKO-LMS 5.3 LTS</span>
+      </h3>
+      <p style="font-size: 13px; color: var(--text-muted);">
+        Mô hình Competency-Based Education (CBE) được vận hành hoàn toàn tự động, loại bỏ mọi tác vụ thủ công:
+      </p>
+      <div class="cbe-steps">
+        <div class="cbe-step-item">
+          <div class="cbe-step-num">1</div>
+          <div class="cbe-step-title">Nạp Khung Bằng CSV</div>
+          <div>Admin nạp file CSV chuẩn 6 cột vào <code>Site Admin &gt; Competencies &gt; Import</code>.</div>
+        </div>
+        <div class="cbe-step-item">
+          <div class="cbe-step-num">2</div>
+          <div class="cbe-step-title">Gán Vào Khóa Học Tiles</div>
+          <div>Gán mã năng lực (ví dụ <code>VSTEP_READ_B1</code>) vào mục tiêu khóa học và bài kiểm tra.</div>
+        </div>
+        <div class="cbe-step-item">
+          <div class="cbe-step-num">3</div>
+          <div class="cbe-step-title">Competency Rule Tự Động</div>
+          <div>Học viên làm bài trắc nghiệm Quiz đạt điểm &gt;= 70% <i class="fa-solid fa-arrow-right"></i> Tự động đạt chuẩn (Proficient = Yes).</div>
+        </div>
+        <div class="cbe-step-item">
+          <div class="cbe-step-num">4</div>
+          <div class="cbe-step-title">Cấp Badge &amp; Certificate</div>
+          <div>Kích hoạt cấp Huy hiệu OpenBadge và xuất chứng chỉ CustomCert PDF có mã QR xác thực.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRAMEWORK TOOLBAR -->
+    <div class="fw-toolbar">
+      <div class="fw-tabs-cluster">
+        <button id="tabBtnVstep" class="fw-tab-btn active" onclick="switchFramework('vstep')">
+          <span><i class="fa-solid fa-language"></i> VSTEP Ngoại Ngữ 6 Bậc</span>
+          <span class="fw-tab-badge">24 Chuẩn</span>
+        </button>
+        <button id="tabBtnDigCompEdu" class="fw-tab-btn" onclick="switchFramework('digcompedu')">
+          <span><i class="fa-solid fa-graduation-cap"></i> DigCompEdu Sư Phạm Số</span>
+          <span class="fw-tab-badge">36 Chuẩn</span>
+        </button>
+        <button id="tabBtnMekoIT" class="fw-tab-btn" onclick="switchFramework('mekoit')">
+          <span><i class="fa-solid fa-laptop-code"></i> MEKO-IT Kỹ Thuật Lập Trình</span>
+          <span class="fw-tab-badge">24 Chuẩn</span>
+        </button>
+      </div>
+
+      <div class="fw-tools-cluster">
+        <div class="search-input-wrap">
+          <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" id="filterKeyword" class="search-input" placeholder="Tìm kiếm năng lực, mã..." oninput="handleFilter()">
+        </div>
+        <select id="filterLevel" class="select-level" onchange="handleFilter()">
+          <option value="ALL">Tất cả các bậc / cấp độ</option>
+          <option value="A1">Bậc 1 / Cấp A1</option>
+          <option value="A2">Bậc 2 / Cấp A2</option>
+          <option value="B1">Bậc 3 / Cấp B1 (Chuẩn ĐH)</option>
+          <option value="B2">Bậc 4 / Cấp B2</option>
+          <option value="C1">Bậc 5 / Cấp C1</option>
+          <option value="C2">Bậc 6 / Cấp C2</option>
+        </select>
+        <button class="btn-tool" onclick="toggleAllDomains(true)" title="Mở rộng tất cả miền">
+          [+] Mở Rộng
+        </button>
+        <button class="btn-tool" onclick="toggleAllDomains(false)" title="Thu gọn tất cả">
+          [-] Thu Gọn
+        </button>
+        <a id="btnDownloadCsvMain" href="../data/khung_nang_luc_vstep_6bac_vn.csv" download class="btn-tool btn-download-csv" title="Tải tệp CSV chuẩn nạp Moodle">
+          <i class="fa-solid fa-download"></i> Tải CSV Moodle 5.3
+        </a>
+      </div>
+    </div>
+
+    <!-- ACTIVE FRAMEWORK HERO SUMMARY -->
+    <div class="fw-active-header">
+      <div>
+        <h2 id="activeFwTitle" class="fw-active-title">Khung Năng Lực Ngoại Ngữ 6 Bậc Dùng Cho Việt Nam (VSTEP)</h2>
+        <div id="activeFwIdnumber" class="fw-active-idnumber">ID Number: MEKO_VSTEP • Ban hành theo TT 01/2014/TT-BGDĐT</div>
+        <p id="activeFwDesc" class="fw-active-desc">
+          Khung tham chiếu năng lực ngoại ngữ 6 bậc dùng cho Việt Nam, áp dụng cho các cơ sở giáo dục đại học và đào tạo doanh nghiệp. Phân định rõ 4 kỹ năng ngôn ngữ cốt lõi: Đọc hiểu (Reading), Nghe hiểu (Listening), Viết (Writing) và Nói (Speaking) từ Bậc 1 (A1) đến Bậc 6 (C2).
+        </p>
+      </div>
+    </div>
+
+    <!-- LEVEL LEGEND STRIP -->
+    <div id="levelsStrip" class="levels-strip">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- DOMAINS & COMPETENCIES TREE CONTAINER -->
+    <div id="competenciesContainer">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- INTERACTIVE SAMPLE CSV PREVIEW DRAWER (YÊU CẦU CỦA NGƯỜI DÙNG) -->
+    <div class="sample-csv-preview-box">
+      <div class="sample-csv-header">
+        <div class="sample-csv-title">
+          <span><i class="fa-solid fa-file-lines"></i></span>
+          <span>Bản Xem Trước Cấu Trúc CSV Chuẩn Moodle Tool LP Import (Sample Framework Data)</span>
+        </div>
+        <div>
+          <a id="btnSampleCsvDownload" href="../data/khung_nang_luc_vstep_6bac_vn.csv" download class="btn-tool" style="font-size:12px; padding:6px 12px; background:var(--meko-primary-light); color:var(--meko-primary); border-color:#BFDBFE;">
+            Tải CSV Mẫu Này ⬇
+          </a>
+        </div>
+      </div>
+      <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:12px;">
+        File CSV được cấu hình đúng 6 cột bắt buộc của Moodle: <code>Parent ID number, ID number, Name, Description, Scale values, Scale configuration</code>. Đảm bảo nạp thành công 100% không phát sinh lỗi phân cấp cây:
+      </p>
+      <div class="csv-table-wrap">
+        <table class="csv-preview-table" id="csvPreviewTable">
+          <thead>
+            <tr>
+              <th>Parent ID number</th>
+              <th>ID number</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Scale values</th>
+            </tr>
+          </thead>
+          <tbody id="csvPreviewBody">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- DETAIL MODAL -->
+  <div id="compModal" class="modal-backdrop" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modalTitle">Chi Tiết Chuẩn Năng Lực</h3>
+        <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h4>TẬP ĐOÀN CÔNG NGHỆ MEKOSOFT (MEKOSOFT CORPORATION)</h4>
+        <p>
+          Hệ sinh thái Đào tạo &amp; Quản trị Năng lực Số Doanh nghiệp MEKO-LMS (Moodle 5.3 LTS) và MEKO-TMS (Liferay 7.4 CE) được phát triển và vận hành độc quyền bởi <strong>MEKOSOFT Corporation</strong>.
+        </p>
+        <p style="margin-top: 10px; font-size: 11.5px; color: #64748B;">
+          Bản quyền giải pháp phần mềm, tài liệu kỹ thuật và khung chuẩn năng lực thuộc quyền sở hữu của MEKOSOFT Corporation.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Khung Chuẩn Năng Lực</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:switchFramework('vstep')">Khung Ngoại Ngữ 6 Bậc VSTEP (Việt Nam)</a></li>
+          <li><a href="javascript:switchFramework('digcompedu')">Khung Sư Phạm Số DigCompEdu (Châu Âu)</a></li>
+          <li><a href="javascript:switchFramework('mekoit')">Khung Kỹ Thuật MEKO-IT (6 Cấp Độ)</a></li>
+          <li><a href="../data/khung_nang_luc_vstep_6bac_vn.csv" download>Tải CSV Chuẩn VSTEP</a></li>
+          <li><a href="../data/khung_nang_luc_digcompedu_6bac_eu.csv" download>Tải CSV Chuẩn DigCompEdu</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hệ Thống Trực Thuộc</h4>
+        <ul class="footer-links">
+          <li><a href="01_moodle_lms_homepage.html">MEKO-LMS (meko.localhost/lms)</a></li>
+          <li><a href="07_liferay_tms_portal_home.html">MEKO-TMS (meko.localhost/tms)</a></li>
+          <li><a href="11_email_enrollment_notification.html">Mailpit Test (meko.localhost/mail)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Tập đoàn Công nghệ MEKOSOFT (MEKOSOFT Corporation). Mọi quyền được bảo lưu.
+    </div>
+  </footer>
+
+  <!-- DATA & LOGIC SCRIPTS -->
+  <script>
+    // 1. DATA KHUNG VSTEP (VIỆT NAM - 6 BẬC)
+    const dataVstep = {
+      id: "vstep",
+      idnumber: "MEKO_VSTEP",
+      name: "Khung Năng Lực Ngoại Ngữ 6 Bậc Dùng Cho Việt Nam (VSTEP)",
+      authority: "Ban hành theo Thông tư 01/2014/TT-BGDĐT",
+      csvPath: "../data/khung_nang_luc_vstep_6bac_vn.csv",
+      description: "Khung tham chiếu năng lực ngoại ngữ 6 bậc dùng cho Việt Nam, chuẩn hóa mục tiêu học tập và đánh giá kiểm tra chuẩn đầu ra ngoại ngữ cho sinh viên, giảng viên và nhân sự chất lượng cao.",
+      levels: [
+        { code: "A1", name: "Bậc 1 (Sơ cấp A1)", desc: "Hiểu và sử dụng cấu trúc quen thuộc hàng ngày, chào hỏi, tự giới thiệu đơn giản." },
+        { code: "A2", name: "Bậc 2 (Sơ cấp A2)", desc: "Giao tiếp trong các tình huống đơn giản về thông tin cá nhân, gia đình, mua sắm." },
+        { code: "B1", name: "Bậc 3 (Trung cấp B1)", desc: "Hiểu ý chính chủ đề quen thuộc (học tập, làm việc). Chuẩn tốt nghiệp Đại học." },
+        { code: "B2", name: "Bậc 4 (Trung cấp B2)", desc: "Nắm nội dung văn bản phức tạp, trao đổi trôi chảy tự nhiên với người bản ngữ." },
+        { code: "C1", name: "Bậc 5 (Cao cấp C1)", desc: "Hiểu rộng các văn bản dài, nhận biết ẩn ý. Sử dụng ngôn ngữ linh hoạt cho học thuật." },
+        { code: "C2", name: "Bậc 6 (Cao cấp C2)", desc: "Sử dụng ngôn ngữ tinh tế, chính xác tuyệt đối như người bản ngữ có học thức cao." }
+      ],
+      domains: [
+        {
+          code: "VSTEP_READ",
+          name: "Kỹ năng Đọc hiểu (Reading Comprehension)",
+          en_name: "Reading Skill",
+          description: "Năng lực tiếp nhận, phân tích, suy luận và tổng hợp thông tin từ văn bản tiếng Anh theo các bậc trình độ.",
+          competencies: [
+            { code: "VSTEP_READ_A1", level: "A1", name: "Đọc hiểu Bậc 1 (A1 - Sơ cấp)", statement: "Hiểu được các từ ngữ quen thuộc và câu rất đơn giản trên biển báo, áp phích hoặc catalog giới thiệu.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-101: Tiếng Anh Khởi Động" },
+            { code: "VSTEP_READ_A2", level: "A2", name: "Đọc hiểu Bậc 2 (A2 - Sơ cấp)", statement: "Đọc hiểu các thông báo ngắn, tờ rơi, thực đơn và lịch trình hàng ngày quen thuộc.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-102: Tiếng Anh Giao Tiếp Cơ Bản" },
+            { code: "VSTEP_READ_B1", level: "B1", name: "Đọc hiểu Bậc 3 (B1 - Trung cấp)", statement: "Đọc hiểu các văn bản chứa ngôn ngữ thực tế liên quan đến công việc hoặc học tập chuyên ngành.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-201: Tiếng Anh Chuẩn Đầu Ra B1" },
+            { code: "VSTEP_READ_B2", level: "B2", name: "Đọc hiểu Bậc 4 (B2 - Trung cấp)", statement: "Đọc hiểu các bài báo, báo cáo chuyên môn đương đại và phân tích quan điểm tác giả.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-301: Tiếng Anh Học Thuật B2" },
+            { code: "VSTEP_READ_C1", level: "C1", name: "Đọc hiểu Bậc 5 (C1 - Cao cấp)", statement: "Đọc hiểu và đánh giá phản biện các tài liệu học thuật phức tạp, tiểu luận chuyên sâu.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-401: Tiếng Anh Nghiên Cứu C1" },
+            { code: "VSTEP_READ_C2", level: "C2", name: "Đọc hiểu Bậc 6 (C2 - Cao cấp)", statement: "Đọc hiểu hầu như mọi thể loại văn bản học thuật và văn học cổ điển một cách dễ dàng.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-501: Tiếng Anh Bậc Thầy C2" }
+          ]
+        },
+        {
+          code: "VSTEP_LIST",
+          name: "Kỹ năng Nghe hiểu (Listening Comprehension)",
+          en_name: "Listening Skill",
+          description: "Năng lực tiếp nhận thông điệp âm thanh, phân biệt ngữ điệu và nắm bắt chi tiết thông tin từ hội thoại và bài giảng.",
+          competencies: [
+            { code: "VSTEP_LIST_A1", level: "A1", name: "Nghe hiểu Bậc 1 (A1 - Sơ cấp)", statement: "Nhận biết các từ quen thuộc và cụm từ cơ bản khi người đối thoại nói chậm rãi và rõ ràng.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-101: Tiếng Anh Khởi Động" },
+            { code: "VSTEP_LIST_A2", level: "A2", name: "Nghe hiểu Bậc 2 (A2 - Sơ cấp)", statement: "Nắm được ý chính trong các thông báo và thông điệp ngắn đơn giản hàng ngày.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-102: Tiếng Anh Giao Tiếp Cơ Bản" },
+            { code: "VSTEP_LIST_B1", level: "B1", name: "Nghe hiểu Bậc 3 (B1 - Trung cấp)", statement: "Hiểu các ý chính của bài nói rõ ràng về các vấn đề quen thuộc trong công việc và học tập.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-201: Tiếng Anh Chuẩn Đầu Ra B1" },
+            { code: "VSTEP_LIST_B2", level: "B2", name: "Nghe hiểu Bậc 4 (B2 - Trung cấp)", statement: "Hiểu các bài thuyết trình dài, thảo luận kỹ thuật trong lĩnh vực chuyên ngành quen thuộc.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-301: Tiếng Anh Học Thuật B2" },
+            { code: "VSTEP_LIST_C1", level: "C1", name: "Nghe hiểu Bậc 5 (C1 - Cao cấp)", statement: "Hiểu hầu hết các chương trình truyền thanh, phim ảnh và hội thảo khoa học không bị rào cản ngữ điệu.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-401: Tiếng Anh Nghiên Cứu C1" },
+            { code: "VSTEP_LIST_C2", level: "C2", name: "Nghe hiểu Bậc 6 (C2 - Cao cấp)", statement: "Nghe hiểu mọi dạng ngôn ngữ nói trực tiếp hay truyền thông ở tốc độ bản ngữ tự nhiên.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-501: Tiếng Anh Bậc Thầy C2" }
+          ]
+        },
+        {
+          code: "VSTEP_WRIT",
+          name: "Kỹ năng Viết (Writing Competence)",
+          en_name: "Writing Skill",
+          description: "Khả năng diễn đạt bằng văn bản từ thư tín cá nhân, email công vụ đến báo cáo học thuật chuyên sâu.",
+          competencies: [
+            { code: "VSTEP_WRIT_A1", level: "A1", name: "Viết Bậc 1 (A1 - Sơ cấp)", statement: "Viết thiệp ngắn, điền mẫu biểu cá nhân (tên, quốc tịch, địa chỉ) đơn giản.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-101: Tiếng Anh Khởi Động" },
+            { code: "VSTEP_WRIT_A2", level: "A2", name: "Viết Bậc 2 (A2 - Sơ cấp)", statement: "Viết mẩu tin nhắn ngắn, ghi chú đơn giản và thư cảm ơn ngắn gọn.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-102: Tiếng Anh Giao Tiếp Cơ Bản" },
+            { code: "VSTEP_WRIT_B1", level: "B1", name: "Viết Bậc 3 (B1 - Trung cấp)", statement: "Viết đoạn văn liên kết về chủ đề quen thuộc, thư tín cá nhân thuật lại trải nghiệm.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-201: Tiếng Anh Chuẩn Đầu Ra B1" },
+            { code: "VSTEP_WRIT_B2", level: "B2", name: "Viết Bậc 4 (B2 - Trung cấp)", statement: "Viết bài luận rõ ràng, chi tiết, tổng hợp thông tin và đưa ra quan điểm ủng hộ/phản đối.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-301: Tiếng Anh Học Thuật B2" },
+            { code: "VSTEP_WRIT_C1", level: "C1", name: "Viết Bậc 5 (C1 - Cao cấp)", statement: "Soạn thảo bài tiểu luận, báo cáo hoặc thư từ chuyên nghiệp có bố cục chặt chẽ, mạch lạc.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-401: Tiếng Anh Nghiên Cứu C1" },
+            { code: "VSTEP_WRIT_C2", level: "C2", name: "Viết Bậc 6 (C2 - Cao cấp)", statement: "Viết tài liệu học thuật phức tạp hoặc văn bản pháp lý với phong cách văn phong chuẩn xác, sắc bén.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-501: Tiếng Anh Bậc Thầy C2" }
+          ]
+        },
+        {
+          code: "VSTEP_SPK",
+          name: "Kỹ năng Nói (Speaking Competence)",
+          en_name: "Speaking Skill",
+          description: "Khả năng tương tác trực tiếp, trình bày ý kiến, diễn thuyết và đàm phán trong môi trường đa văn hóa.",
+          competencies: [
+            { code: "VSTEP_SPK_A1", level: "A1", name: "Nói Bậc 1 (A1 - Sơ cấp)", statement: "Giao tiếp đơn giản nếu người đối thoại sẵn sàng nhắc lại hoặc nói chậm lại.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-101: Tiếng Anh Khởi Động" },
+            { code: "VSTEP_SPK_A2", level: "A2", name: "Nói Bậc 2 (A2 - Sơ cấp)", statement: "Giao tiếp trong các tình huống thường nhật đòi hỏi trao đổi thông tin trực tiếp, đơn giản.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-102: Tiếng Anh Giao Tiếp Cơ Bản" },
+            { code: "VSTEP_SPK_B1", level: "B1", name: "Nói Bậc 3 (B1 - Trung cấp)", statement: "Xử lý hầu hết các tình huống nảy sinh khi đi lại, trình bày lý do và kế hoạch ngắn gọn.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-201: Tiếng Anh Chuẩn Đầu Ra B1" },
+            { code: "VSTEP_SPK_B2", level: "B2", name: "Nói Bậc 4 (B2 - Trung cấp)", statement: "Giao tiếp tự tin, bảo vệ quan điểm trong tranh luận và thuyết trình dự án rõ ràng.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-301: Tiếng Anh Học Thuật B2" },
+            { code: "VSTEP_SPK_C1", level: "C1", name: "Nói Bậc 5 (C1 - Cao cấp)", statement: "Sử dụng ngôn ngữ linh hoạt cho các mục đích xã hội và nghề nghiệp mà không gặp khó khăn.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-401: Tiếng Anh Nghiên Cứu C1" },
+            { code: "VSTEP_SPK_C2", level: "C2", name: "Nói Bậc 6 (C2 - Cao cấp)", statement: "Thuyết trình và phản biện các đề tài khoa học trừu tượng một cách lưu loát và hoàn hảo.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "ENG-501: Tiếng Anh Bậc Thầy C2" }
+          ]
+        }
+      ]
+    };
+
+    // 2. DATA KHUNG DIGCOMPEDU (CHÂU ÂU - 6 CẤP ĐỘ SƯ PHẠM SỐ)
+    const dataDigCompEdu = {
+      id: "digcompedu",
+      idnumber: "MEKO_DIGCOMPEDU",
+      name: "Khung Năng Lực Số Sư Phạm Châu Âu (DigCompEdu - 6 Cấp Độ)",
+      authority: "European Framework for the Digital Competence of Educators",
+      csvPath: "../data/khung_nang_luc_digcompedu_6bac_eu.csv",
+      description: "Mô hình chuẩn hóa năng lực ứng dụng công nghệ số dành cho giảng viên và cán bộ quản lý đào tạo, gồm 6 lĩnh vực sư phạm số phân cấp từ cấp Khởi nhập (A1) đến Tiên phong (C2).",
+      levels: [
+        { code: "A1", name: "Newcomer (A1 - Khởi nhập)", desc: "Nhận biết tiềm năng của công nghệ số, sử dụng ở mức độ cơ bản dưới sự trợ giúp." },
+        { code: "A2", name: "Explorer (A2 - Khám phá)", desc: "Bắt đầu thử nghiệm các công cụ số trong soạn giảng và tương tác người học." },
+        { code: "B1", name: "Integrator (B1 - Tích hợp)", desc: "Tích hợp thường xuyên các ứng dụng số vào giảng dạy và quản lý lớp học." },
+        { code: "B2", name: "Expert (B2 - Thành thạo)", desc: "Làm chủ công nghệ số, sử dụng sáng tạo và cố vấn hỗ trợ đồng nghiệp." },
+        { code: "C1", name: "Leader (C1 - Dẫn dắt)", desc: "Dẫn dắt các sáng kiến đổi mới phương pháp sư phạm số trong khoa và trường." },
+        { code: "C2", name: "Pioneer (C2 - Tiên phong)", desc: "Định hình các chuẩn mực sư phạm số mới, nghiên cứu và phát triển giải pháp đột phá." }
+      ],
+      domains: [
+        {
+          code: "DIG_AREA1",
+          name: "Lĩnh vực 1: Gắn kết chuyên môn (Professional Engagement)",
+          en_name: "Area 1: Professional Engagement",
+          description: "Sử dụng công nghệ số trong giao tiếp tổ chức, cộng tác sư phạm và phát triển chuyên môn liên tục.",
+          competencies: [
+            { code: "DIG_A1_1", level: "A1", name: "A1.1: Nhận thức truyền thông số tổ chức", statement: "Nhận thức tiềm năng của email và LMS trong truyền thông sư phạm và trao đổi công vụ.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A1_2", level: "A2", name: "A1.2: Sử dụng công cụ số trao đổi cơ bản", statement: "Thử nghiệm sử dụng email và nhóm chat trực tuyến để gửi tài liệu cho sinh viên.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A1_3", level: "B1", name: "A1.3: Tích hợp kênh số quản lý lớp học", statement: "Tích hợp thường xuyên diễn đàn Moodle và thông báo tự động vào quản lý lớp học.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-201: Ứng Dụng Moodle Trong Dạy Học" },
+            { code: "DIG_A1_4", level: "B2", name: "A1.4: Điều phối hợp tác chuyên môn số", statement: "Sử dụng linh hoạt các nền tảng đám mây chia sẻ tài nguyên và đồng soạn thảo bài giảng.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-301: Thiết Kế Khóa Học e-Learning Chuẩn" },
+            { code: "DIG_A1_5", level: "C1", name: "A1.5: Dẫn dắt chuyển đổi số bộ môn", statement: "Dẫn dắt các sáng kiến chuyển đổi số phương pháp giảng dạy tại khoa và viện đào tạo.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-401: Lãnh Đạo Chuyển Đổi Số Giáo Dục" },
+            { code: "DIG_A1_6", level: "C2", name: "A1.6: Tiên phong mô hình kết nối học thuật", statement: "Đổi mới sáng tạo mạng lưới trao đổi học thuật số liên trường tầm vóc quốc tế.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-501: Chuyên Gia Sư Phạm Số MEKO" }
+          ]
+        },
+        {
+          code: "DIG_AREA2",
+          name: "Lĩnh vực 2: Tài nguyên học liệu số (Digital Resources)",
+          en_name: "Area 2: Digital Resources",
+          description: "Tìm kiếm, chọn lọc, tạo mới, chỉnh sửa và bảo vệ bản quyền tài nguyên giáo dục mở (OER).",
+          competencies: [
+            { code: "DIG_A2_1", level: "A1", name: "A2.1: Nhận diện nguồn học liệu số", statement: "Nhận diện các trang web chia sẻ học liệu và biết cách tải slide tài liệu bài giảng.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A2_2", level: "A2", name: "A2.2: Chọn lọc tài liệu số theo bài giảng", statement: "Tìm kiếm và áp dụng các tiêu chí cơ bản để chọn tài liệu số phù hợp nội dung môn học.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A2_3", level: "B1", name: "A2.3: Tái tạo và biên tập bài giảng số", statement: "Chỉnh sửa, kết hợp các nguồn tài nguyên số và đính kèm vào các ô Tiles trên Moodle.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-201: Ứng Dụng Moodle Trong Dạy Học" },
+            { code: "DIG_A2_4", level: "B2", name: "A2.4: Xuất bản gói học liệu tương tác SCORM", statement: "Tạo gói SCORM/H5P tương tác cao và cấp phép bản quyền Creative Commons rõ ràng.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-301: Thiết Kế Khóa Học e-Learning Chuẩn" },
+            { code: "DIG_A2_5", level: "C1", name: "A2.5: Xây dựng kho học liệu số cấp trường", statement: "Chủ trì xây dựng ngân hàng học liệu số mở dùng chung cho các phân hiệu và ngành học.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-401: Lãnh Đạo Chuyển Đổi Số Giáo Dục" },
+            { code: "DIG_A2_6", level: "C2", name: "A2.6: Khởi xướng chiến lược học liệu mở", statement: "Tham mưu chính sách bản quyền và phát triển kho học liệu mở quy chuẩn quốc tế.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-501: Chuyên Gia Sư Phạm Số MEKO" }
+          ]
+        },
+        {
+          code: "DIG_AREA3",
+          name: "Lĩnh vực 3: Dạy và học số (Teaching & Learning)",
+          en_name: "Area 3: Teaching & Learning",
+          description: "Thiết kế, triển khai và quản lý hoạt động dạy học trực tuyến và kết hợp (Blended Learning).",
+          competencies: [
+            { code: "DIG_A3_1", level: "A1", name: "A3.1: Dạy học với máy chiếu / slide cơ bản", statement: "Sử dụng thiết bị số trình chiếu bài giảng và hướng dẫn sinh viên xem tài liệu.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A3_2", level: "A2", name: "A3.2: Thử nghiệm bài giảng video / podcast", statement: "Thử nghiệm thu âm hoặc quay video bài giảng ngắn hỗ trợ sinh viên tự học ở nhà.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A3_3", level: "B1", name: "A3.3: Vận hành lớp học Blended Learning", statement: "Kết hợp linh hoạt giữa giảng dạy trực tiếp và giao bài tập tương tác trên Moodle Tiles.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-201: Ứng Dụng Moodle Trong Dạy Học" },
+            { code: "DIG_A3_4", level: "B2", name: "A3.4: Cá nhân hóa lộ trình học tập số", statement: "Thiết lập điều kiện truy cập (Restrict Access) và lộ trình học tập phân nhánh cho sinh viên.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-301: Thiết Kế Khóa Học e-Learning Chuẩn" },
+            { code: "DIG_A3_5", level: "C1", name: "A3.5: Cố vấn phương pháp dạy học kết hợp", statement: "Tập huấn và cố vấn phương pháp dạy học số tích cực cho đội ngũ giảng viên mới.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-401: Lãnh Đạo Chuyển Đổi Số Giáo Dục" },
+            { code: "DIG_A3_6", level: "C2", name: "A3.6: Đổi mới sáng tạo sư phạm tương lai", statement: "Nghiên cứu ứng dụng công nghệ thực tế ảo (VR/AR) và AI Adaptive Learning vào giảng dạy.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-501: Chuyên Gia Sư Phạm Số MEKO" }
+          ]
+        },
+        {
+          code: "DIG_AREA4",
+          name: "Lĩnh vực 4: Đánh giá học tập (Assessment)",
+          en_name: "Area 4: Digital Assessment",
+          description: "Sử dụng công nghệ số để kiểm tra đánh giá quá trình (formative) và định kỳ (summative).",
+          competencies: [
+            { code: "DIG_A4_1", level: "A1", name: "A4.1: Nhận bài tập qua hệ thống số", statement: "Cấu hình tiếp nhận bài tập sinh viên nộp dưới dạng file Word/PDF trên LMS.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A4_2", level: "A2", name: "A4.2: Tạo bài trắc nghiệm Quiz cơ bản", statement: "Tạo bài trắc nghiệm khách quan với ngân hàng câu hỏi định dạng Aiken đơn giản.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A4_3", level: "B1", name: "A4.3: Tự động chấm điểm & phản hồi số", statement: "Cấu hình bài Quiz tự động chấm điểm, phản hồi giải thích đáp án tức thì cho người học.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-201: Ứng Dụng Moodle Trong Dạy Học" },
+            { code: "DIG_A4_4", level: "B2", name: "A4.4: Thiết lập Competency Rule đánh giá", statement: "Gán chuẩn năng lực vào Quiz và cấu hình điểm sàn đạt chuẩn (Pass Score >= 70%).", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-301: Thiết Kế Khóa Học e-Learning Chuẩn" },
+            { code: "DIG_A4_5", level: "C1", name: "A4.5: Phân tích học tập (Learning Analytics)", statement: "Khai thác dữ liệu sổ điểm Grader Report và phân tích chỉ số hoàn thành khóa học.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-401: Lãnh Đạo Chuyển Đổi Số Giáo Dục" },
+            { code: "DIG_A4_6", level: "C2", name: "A4.6: Thiết lập ma trận đánh giá năng lực", statement: "Xây dựng khung đánh giá chuẩn đầu ra liên thông cấp bằng và chứng chỉ tự động.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-501: Chuyên Gia Sư Phạm Số MEKO" }
+          ]
+        },
+        {
+          code: "DIG_AREA5",
+          name: "Lĩnh vực 5: Trao quyền cho người học (Empowering Learners)",
+          en_name: "Area 5: Empowering Learners",
+          description: "Đảm bảo tính tiếp cận, hòa nhập, cá nhân hóa và thúc đẩy tính chủ động của người học.",
+          competencies: [
+            { code: "DIG_A5_1", level: "A1", name: "A5.1: Đảm bảo học liệu dễ tiếp cận", statement: "Soạn bài giảng cỡ chữ rõ ràng, định dạng chuẩn để sinh viên dễ đọc trên điện thoại.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A5_2", level: "A2", name: "A5.2: Hỗ trợ sinh viên kỹ năng số cơ bản", statement: "Hướng dẫn sinh viên cách tải bài tập, xem điểm và tham gia diễn đàn trên LMS.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A5_3", level: "B1", name: "A5.3: Khuyến khích tự chủ học tập", statement: "Cung cấp học liệu tham khảo bổ sung và diễn đàn thảo luận nhóm để sinh viên tương tác.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-201: Ứng Dụng Moodle Trong Dạy Học" },
+            { code: "DIG_A5_4", level: "B2", name: "A5.4: Thiết kế trải nghiệm học tập hòa nhập", statement: "Tối ưu hóa học liệu cho người học có hoàn cảnh đặc biệt (phụ đề video, âm thanh rõ).", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-301: Thiết Kế Khóa Học e-Learning Chuẩn" },
+            { code: "DIG_A5_5", level: "C1", name: "A5.5: Kiến tạo không gian học tập linh hoạt", statement: "Xây dựng hệ sinh thái học tập suốt đời cho người học trong toàn tổ chức.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-401: Lãnh Đạo Chuyển Đổi Số Giáo Dục" },
+            { code: "DIG_A5_6", level: "C2", name: "A5.6: Định hình chiến lược trao quyền số", statement: "Đề xuất chính sách bình đẳng số và hỗ trợ người học tiếp cận tri thức mở không rào cản.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-501: Chuyên Gia Sư Phạm Số MEKO" }
+          ]
+        },
+        {
+          code: "DIG_AREA6",
+          name: "Lĩnh vực 6: Thúc đẩy năng lực số học viên (Facilitating Digital Competence)",
+          en_name: "Area 6: Facilitating Digital Competence",
+          description: "Tạo điều kiện để người học phát triển năng lực thông tin số, giao tiếp số và sáng tạo số.",
+          competencies: [
+            { code: "DIG_A6_1", level: "A1", name: "A6.1: Nhắc nhở an toàn số học đường", statement: "Nhắc nhở học viên bảo mật mật khẩu tài khoản và tuân thủ quy tắc ứng xử trên mạng.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A6_2", level: "A2", name: "A6.2: Hướng dẫn tra cứu thông tin học thuật", statement: "Hướng dẫn sinh viên tra cứu tài liệu học thuật có nguồn gốc rõ ràng phục vụ tiểu luận.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-101: Nhập Môn Sư Phạm Số" },
+            { code: "DIG_A6_3", level: "B1", name: "A6.3: Tổ chức bài tập nhóm cộng tác số", statement: "Yêu cầu sinh viên hợp tác làm việc nhóm qua Google Docs hoặc Moodle Wiki.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-201: Ứng Dụng Moodle Trong Dạy Học" },
+            { code: "DIG_A6_4", level: "B2", name: "A6.4: Thúc đẩy sáng tạo sản phẩm số", statement: "Giao đề tài yêu cầu sinh viên sáng tạo video, podcast, infographic tổng kết kiến thức.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-301: Thiết Kế Khóa Học e-Learning Chuẩn" },
+            { code: "DIG_A6_5", level: "C1", name: "A6.5: Định hướng đạo đức AI & bản quyền số", statement: "Tập huấn cho học viên cách sử dụng công cụ AI tạo sinh một cách có trách nhiệm và liêm chính.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-401: Lãnh Đạo Chuyển Đổi Số Giáo Dục" },
+            { code: "DIG_A6_6", level: "C2", name: "A6.6: Phát triển công dân số toàn cầu", statement: "Xây dựng chương trình phát triển năng lực số toàn diện chuẩn hóa quốc tế cho sinh viên.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "EDU-501: Chuyên Gia Sư Phạm Số MEKO" }
+          ]
+        }
+      ]
+    };
+
+    // 3. DATA KHUNG KỸ THUẬT MEKO-IT (6 CẤP ĐỘ NĂNG LỰC LẬP TRÌNH)
+    const dataMekoIT = {
+      id: "mekoit",
+      idnumber: "MEKO_IT_FRAMEWORK",
+      name: "Khung Năng Lực Kỹ Thuật Lập Trình & Công Nghệ Số MEKO-IT (6 Cấp Độ)",
+      authority: "Chuẩn Năng Lực Kỹ Sư Phần Mềm Tập Đoàn MEKOSOFT",
+      csvPath: "../data/khung_nang_luc_vstep_6bac_vn.csv", // placeholder for IT csv
+      description: "Khung năng lực chuyên môn kỹ thuật phân cấp 6 bậc (L1 -> L6) dành cho kỹ sư phát triển phần mềm, quản trị hệ thống và kiến trúc sư giải pháp doanh nghiệp.",
+      levels: [
+        { code: "A1", name: "Level 1: Intern / Fresher", desc: "Nắm vững cú pháp cơ bản, thực hiện tác vụ lập trình nhỏ dưới sự kèm cặp trực tiếp." },
+        { code: "A2", name: "Level 2: Junior Engineer", desc: "Lập trình độc lập các hàm nghiệp vụ đơn giản, hiểu quy trình Git và cấu trúc dữ liệu." },
+        { code: "B1", name: "Level 3: Mid-level Engineer", desc: "Tự chủ xây dựng module, thiết kế REST API chuẩn, tối ưu hóa truy vấn CSDL cơ bản." },
+        { code: "B2", name: "Level 4: Senior Engineer", desc: "Làm chủ kiến trúc hệ thống, giải quyết bài toán tải cao, refactor mã nguồn phức tạp." },
+        { code: "C1", name: "Level 5: Tech Lead / Staff", desc: "Dẫn dắt kỹ thuật nhóm, review mã nguồn toàn diện, thiết kế tích hợp liên hệ thống." },
+        { code: "C2", name: "Level 6: Solution Architect", desc: "Hoạch định kiến trúc tổng thể phần mềm cấp tập đoàn, bảo mật và khả năng mở rộng cao." }
+      ],
+      domains: [
+        {
+          code: "MEKO_FE",
+          name: "Miền 1: Frontend & Web Application Engineering",
+          en_name: "Frontend Development",
+          description: "Phát triển giao diện người dùng tương tác cao, thiết kế Responsive và tối ưu hóa hiệu năng trải nghiệm web.",
+          competencies: [
+            { code: "IT_FE_L1", level: "A1", name: "FE-L1: Cắt giao diện HTML5/CSS3 chuẩn", statement: "Chuyển đổi thiết kế Figma thành trang HTML5/CSS3 chuẩn nhận diện màu sắc MEKOSOFT.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-101: Lập Trình Web Cơ Bản" },
+            { code: "IT_FE_L2", level: "A2", name: "FE-L2: Xử lý JavaScript DOM & ES6+", statement: "Sử dụng JavaScript ES6+ xử lý sự kiện người dùng, validation biểu mẫu và gọi Fetch API.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-102: JavaScript Nâng Cao" },
+            { code: "IT_FE_L3", level: "B1", name: "FE-L3: Xây dựng React / Vite SPA Component", statement: "Xây dựng ứng dụng đơn trang React có quản lý trạng thái Hooks, Props và Router mượt mà.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-201: ReactJS Chuyên Sâu" },
+            { code: "IT_FE_L4", level: "B2", name: "FE-L4: Tối ưu hóa hiệu năng Web & LCP", statement: "Tối ưu hóa Core Web Vitals, giảm dung lượng bundle, lazy-loading ảnh và caching tài nguyên.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-301: Tối Ưu Hóa Giao Diện Doanh Nghiệp" },
+            { code: "IT_FE_L5", level: "C1", name: "FE-L5: Thiết kế Kiến Trúc Design System", statement: "Xây dựng bộ thư viện UI Components dùng chung (Design System) nhất quán toàn tập đoàn.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-401: Frontend Architecture" },
+            { code: "IT_FE_L6", level: "C2", name: "FE-L6: Tiên phong Micro-Frontend Doanh Nghiệp", statement: "Hoạch định kiến trúc Micro-Frontend nhúng linh hoạt vào Liferay Portal và Moodle LMS.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-501: Enterprise Web Architecture" }
+          ]
+        },
+        {
+          code: "MEKO_BE",
+          name: "Miền 2: Backend, Microservices & REST API",
+          en_name: "Backend Engineering",
+          description: "Xây dựng logic nghiệp vụ máy chủ, giao tiếp API bảo mật, xử lý tác vụ nền và tích hợp hệ thống.",
+          competencies: [
+            { code: "IT_BE_L1", level: "A1", name: "BE-L1: Viết script máy chủ căn bản", statement: "Viết các script PHP hoặc Java căn bản xử lý logic tính toán và đọc ghi file đơn giản.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-103: Lập Trình Backend Căn Bản" },
+            { code: "IT_BE_L2", level: "A2", name: "BE-L2: Xây dựng RESTful API CRUD", statement: "Xây dựng các điểm cuối REST API chuẩn HTTP methods (GET, POST, PUT, DELETE) với JSON.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-202: RESTful API Engineering" },
+            { code: "IT_BE_L3", level: "B1", name: "BE-L3: Liferay Service Builder & Spring Boot", statement: "Phát triển cụm dịch vụ Service Builder 5 bảng hoặc Spring Boot Service kết nối cơ sở dữ liệu.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-203: Liferay 7.4 Service Builder" },
+            { code: "IT_BE_L4", level: "B2", name: "BE-L4: Tích hợp xác thực OIDC & JWT", statement: "Bảo vệ API bằng JWT Bearer Token, tích hợp Single Sign-On Keycloak và phân quyền RBAC.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-302: Bảo Mật & Xác Thực Hệ Thống" },
+            { code: "IT_BE_L5", level: "C1", name: "BE-L5: Kiến trúc Event-Driven & Hàng Đợi", statement: "Thiết kế xử lý bất đồng bộ qua hàng đợi thông điệp (RabbitMQ/Kafka) và caching Redis.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-402: Microservices & Event-Driven" },
+            { code: "IT_BE_L6", level: "C2", name: "BE-L6: Kiến trúc giải pháp phân tán chịu tải", statement: "Hoạch định kiến trúc hệ thống phân tán chịu tải hàng triệu giao dịch, zero downtime.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-502: Distributed Systems Architect" }
+          ]
+        },
+        {
+          code: "MEKO_DB",
+          name: "Miền 3: CSDL & Kiến Trúc Dữ Liệu (Database Engineering)",
+          en_name: "Database Architecture",
+          description: "Thiết kế mô hình quan hệ ERD, chuẩn hóa dữ liệu, tối ưu hóa câu lệnh SQL và bảo toàn tính toàn vẹn ACID.",
+          competencies: [
+            { code: "IT_DB_L1", level: "A1", name: "DB-L1: Truy vấn SQL cơ bản", statement: "Thực hiện câu lệnh SELECT, INSERT, UPDATE, DELETE và lọc dữ liệu với mệnh đề WHERE.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-104: Cơ Sở Dữ Liệu Quan Hệ" },
+            { code: "IT_DB_L2", level: "A2", name: "DB-L2: JOIN nhiều bảng & Transaction", statement: "Viết câu lệnh INNER/LEFT JOIN phức tạp, hiểu cách sử dụng Transaction tránh mất mát dữ liệu.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-204: Quản Trị CSDL Nâng Cao" },
+            { code: "IT_DB_L3", level: "B1", name: "DB-L3: Thiết kế mô hình ERD chuẩn hóa 3NF", statement: "Thiết kế lược đồ quan hệ CDM/LDM chuẩn 3NF, thiết lập Primary Key và Foreign Key chặt chẽ.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-204: Quản Trị CSDL Nâng Cao" },
+            { code: "IT_DB_L4", level: "B2", name: "DB-L4: Đánh chỉ mục Index & Tối ưu Query", statement: "Phân tích EXPLAIN PLAN, tối ưu hóa chỉ mục B-Tree và loại bỏ full-table scans.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-304: Tối Ưu Hiệu Năng CSDL" },
+            { code: "IT_DB_L5", level: "C1", name: "DB-L5: Phân mảnh Partition & Sao lưu tự động", statement: "Thiết kế chiến lược Partitioning bảng dữ liệu lớn, lập kế hoạch sao lưu replication master-slave.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-404: Database High Availability" },
+            { code: "IT_DB_L6", level: "C2", name: "DB-L6: Kiến trúc Data Lakehouse & Big Data", statement: "Hoạch định kiến trúc dữ liệu tập trung tích hợp BigQuery, Spark và xử lý thời gian thực.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-504: Enterprise Data Architecture" }
+          ]
+        },
+        {
+          code: "MEKO_DEVOPS",
+          name: "Miền 4: DevOps, CI/CD & Điện Toán Đám Mây",
+          en_name: "DevOps & Cloud",
+          description: "Tự động hóa triển khai phần mềm, đóng gói container Docker, cấu hình hạ tầng Linux và giám sát dịch vụ.",
+          competencies: [
+            { code: "IT_OPS_L1", level: "A1", name: "OPS-L1: Quản trị Linux Ubuntu căn bản", statement: "Thao tác dòng lệnh Linux Bash: phân quyền tệp tin, xem tiến trình, chỉnh sửa cấu hình nano/vim.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-105: Quản Trị Hệ Điều Hành Linux" },
+            { code: "IT_OPS_L2", level: "A2", name: "OPS-L2: Đóng gói ứng dụng Docker", statement: "Viết Dockerfile đóng gói ứng dụng, cấu hình biến môi trường và chạy container độc lập.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-205: Docker & Containerization" },
+            { code: "IT_OPS_L3", level: "B1", name: "OPS-L3: Triển khai Docker Compose đa dịch vụ", statement: "Viết file docker-compose.yml khởi chạy cụm Moodle, MariaDB, Liferay và Keycloak.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-205: Docker & Containerization" },
+            { code: "IT_OPS_L4", level: "B2", name: "OPS-L4: Cấu hình Reverse Proxy Nginx & SSL", statement: "Thiết lập Nginx làm cổng Gateway, cấu hình chứng chỉ SSL/TLS và ánh xạ Virtual Hosts FQDN.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-305: Nginx & Reverse Proxy" },
+            { code: "IT_OPS_L5", level: "C1", name: "OPS-L5: Xây dựng Pipeline CI/CD tự động", statement: "Thiết lập GitHub Actions / GitLab CI tự động kiểm thử đơn vị, build jar và deploy server.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-405: CI/CD Pipeline Automation" },
+            { code: "IT_OPS_L6", level: "C2", name: "OPS-L6: Hạ Tầng Tự Động Hóa (Infrastructure as Code)", statement: "Hoạch định hạ tầng đám mây đa vùng, tự động mở rộng (Auto-scaling) và giám sát Prometheus/Grafana.", rule: "Điểm Quiz >= 70% đạt chuẩn", course: "IT-505: Cloud Infrastructure Architecture" }
+          ]
+        }
+      ]
+    };
+
+    // ACTIVE STATE
+    let currentFramework = dataVstep;
+    const allFrameworks = {
+      vstep: dataVstep,
+      digcompedu: dataDigCompEdu,
+      mekoit: dataMekoIT
+    };
+
+    // SWITCH FRAMEWORK
+    function switchFramework(fwKey) {
+      if (!allFrameworks[fwKey]) return;
+      currentFramework = allFrameworks[fwKey];
+
+      // Update Tab active classes
+      document.querySelectorAll('.fw-tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (fwKey === 'vstep') document.getElementById('tabBtnVstep').classList.add('active');
+      else if (fwKey === 'digcompedu') document.getElementById('tabBtnDigCompEdu').classList.add('active');
+      else if (fwKey === 'mekoit') document.getElementById('tabBtnMekoIT').classList.add('active');
+
+      // Update Hero and Header details
+      document.getElementById('bcFrameworkName').innerText = currentFramework.name;
+      document.getElementById('activeFwTitle').innerText = currentFramework.name;
+      document.getElementById('activeFwIdnumber').innerText = `ID Number: ${currentFramework.idnumber} • ${currentFramework.authority}`;
+      document.getElementById('activeFwDesc').innerText = currentFramework.description;
+      document.getElementById('btnDownloadCsvMain').href = currentFramework.csvPath;
+      document.getElementById('btnSampleCsvDownload').href = currentFramework.csvPath;
+
+      // Update counters
+      document.getElementById('metricDomains').innerText = String(currentFramework.domains.length).padStart(2, '0');
+      let totalComp = 0;
+      currentFramework.domains.forEach(d => totalComp += d.competencies.length);
+      document.getElementById('metricCompetencies').innerText = String(totalComp).padStart(2, '0');
+
+      // Render levels strip
+      renderLevelsStrip();
+
+      // Render tree
+      renderCompetencyTree();
+
+      // Render sample CSV
+      renderSampleCsvPreview();
+    }
+
+    // RENDER LEVELS STRIP
+    function renderLevelsStrip() {
+      const strip = document.getElementById('levelsStrip');
+      strip.innerHTML = '';
+      currentFramework.levels.forEach(lvl => {
+        const div = document.createElement('div');
+        div.className = 'level-pill';
+        div.innerHTML = `
+          <div class="level-pill-code">${lvl.name}</div>
+          <div class="level-pill-def">${lvl.desc}</div>
+        `;
+        strip.appendChild(div);
+      });
+    }
+
+    // RENDER TREE
+    function renderCompetencyTree() {
+      const container = document.getElementById('competenciesContainer');
+      container.innerHTML = '';
+
+      const keyword = (document.getElementById('filterKeyword').value || '').trim().toLowerCase();
+      const levelFilter = document.getElementById('filterLevel').value;
+
+      currentFramework.domains.forEach(domain => {
+        // Filter competencies
+        const matchedComps = domain.competencies.filter(c => {
+          const matchKeyword = !keyword || c.name.toLowerCase().includes(keyword) || c.code.toLowerCase().includes(keyword) || c.statement.toLowerCase().includes(keyword);
+          const matchLevel = levelFilter === 'ALL' || c.level.toUpperCase() === levelFilter.toUpperCase();
+          return matchKeyword && matchLevel;
+        });
+
+        if (matchedComps.length === 0) return; // skip domain if no matches
+
+        const domBlock = document.createElement('div');
+        domBlock.className = 'domain-block';
+        domBlock.id = `domain-${domain.code}`;
+
+        domBlock.innerHTML = `
+          <div class="domain-header" onclick="toggleDomain('${domain.code}')">
+            <div class="domain-title-wrap">
+              <span class="domain-badge">${domain.code}</span>
+              <span class="domain-title">${domain.name}</span>
+              <span class="domain-meta">(${matchedComps.length} chuẩn hiển thị)</span>
+            </div>
+            <div class="domain-toggle-icon">▼</div>
+          </div>
+          <div class="domain-body">
+            <div class="domain-desc-text">${domain.description}</div>
+            <div class="competency-grid" id="grid-${domain.code}">
+              ${matchedComps.map(c => `
+                <div class="comp-card">
+                  <div>
+                    <div class="comp-card-header">
+                      <span class="comp-code">${c.code}</span>
+                      <span class="comp-level-badge badge-${c.level.toLowerCase()}">Cấp ${c.level}</span>
+                    </div>
+                    <div class="comp-name">${c.name}</div>
+                    <div class="comp-statement">${c.statement}</div>
+                  </div>
+                  <div>
+                    <div class="comp-card-footer">
+                      <span class="comp-rule-tag">
+                        <span><i class="fa-solid fa-check"></i></span> ${c.rule}
+                      </span>
+                      <button class="btn-inspect" onclick="openCompModal('${c.code}', '${c.name.replace(/'/g, "\'")}', '${c.level}', '${c.statement.replace(/'/g, "\'")}', '${c.rule.replace(/'/g, "\'")}', '${c.course.replace(/'/g, "\'")}')">
+                        Chi Tiết <i class="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+
+        container.appendChild(domBlock);
+      });
+
+      if (container.children.length === 0) {
+        container.innerHTML = `
+          <div style="background:#FFF; border:1px solid var(--border-color); border-radius:10px; padding:40px; text-align:center; color:var(--text-muted);">
+            <div style="font-size:32px; margin-bottom:10px;"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <h3 style="font-size:16px; font-weight:700; color:var(--text-main); margin-bottom:6px;">Không tìm thấy chuẩn năng lực phù hợp</h3>
+            <p style="font-size:13px;">Vui lòng thử lại với từ khóa tìm kiếm khác hoặc chuyển bộ lọc cấp độ về "Tất cả các bậc".</p>
+          </div>
+        `;
+      }
+    }
+
+    // TOGGLE DOMAIN
+    function toggleDomain(domCode) {
+      const block = document.getElementById(`domain-${domCode}`);
+      if (block) {
+        block.classList.toggle('collapsed');
+      }
+    }
+
+    function toggleAllDomains(expand) {
+      document.querySelectorAll('.domain-block').forEach(b => {
+        if (expand) b.classList.remove('collapsed');
+        else b.classList.add('collapsed');
+      });
+    }
+
+    function handleFilter() {
+      renderCompetencyTree();
+    }
+
+    // RENDER SAMPLE CSV PREVIEW TABLE
+    function renderSampleCsvPreview() {
+      const tbody = document.getElementById('csvPreviewBody');
+      tbody.innerHTML = '';
+
+      // Framework root row
+      const rootTr = document.createElement('tr');
+      rootTr.style.background = '#EEF2FF';
+      rootTr.style.fontWeight = 'bold';
+      rootTr.innerHTML = `
+        <td><em>(Root)</em></td>
+        <td><code>${currentFramework.idnumber}</code></td>
+        <td>${currentFramework.name}</td>
+        <td>${currentFramework.description.slice(0, 70)}...</td>
+        <td>Chưa đạt, Đạt</td>
+      `;
+      tbody.appendChild(rootTr);
+
+      // Domain and competency rows
+      currentFramework.domains.forEach(d => {
+        const domTr = document.createElement('tr');
+        domTr.style.background = '#F8FAFC';
+        domTr.style.fontWeight = '600';
+        domTr.innerHTML = `
+          <td><code>${currentFramework.idnumber}</code></td>
+          <td><code>${d.code}</code></td>
+          <td>${d.name}</td>
+          <td>${d.description.slice(0, 60)}...</td>
+          <td><em>(Kế thừa)</em></td>
+        `;
+        tbody.appendChild(domTr);
+
+        d.competencies.slice(0, 2).forEach(c => {
+          const compTr = document.createElement('tr');
+          compTr.innerHTML = `
+            <td><code>${d.code}</code></td>
+            <td><code>${c.code}</code></td>
+            <td>${c.name}</td>
+            <td>${c.statement.slice(0, 65)}...</td>
+            <td><em>(Kế thừa)</em></td>
+          `;
+          tbody.appendChild(compTr);
+        });
+      });
+    }
+
+    // MODAL HANDLERS
+    function openCompModal(code, name, level, statement, rule, course) {
+      document.getElementById('modalTitle').innerText = `${code}: ${name}`;
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div class="modal-row">
+          <div class="modal-label">Mã Chuẩn Năng Lực (ID Number)</div>
+          <div class="modal-val-box"><code>${code}</code></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">Khung Chuẩn & Cấp Độ Trình Độ</div>
+          <div class="modal-val-box">
+            <strong>${currentFramework.name}</strong> • <span class="comp-level-badge badge-${level.toLowerCase()}">Bậc / Cấp ${level}</span>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">Mô Tả Năng Lực Cần Đạt (Competency Statement)</div>
+          <div class="modal-val-box">${statement}</div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">Quy Tắc Đánh Giá Tự Động (Competency Rule Moodle 5.3)</div>
+          <div class="modal-val-box" style="border-left: 3px solid var(--meko-success);">
+            <strong>Quy tắc kích hoạt:</strong> Hoàn thành bài trắc nghiệm Quiz với điểm số &gt;= 70% tự động đánh dấu <code>Proficient = Yes</code> và kích hoạt cấp Chứng chỉ CustomCert PDF.
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">Khóa Học Đang Dạy & Đánh Giá Năng Lực Này</div>
+          <div class="modal-val-box">
+            <a href="05_moodle_lms_course_view_tiles.html" style="color:var(--meko-primary); font-weight:700; text-decoration:none;">
+              <i class="fa-solid fa-book"></i> ${course} (Khóa Học Định Dạng Tiles) <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      `;
+      document.getElementById('compModal').classList.add('show');
+    }
+
+    function closeModal(e) {
+      if (!e || e.target.id === 'compModal' || e.target.classList.contains('modal-close-btn')) {
+        document.getElementById('compModal').classList.remove('show');
+      }
+    }
+
+    // INIT ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check url param
+      const urlParams = new URLSearchParams(window.location.search);
+      const tab = urlParams.get('tab');
+      if (tab === 'digcompedu' || tab === 'faculty' || tab === 'lecturer') {
+        switchFramework('digcompedu');
+      } else if (tab === 'it' || tab === 'mekoit') {
+        switchFramework('mekoit');
+      } else {
+        switchFramework('vstep');
+      }
+    });
+  </script>
+</body>
+</html>

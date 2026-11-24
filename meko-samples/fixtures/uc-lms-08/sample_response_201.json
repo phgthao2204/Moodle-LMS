@@ -1,0 +1,16 @@
+{
+  "course_id": 105,
+  "shortname": "ACCEES-CS101",
+  "fullname": "Nhap mon Khoa hoc Du lieu",
+  "category_id": 1,
+  "import_status": "completed",
+  "modules_created": 4,
+  "lom_summary": {
+    "accees_course_status": "published",
+    "accees_delivery_mode": "online",
+    "accees_duration": "30",
+    "accees_institution": "CTU",
+    "accees_is_featured": true
+  },
+  "warnings": []
+}

@@ -1,0 +1,27 @@
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.bak
+*~
+*.swp
+
+# Node & Build artifacts
+node_modules/
+npm-debug.log
+
+# Composer
+vendor/
+
+# Archives
+*.zip
+*.tar.gz
+releases/
+
+# AI & Test Artifacts
+AGENTS.md
+test-results/
+scratch/
+meko
+

@@ -1,0 +1,540 @@
+/* ==============================================================================
+ * MEKO-LMS DESIGN SYSTEM v2.0 - CLEAN DIRECT LOGIN (/login/index.php) SCSS
+ * 100% Solid Colors, 0% Gradient, 0% Emoji, Be Vietnam Pro typography.
+ * ============================================================================== */
+
+/* Accessibility Skip-to-main-content hidden unless focused */
+.visually-hidden-focusable:not(:focus):not(:focus-within),
+.sr-only:not(:focus):not(:focus-within),
+.sr-only-focusable:not(:focus):not(:focus-within),
+a.visually-hidden-focusable:not(:focus) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.visually-hidden-focusable:focus,
+a.visually-hidden-focusable:focus {
+    position: absolute !important;
+    top: 8px !important;
+    left: 8px !important;
+    z-index: 9999 !important;
+    padding: 8px 14px !important;
+    background: #0000B6 !important;
+    color: #FFFFFF !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+body.accees-clean-login-page {
+    background-color: #0F172A !important;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px) !important;
+    background-size: 24px 24px !important;
+    color: #0F172A;
+    margin: 0;
+    padding: 0;
+    font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.accees-login-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .top-strip {
+        background-color: rgba(15, 23, 42, 0.85);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        width: 100%;
+        box-sizing: border-box;
+
+        .login-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #E2E8F0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.15s ease;
+
+            &:hover {
+                background: #0000B6;
+                color: #FFFFFF;
+                border-color: #0000B6;
+                text-decoration: none;
+            }
+        }
+
+        .project-tag {
+            font-weight: 600;
+            color: #94A3B8;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .badge-meko {
+                background-color: #1E293B;
+                color: #38BDF8;
+                padding: 3px 8px;
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 700;
+                border: 1px solid #334155;
+            }
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+
+            .lang-btn {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11.5px;
+                font-weight: 700;
+                text-decoration: none;
+                color: #94A3B8;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.05);
+                transition: all 0.15s ease;
+
+                &:hover {
+                    border-color: #FFFFFF;
+                    color: #FFFFFF;
+                    text-decoration: none;
+                }
+
+                &.active {
+                    background: #0000B6;
+                    color: #FFFFFF;
+                    border-color: #0000B6;
+                }
+            }
+        }
+    }
+
+    .login-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 36px 16px;
+        box-sizing: border-box;
+    }
+
+    .login-card-container {
+        width: 100%;
+        max-width: 485px !important;
+        background: #FFFFFF !important;
+        border-radius: 12px !important;
+        border: 1px solid #E2E8F0 !important;
+        border-top: 5px solid #0000B6 !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3) !important;
+        overflow: hidden;
+        margin: 0 auto;
+        padding: 0 !important;
+    }
+
+    .login-header {
+        padding: 28px 28px 16px;
+        text-align: center;
+        border-bottom: 1px solid #F1F5F9;
+        background: #FFFFFF;
+
+        .brand-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            text-decoration: none;
+
+            .brand-badge {
+                background-color: #EEF2FF;
+                color: #0000B6;
+                border: 1px solid #C7D2FE;
+                padding: 2px 7px;
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 700;
+            }
+        }
+
+        .login-heading {
+            font-size: 20px !important;
+            font-weight: 800 !important;
+            color: #0F172A !important;
+            margin-bottom: 6px !important;
+            letter-spacing: -0.2px;
+        }
+
+        .login-subheading {
+            font-size: 13px !important;
+            color: #64748B !important;
+            margin-bottom: 0 !important;
+            line-height: 1.4 !important;
+            white-space: nowrap !important;
+            letter-spacing: -0.1px !important;
+        }
+    }
+
+    .login-body {
+        padding: 22px 28px 24px;
+        box-sizing: border-box;
+        background: #FFFFFF;
+
+        .loginform {
+            h1.h2,
+            > p.text-muted,
+            .login-languagemenu,
+            .login-cookiesnotice,
+            .login-divider {
+                display: none !important;
+            }
+        }
+
+        .login-institution-note {
+            font-size: 12px !important;
+            font-weight: 500 !important;
+            color: #475569 !important;
+            margin: 0 0 16px 0 !important;
+            text-align: left !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            letter-spacing: -0.15px !important;
+            line-height: 1.4 !important;
+        }
+
+        .login-form-username,
+        .login-form-password {
+            margin-bottom: 16px;
+            text-align: left;
+
+            label,
+            .meko-label {
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                color: #334155 !important;
+                margin-bottom: 4px !important;
+                display: block !important;
+                text-align: left !important;
+            }
+        }
+
+        .meko-input-icon {
+            display: block !important;
+            color: #0F172A !important;
+            margin-bottom: 5px !important;
+            text-align: left !important;
+            line-height: 1 !important;
+
+            svg {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+
+        input.form-control {
+            height: 44px !important;
+            border: 1.5px solid #CBD5E1 !important;
+            border-radius: 6px !important;
+            padding: 10px 14px !important;
+            font-size: 14px !important;
+            color: #0F172A !important;
+            background-color: #F8FAFC !important;
+            transition: border-color 0.15s ease, background-color 0.15s ease !important;
+            width: 100%;
+            box-sizing: border-box;
+
+            &:focus {
+                background-color: #FFFFFF !important;
+                border-color: #0000B6 !important;
+                box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+                outline: none !important;
+            }
+        }
+
+        /* Password Group & Eye Toggle Button - Seamless Unified Input Pill */
+        .input-group,
+        .meko-password-group,
+        .toggle-sensitive-wrapper {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            position: relative !important;
+            height: 44px !important;
+            border: 1.5px solid #CBD5E1 !important;
+            border-radius: 6px !important;
+            background-color: #F8FAFC !important;
+            transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+
+            &:focus-within {
+                border-color: #0000B6 !important;
+                background-color: #FFFFFF !important;
+                box-shadow: 0 0 0 3px rgba(0, 0, 182, 0.1) !important;
+            }
+
+            > input.form-control {
+                flex: 1 1 auto !important;
+                width: 1% !important;
+                min-width: 0 !important;
+                height: 100% !important;
+                border: none !important;
+                outline: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                border-radius: 0 !important;
+                padding: 10px 14px !important;
+                font-size: 14px !important;
+                color: #0F172A !important;
+                margin: 0 !important;
+
+                &:focus {
+                    border: none !important;
+                    outline: none !important;
+                    box-shadow: none !important;
+                    background: transparent !important;
+                }
+            }
+
+            > button,
+            > .btn,
+            .meko-eye-toggle-btn {
+                flex: 0 0 44px !important;
+                width: 44px !important;
+                height: 100% !important;
+                border: none !important;
+                outline: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                border-radius: 0 !important;
+                color: #64748B !important;
+                padding: 0 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                cursor: pointer !important;
+                margin: 0 !important;
+                transition: background-color 0.15s ease, color 0.15s ease !important;
+
+                &:hover {
+                    color: #0F172A !important;
+                    background-color: rgba(0, 0, 0, 0.04) !important;
+                }
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                }
+            }
+
+            .eye-icon-hide {
+                display: none !important;
+            }
+
+            &.is-showing-password {
+                .eye-icon-show {
+                    display: none !important;
+                }
+                .eye-icon-hide {
+                    display: inline-block !important;
+                }
+            }
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+
+        .meko-form-options {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            margin-top: 14px !important;
+            margin-bottom: 18px !important;
+            font-size: 13px !important;
+
+            .meko-remember-box {
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 7px !important;
+                margin: 0 !important;
+
+                .form-check-input {
+                    margin: 0 !important;
+                    cursor: pointer !important;
+                    width: 16px !important;
+                    height: 16px !important;
+                    border: 1.5px solid #CBD5E1 !important;
+                    border-radius: 4px !important;
+                    -webkit-appearance: none !important;
+                    appearance: none !important;
+                    background-color: #ffffff !important;
+
+                    &:checked {
+                        background-color: #0000B6 !important;
+                        border-color: #0000B6 !important;
+                        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m5 10 3.5 3.5 6.5-7'/%3e%3c/svg%3e") !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                        background-size: 11px 11px !important;
+                    }
+                }
+
+                .form-check-label {
+                    cursor: pointer !important;
+                    color: #475569 !important;
+                    font-size: 13px !important;
+                    font-weight: 500 !important;
+                    user-select: none !important;
+                }
+            }
+
+            .meko-forgot-box {
+                text-align: right;
+
+                .meko-forgot-link {
+                    color: #0000B6 !important;
+                    font-size: 13px !important;
+                    font-weight: 600 !important;
+                    text-decoration: none !important;
+                    transition: color 0.15s ease !important;
+
+                    &:hover {
+                        color: #000088 !important;
+                        text-decoration: underline !important;
+                    }
+                }
+            }
+        }
+
+        .login-form-submit {
+            margin-top: 16px;
+            margin-bottom: 10px;
+
+            #loginbtn,
+            .meko-submit-btn,
+            button[type="submit"] {
+                width: 100% !important;
+                height: 46px !important;
+                background-color: #0000B6 !important;
+                border: 1px solid #0000B6 !important;
+                color: #FFFFFF !important;
+                font-size: 14.5px !important;
+                font-weight: 700 !important;
+                border-radius: 6px !important;
+                cursor: pointer !important;
+                transition: background-color 0.15s ease, transform 0.1s ease !important;
+
+                &:hover {
+                    background-color: #000096 !important;
+                    border-color: #000096 !important;
+                    color: #FFFFFF !important;
+                    text-decoration: none !important;
+                }
+            }
+        }
+
+        .alert-danger,
+        .loginerrors,
+        .meko-login-alert {
+            background-color: #FEF2F2 !important;
+            border: 1px solid #FECACA !important;
+            color: #DC2626 !important;
+            border-radius: 6px !important;
+            padding: 10px 14px !important;
+            font-size: 13px !important;
+            margin-bottom: 16px !important;
+        }
+    }
+
+    .login-footer {
+        padding: 16px 28px 20px;
+        text-align: center;
+        font-size: 12.5px;
+        color: #64748B;
+        border-top: 1px solid #F1F5F9;
+        background: #F8FAFC;
+        line-height: 1.5;
+
+        .support-info a {
+            color: #0000B6;
+            text-decoration: none;
+            font-weight: 600;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .copyright {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #94A3B8;
+        }
+    }
+}
+
+@media (max-width: 520px) {
+    .accees-login-shell {
+        .login-card-container {
+            max-width: 100% !important;
+            margin: 0 6px;
+        }
+
+        .login-header {
+            padding: 22px 18px 14px;
+
+            .login-subheading {
+                white-space: normal !important;
+                font-size: 12px !important;
+                text-wrap: balance !important;
+            }
+        }
+
+        .login-body {
+            padding: 18px 18px 20px;
+
+            .login-institution-note {
+                white-space: normal !important;
+                font-size: 11px !important;
+                text-wrap: balance !important;
+            }
+        }
+
+        .login-footer {
+            padding: 14px 18px 18px;
+        }
+    }
+}

@@ -1,0 +1,4 @@
+plugins { id "base" }
+
+tasks.named("build") { dependsOn subprojects.collect { it.tasks.matching { task -> task.name == "build" } } }
+tasks.named("clean") { dependsOn subprojects.collect { it.tasks.matching { task -> task.name == "clean" } } }

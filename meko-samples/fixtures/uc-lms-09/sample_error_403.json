@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "FORBIDDEN",
+    "message": "User does not possess the required capability local/accees_imscp:export for this course",
+    "details": {
+      "capability": "local/accees_imscp:export",
+      "course_id": 35
+    }
+  }
+}

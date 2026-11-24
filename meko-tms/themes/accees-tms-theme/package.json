@@ -1,0 +1,15 @@
+{
+  "name": "accees-tms-theme",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:live": "node scripts/verify-live.mjs"
+  },
+  "devDependencies": {
+    "adm-zip": "0.6.1",
+    "sass": "1.83.4"
+  }
+}

@@ -1,0 +1,317 @@
+{{!
+    @template theme_accees_lms_theme/frontpage
+
+    ACCEES LMS Frontpage Template.
+    100% aligned with ACCEES LMS Design System v2.0 (ACCEES_LMS_Design_System.html).
+    Renders Solid Blue Hero Banner with 4 Highlight Cards, Competency Frameworks (soft-tinted 36x36px icons),
+    16:9 Course Cards (.card-course-demo), and Ecosystem Interoperability Hub.
+}}
+<div class="accees-frontpage-wrapper">
+    <!-- 1. HERO BANNER (DESIGN SYSTEM #sec-hero) -->
+    <section class="accees-hero-section" id="sec-hero">
+        <div class="container">
+            <div class="ds-hero-banner">
+                <div class="ds-hero-label">{{#hero_badge}}{{hero_badge}}{{/hero_badge}}{{^hero_badge}}{{#str}}hero_badge, theme_meko{{/str}}{{/hero_badge}}</div>
+                <h1 class="ds-hero-title">{{#herotitle}}{{ herotitle }}{{/herotitle}}{{^herotitle}}{{#str}}hero_default_title, theme_meko{{/str}}{{/herotitle}}</h1>
+                <p class="ds-hero-desc">{{#herosubtitle}}{{ herosubtitle }}{{/herosubtitle}}{{^herosubtitle}}{{#str}}hero_default_subtitle, theme_meko{{/str}}{{/herosubtitle}}</p>
+
+                <!-- Search Bar (.search-hero-box) -->
+                <div class="hero-search-wrapper mb-3">
+                    <form action="{{{ config.wwwroot }}}/course/search.php" method="get">
+                        <div class="search-hero-box mx-auto">
+                            <i class="fa-solid fa-magnifying-glass text-muted ms-3" style="font-size: 15px;"></i>
+                            <input type="text" name="search" id="hero-search-input" placeholder="{{#str}}searchcourses, theme_meko{{/str}}" aria-label="Search courses" required>
+                            <button class="btn-hero-search" id="hero-btn-search" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>{{#str}}searchbutton, theme_meko{{/str}}</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Hero Primary & Secondary Actions CTA -->
+                <div class="hero-actions-row mb-4 d-flex justify-content-center align-items-center flex-wrap" style="gap: 12px;">
+                    <a href="{{{ config.wwwroot }}}/course/index.php" id="hero-cta-explore" class="btn-hero-cta-primary">
+                        <span>{{#str}}hero_cta_explore, theme_meko{{/str}}</span>
+                    </a>
+                    <a href="{{{ config.wwwroot }}}/local/meko_competencies/index.php" id="hero-cta-assessment" class="btn-hero-cta-secondary">
+                        <span>{{#str}}hero_cta_assessment, theme_meko{{/str}}</span>
+                    </a>
+                </div>
+
+                <!-- 4 Highlight Cards (.ds-hero-grid from Design System lines 942-966) -->
+                <div class="ds-hero-grid text-start">
+                    <div class="ds-hero-card">
+                        <div class="ds-hero-card-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                        <div class="ds-hero-card-title">{{#str}}hero_stat1_title, theme_meko{{/str}}</div>
+                        <div class="ds-hero-card-desc">{{#str}}hero_stat1_desc, theme_meko{{/str}}</div>
+                    </div>
+                    <div class="ds-hero-card">
+                        <div class="ds-hero-card-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <div class="ds-hero-card-title">{{#str}}hero_stat2_title, theme_meko{{/str}}</div>
+                        <div class="ds-hero-card-desc">{{#str}}hero_stat2_desc, theme_meko{{/str}}</div>
+                    </div>
+                    <div class="ds-hero-card">
+                        <div class="ds-hero-card-icon"><i class="fa-solid fa-box-archive"></i></div>
+                        <div class="ds-hero-card-title">{{#str}}hero_stat3_title, theme_meko{{/str}}</div>
+                        <div class="ds-hero-card-desc">{{#str}}hero_stat3_desc, theme_meko{{/str}}</div>
+                    </div>
+                    <div class="ds-hero-card">
+                        <div class="ds-hero-card-icon"><i class="fa-solid fa-award"></i></div>
+                        <div class="ds-hero-card-title">{{#str}}hero_stat4_title, theme_meko{{/str}}</div>
+                        <div class="ds-hero-card-desc">{{#str}}hero_stat4_desc, theme_meko{{/str}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. COMPETENCY FRAMEWORKS SECTION (DESIGN SYSTEM #sec-icons & #sec-tabs) -->
+    <section class="competency-section" id="sec-competencies">
+        <div class="container">
+            <div class="section-header text-center mb-4">
+                <div class="ds-section-tag">{{#str}}comp_eyebrow, theme_meko{{/str}}</div>
+                <h2 class="section-title">{{#str}}competency_frameworks, theme_meko{{/str}}</h2>
+                <p class="section-desc">{{#str}}comp_section_desc, theme_meko{{/str}}</p>
+            </div>
+
+            <!-- Navigation Tabs: Sinh viên (DigComp 2.2) & Giảng viên (DigCompEdu) -->
+            <ul class="nav nav-tabs nav-tabs-competency" id="competencyTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="student-tab" onclick="switchCompetencyTab('student', this)" data-toggle="tab" data-bs-toggle="tab" data-target="#student-domains" data-bs-target="#student-domains" type="button" role="tab" aria-controls="student-domains" aria-selected="true">
+                        <span>{{#str}}student_framework, theme_meko{{/str}}</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="teacher-tab" onclick="switchCompetencyTab('teacher', this)" data-toggle="tab" data-bs-toggle="tab" data-target="#teacher-domains" data-bs-target="#teacher-domains" type="button" role="tab" aria-controls="teacher-domains" aria-selected="false">
+                        <span>{{#str}}teacher_framework, theme_meko{{/str}}</span>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="competencyTabContent">
+                <!-- 5 Student Domains (DigComp 2.2) -->
+                <div class="tab-pane fade show active" id="student-domains" role="tabpanel" aria-labelledby="student-tab">
+                    <div class="competency-grid">
+                        {{#student_domains}}
+                        <div class="competency-card" style="border-top: 3px solid {{ border_color }};">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3" style="gap: 8px;">
+                                    <div class="ds-rule-icon" style="background-color: {{ icon_bg }}; color: {{ icon_color }};">
+                                        <i class="{{ icon }}"></i>
+                                    </div>
+                                    <span class="ds-domain-pill text-nowrap" style="background-color: {{ icon_bg }}; color: {{ icon_color }}; white-space: nowrap;">{{ badge_label }}</span>
+                                </div>
+                                <div class="card-title">{{ title }}</div>
+                                <p class="card-desc">{{ desc }}</p>
+                            </div>
+                            <div class="card-meta">
+                                <span><i class="fa-solid fa-layer-group me-1" style="color: {{ icon_color }};"></i> {{ meta_label }}</span>
+                                <a href="{{{ config.wwwroot }}}{{ cat_url }}" class="btn-ds-outline-sm">{{#str}}view_domain_courses, theme_meko{{/str}} <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                            </div>
+                        </div>
+                        {{/student_domains}}
+                    </div>
+                </div>
+
+                <!-- 6 Teacher Domains (DigCompEdu) -->
+                <div class="tab-pane fade" id="teacher-domains" role="tabpanel" aria-labelledby="teacher-tab">
+                    <div class="competency-grid">
+                        {{#teacher_domains}}
+                        <div class="competency-card" style="border-top: 3px solid {{ border_color }};">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-3" style="gap: 8px;">
+                                    <div class="ds-rule-icon" style="background-color: {{ icon_bg }}; color: {{ icon_color }};">
+                                        <i class="{{ icon }}"></i>
+                                    </div>
+                                    <span class="ds-domain-pill text-nowrap" style="background-color: {{ icon_bg }}; color: {{ icon_color }}; white-space: nowrap;">{{ badge_label }}</span>
+                                </div>
+                                <div class="card-title">{{ title }}</div>
+                                <p class="card-desc">{{ desc }}</p>
+                            </div>
+                            <div class="card-meta">
+                                <span><i class="fa-solid fa-layer-group me-1" style="color: {{ icon_color }};"></i> {{ meta_label }}</span>
+                                <a href="{{{ config.wwwroot }}}{{ cat_url }}" class="btn-ds-outline-sm">{{#str}}view_domain_courses, theme_meko{{/str}} <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                            </div>
+                        </div>
+                        {{/teacher_domains}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. DYNAMIC COURSES 16:9 CARDS (DESIGN SYSTEM #sec-course-card lines 1420-1473) -->
+    <section class="course-section" id="sec-courses">
+        <div class="container">
+            <div class="section-header text-center mb-4">
+                <div class="ds-section-tag">{{#str}}courses_eyebrow, theme_meko{{/str}}</div>
+                <h2 class="section-title">{{#str}}featured_courses, theme_meko{{/str}}</h2>
+                <p class="section-desc">{{#str}}courses_section_desc, theme_meko{{/str}}</p>
+            </div>
+
+            {{#has_course_categories}}
+            <div class="d-flex flex-wrap justify-content-center mb-4" id="accees-category-filters" style="gap: 8px;">
+                <button type="button" onclick="filterAcceesCourses('all', this)" class="accees-cat-filter-btn active">
+                    <span>{{#str}}all_categories, theme_meko{{/str}}</span>
+                </button>
+                {{#course_categories}}
+                <button type="button" onclick="filterAcceesCourses('{{ id }}', this)" class="accees-cat-filter-btn">
+                    <span>{{ name }}</span>
+                    <span class="cat-count-pill">{{ coursecount }}</span>
+                </button>
+                {{/course_categories}}
+            </div>
+            {{/has_course_categories}}
+
+            {{#has_featured_courses}}
+            <div class="row" id="accees-courses-grid">
+                {{#featured_courses}}
+                <div class="col-lg-4 col-md-6 col-12 mb-4 accees-course-item" data-category-id="{{ categoryid }}">
+                    {{> core_course/course_card }}
+                </div>
+                {{/featured_courses}}
+            </div>
+            {{/has_featured_courses}}
+
+            <div class="text-center mt-2">
+                <a href="{{{ config.wwwroot }}}/course/index.php" class="btn-ds-outline-primary">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>{{#str}}explore_courses, theme_meko{{/str}}</span>
+                </a>
+            </div>
+
+            <!-- Standard Moodle Frontpage Content Output (Hidden to preserve clean portal design) -->
+            <div class="moodle-frontpage-content d-none" aria-hidden="true">
+                {{{ output.main_content }}}
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ECOSYSTEM INTEGRATION HUB (DESIGN SYSTEM #sec-hub) -->
+    <section class="ecosystem-section" id="sec-ecosystem">
+        <div class="container">
+            <div class="section-header text-center mb-4">
+                <div class="ds-section-tag">{{#str}}eco_eyebrow, theme_meko{{/str}}</div>
+                <h2 class="section-title"><i class="fa-solid fa-network-wired me-2" style="color: #0000B6;"></i>{{#str}}eco_title, theme_meko{{/str}}</h2>
+                <p class="section-desc">{{#str}}eco_desc, theme_meko{{/str}}</p>
+            </div>
+
+            <div class="row mt-2">
+                <!-- Ecosystem Card 1: TMS -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="eco-card h-100 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3" style="gap: 12px;">
+                            <div class="ds-rule-icon-lg" style="background-color: #EBF0FF; color: #0000B6;">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <div>
+                                <h5 class="eco-card-title mb-1">{{#str}}eco_tms_title, theme_meko{{/str}}</h5>
+                                <span class="ds-badge badge-light-blue">ACCEES-TMS · Liferay 7.4</span>
+                            </div>
+                        </div>
+                        <p class="eco-card-desc">{{#str}}eco_tms_desc, theme_meko{{/str}}</p>
+                        <ul class="list-unstyled eco-feature-list mb-4 flex-grow-1">
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_tms_b1, theme_meko{{/str}}</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_tms_b2, theme_meko{{/str}}</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_tms_b3, theme_meko{{/str}}</li>
+                        </ul>
+                        <a href="{{{ tms_url }}}" target="_blank" rel="noopener" class="btn-ds-outline-primary w-100 justify-content-center mt-auto">
+                            <span>{{#str}}eco_tms_btn, theme_meko{{/str}}</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Ecosystem Card 2: DLRP -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="eco-card h-100 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3" style="gap: 12px;">
+                            <div class="ds-rule-icon-lg" style="background-color: #F0FDF0; color: #39B500;">
+                                <i class="fa-solid fa-box-archive"></i>
+                            </div>
+                            <div>
+                                <h5 class="eco-card-title mb-1">{{#str}}eco_dlrp_title, theme_meko{{/str}}</h5>
+                                <span class="ds-badge badge-light-green">ACCEES-DLRP · InvenioRDM</span>
+                            </div>
+                        </div>
+                        <p class="eco-card-desc">{{#str}}eco_dlrp_desc, theme_meko{{/str}}</p>
+                        <ul class="list-unstyled eco-feature-list mb-4 flex-grow-1">
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_dlrp_b1, theme_meko{{/str}}</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_dlrp_b2, theme_meko{{/str}}</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_dlrp_b3, theme_meko{{/str}}</li>
+                        </ul>
+                        <a href="{{{ dlrp_url }}}" target="_blank" rel="noopener" class="btn-ds-outline-secondary w-100 justify-content-center mt-auto">
+                            <span>{{#str}}eco_dlrp_btn, theme_meko{{/str}}</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Ecosystem Card 3: SSO -->
+                <div class="col-lg-4 col-md-12 mb-4">
+                    <div class="eco-card h-100 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3" style="gap: 12px;">
+                            <div class="ds-rule-icon-lg" style="background-color: #FFF5EB; color: #EA6400;">
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+                            <div>
+                                <h5 class="eco-card-title mb-1">{{#str}}eco_sso_title, theme_meko{{/str}}</h5>
+                                <span class="ds-badge badge-light-orange">ACCEES-SSO · Keycloak IAM</span>
+                            </div>
+                        </div>
+                        <p class="eco-card-desc">{{#str}}eco_sso_desc, theme_meko{{/str}}</p>
+                        <ul class="list-unstyled eco-feature-list mb-4 flex-grow-1">
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_sso_b1, theme_meko{{/str}}</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_sso_b2, theme_meko{{/str}}</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: #39B500;"></i> {{#str}}eco_sso_b3, theme_meko{{/str}}</li>
+                        </ul>
+                        <a href="{{{ sso_account_url }}}" target="_blank" rel="noopener" class="btn-ds-outline-accent w-100 justify-content-center mt-auto">
+                            <span>{{#str}}eco_sso_btn, theme_meko{{/str}}</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+function switchCompetencyTab(target, btnEl) {
+    var studentPane = document.getElementById('student-domains');
+    var teacherPane = document.getElementById('teacher-domains');
+    var studentBtn = document.getElementById('student-tab');
+    var teacherBtn = document.getElementById('teacher-tab');
+    if (!studentPane || !teacherPane) return;
+    if (target === 'teacher') {
+        studentPane.classList.remove('show', 'active');
+        teacherPane.classList.add('show', 'active');
+        studentBtn.classList.remove('active');
+        teacherBtn.classList.add('active');
+    } else {
+        teacherPane.classList.remove('show', 'active');
+        studentPane.classList.add('show', 'active');
+        teacherBtn.classList.remove('active');
+        studentBtn.classList.add('active');
+    }
+}
+
+function filterAcceesCourses(catId, btnEl) {
+    var buttons = document.querySelectorAll('#accees-category-filters .accees-cat-filter-btn');
+    buttons.forEach(function(b) {
+        b.classList.remove('active');
+    });
+    if (btnEl) {
+        btnEl.classList.add('active');
+    }
+    var items = document.querySelectorAll('#accees-courses-grid .accees-course-item');
+    items.forEach(function(item) {
+        if (catId === 'all' || item.getAttribute('data-category-id') === String(catId)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+</script>

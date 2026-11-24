@@ -1,0 +1,840 @@
+{{!
+    @template theme_accees_lms_theme/core_course/coursecat
+    ACCEES-LMS Competency-Filtered Course Catalog (/course/index.php) - UC-LMS-01 & UC-LMS-02.
+    Sticky 2-column layout, Active Filter Chips, Competency Context Banner, Server Sort & Pagination,
+    Compound Empty States, and Vanilla-JS Quick Competency Picker Modal.
+    Strict zero exposed internal idnumber policy.
+}}
+
+<div class="course-catalog-page-wrapper">
+
+    <!-- Breadcrumb -->
+    <nav class="cat-breadcrumb mb-3" aria-label="Breadcrumb">
+        <a href="{{config.wwwroot}}/?redirect=0" style="color: #0000B6; text-decoration: none; font-size: 13px; font-weight: 600;"><i class="fa-solid fa-house me-1"></i>{{#str}} nav_home, theme_meko {{/str}}</a>
+        <span style="color: #94A3B8; margin: 0 8px;">/</span>
+        <strong style="color: #0F172A; font-size: 13px;">{{#str}} course_catalog, theme_meko {{/str}}</strong>
+    </nav>
+
+    {{! 1. Category Header Strip (shown when no specific Competency Target Level banner is active) }}
+    {{^competency_filter}}
+    <div class="cat-header-strip">
+        {{#categoryname}}
+            <span class="cat-header-badge">
+                <i class="fa fa-folder-open me-1"></i> {{#str}} domain_title, theme_meko {{/str}}
+            </span>
+            <h1>{{ categoryname }}</h1>
+            {{#categorydesc}}
+                <p>{{{ categorydesc }}}</p>
+            {{/categorydesc}}
+            {{^categorydesc}}
+                <p>{{#str}} all_categories_desc, theme_meko {{/str}}</p>
+            {{/categorydesc}}
+        {{/categoryname}}
+        {{^categoryname}}
+            <span class="cat-header-badge">
+                <i class="fa fa-graduation-cap me-1"></i> {{#str}} course_catalog, theme_meko {{/str}}
+            </span>
+            <h1>{{#str}} all_categories, theme_meko {{/str}}</h1>
+            <p>{{#str}} all_categories_desc, theme_meko {{/str}}</p>
+        {{/categoryname}}
+    </div>
+    {{/competency_filter}}
+
+    {{! 2. Grid-Aligned 2-Column Catalog Body }}
+    <div class="row align-items-start">
+
+        {{! LEFT COLUMN: Sticky Competency Navigation & Moodle Category Filter }}
+        <aside class="col-lg-3 col-md-4 mb-4">
+            <div class="catalog-sidebar-sticky">
+
+                {{! Widget 1: Digital Competency Tree & Quick Search }}
+                {{#competency_sidebar}}
+                <div class="catalog-sidebar-card" data-framework-key="{{ active_framework }}">
+                    <div class="catalog-sidebar-card-header">
+                        <span class="catalog-sidebar-card-title">
+                            <i class="fa fa-sitemap"></i> {{#str}} nav_competencies, theme_meko {{/str}}
+                        </span>
+                        <span class="catalog-fw-count-pill">{{ competency_count_badge }}</span>
+                    </div>
+                    <div class="p-3">
+                        {{! Students / Faculty Framework Switcher }}
+                        <div class="catalog-fw-switcher" role="tablist" aria-label="Competency Framework">
+                            <a href="{{{ students_tab_url }}}"
+                               class="catalog-fw-tab-link {{#is_students}}active{{/is_students}}">
+                                <i class="fa fa-graduation-cap me-1"></i> {{#str}} student_tab, theme_meko {{/str}}
+                            </a>
+                            <a href="{{{ faculty_tab_url }}}"
+                               class="catalog-fw-tab-link {{#is_faculty}}active{{/is_faculty}}">
+                                <i class="fa fa-chalkboard-user me-1"></i> {{#str}} teacher_tab, theme_meko {{/str}}
+                            </a>
+                        </div>
+
+                        {{! Sidebar Quick Competency Search }}
+                        <div class="sidebar-search-wrap">
+                            <i class="fa fa-search sidebar-search-icon" aria-hidden="true"></i>
+                            <input type="text"
+                                   id="sidebarCompSearch"
+                                   placeholder="{{#str}} search_filter_placeholder, theme_meko {{/str}}"
+                                   autocomplete="off">
+                            <button type="button"
+                                    id="sidebarCompSearchClear"
+                                    class="sidebar-search-clear"
+                                    aria-label="{{#str}} clear_search_btn, theme_meko {{/str}}"
+                                    title="{{#str}} clear_search_btn, theme_meko {{/str}}">&times;</button>
+                        </div>
+
+                        {{! Collapsible 3-Tier Domain > Competency > Level Tree (Vanilla JS Accordions) }}
+                        <div class="sidebar-comp-tree" id="sidebarCompTree">
+                            {{#domains}}
+                            <div class="sidebar-domain-block {{#is_open}}is-open{{/is_open}}"
+                                 data-domain-code="{{ idnumber }}">
+                                <button type="button"
+                                        class="sidebar-domain-header"
+                                        aria-expanded="{{#is_open}}true{{/is_open}}{{^is_open}}false{{/is_open}}">
+                                    <span class="text-truncate" title="{{ shortname }}">{{ shortname }}</span>
+                                    <i class="fa fa-chevron-down sidebar-domain-chevron" aria-hidden="true"></i>
+                                </button>
+                                <div class="sidebar-domain-body">
+                                    {{#competencies}}
+                                    <div class="sidebar-comp-item" data-comp-code="{{ idnumber }}">
+                                        {{#comp_url}}
+                                        <a href="{{{ comp_url }}}"
+                                           class="sidebar-comp-title d-block text-decoration-none {{#is_current_comp}}is-current{{/is_current_comp}}"
+                                           title="{{ shortname }}"
+                                           {{#is_current_comp}}aria-current="page"{{/is_current_comp}}>{{ shortname }}</a>
+                                        {{/comp_url}}
+                                        {{^comp_url}}
+                                        <div class="sidebar-comp-title">{{ shortname }}</div>
+                                        {{/comp_url}}
+                                        <div class="sidebar-levels-wrap">
+                                            {{#levels}}
+                                            <a href="{{{ url }}}"
+                                               class="sidebar-level-btn level-key-{{ level_key }} {{#is_current}}is-current{{/is_current}}"
+                                               title="{{ shortname }}"
+                                               {{#is_current}}aria-current="page"{{/is_current}}>
+                                                {{ level_badge }}
+                                            </a>
+                                            {{/levels}}
+                                        </div>
+                                    </div>
+                                    {{/competencies}}
+                                </div>
+                            </div>
+                            {{/domains}}
+                        </div>
+
+                        {{! Sidebar Modal Trigger + View Full Framework Matrix/Tree Link }}
+                        <div class="catalog-sidebar-actions">
+                            {{#competency_picker}}
+                            <button type="button"
+                                    class="btn-open-comp-picker"
+                                    data-open-comp-picker="1">
+                                <i class="fa fa-sliders"></i> {{#str}} browse_all_competencies, theme_meko {{/str}}
+                            </button>
+                            {{/competency_picker}}
+                            <a href="{{{ view_all_framework_url }}}"
+                               class="btn-view-full-framework">
+                                <i class="fa fa-arrow-up-right-from-square"></i> {{#str}} view_all_framework, theme_meko {{/str}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{/competency_sidebar}}
+
+                {{! Widget 2: Quick Sibling Proficiency Level Switcher }}
+                {{#competency_filter}}
+                    {{#has_siblings}}
+                    <div class="catalog-sidebar-card">
+                        <div class="catalog-sidebar-card-header">
+                            <span class="catalog-sidebar-card-title">
+                                <i class="fa fa-layer-group"></i> {{#str}} sibling_levels_title, theme_meko {{/str}}
+                            </span>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            {{#sibling_levels}}
+                                <a href="{{{ url }}}"
+                                   class="list-group-item list-group-item-action catalog-sidebar-item d-flex justify-content-between align-items-center {{#is_current}}active{{/is_current}}"
+                                   {{#is_current}}aria-current="page"{{/is_current}}>
+                                    <span>{{ badge_label }}</span>
+                                    {{#is_current}}<i class="fa fa-check-circle small" aria-hidden="true"></i>{{/is_current}}
+                                </a>
+                            {{/sibling_levels}}
+                        </div>
+                    </div>
+                    {{/has_siblings}}
+                {{/competency_filter}}
+
+                {{! Widget 3: Knowledge Domains (Moodle Course Categories) }}
+                <div class="catalog-sidebar-card mb-0">
+                    <div class="catalog-sidebar-card-header">
+                        <span class="catalog-sidebar-card-title">
+                            <i class="fa fa-folder"></i> {{#str}} domains_nav, theme_meko {{/str}}
+                        </span>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {{#categories_tree}}
+                            <a href="{{{ url }}}"
+                               class="list-group-item list-group-item-action catalog-sidebar-item d-flex justify-content-between align-items-center {{#isactive}}active{{/isactive}}">
+                                <span class="text-truncate me-2" title="{{ name }}">{{ name }}</span>
+                                <span class="badge bg-light text-dark border rounded-pill">{{ course_count }}</span>
+                            </a>
+                        {{/categories_tree}}
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        {{! RIGHT COLUMN: Active Filter Chips, Competency Banner, Toolbar, Course Grid, Pagination }}
+        <section class="col-lg-9 col-md-8">
+
+            {{! Active Filters Strip (Domain + Framework + Target Level) }}
+            {{#has_active_filters}}
+            <div class="active-filters-strip">
+                <div class="active-filters-list">
+                    <span class="active-filters-heading">
+                        <i class="fa fa-filter me-1 text-accees-primary"></i> {{#str}} active_filters, theme_meko {{/str}}:
+                    </span>
+                    {{#category_filter}}
+                        <span class="filter-chip">
+                            <span class="text-muted">{{#str}} domain_title, theme_meko {{/str}}:</span>
+                            <strong class="text-accees-primary">{{ category_name }}</strong>
+                            <a href="{{{ clear_url }}}"
+                               class="filter-chip-close"
+                               aria-label="{{#str}} clear_category_filter, theme_meko {{/str}}"
+                               title="{{#str}} clear_category_filter, theme_meko {{/str}}">&times;</a>
+                        </span>
+                    {{/category_filter}}
+                    {{#competency_filter}}
+                        <span class="filter-chip chip-framework">
+                            <span class="text-muted">{{#str}} framework_chip_label, theme_meko {{/str}}:</span>
+                            <strong>{{ framework_short_label }}</strong>
+                        </span>
+                        <span class="filter-chip chip-competency">
+                            <span>{{#chip_label}}{{ chip_label }}{{/chip_label}}{{^chip_label}}{{#str}} competence_chip_label, theme_meko {{/str}}{{/chip_label}}:</span>
+                            <strong>{{#parent_name}}{{ parent_name }} &middot; {{/parent_name}}{{^parent_name}}{{ competency_name }} &middot; {{/parent_name}}{{ level_badge }}</strong>
+                            <a href="{{{ clear_competency_url }}}"
+                               class="filter-chip-close"
+                               aria-label="{{#str}} clear_competency_filter, theme_meko {{/str}}"
+                               title="{{#str}} clear_competency_filter, theme_meko {{/str}}">&times;</a>
+                        </span>
+                    {{/competency_filter}}
+                </div>
+                <a href="{{{ clear_all_url }}}" class="btn-clear-all-filters">
+                    <i class="fa fa-times-circle"></i> {{#str}} clear_all_filters, theme_meko {{/str}}
+                </a>
+            </div>
+            {{/has_active_filters}}
+
+            {{! Target Level Context Banner (3-Tier Trail + Learning Outcome + CBE Note + Actions) }}
+            {{#competency_filter}}
+            <div class="comp-filter-banner level-accent-{{ level_key }}">
+                <div class="comp-banner-trail">
+                    {{#domain_name}}
+                        {{#domain_url}}
+                        <a href="{{{ domain_url }}}" class="comp-banner-domain-pill text-decoration-none">
+                            <span class="catalog-tier-badge">{{#str}} tier_domain, theme_meko {{/str}}</span>
+                            {{ domain_name }}
+                        </a>
+                        {{/domain_url}}
+                        {{^domain_url}}
+                        <span class="comp-banner-domain-pill">
+                            <span class="catalog-tier-badge">{{#str}} tier_domain, theme_meko {{/str}}</span>
+                            {{ domain_name }}
+                        </span>
+                        {{/domain_url}}
+                        <span class="text-muted fw-bold">&rsaquo;</span>
+                    {{/domain_name}}
+                    {{#parent_name}}
+                        {{#parent_url}}
+                        <a href="{{{ parent_url }}}" class="comp-banner-comp-pill text-decoration-none">
+                            <span class="catalog-tier-badge tier-comp">{{#str}} tier_competency, theme_meko {{/str}}</span>
+                            {{ parent_name }}
+                        </a>
+                        {{/parent_url}}
+                        {{^parent_url}}
+                        <span class="comp-banner-comp-pill">
+                            <span class="catalog-tier-badge tier-comp">{{#str}} tier_competency, theme_meko {{/str}}</span>
+                            {{ parent_name }}
+                        </span>
+                        {{/parent_url}}
+                        <span class="text-muted fw-bold">&rsaquo;</span>
+                    {{/parent_name}}
+                    <span class="badge {{ badge_class }}">{{ level_badge }}</span>
+                </div>
+
+                <h1 class="comp-banner-title">{{ competency_name }}</h1>
+
+                {{#competency_desc}}
+                <div class="comp-banner-outcome-box">
+                    <div class="comp-banner-outcome-label">
+                        <i class="fa fa-bullseye"></i> {{#str}} target_level_outcome, theme_meko {{/str}}
+                    </div>
+                    <div>{{{ competency_desc }}}</div>
+                </div>
+                {{/competency_desc}}
+
+                <div class="comp-banner-footer">
+                    <div class="text-muted">
+                        <span>{{#str}} framework_label, theme_meko {{/str}}: <strong class="text-dark">{{ framework_name }}</strong></span>
+                        <span class="mx-2">&bull;</span>
+                        <span>{{#str}} showing_courses_for_comp, theme_meko, {{ total_courses }} {{/str}}</span>
+                    </div>
+                    <div class="comp-banner-actions">
+                        {{#competency_picker}}
+                        <button type="button"
+                                class="btn-accees-solid-sm"
+                                data-open-comp-picker="1">
+                            <i class="fa fa-sliders"></i> {{#str}} change_target_level, theme_meko {{/str}}
+                        </button>
+                        {{/competency_picker}}
+                        {{#tree_view_url}}
+                        <a href="{{{ tree_view_url }}}"
+                           class="btn-accees-slate-outline-sm">
+                            <i class="fa fa-sitemap"></i> {{#str}} view_on_tree, theme_meko {{/str}}
+                        </a>
+                        {{/tree_view_url}}
+                        <a href="{{{ clear_competency_url }}}"
+                           class="btn-accees-danger-outline-sm">
+                            <i class="fa fa-times"></i> {{#str}} clear_filter, theme_meko {{/str}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/competency_filter}}
+
+            {{! Catalog Toolbar: Search + Server-side Sort + Course Counter }}
+            <div class="catalog-toolbar-card">
+                <div class="catalog-toolbar-row">
+                    <form action="#" method="get" class="catalog-search-box" id="courseSearchForm" onsubmit="return false;">
+                        <i class="fa fa-search catalog-search-icon" aria-hidden="true"></i>
+                        <input type="text"
+                               id="courseSearchInput"
+                               placeholder="{{#str}} search_in_category, theme_meko {{/str}}"
+                               autocomplete="off">
+                        <button type="button"
+                                id="clearCourseSearchBtn"
+                                class="catalog-search-clear"
+                                aria-label="{{#str}} clear_search_btn, theme_meko {{/str}}"
+                                title="{{#str}} clear_search_btn, theme_meko {{/str}}">&times;</button>
+                    </form>
+
+                    <div class="catalog-toolbar-right">
+                        <div class="small text-muted fw-bold"
+                             id="courseCountSummary"
+                             data-page-count="{{ page_courses_count }}"
+                             data-courses-found-label="{{#str}} courses_found, theme_meko {{/str}}"
+                             data-default-summary="{{#is_paginated}}{{ showing_range_text }}{{/is_paginated}}{{^is_paginated}}{{ total_courses }} {{#str}} courses_found, theme_meko {{/str}}{{/is_paginated}}">
+                            {{#is_paginated}}{{ showing_range_text }}{{/is_paginated}}{{^is_paginated}}{{ total_courses }} {{#str}} courses_found, theme_meko {{/str}}{{/is_paginated}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{! Course Cards Grid }}
+            {{#hascourses}}
+                <div class="row" id="courseGridContainer">
+                    {{#courses}}
+                        <div class="col-xl-4 col-md-6 mb-4 course-item-col"
+                             data-fullname="{{ fullname }}"
+                             data-shortname="{{ shortname }}"
+                             data-teacher="{{ teacher_name }}"
+                             data-category="{{ categoryname }}">
+                            {{> core_course/course_card }}
+                        </div>
+                    {{/courses}}
+
+                    {{! Empty In-Page Search Results }}
+                    <div id="noSearchCoursesMatch" class="col-12 d-none">
+                        <div class="accees-empty-state">
+                            <div class="accees-empty-icon">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="h5 fw-bold text-dark mb-1">{{#str}} no_search_match_title, theme_meko {{/str}}</h3>
+                            <p class="accees-empty-desc">
+                                {{#str}} no_search_match_desc, theme_meko {{/str}}
+                            </p>
+                            <div class="accees-empty-actions">
+                                <button type="button"
+                                        class="btn-accees-solid-sm"
+                                        id="resetCourseSearchBtn">
+                                    <i class="fa fa-times"></i> {{#str}} clear_search_btn, theme_meko {{/str}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{! Moodle Core Paging Bar }}
+                {{#is_paginated}}
+                <div class="moodle-pagination d-flex justify-content-center mt-4" id="coursePaginationWrapper">
+                    {{{ pagination }}}
+                </div>
+                {{/is_paginated}}
+            {{/hascourses}}
+
+            {{! Intelligent Empty States (Compound Filter vs Single Competency vs Single Category) }}
+            {{^hascourses}}
+                <div class="accees-empty-state">
+                    <div class="accees-empty-icon">
+                        <i class="fa {{#is_compound_filter}}fa-filter-circle-xmark{{/is_compound_filter}}{{^is_compound_filter}}fa-graduation-cap{{/is_compound_filter}}" aria-hidden="true"></i>
+                    </div>
+
+                    {{#is_compound_filter}}
+                        <h3 class="h5 fw-bold text-dark mb-2">{{#str}} empty_compound_title, theme_meko {{/str}}</h3>
+                        <p class="accees-empty-desc">
+                            {{ compound_empty_desc }}
+                        </p>
+                        {{#competency_filter}}
+                        <div class="accees-empty-actions">
+                            <a href="{{{ relax_category_url }}}"
+                               class="btn-accees-solid-sm">
+                                <i class="fa fa-layer-group"></i> {{#str}} empty_relax_category, theme_meko {{/str}}
+                            </a>
+                            <a href="{{{ relax_competency_url }}}"
+                               class="btn-accees-outline-sm">
+                                <i class="fa fa-folder-open"></i> {{#str}} empty_relax_competency, theme_meko {{/str}}
+                            </a>
+                            <a href="{{{ clear_all_url }}}"
+                               class="btn-accees-slate-outline-sm">
+                                {{#str}} clear_all_filters, theme_meko {{/str}}
+                            </a>
+                        </div>
+                        {{/competency_filter}}
+                    {{/is_compound_filter}}
+
+                    {{^is_compound_filter}}
+                        {{#competency_filter}}
+                            <h3 class="h5 fw-bold text-dark mb-2">{{#str}} no_courses_comp_title, theme_meko {{/str}}</h3>
+                            <p class="accees-empty-desc">
+                                {{#str}} no_courses_comp_desc, theme_meko {{/str}}
+                            </p>
+                            <div class="accees-empty-actions">
+                                {{#competency_picker}}
+                                <button type="button"
+                                        class="btn-accees-solid-sm"
+                                        data-open-comp-picker="1">
+                                    <i class="fa fa-sliders"></i> {{#str}} change_target_level, theme_meko {{/str}}
+                                </button>
+                                {{/competency_picker}}
+                                {{#tree_view_url}}
+                                <a href="{{{ tree_view_url }}}"
+                                   class="btn-accees-slate-outline-sm">
+                                    <i class="fa fa-sitemap"></i> {{#str}} view_on_tree, theme_meko {{/str}}
+                                </a>
+                                {{/tree_view_url}}
+                                <a href="{{{ all_courses_url }}}"
+                                   class="btn-accees-outline-sm">
+                                    {{#str}} view_all_courses_btn, theme_meko {{/str}}
+                                </a>
+                            </div>
+                        {{/competency_filter}}
+
+                        {{^competency_filter}}
+                            <h3 class="h5 fw-bold text-dark mb-2">{{#str}} empty_cat_title, theme_meko {{/str}}</h3>
+                            <p class="accees-empty-desc">
+                                {{#str}} empty_cat_desc, theme_meko {{/str}}
+                            </p>
+                            <div class="accees-empty-actions">
+                                <a href="{{{ clear_all_url }}}"
+                                   class="btn-accees-solid-sm">
+                                    {{#str}} view_all_courses_btn, theme_meko {{/str}}
+                                </a>
+                                {{#competency_picker}}
+                                <button type="button"
+                                        class="btn-accees-outline-sm"
+                                        data-open-comp-picker="1">
+                                    <i class="fa fa-sliders"></i> {{#str}} browse_all_competencies, theme_meko {{/str}}
+                                </button>
+                                {{/competency_picker}}
+                            </div>
+                        {{/competency_filter}}
+                    {{/is_compound_filter}}
+                </div>
+            {{/hascourses}}
+
+        </section>
+    </div>
+
+    {{! 3. Vanilla-JS Quick Competency Picker Modal (Students + Faculty, Zero ID Numbers Exposed) }}
+    {{#competency_picker}}
+    <div id="compQuickPickerModal"
+         class="accees-picker-modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="compQuickPickerTitle"
+         aria-hidden="true">
+        <div class="accees-picker-backdrop" data-close-comp-picker="1"></div>
+        <div class="accees-picker-dialog">
+            <div class="accees-picker-header">
+                <div>
+                    <h3 id="compQuickPickerTitle">{{#str}} picker_modal_title, theme_meko {{/str}}</h3>
+                    <p>{{#str}} picker_modal_subtitle, theme_meko {{/str}}</p>
+                </div>
+                <button type="button"
+                        class="accees-picker-close"
+                        data-close-comp-picker="1"
+                        aria-label="{{#str}} close_modal, theme_meko {{/str}}"
+                        title="{{#str}} close_modal, theme_meko {{/str}}">&times;</button>
+            </div>
+
+            <div class="accees-picker-controls">
+                <div class="accees-picker-tabs" role="tablist">
+                    <button type="button"
+                            class="accees-picker-tab {{#is_students_active}}active{{/is_students_active}}"
+                            data-picker-tab="students"
+                            role="tab"
+                            aria-selected="{{#is_students_active}}true{{/is_students_active}}{{^is_students_active}}false{{/is_students_active}}">
+                        <i class="fa fa-graduation-cap me-1"></i> {{#str}} student_tab, theme_meko {{/str}} ({{ students_count_label }})
+                    </button>
+                    <button type="button"
+                            class="accees-picker-tab {{#is_faculty_active}}active{{/is_faculty_active}}"
+                            data-picker-tab="faculty"
+                            role="tab"
+                            aria-selected="{{#is_faculty_active}}true{{/is_faculty_active}}{{^is_faculty_active}}false{{/is_faculty_active}}">
+                        <i class="fa fa-chalkboard-user me-1"></i> {{#str}} teacher_tab, theme_meko {{/str}} ({{ faculty_count_label }})
+                    </button>
+                </div>
+
+                <div class="accees-picker-search-wrap">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text"
+                           id="pickerCompSearch"
+                           placeholder="{{#str}} picker_search_placeholder, theme_meko {{/str}}"
+                           autocomplete="off">
+                </div>
+            </div>
+
+            <div class="accees-picker-body">
+                {{! Students Framework Panel }}
+                <div class="accees-picker-panel {{#is_students_active}}active{{/is_students_active}}"
+                     data-picker-panel="students">
+                    {{#students_domains}}
+                    <div class="picker-domain-section" data-picker-domain="{{ idnumber }}">
+                        <div class="picker-domain-title">{{ shortname }}</div>
+                        <div class="picker-comp-grid">
+                            {{#competencies}}
+                            <div class="picker-comp-card" data-picker-comp="{{ idnumber }}">
+                                {{#comp_url}}
+                                <a href="{{{ comp_url }}}" class="picker-comp-name d-block text-decoration-none {{#is_current_comp}}is-current{{/is_current_comp}}">{{ shortname }}</a>
+                                {{/comp_url}}
+                                {{^comp_url}}
+                                <div class="picker-comp-name">{{ shortname }}</div>
+                                {{/comp_url}}
+                                <div class="picker-levels-row">
+                                    {{#levels}}
+                                    <a href="{{{ url }}}"
+                                       class="picker-level-link {{#is_current}}is-current{{/is_current}}"
+                                       title="{{ shortname }}">
+                                        {{ level_badge }}
+                                    </a>
+                                    {{/levels}}
+                                </div>
+                            </div>
+                            {{/competencies}}
+                        </div>
+                    </div>
+                    {{/students_domains}}
+                </div>
+
+                {{! Faculty Framework Panel }}
+                <div class="accees-picker-panel {{#is_faculty_active}}active{{/is_faculty_active}}"
+                     data-picker-panel="faculty">
+                    {{#faculty_domains}}
+                    <div class="picker-domain-section" data-picker-domain="{{ idnumber }}">
+                        <div class="picker-domain-title">{{ shortname }}</div>
+                        <div class="picker-comp-grid">
+                            {{#competencies}}
+                            <div class="picker-comp-card" data-picker-comp="{{ idnumber }}">
+                                {{#comp_url}}
+                                <a href="{{{ comp_url }}}" class="picker-comp-name d-block text-decoration-none {{#is_current_comp}}is-current{{/is_current_comp}}">{{ shortname }}</a>
+                                {{/comp_url}}
+                                {{^comp_url}}
+                                <div class="picker-comp-name">{{ shortname }}</div>
+                                {{/comp_url}}
+                                <div class="picker-levels-row">
+                                    {{#levels}}
+                                    <a href="{{{ url }}}"
+                                       class="picker-level-link {{#is_current}}is-current{{/is_current}}"
+                                       title="{{ shortname }}">
+                                        {{ level_badge }}
+                                    </a>
+                                    {{/levels}}
+                                </div>
+                            </div>
+                            {{/competencies}}
+                        </div>
+                    </div>
+                    {{/faculty_domains}}
+                </div>
+
+                <div id="pickerNoResults" class="picker-no-results-box d-none">
+                    <i class="fa fa-search fa-lg mb-2 d-block text-muted" aria-hidden="true"></i>
+                    <div class="fw-bold text-dark">{{#str}} picker_no_results, theme_meko {{/str}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/competency_picker}}
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function normalizeStr(str) {
+        if (!str) return '';
+        return str.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd')
+            .trim();
+    }
+
+    // 1. Sidebar Domain Collapse (Zero Bootstrap version dependency)
+    document.querySelectorAll('.sidebar-domain-header').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var block = btn.closest('.sidebar-domain-block');
+            if (!block) return;
+            var isOpen = block.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+    });
+
+    // 2. Sidebar Competency Quick Search + Clear Button
+    var sidebarSearchInput = document.getElementById('sidebarCompSearch');
+    var sidebarClearBtn = document.getElementById('sidebarCompSearchClear');
+
+    function filterSidebarCompetencies() {
+        if (!sidebarSearchInput) return;
+        var raw = sidebarSearchInput.value || '';
+        var q = normalizeStr(raw);
+
+        if (sidebarClearBtn) {
+            sidebarClearBtn.classList.toggle('visible', raw.trim().length > 0);
+        }
+
+        document.querySelectorAll('.sidebar-domain-block').forEach(function(dom) {
+            var domTitleEl = dom.querySelector('.sidebar-domain-header');
+            var domText = normalizeStr(domTitleEl ? domTitleEl.textContent : '');
+            var domMatchesAll = q.length > 0 && domText.indexOf(q) !== -1;
+
+            var items = dom.querySelectorAll('.sidebar-comp-item');
+            var visibleCount = 0;
+
+            items.forEach(function(item) {
+                var itemText = normalizeStr(item.textContent || '');
+                if (!q || domMatchesAll || itemText.indexOf(q) !== -1) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (q && visibleCount > 0) {
+                dom.style.display = '';
+                dom.classList.add('is-open');
+                if (domTitleEl) domTitleEl.setAttribute('aria-expanded', 'true');
+            } else if (q && visibleCount === 0) {
+                dom.style.display = 'none';
+            } else {
+                dom.style.display = '';
+            }
+        });
+    }
+
+    if (sidebarSearchInput) {
+        sidebarSearchInput.addEventListener('input', filterSidebarCompetencies);
+        sidebarSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                filterSidebarCompetencies();
+            }
+        });
+    }
+    if (sidebarClearBtn && sidebarSearchInput) {
+        sidebarClearBtn.addEventListener('click', function() {
+            sidebarSearchInput.value = '';
+            sidebarSearchInput.focus();
+            filterSidebarCompetencies();
+        });
+    }
+
+    // 3. Client-side Instant Course Search
+    var courseSearchInput = document.getElementById('courseSearchInput');
+    var clearCourseBtn = document.getElementById('clearCourseSearchBtn');
+    var resetCourseBtn = document.getElementById('resetCourseSearchBtn');
+    var countSummaryEl = document.getElementById('courseCountSummary');
+    var noMatchEl = document.getElementById('noSearchCoursesMatch');
+    var paginationEl = document.getElementById('coursePaginationWrapper');
+    var courseCols = document.querySelectorAll('.course-item-col');
+
+    if (courseSearchInput) {
+        function runCourseFilter() {
+            var raw = courseSearchInput.value || '';
+            var q = normalizeStr(raw);
+            var visible = 0;
+
+            if (clearCourseBtn) {
+                clearCourseBtn.classList.toggle('visible', raw.trim().length > 0);
+            }
+
+            courseCols.forEach(function(col) {
+                if (!q) {
+                    col.style.display = '';
+                    visible++;
+                    return;
+                }
+                var haystack = normalizeStr(
+                    (col.getAttribute('data-fullname') || '') + ' ' +
+                    (col.getAttribute('data-shortname') || '') + ' ' +
+                    (col.getAttribute('data-teacher') || '') + ' ' +
+                    (col.getAttribute('data-category') || '') + ' ' +
+                    (col.textContent || '')
+                );
+                if (haystack.indexOf(q) !== -1) {
+                    col.style.display = '';
+                    visible++;
+                } else {
+                    col.style.display = 'none';
+                }
+            });
+
+            if (countSummaryEl) {
+                if (q) {
+                    var pageTotal = countSummaryEl.getAttribute('data-page-count') || '0';
+                    var suffix = countSummaryEl.getAttribute('data-courses-found-label') || 'courses found';
+                    countSummaryEl.textContent = visible + ' / ' + pageTotal + ' ' + suffix;
+                } else {
+                    countSummaryEl.textContent = countSummaryEl.getAttribute('data-default-summary') || '';
+                }
+            }
+
+            if (noMatchEl && courseCols.length > 0) {
+                noMatchEl.classList.toggle('d-none', !(visible === 0 && q.length > 0));
+            }
+            if (paginationEl) {
+                paginationEl.style.display = q ? 'none' : '';
+            }
+        }
+
+        courseSearchInput.addEventListener('input', runCourseFilter);
+        courseSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                runCourseFilter();
+            }
+        });
+
+        if (clearCourseBtn) {
+            clearCourseBtn.addEventListener('click', function() {
+                courseSearchInput.value = '';
+                courseSearchInput.focus();
+                runCourseFilter();
+            });
+        }
+        if (resetCourseBtn) {
+            resetCourseBtn.addEventListener('click', function() {
+                courseSearchInput.value = '';
+                courseSearchInput.focus();
+                runCourseFilter();
+            });
+        }
+    }
+
+    // 5. Vanilla-JS Quick Competency Picker Modal
+    var modalEl = document.getElementById('compQuickPickerModal');
+    if (modalEl) {
+        var pickerTabs = modalEl.querySelectorAll('[data-picker-tab]');
+        var pickerPanels = modalEl.querySelectorAll('[data-picker-panel]');
+        var pickerSearch = document.getElementById('pickerCompSearch');
+        var pickerNoRes = document.getElementById('pickerNoResults');
+        var activeTab = 'students';
+
+        pickerTabs.forEach(function(tab) {
+            if (tab.classList.contains('active')) {
+                activeTab = tab.getAttribute('data-picker-tab') || 'students';
+            }
+        });
+
+        function openPickerModal() {
+            modalEl.classList.add('is-open');
+            modalEl.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(function() {
+                if (pickerSearch) pickerSearch.focus();
+            }, 60);
+        }
+
+        function closePickerModal() {
+            modalEl.classList.remove('is-open');
+            modalEl.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        function filterPickerPanel() {
+            var q = normalizeStr(pickerSearch ? pickerSearch.value : '');
+            var currentPanel = modalEl.querySelector('[data-picker-panel="' + activeTab + '"]');
+            if (!currentPanel) return;
+
+            var totalCardsVisible = 0;
+            currentPanel.querySelectorAll('.picker-domain-section').forEach(function(sec) {
+                var domTitle = normalizeStr((sec.querySelector('.picker-domain-title') || {}).textContent || '');
+                var domMatchesAll = q.length > 0 && domTitle.indexOf(q) !== -1;
+                var secVisible = 0;
+
+                sec.querySelectorAll('.picker-comp-card').forEach(function(card) {
+                    var cardText = normalizeStr(card.textContent || '');
+                    if (!q || domMatchesAll || cardText.indexOf(q) !== -1) {
+                        card.style.display = '';
+                        secVisible++;
+                        totalCardsVisible++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                sec.style.display = (secVisible > 0) ? '' : 'none';
+            });
+
+            if (pickerNoRes) {
+                pickerNoRes.classList.toggle('d-none', totalCardsVisible > 0);
+            }
+        }
+
+        document.querySelectorAll('[data-open-comp-picker]').forEach(function(btn) {
+            btn.addEventListener('click', openPickerModal);
+        });
+
+        modalEl.querySelectorAll('[data-close-comp-picker]').forEach(function(el) {
+            el.addEventListener('click', closePickerModal);
+        });
+
+        pickerTabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                activeTab = this.getAttribute('data-picker-tab') || 'students';
+                pickerTabs.forEach(function(t) {
+                    var isSel = (t.getAttribute('data-picker-tab') === activeTab);
+                    t.classList.toggle('active', isSel);
+                    t.setAttribute('aria-selected', isSel ? 'true' : 'false');
+                });
+                pickerPanels.forEach(function(panel) {
+                    var isSel = (panel.getAttribute('data-picker-panel') === activeTab);
+                    panel.classList.toggle('active', isSel);
+                });
+                filterPickerPanel();
+            });
+        });
+
+        if (pickerSearch) {
+            pickerSearch.addEventListener('input', filterPickerPanel);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalEl.classList.contains('is-open')) {
+                closePickerModal();
+            }
+        });
+    }
+});
+</script>

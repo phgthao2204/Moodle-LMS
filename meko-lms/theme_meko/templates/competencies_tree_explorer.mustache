@@ -1,0 +1,73 @@
+<div class="meko-framework-page competency-tree-page">
+  <header class="framework-nav">
+    <div class="framework-nav-inner">
+      <a class="framework-brand" href="{{homeurl}}">
+        <img src="{{logourl}}" alt="MEKOSOFT LMS">
+      </a>
+      <nav aria-label="Điều hướng chính">
+        <a href="{{homeurl}}">{{#str}} nav_home, theme_meko {{/str}}</a>
+        <a href="{{catalogurl}}">{{#str}} nav_catalog, theme_meko {{/str}}</a>
+        {{#isloggedin}}<a href="{{mycoursesurl}}">{{#str}} nav_mycourses, theme_meko {{/str}}</a>{{/isloggedin}}
+        <a class="is-active" href="{{competenciesurl}}">{{#str}} nav_competencies, theme_meko {{/str}}</a>
+      </nav>
+      <div class="framework-account">
+        <div class="framework-languages" aria-label="Ngôn ngữ">
+          <a class="{{#langvi}}is-active{{/langvi}}" href="{{langviurl}}" lang="vi"{{#langvi}} aria-current="true"{{/langvi}}>VI</a>
+          <a class="{{#langen}}is-active{{/langen}}" href="{{langenurl}}" lang="en"{{#langen}} aria-current="true"{{/langen}}>EN</a>
+          <a class="{{#langfr}}is-active{{/langfr}}" href="{{langfrurl}}" lang="fr"{{#langfr}} aria-current="true"{{/langfr}}>FR</a>
+        </div>
+        {{#isloggedin}}
+          <a href="{{logouturl}}" class="framework-login">{{#str}} nav_logout, theme_meko {{/str}}</a>
+        {{/isloggedin}}
+        {{^isloggedin}}
+          <a href="{{loginurl}}" class="framework-login">{{#str}} login, theme_meko {{/str}} SSO</a>
+        {{/isloggedin}}
+      </div>
+    </div>
+  </header>
+
+  <main class="framework-container competency-tree-container">
+    <div class="framework-breadcrumb">
+      <a href="{{homeurl}}">Trang chủ</a><span>&gt;</span>
+      <a href="{{competenciesurl}}">{{#str}} nav_competencies, theme_meko {{/str}}</a><span>&gt;</span>
+      <strong>DigComp ACCEES</strong>
+    </div>
+
+    <section class="competency-tree-intro">
+      <div class="framework-hero-kicker">DIGCOMP ACCEES · DIGITAL COMPETENCY FRAMEWORK</div>
+      <h1>DigComp ACCEES Tree Explorer</h1>
+      <p>Chọn một năng lực hoặc bậc mục tiêu để xem chuẩn đầu ra, ví dụ thực hành và các khóa học liên quan.</p>
+    </section>
+
+    <div class="competency-tree-explorer">
+      <aside class="competency-tree-sidebar" aria-label="Điều hướng khung năng lực">
+        <div class="competency-tree-controls">
+          <div class="competency-framework-switch" role="group" aria-label="Chọn khung năng lực">
+            <button type="button" class="competency-framework-button" data-framework-choice="faculty" aria-pressed="false">Faculty</button>
+            <button type="button" class="competency-framework-button" data-framework-choice="students" aria-pressed="false">Students</button>
+          </div>
+          <label class="competency-tree-search">
+            <span class="sr-only">Tìm năng lực</span>
+            <input id="competencyTreeSearch" type="search" placeholder="Tìm năng lực..." autocomplete="off">
+          </label>
+          <div class="competency-tree-actions">
+            <button type="button" data-tree-action="expand">+ Mở rộng tất cả</button>
+            <button type="button" data-tree-action="collapse">− Thu gọn tất cả</button>
+          </div>
+        </div>
+        <div id="competencyTree" class="competency-tree" role="tree" aria-label="Cây năng lực"></div>
+      </aside>
+
+      <section id="competencyDetails" class="competency-tree-details" aria-live="polite">
+        <div class="competency-tree-empty">Đang tải dữ liệu khung năng lực...</div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="framework-footer">
+    <div class="framework-copyright">© 2026 Tập đoàn Công nghệ MEKOSOFT (MEKOSOFT Corporation). Mọi quyền được bảo lưu.</div>
+  </footer>
+
+  <script type="application/json" id="competencyTreeData">{{{competency_tree_json}}}</script>
+  <script src="{{{competency_tree_js_url}}}" defer></script>
+</div>

@@ -1,0 +1,48 @@
+name: CI - ACCEES LMS (Moodle 5.3 REST API v2)
+on:
+  pull_request:
+    branches: [develop, staging]
+    paths: ['meko-lms/**', 'meko-samples/fixtures/**']
+jobs:
+  lint-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: PHP Syntax Check
+        run: find meko-lms -name "*.php" -print0 | xargs -0 -n1 php -l
+      - name: Check Required ACCEES Plugin Skeletons
+        run: |
+          for p in accees_imscp accees_sync_api; do
+            test -f "meko-lms/local/$p/version.php" || { echo "Missing version.php in local/$p"; exit 1; }
+            test -f "meko-lms/local/$p/db/access.php" || { echo "Missing db/access.php in local/$p"; exit 1; }
+          done
+      - name: Check Zero Emoji & No Hardcoded Legacy Domains
+        run: |
+          python3 -c "
+          import glob, re, sys
+          bad = []
+          for p in glob.glob('meko-lms/**/*.*', recursive=True):
+              if p.endswith(('.php', '.mustache', '.scss', '.css', '.js')):
+                  s = open(p, encoding='utf-8', errors='ignore').read()
+                  if re.search(r'[🌀-🫿]', s): bad.append((p, 'emoji'))
+                  if 'dev3.accees.vn' in s or 'dev5.accees.vn' in s: bad.append((p, 'hardcoded_legacy_domain'))
+          if bad:
+              print('ERRORS:', bad); sys.exit(1)
+          "
+      - name: Package Moodle Plugins (.zip)
+        run: |
+          mkdir -p dist
+          if [ -d meko-lms/theme_meko ]; then (cd meko-lms && zip -rq ../dist/theme_meko.zip theme_meko); fi
+          for d in meko-lms/local/*; do
+            [ -d "$d" ] && [ -f "$d/version.php" ] && (cd meko-lms/local && zip -rq "../../dist/local_$(basename "$d").zip" "$(basename "$d")")
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: meko-lms-packages
+          path: dist/*.zip
+          if-no-files-found: ignore

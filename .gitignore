@@ -1,0 +1,37 @@
+# Environment & Secrets
+.env
+*.env.local
+.cache_*/
+
+# Node / Frontend
+node_modules/
+dist/
+
+# Java / Gradle / Liferay
+.gradle/
+build/
+bundles/
+*.jar
+*.war
+!gradle/wrapper/*.jar
+!meko-tms/gradle/wrapper/gradle-wrapper.jar
+
+# PHP / Composer / Moodle (keep docs/vendor/mermaid.min.js)
+/vendor/
+!docs/vendor/
+moodledata/
+moodle/config.php
+
+# Logs, Test Artifacts & OS
+*.log
+*.zip
+test-results/
+playwright-report/
+.DS_Store
+Thumbs.db
+
+# Local browser profiles and publishing workspace
+/artifacts/
+/outputs/
+/.publish/
+*.sql.gz

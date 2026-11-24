@@ -1,0 +1,33 @@
+{
+  "course_id": 105,
+  "shortname": "ACCEES-CS101",
+  "items": [
+    {
+      "user_id": 42,
+      "username": "sv_ctu_001",
+      "progress_percent": 100.0,
+      "completed": true,
+      "timecompleted": 1794950000,
+      "final_grade": {
+        "raw": 8.75,
+        "max": 10.0,
+        "percentage": 87.5
+      },
+      "badges": [
+        {
+          "badge_id": 3,
+          "name": "ACCEES Data Literacy",
+          "issued_at": 1794950010,
+          "uniquehash": "9a1f2c3e4d5b",
+          "assertion_url": "http://meko.localhost/lms/badges/assertion.php?b=9a1f2c3e4d5b"
+        }
+      ]
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "per_page": 50,
+    "total": 1,
+    "total_pages": 1
+  }
+}

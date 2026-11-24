@@ -1,0 +1,36 @@
+{
+  "scope": "local_accees_sync_api:course:read",
+  "capability": "local/accees_sync_api:viewcourses",
+  "cases": [
+    {
+      "name": "paginated-list",
+      "method": "GET",
+      "path": "/lms/api/rest/v2/local_accees_sync_api/courses?page=1&per_page=2",
+      "expected_status": 200
+    },
+    {
+      "name": "course-detail",
+      "method": "GET",
+      "path": "/lms/api/rest/v2/local_accees_sync_api/courses/12",
+      "expected_status": 200
+    },
+    {
+      "name": "combined-filter",
+      "method": "GET",
+      "path": "/lms/api/rest/v2/local_accees_sync_api/courses?institution=MEKOSOFT%20AI%20Center&is_featured=true",
+      "expected_status": 200
+    },
+    {
+      "name": "invalid-page-size",
+      "method": "GET",
+      "path": "/lms/api/rest/v2/local_accees_sync_api/courses?per_page=101",
+      "expected_status": 400
+    },
+    {
+      "name": "course-not-found",
+      "method": "GET",
+      "path": "/lms/api/rest/v2/local_accees_sync_api/courses/999999",
+      "expected_status": 404
+    }
+  ]
+}

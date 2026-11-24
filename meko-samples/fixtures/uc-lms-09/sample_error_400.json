@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "INVALID_PARAMETER",
+    "message": "Invalid courseid parameter: must be a positive integer",
+    "details": {
+      "courseid": "0"
+    }
+  }
+}

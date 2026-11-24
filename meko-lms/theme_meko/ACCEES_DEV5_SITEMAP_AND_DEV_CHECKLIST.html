@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACCEES LMS - Bản Đồ Sitemap, Layout Trang & Checklist Kỹ Thuật Dev5</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0052CC;
+      --primary-hover: #0040A8;
+      --primary-light: #EBF3FF;
+      --navy: #0F172A;
+      --slate: #475569;
+      --border: #E2E8F0;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --success: #059669;
+      --success-light: #ECFDF5;
+      --warning: #D97706;
+      --warning-light: #FFFBEB;
+      --danger: #DC2626;
+      --danger-light: #FEF2F2;
+      --tag-core: #64748B;
+      --tag-custom: #7C3AED;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--navy);
+      line-height: 1.6;
+      padding: 32px 20px 80px;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    /* Header Bar */
+    .doc-header {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-primary { background: var(--primary-light); color: var(--primary); }
+    .badge-warning { background: var(--warning-light); color: var(--warning); }
+    .badge-danger { background: var(--danger-light); color: var(--danger); }
+    .badge-success { background: var(--success-light); color: var(--success); }
+    .badge-custom { background: #F3E8FF; color: var(--tag-custom); }
+    .badge-core { background: #F1F5F9; color: var(--tag-core); }
+    
+    h1 { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 10px; margin-bottom: 6px; }
+    .doc-sub { color: var(--slate); font-size: 14px; }
+
+    /* Alert Boxes */
+    .alert {
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      border-left: 4px solid transparent;
+      font-size: 14px;
+    }
+    .alert-warning {
+      background: var(--warning-light);
+      border-left-color: var(--warning);
+      color: #92400E;
+    }
+    .alert-danger {
+      background: var(--danger-light);
+      border-left-color: var(--danger);
+      color: #991B1B;
+    }
+    .alert-primary {
+      background: var(--primary-light);
+      border-left-color: var(--primary);
+      color: #1E40AF;
+    }
+    .alert strong { font-weight: 600; }
+    .alert code {
+      background: rgba(0,0,0,0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    h2.section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h3.sub-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      margin: 20px 0 12px;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 13.5px;
+    }
+    .data-table th {
+      background: #F1F5F9;
+      color: var(--navy);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .data-table tr:hover { background-color: #FAFAFA; }
+
+    /* Code & Tags */
+    code.inline-code {
+      background: #F1F5F9;
+      color: #0F172A;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      border: 1px solid #E2E8F0;
+    }
+    .file-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: #EEF2FF;
+      color: #3730A3;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Screenshots Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .gallery-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      border-bottom: 1px solid var(--border);
+    }
+    .gallery-caption {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--slate);
+    }
+
+    /* Checklist */
+    .task-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: #FAFCFF;
+    }
+    .task-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task-owner {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #E2E8F0;
+      color: #334155;
+    }
+    .task-items {
+      list-style: none;
+      padding-left: 0;
+    }
+    .task-items li {
+      font-size: 13px;
+      padding: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: #334155;
+    }
+    .task-items input[type="checkbox"] {
+      margin-top: 3px;
+    }
+
+    /* Comparison Table */
+    .comp-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .comp-col {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .comp-col.bad { background: #FEF2F2; border-color: #FECACA; }
+    .comp-col.good { background: #ECFDF5; border-color: #A7F3D0; }
+    .comp-col h4 { font-size: 14px; margin-bottom: 10px; font-weight: 600; }
+    .comp-col.bad h4 { color: #991B1B; }
+    .comp-col.good h4 { color: #065F46; }
+    .comp-col ul { list-style: none; font-size: 13px; }
+    .comp-col ul li { padding: 4px 0; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div>
+      <span class="badge badge-primary">ACCEES LMS 2026</span>
+      <span class="badge badge-warning">DEV5 Environment Audit</span>
+      <span class="badge badge-success">Target: Chiều nay 13h30 - 17h30</span>
+    </div>
+    <h1>TÀI LIỆU SITEMAP, LAYOUT TỪNG TRANG &amp; CHECKLIST CẢI TIẾN DEV5</h1>
+    <p class="doc-sub">Đối soát toàn diện giữa Google Docs (Layout &amp; Chi tiết thành phần) và Mã nguồn thực tế Theme Meko / Moodle Dev5</p>
+  </div>
+
+  <!-- THÔNG BÁO TRẠNG THÁI DEV5 -->
+  <div class="alert alert-primary">
+    <strong>ĐÃ MỞ TRUY CẬP TRANG CHỦ CHO GUEST THÀNH CÔNG TRÊN DEV5!</strong><br>
+    <ul>
+      <li><strong>URL Trang chủ:</strong> <a href="https://lms.dev5.accees.vn/" target="_blank" style="font-weight:700; color:var(--primary); text-decoration:underline;">https://lms.dev5.accees.vn/</a></li>
+      <li><strong>Trạng thái:</strong> HTTP 200 OK &bull; Khách vãng lai (Guest) chưa đăng nhập có thể truy cập thẳng vào Trang chủ để xem Hero banner, 2 Tab Khung năng lực số (Sinh viên &amp; Giảng viên), và danh mục khóa học nổi bật.</li>
+      <li><strong>Đã sửa triệt để:</strong> Bật <code>enablemyhome = 1</code>, đặt <code>defaulthomepage = 0 (Site)</code> và <code>autologinguests = 1</code> để Moodle không ép chuyển hướng sang <code>/login</code> hay <code>/my</code>.</li>
+    </ul>
+  </div>
+
+  <!-- PHẦN 1: SITEMAP VÀ LAYOUT TỪNG TRANG -->
+  <div class="section-card">
+    <h2 class="section-title">PHẦN 1: BẢN ĐỒ SITEMAP &amp; LAYOUT TỪNG TRANG HIỆN TẠI (DEV5)</h2>
+    <p style="font-size: 14px; color: var(--slate); margin-bottom: 16px;">
+      Bảng đối chiếu cấu trúc Layout, nguồn dữ liệu hiện tại, phân loại (Moodle Core vs Custom), và trạng thái thực tế trong mã nguồn:
+    </p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width: 40px;">TT</th>
+          <th style="width: 150px;">Trang / Màn hình</th>
+          <th style="width: 180px;">URL Định tuyến</th>
+          <th>Cấu trúc Layout Thành phần</th>
+          <th style="width: 160px;">Nguồn dữ liệu hiện tại</th>
+          <th style="width: 100px;">Phân loại</th>
+          <th style="width: 140px;">File Mã nguồn Theme</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>01</strong></td>
+          <td><strong>Khung chung<br>(Header &amp; Footer)</strong></td>
+          <td>Áp dụng toàn trang</td>
+          <td>
+            • <strong>Header:</strong> Logo, Menu điều hướng chính, Cụm đổi ngôn ngữ (VI/EN/FR), Nút Login / Thông tin User.<br>
+            • <strong>Footer:</strong> Thông tin bản quyền MEKO, liên kết hệ sinh thái (DLRP, TMS, SSO), giấy phép Creative Commons.
+          </td>
+          <td>
+            - Logo: Ảnh tĩnh trong theme.<br>
+            - Menu: Hardcode mảng PHP.<br>
+            - Footer: Hardcode text.
+          </td>
+          <td><span class="badge badge-custom">Custom Theme</span></td>
+          <td>
+            <span class="file-tag">navbar.mustache</span><br>
+            <span class="file-tag">footer.mustache</span><br>
+            <span class="file-tag">lib.php</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>02</strong></td>
+          <td><strong>Trang chủ<br>(Frontpage / Guest)</strong></td>
+          <td><code>/</code> hoặc <code>/index.php</code></td>
+          <td>
+            • <strong>Hero Banner:</strong> Tiêu đề chào mừng, nút kêu gọi hành động (CTA), ô tìm kiếm khóa học nhanh.<br>
+            • <strong>Khối Năng lực số:</strong> 2 Tab chuyển đổi Sinh viên &amp; Giảng viên (phiên bản tiếng Anh &amp; tiếng Việt).<br>
+            • <strong>Khóa học nổi bật:</strong> Lưới thẻ khóa học tiêu biểu kèm giảng viên.<br>
+            <span class="badge badge-success">✓ Đã mở truy cập Guest trực tiếp</span>
+          </td>
+          <td>
+            - Hero: Dynamic theo string.<br>
+            - Khung NL: Tĩnh từ JS.<br>
+            - Khóa học: Lấy từ DB Moodle.
+          </td>
+          <td><span class="badge badge-custom">Custom Layout</span></td>
+          <td>
+            <span class="file-tag">frontpage.mustache</span><br>
+            <span class="file-tag">layout/frontpage.php</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>03</strong></td>
+          <td><strong>Khung năng lực số</strong></td>
+          <td><code>/theme/meko/competencies.php</code><br>hoặc <code>/local/...</code></td>
+          <td>
+            • <strong>Bộ lọc:</strong> Tìm kiếm năng lực, chọn khung (Sinh viên DigComp 2.2 vs Giảng viên DigCompEdu).<br>
+            • <strong>Danh sách lĩnh vực &amp; chuẩn:</strong> Hiển thị các miền năng lực (D1..D6) và các bậc chuẩn (N1..N3).
+          </td>
+          <td>
+            - File tĩnh Javascript:<br>
+            <code>js/framework-data.js</code><br>
+            (Chưa bind API database)
+          </td>
+          <td><span class="badge badge-custom">Custom Page</span></td>
+          <td>
+            <span class="file-tag">competencies.mustache</span><br>
+            <span class="file-tag">framework-data.js</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>04</strong></td>
+          <td><strong>Khóa học<br>(Course Catalog)</strong></td>
+          <td><code>/course/index.php</code></td>
+          <td>
+            • <strong>Sidebar trái:</strong> Cây 6 lĩnh vực đào tạo Moodle + Bộ chọn nhanh chuẩn năng lực CBE.<br>
+            • <strong>Content phải:</strong> Multi-facet chips đang lọc, banner năng lực mục tiêu, lưới thẻ khóa học tương ứng.
+          </td>
+          <td>
+            - Danh mục: DB Moodle.<br>
+            - Bộ chọn CBE: Hardcode mảng JS lớn trong template.
+          </td>
+          <td><span class="badge badge-custom">Custom Catalog</span></td>
+          <td>
+            <span class="file-tag">catalog.mustache</span><br>
+            <span class="file-tag">lib.php</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>05</strong></td>
+          <td><strong>Khóa học của tôi<br>(My Courses)</strong></td>
+          <td><code>/my/courses.php</code></td>
+          <td>
+            • <strong>Thống kê:</strong> 4 thẻ đếm (Đang học, Hoàn thành, Sắp tới, Huy hiệu).<br>
+            • <strong>Toolbar:</strong> Tabs lọc trạng thái, ô tìm kiếm, sắp xếp, chuyển dạng Lưới / Danh sách.<br>
+            • <strong>Khối tài nguyên:</strong> Open Badges 3.0 &amp; Ngân hàng học liệu số.
+          </td>
+          <td>
+            - Số liệu khóa: Core Moodle API.<br>
+            - Toàn bộ Label, Tabs, Thống kê: Hardcode tiếng Việt!
+          </td>
+          <td><span class="badge badge-custom">Custom Template</span></td>
+          <td>
+            <span class="file-tag">mycourses.mustache</span><br>
+            <span class="file-tag">layout/mycourses.php</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>06</strong></td>
+          <td><strong>Chi tiết khóa học<br>(Course View)</strong></td>
+          <td><code>/course/view.php?id=X</code></td>
+          <td>
+            • <strong>Hero khóa học:</strong> Tên khóa, giảng viên, chuẩn đầu ra liên kết.<br>
+            • <strong>Định dạng Tiles:</strong> Lưới các chủ đề dạng thẻ (Tiles Format), bấm mở popup học liệu.<br>
+            • <strong>Sidebar phụ:</strong> Khối phụ trợ (Blocks).
+          </td>
+          <td>
+            - Khóa học: Moodle DB.<br>
+            - Tiles layout: Plugin format_tiles + Mustache theme override.
+          </td>
+          <td><span class="badge badge-custom">Custom Tiles</span></td>
+          <td>
+            <span class="file-tag">course_detail.mustache</span><br>
+            <span class="file-tag">js/course_detail.js</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>07</strong></td>
+          <td><strong>Trang Ghi danh<br>(Enrolment)</strong></td>
+          <td><code>/enrol/index.php?id=X</code></td>
+          <td>
+            • <strong>Thông tin tổng quan:</strong> Hình ảnh, mô tả, giảng viên phụ trách.<br>
+            • <strong>Hộp đăng ký:</strong> Các phương thức ghi danh (Tự ghi danh, nhập mã key, thanh toán/yêu cầu xét duyệt).
+          </td>
+          <td>
+            - Moodle Core Enrolment API.<br>
+            - Đang dùng style mặc định của Boost.
+          </td>
+          <td><span class="badge badge-core">Moodle Core</span></td>
+          <td>
+            <span class="file-tag">scss/pages/_enrol.scss</span> (Cần tinh chỉnh)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>08</strong></td>
+          <td><strong>Trang Đăng nhập<br>(Login)</strong></td>
+          <td><code>/login/index.php</code></td>
+          <td>
+            • <strong>Khung 2 cột:</strong> Cột trái là thông tin / background MEKO; cột phải là Form đăng nhập (Tài khoản, Mật khẩu, Ghi nhớ, Quên mật khẩu).
+          </td>
+          <td>
+            - Moodle Core Auth.<br>
+            - Style tùy biến theo thương hiệu.
+          </td>
+          <td><span class="badge badge-custom">Custom Login</span></td>
+          <td>
+            <span class="file-tag">layout/login.php</span><br>
+            <span class="file-tag">style/login.css</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>09</strong></td>
+          <td><strong>Học viên &amp; Bảng điểm<br>(Participants / Grades)</strong></td>
+          <td><code>/user/index.php</code><br><code>/grade/report/...</code></td>
+          <td>
+            • Bảng danh sách học viên, phân quyền role, nhóm học tập.<br>
+            • Bảng tổng hợp điểm số các hoạt động trong khóa học.
+          </td>
+          <td>
+            - Moodle Core Database &amp; Gradebook.
+          </td>
+          <td><span class="badge badge-core">Moodle Core</span></td>
+          <td>
+            Cần theme override CSS để đồng bộ font và bảng màu solid.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">Hình ảnh Thực tế các Màn hình Đang Chạy trên DEV5 (Đã Chụp Trực Tiếp):</h3>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="docs_assets/dev5_guest_frontpage_live.png" alt="DEV5 Frontpage Live Guest">
+        <div class="gallery-caption"><strong>Trang chủ DEV5 (Frontpage Guest live - URL: /)</strong> &bull; Hero Banner &amp; Khung năng lực số</div>
+      </div>
+      <div class="gallery-item">
+        <img src="docs_assets/dev5_live_mycourses.png" alt="DEV5 My Courses Live">
+        <div class="gallery-caption"><strong>Khóa học của tôi (My Courses live - URL: /my/courses.php)</strong></div>
+      </div>
+      <div class="gallery-item">
+        <img src="docs_assets/dev5_login_fixed.png" alt="DEV5 Login Live">
+        <div class="gallery-caption"><strong>Trang Đăng nhập chuẩn thương hiệu (/login/index.php)</strong></div>
+      </div>
+      <div class="gallery-item">
+        <img src="docs_assets/dev5_home_clicked_success.png" alt="DEV5 Navbar Navigation">
+        <div class="gallery-caption"><strong>Khung điều hướng Navbar &amp; Menu Header thực tế</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 2: BÁO CÁO CẢI TIẾN NỘI DUNG & CODE -->
+  <div class="section-card">
+    <h2 class="section-title">PHẦN 2: BÁO CÁO CẢI TIẾN NỘI DUNG, CHUẨN HÓA KHUNG NĂNG LỰC &amp; MÃ NGUỒN</h2>
+
+    <!-- 2.1 Chuẩn hóa Khung Năng Lực -->
+    <h3 class="sub-title">2.1. Chuẩn hóa Tên Khung &amp; Chuẩn Năng Lực (Xóa bỏ dấu ngoặc rườm rà)</h3>
+    <p style="font-size: 13.5px; color: var(--slate); margin-bottom: 12px;">
+      Hiện tại trong <code>catalog.mustache</code> và <code>framework-data.js</code> có quá nhiều dấu ngoặc đơn, ngoặc vuông và gạch nối lồng ghép: <code>(DigComp 2.2)</code>, <code>[Bậc N1 - Cơ bản]</code>, <code>(Basic)</code>, <code>(A1 - Sơ cấp)</code>... làm giao diện bị rối mắt và không chuẩn hóa chuẩn đầu ra.
+    </p>
+
+    <div class="comp-box">
+      <div class="comp-col bad">
+        <h4>✕ Hiện trạng cũ (Rườm rà, nhiều dấu ngoặc)</h4>
+        <ul>
+          <li>• <code>Sinh viên (DigComp 2.2)</code></li>
+          <li>• <code>Giảng viên (DigCompEdu)</code></li>
+          <li>• <code>D1. Thông tin và dữ liệu số &nbsp;&gt;&nbsp; C1.1. Tìm kiếm thông tin và dữ liệu</code></li>
+          <li>• <code>C1.1 [Bậc N1 - Cơ bản]</code></li>
+          <li>• <code>Bậc N1 - Cơ bản (Basic)</code></li>
+          <li>• <code>Đọc hiểu Bậc 1 (A1 - Sơ cấp)</code></li>
+          <li>• <code>Chuẩn: SV_C1_1_N1 (Bậc N1: Cơ bản)</code></li>
+        </ul>
+      </div>
+      <div class="comp-col good">
+        <h4>✓ Chuẩn hóa đề xuất (Gọn gàng, Chuyên nghiệp)</h4>
+        <ul>
+          <li>• <strong>Khung Sinh viên: DigComp 2.2</strong></li>
+          <li>• <strong>Khung Giảng viên: DigCompEdu</strong></li>
+          <li>• <strong>D1: Dữ liệu và Thông tin số &rarr; C1.1: Tìm kiếm dữ liệu</strong></li>
+          <li>• <strong>C1.1 - Bậc 1: Cơ bản</strong></li>
+          <li>• <strong>Bậc 1: Cơ bản (Level 1)</strong> <em>(Khi ở chế độ song ngữ)</em></li>
+          <li>• <strong>Đọc hiểu: Bậc 1 - Sơ cấp (A1)</strong></li>
+          <li>• <strong>Mã chuẩn: SV_C1_1_N1 | Bậc 1: Cơ bản</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2.3 CẢI TIẾN KHUNG NĂNG LỰC SỐ THEO MẪU TREE EXPLORER -->
+    <h3 class="sub-title">2.3. Đặc tả Cải Tiến Khung Năng Lực Số: Mô hình Tree Explorer 3 Tầng (Theo Bản Thiết Kế Mockup)</h3>
+    <p style="font-size: 13.5px; color: var(--slate); margin-bottom: 12px;">
+      Chuyển đổi giao diện danh sách phẳng / accordion hiện tại thành mô hình <strong>Tree Explorer 2 cột tương tác cao</strong> (tham chiếu từ file <code>DigComp ACCEES Faculty – Tree explorer (mockup).html</code>):
+    </p>
+
+    <div style="background: #F8FAFC; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+      <div style="display: grid; grid-template-columns: 320px 1fr; gap: 20px;">
+        <!-- Cột trái Mockup Preview -->
+        <div style="background: #FFF; border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+          <div style="font-weight: 700; font-size: 13px; color: var(--navy); margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 6px;">
+            CỘT TRÁI: CÂY ĐIỀU HƯỚNG 3 TẦNG
+          </div>
+          <div style="font-size: 12px; color: var(--slate); margin-bottom: 10px;">
+            • <strong>Cụm chọn khung:</strong> <code>Faculty (28)</code> vs <code>Students (18)</code><br>
+            • <strong>Tìm kiếm &amp; Nút (+/-):</strong> Thu gọn / Mở rộng toàn cây nhanh.
+          </div>
+          <div style="font-size: 12.5px; line-height: 1.8; font-family: 'JetBrains Mono', monospace;">
+            ▼ <strong>A. Digital Environment</strong> (2)<br>
+            &nbsp;&nbsp;▼ <strong>A.1. Solving technical problems</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;🟢 <span style="color:#059669; font-weight:600;">Basic</span> (1 khóa)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;🔵 <span style="color:#0000B6; font-weight:600;">Intermediate</span> (1 khóa)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;🟠 <span style="color:#EA6400; font-weight:600;">Advanced</span> (0 khóa)<br>
+            &nbsp;&nbsp;▶ A.2. Establish working env<br>
+            ▶ <strong>B. Protection and Security</strong> (3)<br>
+            ▶ <strong>1. Professional Engagement</strong> (4)<br>
+            ▶ <strong>2. Digital Resources</strong> (3)...
+          </div>
+        </div>
+
+        <!-- Cột phải Mockup Preview -->
+        <div style="background: #FFF; border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+          <div style="font-weight: 700; font-size: 13px; color: var(--navy); margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 6px;">
+            CỘT PHẢI: CHI TIẾT CHUẨN ĐẦU RA &amp; VÍ DỤ THỰC HÀNH
+          </div>
+          <div style="font-size: 12px; color: var(--slate); margin-bottom: 8px;">
+            Breadcrumb: <code>Digital Environment › A.1. Solving technical problems</code>
+          </div>
+          <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">A.1. Solving technical problems</h4>
+          <p style="font-size: 13px; color: var(--slate); margin-bottom: 12px;">Specific digital pedagogical competence for higher education faculty.</p>
+          
+          <!-- Tabs bậc -->
+          <div style="display: flex; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px;">
+            <button style="border: none; background: #ECFDF5; color: #059669; font-weight: 700; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Basic (1)</button>
+            <button style="border: none; background: #EEF2FF; color: #0000B6; font-weight: 600; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Intermediate (1)</button>
+            <button style="border: none; background: #FFF7ED; color: #EA6400; font-weight: 600; padding: 4px 10px; border-radius: 4px; font-size: 12px;">Advanced (0)</button>
+          </div>
+
+          <!-- Box mô tả bậc -->
+          <div style="border-left: 4px solid #059669; background: #F8FAFC; padding: 12px; border-radius: 0 8px 8px 0; font-size: 13px;">
+            <strong style="color: var(--navy);">Yêu cầu chuẩn đầu ra (Competency requirement):</strong>
+            <p style="margin: 4px 0 10px; color: #334155;">Xác định và giải quyết các sự cố kỹ thuật thông thường trong môi trường làm việc số.</p>
+            
+            <strong style="color: var(--navy);">Ví dụ thực hành cụ thể (Practical examples):</strong>
+            <p style="margin: 4px 0 10px; color: #334155;">Tự xử lý các lỗi máy tính cơ bản, reset mật khẩu, quản lý tệp tin, kết nối thiết bị ngoại vi.</p>
+            
+            <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-weight: 600; color: var(--navy); font-size: 12px;">1 khóa học gắn với mức này</span>
+              <button style="background: var(--primary); color: #FFF; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 600;">Xem khóa học &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quy chuẩn 3 bậc màu -->
+    <table class="data-table" style="margin-top: 10px;">
+      <thead>
+        <tr>
+          <th>Bậc Năng Lực</th>
+          <th>Mã Màu Solid Chuẩn</th>
+          <th>Khung Giảng viên (Faculty - 28 NL)</th>
+          <th>Khung Sinh viên (Students - 18 NL)</th>
+          <th>Hành động Dev</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color: #059669;">Basic (Cơ bản)</strong></td>
+          <td><code>#39B500</code> hoặc <code>#059669</code></td>
+          <td>Mức nhận biết, thao tác độc lập cơ bản</td>
+          <td>Bậc N1 (Khám phá / Thao tác)</td>
+          <td>Cập nhật class CSS <code>.badge-basic</code></td>
+        </tr>
+        <tr>
+          <td><strong style="color: #0000B6;">Intermediate (Trung cấp)</strong></td>
+          <td><code>#0000B6</code> (ACCEES Navy)</td>
+          <td>Mức tích hợp vào giảng dạy chuyên môn</td>
+          <td>Bậc N2 (Ứng dụng độc lập)</td>
+          <td>Cập nhật class CSS <code>.badge-inter</code></td>
+        </tr>
+        <tr>
+          <td><strong style="color: #EA6400;">Advanced (Nâng cao)</strong></td>
+          <td><code>#EA6400</code> (ACCEES Orange)</td>
+          <td>Mức sáng tạo, dẫn dắt và chia sẻ</td>
+          <td>Bậc N3 (Sáng tạo &amp; Đột phá)</td>
+          <td>Cập nhật class CSS <code>.badge-adv</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+    <h3 class="sub-title">2.2. Kiểm toán Mã nguồn &amp; Danh sách Text Hardcode Cần Sửa Ngay Chiều Nay</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Dòng</th>
+          <th>Text Tiếng Việt Đang Hardcode</th>
+          <th>Key Đa Ngôn Ngữ Chuẩn Cần Thay Thế</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>navbar.mustache</code></td>
+          <td>42, 54</td>
+          <td><code>aria-label="Ngôn ngữ"</code><br><code>title="Hồ sơ người dùng"</code></td>
+          <td><code>{{#str}} nav_lang_select, theme_meko {{/str}}</code><br><code>{{#str}} nav_profile, theme_meko {{/str}}</code></td>
+          <td><span class="badge badge-warning">Cần fix</span></td>
+        </tr>
+        <tr>
+          <td><code>lib.php</code></td>
+          <td>192</td>
+          <td>Logo chỉ lấy ảnh tĩnh theme: <code>image_url('logo', 'theme_meko')</code></td>
+          <td>Ưu tiên lấy <code>$PAGE->theme->setting_file_url('logo', 'logo')</code></td>
+          <td><span class="badge badge-danger">Lỗi Docs</span></td>
+        </tr>
+        <tr>
+          <td><code>lib.php</code></td>
+          <td>159-189</td>
+          <td>Mảng Menu tĩnh (Home, Catalog, Mycourses)</td>
+          <td>Tích hợp thêm <code>$OUTPUT->custom_menu()</code> của Moodle</td>
+          <td><span class="badge badge-danger">Lỗi Docs</span></td>
+        </tr>
+        <tr>
+          <td><code>mycourses.mustache</code></td>
+          <td>20-23</td>
+          <td><code>Đang học</code>, <code>Hoàn thành</code>, <code>Sắp tới</code>, <code>Huy hiệu số</code></td>
+          <td><code>mycourses_ongoing</code>, <code>mycourses_completed</code>, <code>mycourses_upcoming</code>, <code>mycourses_badges</code></td>
+          <td><span class="badge badge-danger">Chưa đa ngữ</span></td>
+        </tr>
+        <tr>
+          <td><code>mycourses.mustache</code></td>
+          <td>29-32</td>
+          <td>Bộ lọc: <code>Tất cả</code>, <code>Đang diễn ra</code>, <code>Sắp diễn ra</code>, <code>Đã kết thúc</code></td>
+          <td><code>filter_all</code>, <code>filter_ongoing</code>, <code>filter_upcoming</code>, <code>filter_completed</code></td>
+          <td><span class="badge badge-danger">Chưa đa ngữ</span></td>
+        </tr>
+        <tr>
+          <td><code>mycourses.mustache</code></td>
+          <td>41-43</td>
+          <td>Dropdown sắp xếp: <code>Lần truy cập gần nhất</code>, <code>Tên khóa học A–Z</code>, <code>Tiến độ cao nhất</code></td>
+          <td><code>sort_recent</code>, <code>sort_name</code>, <code>sort_progress</code></td>
+          <td><span class="badge badge-danger">Chưa đa ngữ</span></td>
+        </tr>
+        <tr>
+          <td><code>mycourses.mustache</code></td>
+          <td>84</td>
+          <td>Nút: <code>Tiếp tục học →</code>, <code>Xem khóa học →</code></td>
+          <td><code>btn_continue_learning</code>, <code>btn_view_course</code></td>
+          <td><span class="badge badge-danger">Chưa đa ngữ</span></td>
+        </tr>
+        <tr>
+          <td><code>course_detail.mustache</code></td>
+          <td>83, 126</td>
+          <td><code>Nội Dung Khóa Học Theo Chủ Đề (Tiles View)</code><br><code>← Chủ đề trước</code>, <code>Chủ đề sau →</code></td>
+          <td><code>tiles_content_title</code><br><code>tiles_prev_topic</code>, <code>tiles_next_topic</code></td>
+          <td><span class="badge badge-danger">Chưa đa ngữ</span></td>
+        </tr>
+        <tr>
+          <td><code>catalog.mustache</code></td>
+          <td>295+</td>
+          <td>Mảng JavaScript tĩnh 37KB nhúng trực tiếp trong file Mustache</td>
+          <td>Tách ra service hoặc nạp qua AMD Module / AJAX DB Moodle</td>
+          <td><span class="badge badge-warning">Cần refactor</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PHẦN 3: ĐẶC TẢ CHI TIẾT TỪNG MÀN HÌNH (HIỆN TRẠNG, ĐIỂM SỬA & YÊU CẦU ĐẦU RA) -->
+  <div class="section-card">
+    <h2 class="section-title">PHẦN 3: BẢNG ĐẶC TẢ CHI TIẾT CÔNG VIỆC THEO TỪNG MÀN HÌNH</h2>
+    <p style="font-size: 13.5px; color: var(--slate); margin-bottom: 20px;">
+      Mỗi màn hình được bóc tách chi tiết: <strong>Hiện trạng thực tế &bull; Cần chỉnh gì &amp; Ở file nào, dòng nào &bull; Yêu cầu kết quả đầu ra (Acceptance Criteria)</strong> để dev và tester nhìn vào là thực thi được ngay:
+    </p>
+
+    <!-- MÀN 1 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 1: KHUNG GIAO DIỆN CHUNG (HEADER &amp; FOOTER)</span>
+        <span class="badge badge-custom">Toàn hệ thống</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • <strong>Logo:</strong> Đang gọi ảnh tĩnh <code>$OUTPUT->image_url('logo', 'theme_meko')</code> trong <code>lib.php</code>. Khi quản trị viên tải logo mới lên trong Moodle Admin thì ngoài web không tự đổi.<br>
+            • <strong>Menu chính:</strong> Đang hardcode mảng PHP tĩnh (Home, Catalog, Mycourses, Competencies). Chưa nhúng menu động của Moodle Core.<br>
+            • <strong>Đa ngôn ngữ:</strong> Thuộc tính <code>aria-label="Ngôn ngữ"</code> và <code>title="Hồ sơ người dùng"</code> đang viết cứng tiếng Việt.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">lib.php</span> (dòng 192, 240): Sửa hàm lấy logo &rarr; Ưu tiên đọc từ <code>$PAGE->theme->setting_file_url('logo', 'logo')</code>, nếu chưa cấu hình mới fallback về ảnh tĩnh.<br>
+            • <span class="file-tag">lib.php</span> (dòng 159-189) &amp; <span class="file-tag">templates/navbar.mustache</span>: Tích hợp gọi <code>$OUTPUT->custom_menu()</code> của Moodle để cho phép admin tùy biến thêm link menu.<br>
+            • <span class="file-tag">templates/navbar.mustache</span> (dòng 42, 54): Chuyển sang thẻ <code>{{#str}} nav_lang_select, theme_meko {{/str}}</code> và <code>{{#str}} nav_profile, theme_meko {{/str}}</code>.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Vào <code>Site administration &rarr; Appearance &rarr; Logos</code> tải ảnh logo mới lên &rarr; Ngoài web hiển thị ngay logo mới mà không cần sửa code.<br>
+            ✓ Thêm mục menu trong <code>Appearance &rarr; Theme settings &rarr; Custom menu items</code> &rarr; Header hiển thị đúng các menu mới.<br>
+            ✓ Chuyển sang EN/VI/FR &rarr; Toàn bộ navbar và menu chuyển ngữ đồng bộ 100%.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÀN 2 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 2: TRANG CHỦ DÀNH CHO GUEST (FRONTPAGE)</span>
+        <span class="badge badge-success">URL: /</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • Đã mở quyền Guest thành công (HTTP 200 OK), khách vãng lai đã vào được trang chủ không bị đá sang login.<br>
+            • Khối 2 Tab khung năng lực số (Sinh viên &amp; Giảng viên) phiên bản tiếng Anh cần đối soát nội dung với 2 file PDF chuẩn.<br>
+            • Các nút bấm CTA trên Hero banner cần kiểm tra tính chính xác của đường dẫn điều hướng.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">layout/frontpage.php</span> &amp; <span class="file-tag">templates/frontpage.mustache</span>:<br>
+            - Kiểm tra và cập nhật text tiếng Anh của 2 Tab khung năng lực khớp với PDF chuẩn (Faculty: DigCompEdu 28 NL, Students: DigComp 2.2 18 NL).<br>
+            - Kiểm tra liên kết CTA: Nút "Khám phá khóa học" trỏ đúng về <code>/course/index.php</code>, nút "Xem khung năng lực" trỏ đúng về <code>/theme/meko/competencies.php</code>.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Khách vãng lai chưa đăng nhập vào <code>https://lms.dev5.accees.vn/</code> xem được trọn vẹn Hero banner, chuyển tab Sinh viên/Giảng viên mượt mà.<br>
+            ✓ Dữ liệu 2 khung năng lực tiếng Anh hiển thị chính xác theo tài liệu chuẩn, không bị lỗi font hay sai ngữ nghĩa.<br>
+            ✓ Click các nút CTA chuyển đúng trang đích.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÀN 3 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 3: KHUNG NĂNG LỰC SỐ (COMPETENCIES TREE EXPLORER)</span>
+        <span class="badge badge-custom">URL: /theme/meko/competencies.php</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • Giao diện hiện tại dạng danh sách phẳng / accordion, khó nhìn bao quát cấu trúc đa tầng.<br>
+            • Dữ liệu tĩnh load từ file <code>js/framework-data.js</code> (37KB) có quá nhiều dấu ngoặc lồng nhau rườm rà (ví dụ: <code>C1.1 [Bậc N1 - Cơ bản] (Basic)</code>).<br>
+            • Chưa có bộ điều hướng cây phân cấp 3 tầng và chuyển tab 3 bậc năng lực như bản mockup.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">templates/competencies.mustache</span>: Tái cấu trúc thành **Tree Explorer 2 cột** theo đúng mẫu file <code>DigComp ACCEES Faculty – Tree explorer (mockup).html</code>:<br>
+            - <strong>Cột trái:</strong> Cây điều hướng 3 tầng (Domain &rarr; Competency &rarr; Target Level) + Cụm nút chọn khung <code>Faculty (28)</code> vs <code>Students (18)</code> + Ô tìm kiếm + Nút (+/-) mở rộng/thu gọn toàn cây.<br>
+            - <strong>Cột phải:</strong> Breadcrumb, Hộp chi tiết Yêu cầu chuẩn đầu ra (Competency requirement) + Ví dụ thực hành cụ thể (Practical examples) + 3 Tabs bậc (Basic, Intermediate, Advanced) + Nút CTA "Xem khóa học đạt chuẩn".<br>
+            • <span class="file-tag">scss/pages/_competencies.scss</span>: Áp 3 mã màu solid chuẩn: Basic (<code>#39B500</code>), Intermediate (<code>#0000B6</code>), Advanced (<code>#EA6400</code>).<br>
+            • Dữ liệu JSON: Chuẩn hóa lại mảng dữ liệu 28 NL Giảng viên &amp; 18 NL Sinh viên, bỏ các dấu ngoặc vuông/ngoặc đơn lồng nhau.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Giao diện hiển thị đúng 2 cột chuẩn mockup, cây điều hướng click mở/đóng các nhánh mượt mà.<br>
+            ✓ Bấm vào từng bậc trên cây hoặc trên tabs &rarr; Cột phải cập nhật nội dung Yêu cầu &amp; Ví dụ thực hành tương ứng.<br>
+            ✓ Chuyển qua lại giữa Faculty (28) và Students (18) mượt mà, đúng số lượng năng lực.<br>
+            ✓ Bấm nút "Xem khóa học đạt chuẩn" điều hướng sang trang Catalog với bộ lọc chuẩn đó.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÀN 4 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 4: DANH MỤC KHÓA HỌC (COURSE CATALOG)</span>
+        <span class="badge badge-custom">URL: /course/index.php</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • Chứa tới **1.309 ký tự tiếng Việt hardcode** trong template (các label bộ lọc, banner, chips lọc).<br>
+            • Cuối file (dòng 295+) có nguyên một mảng JS tĩnh 37KB mô tả khung năng lực và danh mục Moodle.<br>
+            • Footer tĩnh bị nhúng lặp lại ở cuối file catalog.<br>
+            • Một số khóa học còn dùng tên mock hoặc ảnh thumbnail placeholder.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">templates/catalog.mustache</span>: Thay thế toàn bộ text cứng (dòng 15, 33-35, 47-59, 72-116, 138-175, 201-211) sang thẻ <code>{{#str}}</code>.<br>
+            • Dọn dẹp mảng JS tĩnh ở cuối file, chuẩn hóa tên các bậc năng lực (Bậc 1: Cơ bản, Bậc 2: Trung cấp, Bậc 3: Nâng cao).<br>
+            • Bỏ khối Footer tĩnh thừa trong file catalog (để theme dùng chung <code>footer.mustache</code>).<br>
+            • Kiểm tra dữ liệu khóa học thật 100%: Tên khóa, hình thumbnail 16:9 sắc nét, tên giảng viên phụ trách.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Chuyển sang Tiếng Anh &rarr; Toàn bộ sidebar bộ lọc, thanh filter chips, nút xóa lọc, modal chọn năng lực chuyển sang EN 100%.<br>
+            ✓ Lưới khóa học hiển thị sạch sẽ, đầy đủ thumbnail 16:9, không dùng ảnh placeholder vỡ.<br>
+            ✓ Bấm lọc theo danh mục hoặc theo chuẩn năng lực hoạt động chính xác.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÀN 5 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 5: KHÓA HỌC CỦA TÔI (MY COURSES)</span>
+        <span class="badge badge-custom">URL: /my/courses.php</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • Chứa **210 ký tự tiếng Việt hardcode**: Toàn bộ thẻ đếm thống kê, các tab lọc trạng thái, dropdown sắp xếp, nút tiếp tục học đều viết cứng tiếng Việt.<br>
+            • Khi đổi ngôn ngữ sang EN, trang này vẫn giữ nguyên 100% tiếng Việt.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">templates/mycourses.mustache</span>:<br>
+            - Dòng 20-23: Bọc thẻ <code>{{#str}}</code> cho 4 thẻ đếm (Đang học, Hoàn thành, Sắp tới, Huy hiệu số).<br>
+            - Dòng 29-32: Bọc thẻ <code>{{#str}}</code> cho các tab lọc (Tất cả, Đang diễn ra, Sắp diễn ra, Đã kết thúc).<br>
+            - Dòng 37: Bọc thẻ <code>{{#str}}</code> cho placeholder ô tìm kiếm.<br>
+            - Dòng 41-43: Bọc thẻ <code>{{#str}}</code> cho dropdown sắp xếp (Lần truy cập gần nhất, Tên A-Z, Tiến độ cao nhất).<br>
+            - Dòng 84: Bọc thẻ <code>{{#str}}</code> cho nút "Tiếp tục học →" và "Xem khóa học →".<br>
+            - Dòng 103-111: Bọc thẻ <code>{{#str}}</code> cho khối tài nguyên Open Badges &amp; Ngân hàng học liệu.<br>
+            • Khai báo đủ key tương ứng vào <span class="file-tag">lang/vi/theme_meko.php</span> và <span class="file-tag">lang/en/theme_meko.php</span>.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Hiển thị chính xác tiến độ học tập và các khóa học đã ghi danh của tài khoản đang đăng nhập.<br>
+            ✓ Chuyển đổi ngôn ngữ EN/VI hoạt động 100% trên toàn màn hình (không còn một chữ tiếng Việt nào khi ở chế độ EN).<br>
+            ✓ Tìm kiếm và lọc theo tab mượt mà, không phát sinh lỗi JS.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÀN 6 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 6: CHI TIẾT KHÓA HỌC (COURSE VIEW - TILES FORMAT)</span>
+        <span class="badge badge-custom">URL: /course/view.php?id=X</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • Chứa **189 ký tự tiếng Việt hardcode** trong template.<br>
+            • Tiêu đề "Nội Dung Khóa Học Theo Chủ Đề (Tiles View)", nút điều hướng "Chủ đề trước/sau", nhãn "Mở hoạt động" bị fix cứng.<br>
+            • Cần rà soát khoảng cách padding và bo góc các thẻ Tiles cho đồng bộ với style theme Meko.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">templates/course_detail.mustache</span>: Chuyển toàn bộ các chuỗi cứng (dòng 75, 83-84, 99, 104, 126-127, 141) sang thẻ <code>{{#str}}</code>.<br>
+            • <span class="file-tag">scss/pages/_course_detail.scss</span>: Tinh chỉnh bo góc và màu sắc thanh tiến độ bài học theo chuẩn solid.<br>
+            • Khai báo các key tương ứng vào gói ngôn ngữ <code>lang/</code>.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Giao diện hiển thị bài học dạng thẻ Tiles trực quan, bấm vào từng tile mở popup bài học chuẩn xác.<br>
+            ✓ Nút điều hướng "Chủ đề trước / sau" hoạt động mượt mà.<br>
+            ✓ Đa ngôn ngữ EN/VI hoạt động đầy đủ trên toàn bộ tiêu đề và nhãn của trang.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÀN 7 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 7: TRANG GHI DANH (ENROL) &amp; ĐĂNG NHẬP (LOGIN)</span>
+        <span class="badge badge-custom">URL: /enrol/index.php &amp; /login/index.php</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • **Trang Ghi danh (Enrol):** Đang dùng giao diện mặc định thô của Moodle Boost, các khung viền và nút bấm chưa ăn khớp với bộ nhận diện của Theme Meko.<br>
+            • **Trang Đăng nhập (Login):** Đã có giao diện 2 cột và background chuẩn, cần kiểm tra luồng redirect sau đăng nhập và chức năng quên mật khẩu.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">scss/pages/_enrol.scss</span>: Viết CSS tinh chỉnh cho trang Enrolment: Hộp thông tin khóa học bo góc 8px, font <em>Be Vietnam Pro</em>, nút "Ghi danh" màu solid primary <code>#0052CC</code>.<br>
+            • <span class="file-tag">layout/login.php</span>: Kiểm tra form đăng nhập, link "Quên mật khẩu", và đảm bảo responsive trên màn hình điện thoại không bị co dúm.
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Trang Enrolment hiển thị đồng nhất bộ nhận diện, nút ghi danh nổi bật, thao tác ghi danh thành công.<br>
+            ✓ Trang Login đăng nhập thông suốt, redirect đúng về trang trước đó, không phát sinh lỗi session/token.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- MÀN 8 -->
+    <div class="task-box" style="background:#FFF; margin-bottom:20px; border:1px solid var(--border);">
+      <div class="task-title" style="font-size:16px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span>MÀN 8: GÓI ĐA NGÔN NGỮ &amp; R&amp;D GIẢI PHÁP BIÊN SOẠN (MULTILANG)</span>
+        <span class="badge badge-custom">Hạ tầng ngôn ngữ Moodle</span>
+      </div>
+      <table class="data-table" style="margin-top:10px; margin-bottom:0;">
+        <tr>
+          <td style="width:200px; font-weight:600; background:#F8FAFC;">1. Hiện trạng thực tế</td>
+          <td>
+            • Cả 2 file <code>lang/vi</code> và <code>lang/en</code> đang thiếu khoảng 35 key mới của các trang custom (dẫn đến việc dev trước gõ thẳng tiếng Việt vào template).<br>
+            • Giáo viên / biên soạn chưa có giải pháp tối ưu để nhập liệu nội dung khóa học đa ngôn ngữ (Title, Description, Quiz, Question).
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">2. Cần chỉnh gì &amp; Ở đâu</td>
+          <td>
+            • <span class="file-tag">lang/vi/theme_meko.php</span> &amp; <span class="file-tag">lang/en/theme_meko.php</span>: Thêm đủ 35 key mới (đã liệt kê ở Bảng 2.2).<br>
+            • Kiểm tra cấu hình để Theme Meko xuất hiện đầy đủ trong <code>Site Administration &rarr; Language &rarr; Language customisation</code>.<br>
+            • Lập tài liệu báo cáo nghiên cứu (Spike POC) so sánh 3 phương án: PA1 (Plugin có sẵn), PA2 (Filter core), PA3 (Custom plugin).
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600; background:#F8FAFC;">3. Yêu cầu kết quả đầu ra (DoD)</td>
+          <td>
+            ✓ Quản trị viên có thể vào <code>Language customisation</code> trên giao diện Moodle web để sửa text của theme mà không cần chạm vào code.<br>
+            ✓ Có báo cáo đánh giá cụ thể ưu/nhược điểm của 3 phương án đa ngôn ngữ trước 17h00 chiều nay.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
+

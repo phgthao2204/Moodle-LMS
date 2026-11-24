@@ -1,0 +1,4 @@
+.env
+moodle/config.php
+.cache_accees_repo/
+*.log

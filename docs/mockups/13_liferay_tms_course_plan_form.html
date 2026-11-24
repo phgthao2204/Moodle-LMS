@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Tạo Kế Hoạch &amp; Mở Lớp Đào Tạo | MEKO-TMS Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --primary: #0000B6; --success: #39B500; --warning: #EA6400; --bg: #F3F4F6; --border: #E5E7EB; --muted: #6B7280; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--bg); color: #1F2937; font-size: 14px; }
+    .navbar-header { background: #FFFFFF; border-bottom: 1px solid var(--border); height: 58px; position: sticky; top: 0; z-index: 100; }
+    .navbar-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; height: 100%; display: flex; justify-content: space-between; align-items: center; }
+    .brand-logo-wrap { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .brand-logo-img { height: 34px; }
+    .brand-sub-badge { background: #FFF7ED; color: var(--warning); font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 12px; border: 1px solid #FED7AA; }
+    .role-badge { background: #0B1C61; color: #FFFFFF; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 5px; }
+    .btn-portal { border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 12.5px; font-weight: 600; color: #374151; text-decoration: none; }
+    .admin-shell { max-width: 1400px; margin: 0 auto; display: flex; min-height: calc(100vh - 58px); }
+    .admin-sidebar { width: 250px; background: #FFFFFF; border-right: 1px solid var(--border); padding: 20px 14px; flex-shrink: 0; }
+    .sb-group-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 10px 6px; }
+    .sb-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 6px; text-decoration: none; color: #374151; font-weight: 600; font-size: 13.5px; margin-bottom: 4px; }
+    .sb-link:hover { background: #F9FAFB; color: var(--primary); }
+    .sb-link.active { background: #EEF2FF; color: var(--primary); }
+    .admin-main { flex: 1; padding: 26px 32px; }
+    .page-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .page-head h1 { font-size: 21px; font-weight: 800; color: #111827; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+    .form-card { background: #FFFFFF; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .card-head { background: #F8FAFC; padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .card-head h2 { font-size: 15.5px; font-weight: 800; color: #0B1C61; }
+    .entity-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: #EEF2FF; color: var(--primary); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+    .card-body { padding: 18px 20px; }
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .f-group { margin-bottom: 12px; }
+    .f-group label { display: block; font-size: 12.5px; font-weight: 700; color: #374151; margin-bottom: 5px; }
+    .req { color: #DC2626; }
+    .f-ctrl { width: 100%; padding: 8px 11px; border: 1px solid #D1D5DB; border-radius: 6px; font-family: inherit; font-size: 13px; background: #FFFFFF; }
+    .f-hint { font-size: 11.5px; color: var(--muted); margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+    .comp-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .chip { background: #EEF2FF; color: var(--primary); border: 1px solid #C7D2FE; padding: 4px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; }
+    .card-foot { padding: 14px 20px; border-top: 1px solid var(--border); background: #F9FAFB; display: flex; justify-content: flex-end; gap: 8px; }
+    .btn { padding: 8px 14px; border-radius: 6px; font-weight: 600; font-size: 13px; border: 1px solid #D1D5DB; background: #FFFFFF; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #1F2937; }
+    .btn-primary { background: var(--primary); color: #FFFFFF; border-color: var(--primary); }
+    .btn-success { background: var(--success); color: #FFFFFF; border-color: var(--success); }
+    .btn-warn { background: var(--warning); color: #FFFFFF; border-color: var(--warning); }
+    @media (max-width: 1100px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="navbar-header">
+    <div class="navbar-inner">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <a href="07_liferay_tms_portal_home.html" class="brand-logo-wrap">
+          <img src="assets/logo_meko.svg" alt="MEKOSOFT" class="brand-logo-img">
+          <span class="brand-sub-badge">TMS ADMIN</span>
+        </a>
+        <span class="role-badge"><i class="fa-solid fa-user-shield"></i> Không gian Quản trị Đào tạo</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="07_liferay_tms_portal_home.html" class="btn-portal"><i class="fa-solid fa-arrow-up-right-from-square"></i> Xem Cổng Công khai</a>
+        <span style="font-size:13px; font-weight:600;">Cán bộ Đào tạo</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <div class="sb-group-title">Điều phối Đào tạo</div>
+      <a href="08_liferay_tms_course_management.html" class="sb-link active"><i class="fa-solid fa-book-open"></i> Quản lý Lớp &amp; Kế hoạch</a>
+      <div class="sb-group-title">Học viên &amp; Ghi danh</div>
+      <a href="09_liferay_tms_enrollment_records.html" class="sb-link"><i class="fa-solid fa-users"></i> Xét duyệt &amp; Import Excel</a>
+      <div class="sb-group-title">Hệ thống &amp; Thông báo</div>
+      <a href="14_liferay_tms_import_reject_logs.html" class="sb-link"><i class="fa-solid fa-clock-rotate-left"></i> Nhật ký Sync &amp; Email</a>
+      <a href="11_email_enrollment_notification.html" target="_blank" class="sb-link"><i class="fa-solid fa-envelope-open-text"></i> Mẫu Email Thông báo</a>
+    </aside>
+
+    <main class="admin-main">
+      <div class="page-head">
+        <div>
+          <h1>Biểu mẫu Lập Kế hoạch Mở khóa &amp; Tạo Lớp Đào tạo</h1>
+          <p style="font-size:13px; color:var(--muted);">Tách rõ 2 bước: (1) Lập &amp; Duyệt Kế hoạch (TMSCoursePlan) → (2) Mở Lớp &amp; Triển khai sang Moodle (TMSCourse).</p>
+        </div>
+        <a href="08_liferay_tms_course_management.html" class="btn"><i class="fa-solid fa-arrow-left"></i> Quay lại Danh sách Lớp</a>
+      </div>
+
+      <div class="grid-2">
+        <!-- FORM 1: KẾ HOẠCH MỞ KHÓA -->
+        <section class="form-card">
+          <div class="card-head">
+            <h2>1. Biểu mẫu Kế hoạch Mở khóa</h2>
+            <span class="entity-tag">TMSCoursePlan</span>
+          </div>
+          <div class="card-body">
+            <div class="f-group">
+              <label>Tên khóa học dự kiến <span class="req">*</span></label>
+              <input type="text" class="f-ctrl" value="Đóng gói Học liệu Chuẩn IMS CP &amp; Nhúng Tài nguyên Số">
+              <div class="f-hint">courseTitle (tối đa 255 ký tự)</div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Mã định danh LOM / Học liệu</label>
+                <input type="text" class="f-ctrl" value="LOM-MK-2026-01">
+                <div class="f-hint">lomIdentifier</div>
+              </div>
+              <div class="f-group">
+                <label>Hình thức đào tạo <span class="req">*</span></label>
+                <select class="f-ctrl">
+                  <option>Blended Learning</option>
+                  <option>Online</option>
+                  <option>Self-paced</option>
+                </select>
+                <div class="f-hint">deliveryFormat</div>
+              </div>
+            </div>
+            <div class="f-group">
+              <label>Gói học liệu chuẩn IMS CC (`.imscc`) <span class="req">*</span></label>
+              <div style="display:flex; gap:8px;">
+                <input type="text" class="f-ctrl" value="http://meko.localhost/documents/ims/nls01-ims.imscc">
+                <button class="btn"><i class="fa-solid fa-upload"></i> Tải .imscc</button>
+              </div>
+              <div class="f-hint">imsPackageUrl (dùng cho local_meko_imscp_create_course)</div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Số tín chỉ / Giờ học <span class="req">*</span></label>
+                <input type="number" class="f-ctrl" value="3">
+                <div class="f-hint">creditHours</div>
+              </div>
+              <div class="f-group">
+                <label>Sĩ số dự kiến <span class="req">*</span></label>
+                <input type="number" class="f-ctrl" value="50">
+                <div class="f-hint">estimatedLearners</div>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Ngày dự kiến mở <span class="req">*</span></label>
+                <input type="date" class="f-ctrl" value="2026-11-20">
+              </div>
+              <div class="f-group">
+                <label>Ngày dự kiến kết thúc <span class="req">*</span></label>
+                <input type="date" class="f-ctrl" value="2026-12-20">
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Giảng viên phụ trách <span class="req">*</span></label>
+                <input type="text" class="f-ctrl" value="PGS.TS. Trần Thanh Điền">
+              </div>
+              <div class="f-group">
+                <label>Email giảng viên (Map Moodle) <span class="req">*</span></label>
+                <input type="email" class="f-ctrl" value="dien.tran@mekosoft.vn">
+              </div>
+            </div>
+            <div class="f-group">
+              <label>Mô tả đề cương / Đối tượng học</label>
+              <textarea class="f-ctrl" rows="2">Dành cho giảng viên và kỹ sư xây dựng học liệu chuẩn IMS CC 1.1 &amp; QTI 1.2 trên Moodle 5.3.</textarea>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn"><i class="fa-regular fa-floppy-disk"></i> Lưu Nháp (DRAFT_PLAN)</button>
+            <button class="btn btn-success"><i class="fa-solid fa-check"></i> Duyệt Kế hoạch (APPROVED)</button>
+          </div>
+        </section>
+
+        <!-- FORM 2: MỞ LỚP ĐÀO TẠO -->
+        <section class="form-card">
+          <div class="card-head">
+            <h2>2. Biểu mẫu Mở Lớp &amp; Triển khai LMS</h2>
+            <span class="entity-tag">TMSCourse</span>
+          </div>
+          <div class="card-body">
+            <div class="f-group">
+              <label>Kế hoạch gốc đã duyệt <span class="req">*</span></label>
+              <select class="f-ctrl">
+                <option>[APPROVED] Đóng gói Học liệu Chuẩn IMS CP (LOM-MK-2026-01)</option>
+                <option>[APPROVED] Phân tích Dữ liệu Học tập với PowerBI</option>
+              </select>
+              <div class="f-hint">planId (chỉ hiện Plan có status = APPROVED)</div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Mã lớp học (duy nhất) <span class="req">*</span></label>
+                <input type="text" class="f-ctrl" value="MK-2026-01">
+                <div class="f-hint">courseCode (map moodle_shortname)</div>
+              </div>
+              <div class="f-group">
+                <label>Danh mục Moodle <span class="req">*</span></label>
+                <select class="f-ctrl">
+                  <option value="DIGCOMP_STU">DIGCOMP_STU — Năng lực số Sinh viên</option>
+                  <option value="DIGCOMP_LEC">DIGCOMP_LEC — Năng lực số Giảng viên</option>
+                </select>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Học kỳ / Năm học</label>
+                <input type="text" class="f-ctrl" value="HK1 · 2026-2027">
+              </div>
+              <div class="f-group">
+                <label>Chỉ tiêu sĩ số tối đa <span class="req">*</span></label>
+                <input type="number" class="f-ctrl" value="50">
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Mở cổng ghi danh từ</label>
+                <input type="date" class="f-ctrl" value="2026-11-16">
+              </div>
+              <div class="f-group">
+                <label>Đóng cổng ghi danh</label>
+                <input type="date" class="f-ctrl" value="2026-11-19">
+              </div>
+            </div>
+            <div class="f-group">
+              <label>Ảnh bìa khóa học (16:9) <span class="req">*</span></label>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <img src="assets/courses/course_01_ims_dlrp.jpg" alt="Cover" style="width:72px; height:42px; object-fit:cover; border-radius:4px; border:1px solid #D1D5DB;">
+                <input type="text" class="f-ctrl" value="assets/courses/course_01_ims_dlrp.jpg">
+              </div>
+            </div>
+            <div class="f-group">
+              <label>Chuẩn năng lực gắn vào lớp (TMSCourseCompetency)</label>
+              <div class="comp-chips">
+                <span class="chip">SV_C1_1_N1 · Tìm kiếm &amp; Lọc Dữ liệu (60%)</span>
+                <span class="chip">SV_C1_3_N1 · Đóng gói Học liệu Số (40%)</span>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-group">
+                <label>Trạng thái lớp trên TMS</label>
+                <select class="f-ctrl">
+                  <option>ENROLLING (Đang mở chiêu sinh)</option>
+                  <option>UPCOMING (Sắp khai giảng)</option>
+                  <option>IN_PROGRESS (Đang triển khai)</option>
+                </select>
+              </div>
+              <div class="f-group">
+                <label>Hiển thị nổi bật</label>
+                <select class="f-ctrl">
+                  <option value="true">Có (isFeatured = true)</option>
+                  <option value="false">Không</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-foot">
+            <button class="btn"><i class="fa-regular fa-floppy-disk"></i> Lưu Lớp (SaveCourseAction)</button>
+            <button class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Triển khai sang LMS (DeployToMoodleAction)</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

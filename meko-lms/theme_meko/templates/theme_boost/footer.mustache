@@ -1,0 +1,102 @@
+{{!
+    @template theme_boost/footer
+
+    ACCEES LMS Official Footer Template (Boost Override).
+    100% compliant with the official ACCEES Portal (https://accees.ctu.edu.vn).
+    - Authentic 4-column layout matching the main site.
+    - Official EU Badge + disclaimer row.
+    - Elegant bottom copyright bar (without bulky version badges).
+    - Full-width dark navy background with tri-color brand accent line.
+}}
+<footer class="site-footer accees-footer-official" id="page-footer">
+    <div class="wrap fi">
+        <div class="ft">
+            <!-- Cột trái: Logo + Mô tả + Social -->
+            <div class="ft-brand-col">
+                <a href="{{{ config.wwwroot }}}/" class="d-inline-block mb-3" title="ACCEES Project">
+                    <img class="footer-logo-img" src="{{{ logo_white_url }}}" alt="{{ brand_name }} Logo" style="height: 42px; width: auto; object-fit: contain;">
+                </a>
+                <p class="fb-text">
+                    {{{ footer_desc }}}
+                </p>
+                <div class="social">
+                    <a class="soc" href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                    </a>
+                    <a class="soc" href="https://youtube.com" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43zM9.75 15.02l.01-6.54 5.72 3.27-5.73 3.27z"/></svg>
+                    </a>
+                    <a class="soc" href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 110-4 2 2 0 010 4z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4 Cột liên kết chuẩn Cổng thông tin & LMS -->
+            <div class="fgroups">
+                <!-- Nhóm 1: Dự án -->
+                <div class="fg-col">
+                    <h4>{{#str}}footer_col_project, theme_meko{{/str}}</h4>
+                    <a href="https://accees.ctu.edu.vn/gioi-thieu" target="_blank" rel="noopener">{{#str}}footer_link_about, theme_meko{{/str}}</a>
+                    <a href="https://accees.ctu.edu.vn/hoat-dong" target="_blank" rel="noopener">{{#str}}footer_link_activities, theme_meko{{/str}}</a>
+                    <a href="https://accees.ctu.edu.vn/tai-nguyen" target="_blank" rel="noopener">{{#str}}footer_link_resources, theme_meko{{/str}}</a>
+                    <a href="https://accees.ctu.edu.vn/tin-tuc" target="_blank" rel="noopener">{{#str}}footer_link_news, theme_meko{{/str}}</a>
+                </div>
+
+                <!-- Nhóm 2: Hệ Thống LMS -->
+                <div class="fg-col">
+                    <h4>{{#str}}footer_col_lms_learning, theme_meko{{/str}}</h4>
+                    <a href="{{{ config.wwwroot }}}/course/index.php">{{#str}}nav_courses, theme_meko{{/str}}</a>
+                    <a href="{{{ config.wwwroot }}}/local/meko_competencies/index.php?framework=DIGCOMP_ACCEES_STUDENTS">{{#str}}nav_comp_student, theme_meko{{/str}}</a>
+                    <a href="{{{ config.wwwroot }}}/local/meko_competencies/index.php?framework=DIGCOMP_ACCEES_FACULTY">{{#str}}nav_comp_teacher, theme_meko{{/str}}</a>
+                    {{#isloggedin}}
+                    <a href="{{{ config.wwwroot }}}/my/">{{#str}}nav_mycourses, theme_meko{{/str}}</a>
+                    {{/isloggedin}}
+                    {{^isloggedin}}
+                    <a href="{{{ config.wwwroot }}}/login/index.php">{{#str}}login_sso_btn, theme_meko{{/str}}</a>
+                    {{/isloggedin}}
+                </div>
+
+                <!-- Nhóm 3: Hệ Sinh Thái Số -->
+                <div class="fg-col">
+                    <h4>{{#str}}footer_col_lms_eco, theme_meko{{/str}}</h4>
+                    <a href="https://accees.ctu.edu.vn" target="_blank" rel="noopener">{{#str}}nav_ctu_portal, theme_meko{{/str}}</a>
+                    <a href="{{#dlrp_url}}{{{ dlrp_url }}}{{/dlrp_url}}{{^dlrp_url}}/dlrp{{/dlrp_url}}" target="_blank" rel="noopener">{{#str}}nav_dlrp, theme_meko{{/str}}</a>
+                    <a href="{{#tms_url}}{{{ tms_url }}}{{/tms_url}}{{^tms_url}}/tms{{/tms_url}}" target="_blank" rel="noopener">{{#str}}nav_tms, theme_meko{{/str}}</a>
+                    <a href="{{#sso_account_url}}{{{ sso_account_url }}}{{/sso_account_url}}{{^sso_account_url}}/{{/sso_account_url}}" target="_blank" rel="noopener">{{#str}}nav_sso_portal, theme_meko{{/str}}</a>
+                </div>
+
+                <!-- Nhóm 4: Pháp Lý & Liên Hệ -->
+                <div class="fg-col">
+                    <h4>{{#str}}footer_col_legal, theme_meko{{/str}}</h4>
+                    <a href="https://accees.ctu.edu.vn/dieu-khoan-va-chinh-sach" target="_blank" rel="noopener">{{#str}}footer_link_privacy, theme_meko{{/str}}</a>
+                    <a href="https://accees.ctu.edu.vn/dieu-khoan-va-chinh-sach" target="_blank" rel="noopener">{{#str}}footer_link_terms, theme_meko{{/str}}</a>
+                    <a href="mailto:{{ support_email }}">{{ support_email }}</a>
+                    <a href="tel:{{ support_phone }}">{{ support_phone }}</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer bottom: EU Badge + Disclaimer + Copyright -->
+        <div class="footer-bottom">
+            {{#is_eu_funded}}
+            <div class="eu-funded-row">
+                <img class="eu-badge-img" src="{{{ config.wwwroot }}}/theme/accees_lms_theme/pix/eu_cofunded_white.png" alt="Co-funded by the European Union">
+                <div class="fsec">
+                    {{#str}}erasmus_disclaimer, theme_meko{{/str}}
+                </div>
+            </div>
+            {{/is_eu_funded}}
+
+            <div class="fbot">
+                <span class="fnote">{{#footer_copyright}}{{footer_copyright}}{{/footer_copyright}}{{^footer_copyright}}{{#str}}footer_copyright, theme_meko{{/str}}{{/footer_copyright}}</span>
+                <span class="fcoord">{{#footer_coord_note}}{{footer_coord_note}}{{/footer_coord_note}}{{^footer_coord_note}}{{#str}}footer_coord_note, theme_meko{{/str}}{{/footer_coord_note}}</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="d-none">
+    {{{ output.standard_footer_html }}}
+</div>
+{{{ output.standard_end_of_body_html }}}

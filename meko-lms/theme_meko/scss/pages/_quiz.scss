@@ -1,0 +1,24 @@
+// Brand the assessment pages without changing Moodle's quiz controls.
+body.path-mod-quiz {
+    background-color: #F8FAFC;
+    font-family: $font-family-base;
+
+    #region-main h1,
+    #region-main h2 {
+        color: #162566;
+        font-weight: 700;
+    }
+
+    .que .formulation {
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        color: #1E293B;
+    }
+
+    .que .info {
+        background-color: #F8FAFC;
+        border-color: #E2E8F0;
+        border-radius: 8px;
+    }
+}

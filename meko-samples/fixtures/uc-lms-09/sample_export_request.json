@@ -1,0 +1,9 @@
+{
+  "include_userdata": false,
+  "lom_override": {
+    "lifecycle": {
+      "version": "1.1"
+    }
+  },
+  "delivery": "download_url"
+}

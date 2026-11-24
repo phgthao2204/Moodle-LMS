@@ -1,0 +1,564 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - MY COURSES DASHBOARD (/my/courses.php)
+// ==============================================================================
+
+.accees-mycourses {
+    background-color: $bg-subtle;
+    min-height: calc(100vh - 200px);
+}
+
+.accees-mycourses-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $text-muted;
+    font-size: 13px;
+    margin: 0 0 14px;
+
+    a {
+        color: $brand-primary;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.accees-mycourses-titlebar {
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: $radius-xl;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 26px;
+
+    @media (max-width: 991px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.accees-mycourses-heading {
+    h1 {
+        color: $text-main;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.25;
+        margin: 0 0 6px;
+    }
+
+    p {
+        color: $text-secondary;
+        font-size: 13.5px;
+        margin: 0;
+        max-width: 680px;
+    }
+}
+
+.accees-mycourses-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(105px, 1fr));
+    gap: 12px;
+    flex-shrink: 0;
+
+    @media (max-width: 991px) {
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.accees-stat-box {
+    background: $bg-subtle;
+    border: 1px solid $border-default;
+    border-radius: $radius-lg;
+    padding: 11px 14px;
+    text-align: center;
+
+    strong {
+        display: block;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+
+    span {
+        color: $text-muted;
+        display: block;
+        font-size: 10.5px;
+        font-weight: 700;
+        margin-top: 5px;
+        letter-spacing: 0.3px;
+    }
+
+    &.is-blue strong {
+        color: $brand-primary;
+    }
+
+    &.is-green strong {
+        color: $brand-success;
+    }
+
+    &.is-orange strong {
+        color: $brand-warning;
+    }
+
+    &.is-navy strong {
+        color: $brand-navy;
+    }
+}
+
+.accees-mycourses-toolbar {
+    align-items: center;
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: $radius-xl;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+}
+
+.accees-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    button {
+        align-items: center;
+        background: $bg-surface;
+        border: 1px solid $border-default;
+        border-radius: $radius-md;
+        color: $text-secondary;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 12.5px;
+        font-weight: 700;
+        gap: 7px;
+        padding: 7px 12px;
+        transition: all 0.15s ease;
+
+        .filter-count {
+            background: $bg-page;
+            border-radius: $radius-pill;
+            color: $text-secondary;
+            font-size: 11px;
+            padding: 1px 7px;
+        }
+
+        &:hover {
+            border-color: $brand-primary;
+            color: $brand-primary;
+        }
+
+        &.is-active {
+            background: $brand-primary;
+            border-color: $brand-primary;
+            color: #FFFFFF;
+
+            .filter-count {
+                background: $brand-navy;
+                color: #FFFFFF;
+            }
+        }
+    }
+}
+
+.accees-toolbar-controls {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 10px;
+    min-width: 280px;
+}
+
+.accees-search-box {
+    position: relative;
+    flex: 0 1 320px;
+
+    .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $text-muted;
+        font-size: 12.5px;
+        pointer-events: none;
+    }
+
+    input {
+        background: $bg-subtle;
+        border: 1px solid $border-strong;
+        border-radius: $radius-md;
+        color: $text-main;
+        font-size: 13px;
+        height: 36px;
+        padding: 0 12px 0 34px;
+        width: 100%;
+
+        &:focus {
+            outline: none;
+            border-color: $brand-primary;
+            background: $bg-surface;
+        }
+    }
+}
+
+.accees-sort-box {
+    margin: 0;
+    position: relative;
+
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        background: $bg-surface url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
+        border: 1px solid $border-strong;
+        border-radius: $radius-md;
+        color: $text-main;
+        font-size: 13px;
+        font-weight: 600;
+        height: 36px;
+        padding: 0 32px 0 12px;
+        cursor: pointer;
+        transition: border-color 0.15s ease;
+
+        &:focus {
+            outline: none;
+            border-color: $brand-primary;
+        }
+    }
+}
+
+.accees-view-switch {
+    display: inline-flex;
+    gap: 4px;
+
+    button {
+        background: $bg-surface;
+        border: 1px solid $border-strong;
+        border-radius: $radius-md;
+        color: $text-secondary;
+        cursor: pointer;
+        height: 36px;
+        width: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+
+        &.is-active {
+            background: $brand-primary;
+            border-color: $brand-primary;
+            color: #FFFFFF;
+        }
+    }
+}
+
+.accees-empty-courses {
+    background: $bg-surface;
+    border: 1px dashed $border-strong;
+    border-radius: $radius-xl;
+    color: $text-secondary;
+    margin-top: 12px;
+    padding: 36px 20px;
+    text-align: center;
+}
+
+.accees-resource-section {
+    margin-top: 28px;
+
+    h2 {
+        color: $text-main;
+        font-size: 16px;
+        font-weight: 800;
+        margin: 0 0 14px;
+    }
+}
+
+.accees-resource-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    @media (max-width: 991px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.accees-resource-card {
+    align-items: center;
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: $radius-xl;
+    color: $text-main;
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    text-decoration: none !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+        border-color: $brand-primary;
+        box-shadow: 0 6px 16px rgba(0, 0, 182, 0.08);
+        transform: translateY(-2px);
+    }
+}
+
+.accees-resource-icon {
+    align-items: center;
+    border-radius: $radius-lg;
+    display: inline-flex;
+    flex: 0 0 46px;
+    font-size: 18px;
+    height: 46px;
+    justify-content: center;
+
+    &.is-blue {
+        background: $brand-primary-tint;
+        color: $brand-primary;
+    }
+
+    &.is-green {
+        background: $brand-success-tint;
+        color: $brand-success;
+    }
+}
+
+.accees-resource-body {
+    flex: 1;
+    min-width: 0;
+
+    strong {
+        display: block;
+        font-size: 14px;
+        font-weight: 700;
+        color: $text-main;
+    }
+
+    p {
+        color: $text-muted;
+        font-size: 12.5px;
+        margin: 3px 0 0;
+        line-height: 1.45;
+    }
+}
+
+.accees-resource-cta {
+    color: $brand-primary;
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+// ==============================================================================
+// MY COURSES - LIST VIEW (DẠNG DANH SÁCH: THUMBNAIL TRÁI, THÔNG TIN PHẢI, NÚT GỌN)
+// ==============================================================================
+
+.accees-mycourses-grid.is-list {
+    .accees-mycourse-col {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        margin-bottom: 18px !important;
+    }
+
+    .accees-course-card {
+        flex-direction: row !important;
+        align-items: stretch !important;
+        min-height: 220px;
+        border-radius: 12px !important;
+        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+        background: #FFFFFF !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08) !important;
+            border-color: #CBD5E1 !important;
+        }
+
+        // VÙNG 1: THUMBNAIL NẰM BÊN TRÁI (290px cố định, 16:9 sắc nét, rounded trái)
+        .course-thumbnail-area {
+            width: 290px !important;
+            min-width: 290px !important;
+            max-width: 290px !important;
+            height: auto !important;
+            min-height: 100% !important;
+            flex: 0 0 290px !important;
+            border-radius: 11px 0 0 11px !important;
+            position: relative;
+            overflow: hidden;
+
+            .course-cover-img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+            }
+        }
+
+        // VÙNG 2: NỘI DUNG NẰM BÊN PHẢI (co giãn linh hoạt)
+        .card-body-content {
+            flex: 1 1 auto !important;
+            padding: 18px 24px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            min-width: 0 !important;
+        }
+
+        .course-card-title {
+            font-size: 16.5px !important;
+            min-height: auto !important;
+            margin-bottom: 6px !important;
+            line-height: 1.4 !important;
+            -webkit-line-clamp: 2 !important;
+
+            a {
+                color: #0F172A !important;
+                &:hover {
+                    color: #0000B6 !important;
+                }
+            }
+        }
+
+        .course-card-summary {
+            font-size: 13px !important;
+            min-height: auto !important;
+            margin-bottom: 12px !important;
+            line-height: 1.5 !important;
+            color: #475569 !important;
+            -webkit-line-clamp: 2 !important;
+        }
+
+        // Nhóm meta (Giảng viên + Chuẩn đầu ra) nằm gọn trên cùng 1 hàng
+        .course-card-meta-group {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 16px !important;
+            margin-bottom: 10px !important;
+            padding-top: 10px !important;
+            border-top: 1px solid #F1F5F9 !important;
+            flex-wrap: wrap;
+        }
+
+        .course-card-teacher {
+            margin-bottom: 0 !important;
+            flex: 0 1 auto;
+        }
+
+        .course-card-cbe-row {
+            margin-bottom: 0 !important;
+            flex: 0 1 auto;
+            max-width: 340px;
+        }
+
+        .course-card-meta-row {
+            margin-bottom: 0 !important;
+            padding-top: 0 !important;
+            border-top: none !important;
+            gap: 8px !important;
+            margin-left: auto;
+        }
+
+        // VÙNG FOOTER: TIẾN ĐỘ BÊN TRÁI, NÚT HÀNH ĐỘNG GỌN GÀNG BÊN PHẢI (KHÔNG BỊ DÀN TRẢI)
+        .course-card-footer {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 24px !important;
+            padding-top: 12px !important;
+            margin-top: auto !important;
+            border-top: 1px solid #E2E8F0 !important;
+
+            .course-card-progress-block {
+                flex: 0 1 320px !important;
+                min-width: 200px !important;
+                margin-bottom: 0 !important;
+
+                .progress {
+                    margin-bottom: 0 !important;
+                    height: 6px !important;
+                }
+            }
+
+            .course-card-action-block {
+                flex: 0 0 auto !important;
+                margin-left: auto !important;
+                width: auto !important;
+
+                .course-card-btn-action {
+                    flex-grow: 0 !important;
+                    width: auto !important;
+                    min-width: 170px !important;
+                    padding: 8px 24px !important;
+                    font-size: 13px !important;
+                    font-weight: 700 !important;
+                    white-space: nowrap !important;
+                }
+
+                .course-card-btn-badge {
+                    padding: 8px 16px !important;
+                    white-space: nowrap !important;
+                }
+            }
+        }
+    }
+
+    // Responsive trên thiết bị di động (màn hình nhỏ < 768px tự động xếp dọc mượt mà)
+    @media (max-width: 767.98px) {
+        .accees-course-card {
+            flex-direction: column !important;
+
+            .course-thumbnail-area {
+                width: 100% !important;
+                min-width: 100% !important;
+                max-width: 100% !important;
+                height: 180px !important;
+                min-height: 180px !important;
+                border-radius: 11px 11px 0 0 !important;
+            }
+
+            .card-body-content {
+                padding: 16px !important;
+            }
+
+            .course-card-meta-group {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 8px !important;
+            }
+
+            .course-card-footer {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+
+                .course-card-progress-block {
+                    flex: 1 1 100% !important;
+                    width: 100% !important;
+                }
+
+                .course-card-action-block {
+                    width: 100% !important;
+                    margin-left: 0 !important;
+
+                    .course-card-btn-action {
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+

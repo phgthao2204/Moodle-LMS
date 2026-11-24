@@ -1,0 +1,449 @@
+{{!
+    @template local_meko_competencies/competency_matrix
+    ACCEES Digital Competency Rubric Matrix Comparative View (UC-LMS-02).
+    Horizontal cross-mapping matrix with aligned CTA baselines and zero exposed idnumber policy.
+}}
+
+<div class="competency-matrix-page-wrapper"
+     data-framework-key="{{ framework_key }}"
+     data-initial-domain="{{ initial_domain }}"
+     data-initial-level="{{ initial_level }}"
+     data-initial-query="{{ initial_query }}">
+
+    <div class="comp-page-shell">
+        {{! 1. Breadcrumb Bar }}
+        <div class="comp-breadcrumb-bar">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{{ config.wwwroot }}}/">{{#str}} home, local_meko_competencies {{/str}}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{{ config.wwwroot }}}/local/meko_competencies/index.php">{{#str}} competencies, local_meko_competencies {{/str}}</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ framework_title }} ({{#str}} matrix_view, local_meko_competencies {{/str}})</li>
+                </ol>
+            </nav>
+        </div>
+
+        {{! 2. Hero Header & 4-Card Metrics Grid }}
+        <div class="comp-hero-banner">
+            <div class="comp-hero-grid">
+                <div class="comp-hero-copy">
+                    <span class="comp-hero-pill">
+                        <i class="fa fa-shield-halved"></i> {{#str}} hero_pill_badge, local_meko_competencies {{/str}}
+                    </span>
+                    <h1 class="comp-hero-title">{{ framework_title }} — {{#str}} matrix_view, local_meko_competencies {{/str}}</h1>
+                    <div class="comp-hero-desc">{{{ matrix_subtitle }}}</div>
+                </div>
+
+                <div class="comp-metrics-grid">
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val">{{ domains_count }}</div>
+                        <div class="comp-metric-label">{{#str}} domains, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val">{{ competencies_count }}</div>
+                        <div class="comp-metric-label">{{#str}} parent_competencies, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val metric-green">{{ levels_count }}</div>
+                        <div class="comp-metric-label">{{#str}} target_levels, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val metric-orange">{{ mapped_courses_count }}</div>
+                        <div class="comp-metric-label">{{#str}} mapped_courses_metric, local_meko_competencies {{/str}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{! 3. Navigation Bar & Multi-Faceted Filter Toolbar }}
+        <div class="comp-toolbar-card">
+            <div class="comp-toolbar-top">
+                <div class="comp-fw-tabs" role="tablist" aria-label="Competency Framework">
+                    <a href="{{{ students_url }}}" class="comp-fw-tab {{#is_students}}active{{/is_students}}">
+                        <i class="fa fa-graduation-cap me-1"></i> {{#students_tab_label}}{{ students_tab_label }}{{/students_tab_label}}{{^students_tab_label}}{{#str}} students_framework_short, local_meko_competencies {{/str}}{{/students_tab_label}}
+                    </a>
+                    <a href="{{{ faculty_url }}}" class="comp-fw-tab {{#is_faculty}}active{{/is_faculty}}">
+                        <i class="fa fa-chalkboard-user me-1"></i> {{#faculty_tab_label}}{{ faculty_tab_label }}{{/faculty_tab_label}}{{^faculty_tab_label}}{{#str}} faculty_framework_short, local_meko_competencies {{/str}}{{/faculty_tab_label}}
+                    </a>
+                </div>
+
+                <div class="comp-search-box">
+                    <i class="fa fa-search comp-search-icon" aria-hidden="true"></i>
+                    <input type="text"
+                           id="matrixSearchInput"
+                           class="comp-search-input"
+                           value="{{ initial_query }}"
+                           placeholder="{{#str}} search_filter_placeholder, local_meko_competencies {{/str}}"
+                           autocomplete="off">
+                    <button type="button"
+                            id="matrixSearchClear"
+                            class="comp-search-clear"
+                            title="{{#str}} clear_search, local_meko_competencies {{/str}}"
+                            aria-label="{{#str}} clear_search, local_meko_competencies {{/str}}">&times;</button>
+                </div>
+
+                <div class="comp-toolbar-actions">
+                    <div class="comp-view-switcher" role="group" aria-label="View Mode">
+                        <a href="{{{ tree_view_url }}}" id="matrixToTreeLink" data-base-url="{{{ tree_view_url }}}" class="comp-view-btn {{#is_tree_view}}active{{/is_tree_view}}">
+                            <i class="fa fa-sitemap"></i> {{#str}} tree_view, local_meko_competencies {{/str}}
+                        </a>
+                        <a href="{{{ matrix_view_url }}}" class="comp-view-btn {{#is_matrix_view}}active{{/is_matrix_view}}">
+                            <i class="fa fa-table-cells"></i> {{#str}} matrix_view, local_meko_competencies {{/str}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {{! Domain Filter Chips }}
+            <div class="comp-filter-row" id="matrixDomainFilterRow">
+                <span class="comp-filter-label"><i class="fa fa-folder-open me-1"></i> {{#str}} filter_domain_label, local_meko_competencies {{/str}}:</span>
+                <button type="button" class="comp-chip-btn active" data-filter-domain="ALL">
+                    {{#str}} all_domains, local_meko_competencies {{/str}} ({{ domains_count }})
+                </button>
+                {{#domains}}
+                    <button type="button" class="comp-chip-btn" data-filter-domain="{{ idnumber }}">
+                        {{ shortname }}
+                    </button>
+                {{/domains}}
+            </div>
+
+            {{! Level Filter Chips }}
+            <div class="comp-filter-row" id="matrixLevelFilterRow">
+                <span class="comp-filter-label"><i class="fa fa-layer-group me-1"></i> {{#str}} filter_level_label, local_meko_competencies {{/str}}:</span>
+                <button type="button" class="comp-chip-btn active" data-filter-level="ALL">
+                    {{#str}} all_levels, local_meko_competencies {{/str}}
+                </button>
+                {{#level_filters}}
+                    <button type="button" class="comp-chip-btn" data-filter-level="{{ level_key }}">
+                        {{ label }}
+                    </button>
+                {{/level_filters}}
+            </div>
+
+            <div class="comp-toolbar-status">
+                <span>
+                    {{#str}} showing_competencies_count, local_meko_competencies {{/str}}
+                    <strong id="matrixVisibleCount">{{ competencies_count }}</strong>
+                    {{#str}} of_total, local_meko_competencies {{/str}}
+                    <strong>{{ competencies_count }}</strong>
+                    {{#str}} parent_competencies, local_meko_competencies {{/str}}
+                </span>
+                <button type="button" id="matrixResetTopBtn" class="comp-reset-link">
+                    <i class="fa fa-rotate-left"></i> {{#str}} reset_filters, local_meko_competencies {{/str}}
+                </button>
+            </div>
+        </div>
+
+        {{! Responsive Horizontal Scroll Notice (< 1200px) }}
+        <div class="matrix-scroll-hint">
+            <i class="fa fa-arrows-left-right"></i>
+            <span>{{#str}} matrix_scroll_hint, local_meko_competencies {{/str}}</span>
+        </div>
+
+        {{! 4. Rubric Matrix Comparative Table }}
+        <div class="rubric-matrix-table-wrapper" id="rubricMatrixTableWrapper">
+            <div class="table-responsive">
+                <table class="rubric-matrix-table table-bordered" id="rubricMatrixTable">
+                    <colgroup id="matrixColgroup">
+                        <col class="col-comp-info">
+                        {{#columns}}
+                            <col class="col-level-col col-level-{{ level_key }}" data-level-col="{{ level_key }}">
+                        {{/columns}}
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="col-comp-info">
+                                <i class="fa fa-list-check me-1"></i> {{#str}} competency_component, local_meko_competencies {{/str}}
+                            </th>
+                            {{#columns}}
+                                <th data-level-col="{{ level_key }}" class="text-center">
+                                    <span class="badge {{ badge_class }} px-3 py-1">
+                                        {{ label }}
+                                    </span>
+                                </th>
+                            {{/columns}}
+                        </tr>
+                    </thead>
+                    {{#matrix_rows}}
+                        <tbody class="matrix-comp-group" data-comp-code="{{ competency_code }}" data-domain-code="{{ domain_code }}">
+                            {{! Row 1: Learning Outcome Descriptions }}
+                            <tr class="matrix-content-row">
+                                <td rowspan="2" class="rubric-comp-info-cell">
+                                    <span class="tier-badge tier-badge-domain mb-2">{{#str}} tier_domain, local_meko_competencies {{/str}}</span>
+                                    <div class="small text-muted text-uppercase fw-bold mb-2">
+                                        {{ domain_name }}
+                                    </div>
+                                    <span class="tier-badge tier-badge-comp mb-1">{{#str}} tier_competency, local_meko_competencies {{/str}}</span>
+                                    <h3 class="rubric-comp-name">
+                                        {{ competency_name }}
+                                    </h3>
+                                </td>
+
+                                {{#cells}}
+                                    <td class="rubric-content-cell cell-level-{{ level_key }} {{#has_level}}cell-has-level{{/has_level}}{{^has_level}}cell-empty-level{{/has_level}}"
+                                        data-level-col="{{ level_key }}"
+                                        data-has-level="{{#has_level}}1{{/has_level}}{{^has_level}}0{{/has_level}}">
+                                        {{#has_level}}
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="badge {{ badge_class }}">{{ badge }}</span>
+                                            </div>
+                                            <div class="rubric-desc-box mb-0">
+                                                {{{ description }}}
+                                            </div>
+                                        {{/has_level}}
+                                        {{^has_level}}
+                                            <div class="d-flex align-items-center justify-content-center h-100 text-muted py-4 small">
+                                                <span>&mdash; {{#str}} not_applicable, local_meko_competencies {{/str}} &mdash;</span>
+                                            </div>
+                                        {{/has_level}}
+                                    </td>
+                                {{/cells}}
+                            </tr>
+
+                            {{! Row 2: Baseline-aligned Course Action Buttons }}
+                            <tr class="matrix-action-row">
+                                {{#cells}}
+                                    <td class="rubric-action-cell cell-level-{{ level_key }} {{#has_level}}cell-has-level{{/has_level}}{{^has_level}}cell-empty-level{{/has_level}}"
+                                        data-level-col="{{ level_key }}">
+                                        {{#has_level}}
+                                            <div class="rubric-action-box">
+                                                {{#has_courses}}
+                                                    <a href="{{{ courses_url }}}" class="rubric-action-btn btn-accees-navy w-100 text-decoration-none">
+                                                        <i class="fa fa-graduation-cap"></i> {{#str}} view_courses_btn, local_meko_competencies {{/str}} ({{ courses_count }}) &rarr;
+                                                    </a>
+                                                {{/has_courses}}
+                                                {{^has_courses}}
+                                                    <a href="{{{ courses_url }}}" class="rubric-action-btn btn-accees-outline-navy w-100 text-decoration-none">
+                                                        <i class="fa fa-book-open"></i> {{#str}} course_catalog, local_meko_competencies {{/str}} (0)
+                                                    </a>
+                                                {{/has_courses}}
+                                            </div>
+                                        {{/has_level}}
+                                        {{^has_level}}
+                                            <div class="rubric-empty-action-spacer" aria-hidden="true"></div>
+                                        {{/has_level}}
+                                    </td>
+                                {{/cells}}
+                            </tr>
+                        </tbody>
+                    {{/matrix_rows}}
+                </table>
+            </div>
+        </div>
+
+        {{! Empty Search/Filter Results Box }}
+        <div id="matrixNoResults" class="comp-empty-box d-none">
+            <div class="display-6 text-muted mb-2"><i class="fa fa-search"></i></div>
+            <h3 class="h5 fw-bold text-dark mb-1">{{#str}} no_results_found, local_meko_competencies {{/str}}</h3>
+            <p class="text-muted small mb-3">{{#str}} no_results_desc, local_meko_competencies {{/str}}</p>
+            <button type="button" id="matrixNoResResetBtn" class="btn btn-sm btn-accees-navy px-3 py-2">
+                <i class="fa fa-rotate-left me-1"></i> {{#str}} reset_filters, local_meko_competencies {{/str}}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var root = document.querySelector('.competency-matrix-page-wrapper');
+    if (!root) return;
+
+    var selectedDomain = (root.getAttribute('data-initial-domain') || 'ALL').trim() || 'ALL';
+    var selectedLevel = (root.getAttribute('data-initial-level') || 'ALL').toLowerCase().trim() || 'all';
+    var searchInput = document.getElementById('matrixSearchInput');
+    var clearSearchBtn = document.getElementById('matrixSearchClear');
+    var searchQuery = searchInput ? normalizeText(searchInput.value) : '';
+
+    var domainChips = document.querySelectorAll('#matrixDomainFilterRow [data-filter-domain]');
+    var levelChips = document.querySelectorAll('#matrixLevelFilterRow [data-filter-level]');
+    var tableWrapper = document.getElementById('rubricMatrixTableWrapper');
+    var noResultsBox = document.getElementById('matrixNoResults');
+    var visibleCountEl = document.getElementById('matrixVisibleCount');
+    var resetTopBtn = document.getElementById('matrixResetTopBtn');
+    var resetEmptyBtn = document.getElementById('matrixNoResResetBtn');
+    var toTreeLink = document.getElementById('matrixToTreeLink');
+
+    var defaultCompColWidth = '{{ competency_col_width }}';
+    var defaultLevelColWidth = '{{ default_level_col_width }}';
+
+    function normalizeText(str) {
+        if (!str) return '';
+        return str.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd')
+            .trim();
+    }
+
+    function updateClearSearchVisibility() {
+        if (!clearSearchBtn || !searchInput) return;
+        if (searchInput.value.trim().length > 0) {
+            clearSearchBtn.classList.add('visible');
+        } else {
+            clearSearchBtn.classList.remove('visible');
+        }
+    }
+
+    function syncTreeSwitcherUrl() {
+        if (!toTreeLink) return;
+        var base = toTreeLink.getAttribute('data-base-url') || toTreeLink.href;
+        try {
+            var url = new URL(base, window.location.origin);
+            url.searchParams.delete('domain');
+            url.searchParams.delete('level');
+            url.searchParams.delete('q');
+            if (selectedDomain && selectedDomain !== 'ALL') url.searchParams.set('domain', selectedDomain);
+            if (selectedLevel && selectedLevel !== 'all') url.searchParams.set('level', selectedLevel);
+            if (searchInput && searchInput.value.trim()) url.searchParams.set('q', searchInput.value.trim());
+            toTreeLink.href = url.toString();
+        } catch (e) {}
+    }
+
+    function syncActiveChips() {
+        domainChips.forEach(function(btn) {
+            var val = btn.getAttribute('data-filter-domain') || 'ALL';
+            btn.classList.toggle('active', val === selectedDomain);
+        });
+        levelChips.forEach(function(btn) {
+            var val = (btn.getAttribute('data-filter-level') || 'ALL').toLowerCase();
+            btn.classList.toggle('active', val === selectedLevel);
+        });
+        if (resetTopBtn) {
+            var dirty = (selectedDomain !== 'ALL' || selectedLevel !== 'all' || searchQuery.length > 0);
+            resetTopBtn.classList.toggle('visible', dirty);
+        }
+    }
+
+    function applyMatrixFilters() {
+        var colElements = document.querySelectorAll('#matrixColgroup [data-level-col]');
+        var thElements = document.querySelectorAll('#rubricMatrixTable thead th[data-level-col]');
+        var contentCells = document.querySelectorAll('.rubric-content-cell[data-level-col]');
+        var actionCells = document.querySelectorAll('.rubric-action-cell[data-level-col]');
+        var compCol = document.querySelector('#matrixColgroup .col-comp-info');
+
+        if (selectedLevel === 'all') {
+            if (compCol) compCol.style.width = '';
+            colElements.forEach(function(col) {
+                col.style.display = '';
+                col.style.width = '';
+            });
+            thElements.forEach(function(th) { th.style.display = ''; });
+            contentCells.forEach(function(td) { td.style.display = ''; });
+            actionCells.forEach(function(td) { td.style.display = ''; });
+        } else {
+            if (compCol) compCol.style.width = '30%';
+            colElements.forEach(function(col) {
+                var cKey = (col.getAttribute('data-level-col') || '').toLowerCase();
+                if (cKey === selectedLevel) {
+                    col.style.display = '';
+                    col.style.width = '70%';
+                } else {
+                    col.style.display = 'none';
+                }
+            });
+            thElements.forEach(function(th) {
+                var cKey = (th.getAttribute('data-level-col') || '').toLowerCase();
+                th.style.display = (cKey === selectedLevel) ? '' : 'none';
+            });
+            contentCells.forEach(function(td) {
+                var cKey = (td.getAttribute('data-level-col') || '').toLowerCase();
+                td.style.display = (cKey === selectedLevel) ? '' : 'none';
+            });
+            actionCells.forEach(function(td) {
+                var cKey = (td.getAttribute('data-level-col') || '').toLowerCase();
+                td.style.display = (cKey === selectedLevel) ? '' : 'none';
+            });
+        }
+
+        var groups = document.querySelectorAll('.matrix-comp-group');
+        var totalVisible = 0;
+
+        groups.forEach(function(group) {
+            var domainCode = group.getAttribute('data-domain-code') || '';
+            var text = normalizeText(group.textContent || '');
+
+            var domainMatches = (selectedDomain === 'ALL') || (domainCode === selectedDomain);
+            var searchMatches = !searchQuery || (text.indexOf(searchQuery) !== -1);
+
+            var levelMatches = true;
+            if (selectedLevel !== 'all') {
+                var targetCell = group.querySelector('.rubric-content-cell[data-level-col="' + selectedLevel + '"]');
+                if (targetCell) {
+                    levelMatches = (targetCell.getAttribute('data-has-level') === '1');
+                }
+            }
+
+            if (domainMatches && searchMatches && levelMatches) {
+                group.style.display = '';
+                totalVisible++;
+            } else {
+                group.style.display = 'none';
+            }
+        });
+
+        if (visibleCountEl) {
+            visibleCountEl.textContent = totalVisible;
+        }
+        if (tableWrapper) tableWrapper.classList.toggle('d-none', totalVisible === 0);
+        if (noResultsBox) noResultsBox.classList.toggle('d-none', totalVisible > 0);
+
+        updateClearSearchVisibility();
+        syncActiveChips();
+        syncTreeSwitcherUrl();
+    }
+
+    function resetAllFilters() {
+        selectedDomain = 'ALL';
+        selectedLevel = 'all';
+        searchQuery = '';
+        if (searchInput) searchInput.value = '';
+        applyMatrixFilters();
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchQuery = normalizeText(this.value);
+            applyMatrixFilters();
+        });
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                searchQuery = '';
+                applyMatrixFilters();
+            }
+        });
+    }
+
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', function() {
+            if (!searchInput) return;
+            searchInput.value = '';
+            searchQuery = '';
+            searchInput.focus();
+            applyMatrixFilters();
+        });
+    }
+
+    domainChips.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            selectedDomain = this.getAttribute('data-filter-domain') || 'ALL';
+            applyMatrixFilters();
+        });
+    });
+
+    levelChips.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            selectedLevel = (this.getAttribute('data-filter-level') || 'ALL').toLowerCase();
+            applyMatrixFilters();
+        });
+    });
+
+    if (resetTopBtn) resetTopBtn.addEventListener('click', resetAllFilters);
+    if (resetEmptyBtn) resetEmptyBtn.addEventListener('click', resetAllFilters);
+
+    applyMatrixFilters();
+});
+</script>

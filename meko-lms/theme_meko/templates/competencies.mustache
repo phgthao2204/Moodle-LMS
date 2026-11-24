@@ -1,0 +1,307 @@
+<div class="meko-framework-page">
+  <header class="framework-nav">
+    <div class="framework-nav-inner">
+      <a class="framework-brand" href="{{homeurl}}">
+        <img src="{{logourl}}" alt="MEKOSOFT LMS">
+      </a>
+      <nav aria-label="Điều hướng chính">
+        <a href="{{homeurl}}">{{#str}} nav_home, theme_meko {{/str}}</a>
+        <a href="{{catalogurl}}">{{#str}} nav_catalog, theme_meko {{/str}}</a>
+        {{#isloggedin}}<a href="{{mycoursesurl}}">{{#str}} nav_mycourses, theme_meko {{/str}}</a>{{/isloggedin}}
+        <a class="is-active" href="{{competenciesurl}}">{{#str}} nav_competencies, theme_meko {{/str}}</a>
+      </nav>
+      <div class="framework-account">
+        <div class="framework-languages" aria-label="Ngôn ngữ">
+          <a class="{{#langvi}}is-active{{/langvi}}" href="{{langviurl}}" lang="vi"{{#langvi}} aria-current="true"{{/langvi}}>VI</a>
+          <a class="{{#langen}}is-active{{/langen}}" href="{{langenurl}}" lang="en"{{#langen}} aria-current="true"{{/langen}}>EN</a>
+          <a class="{{#langfr}}is-active{{/langfr}}" href="{{langfrurl}}" lang="fr"{{#langfr}} aria-current="true"{{/langfr}}>FR</a>
+        </div>
+        {{#isloggedin}}
+          <a href="{{logouturl}}" class="framework-login">{{#str}} nav_logout, theme_meko {{/str}}</a>
+        {{/isloggedin}}
+        {{^isloggedin}}
+          <a href="{{loginurl}}" class="framework-login">{{#str}} login, theme_meko {{/str}} SSO</a>
+        {{/isloggedin}}
+      </div>
+    </div>
+  </header>
+
+  <main class="framework-container">
+    <div class="framework-breadcrumb">
+      <a href="{{homeurl}}">Trang chủ</a><span>&gt;</span>
+      <a href="{{competenciesurl}}">Quản trị năng lực (CBE)</a><span>&gt;</span>
+      <strong id="bcFrameworkName"></strong>
+    </div>
+
+    <section class="framework-hero">
+      <div class="framework-hero-kicker">TẬP ĐOÀN CÔNG NGHỆ MEKOSOFT · PHÂN HỆ COMPETENCY-BASED EDUCATION (CBE)</div>
+      <h1>Hệ Thống Khung Chuẩn Năng Lực Ngoại Ngữ &amp; Năng Lực Số MEKO</h1>
+      <p>Nền tảng tích hợp và chuẩn hóa 3 bộ khung năng lực theo quy chuẩn Quốc gia và Quốc tế: Khung Ngoại Ngữ 6 Bậc VSTEP (Bộ GD&amp;ĐT - TT 01/2014), Khung Sư Phạm Số DigCompEdu (Châu Âu - 6 Cấp Độ) và Khung Năng Lực Lập Trình &amp; Kỹ Thuật MEKO-IT (6 Cấp Độ). Tất cả được nạp trực tiếp vào Moodle 5.3 LTS, tự động ánh xạ vào khóa học Tiles, đánh giá qua Quiz tự động (điểm &gt;= 70%) và cấp chứng nhận CustomCert PDF có mã QR.</p>
+      <div class="framework-metrics">
+        <div><strong id="metricFwCount">03</strong><span>Khung Chuẩn Năng Lực</span></div>
+        <div><strong id="metricDomains">04</strong><span>Miền / Kỹ Năng Thành Phần</span></div>
+        <div><strong id="metricCompetencies">24</strong><span>Chuẩn Năng Lực Nạp Moodle</span></div>
+        <div><strong>100%</strong><span>Tự Động Đánh Giá Qua Quiz</span></div>
+      </div>
+    </section>
+
+    <section class="framework-workflow">
+      <h2>⚙️ Quy Trình Khép Kín Đánh Giá Năng Lực &amp; Cấp Chứng Nhận Trong MEKO-LMS 5.3 LTS</h2>
+      <p>Mô hình Competency-Based Education (CBE) được vận hành hoàn toàn tự động, loại bỏ mọi tác vụ thủ công:</p>
+      <div class="framework-steps">
+        <article><span>1</span><strong>Nạp Khung Bằng CSV</strong><p>Admin nạp file CSV chuẩn 6 cột vào <code>Site Admin &gt; Competencies &gt; Import</code>.</p></article>
+        <article><span>2</span><strong>Gắn Vào Khóa Học Tiles</strong><p>Gắn mã năng lực (ví dụ <code>VSTEP_READ_B1</code>) vào mục tiêu khóa học và bài kiểm tra.</p></article>
+        <article><span>3</span><strong>Competency Rule Tự Động</strong><p>Học viên làm Quiz đạt điểm &gt;= 70% → tự động đạt chuẩn (Proficient = Yes).</p></article>
+        <article><span>4</span><strong>Cấp Badge &amp; Certificate</strong><p>Kích hoạt cấp Huy hiệu OpenBadge và xuất CustomCert PDF có mã QR xác thực.</p></article>
+      </div>
+    </section>
+
+    <section class="framework-controls" aria-label="Công cụ khung năng lực">
+      <div class="framework-tabs" id="frameworkTabs" role="tablist" aria-label="Các khung năng lực"></div>
+      <div class="framework-tools">
+        <label class="framework-search"><span aria-hidden="true"><i class="fa fa-search"></i></span><input id="filterKeyword" type="search" placeholder="Tìm kiếm năng lực, mã..." aria-label="Tìm kiếm năng lực"></label>
+        <select id="filterLevel" aria-label="Lọc theo bậc hoặc cấp độ">
+          <option value="ALL">Tất cả các bậc / cấp độ</option>
+          <option value="A1">Bậc 1 / Cấp A1</option>
+          <option value="A2">Bậc 2 / Cấp A2</option>
+          <option value="B1">Bậc 3 / Cấp B1</option>
+          <option value="B2">Bậc 4 / Cấp B2</option>
+          <option value="C1">Bậc 5 / Cấp C1</option>
+          <option value="C2">Bậc 6 / Cấp C2</option>
+        </select>
+        <button class="framework-tool-button" type="button" id="expandAll">[+] Mở Rộng</button>
+        <button class="framework-tool-button" type="button" id="collapseAll">[-] Thu Gọn</button>
+        <button class="framework-tool-button is-download" type="button" id="downloadCsv"><i class="fa fa-download" aria-hidden="true"></i> Tải CSV Moodle 5.3</button>
+      </div>
+    </section>
+
+    <section class="framework-summary" aria-live="polite">
+      <h2 id="activeFwTitle"></h2>
+      <code id="activeFwIdnumber"></code>
+      <p id="activeFwDesc"></p>
+    </section>
+
+    <div class="framework-levels" id="levelsStrip"></div>
+    <div class="framework-domains" id="competenciesContainer" aria-live="polite"></div>
+
+    <section class="framework-csv">
+      <div class="framework-section-heading">
+        <div><h2>Bản Xem Trước Cấu Trúc CSV Chuẩn Moodle Tool LP Import</h2></div>
+        <button class="framework-tool-button" type="button" id="downloadCsvPreview">Tải CSV Khung Này ↓</button>
+      </div>
+      <p>File CSV gồm 6 cột bắt buộc của Moodle: <code>Parent ID number, ID number, Name, Description, Scale values, Scale configuration</code>.</p>
+      <div class="framework-csv-scroll">
+        <table>
+          <thead><tr><th>Parent ID number</th><th>ID number</th><th>Name</th><th>Description</th><th>Scale values</th><th>Scale configuration</th></tr></thead>
+          <tbody id="csvPreviewBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="framework-footer">
+    <div class="framework-footer-grid">
+      <section><h2>TẬP ĐOÀN CÔNG NGHỆ MEKOSOFT</h2><p>Hệ sinh thái Đào tạo &amp; Quản trị Năng lực Số Doanh nghiệp MEKO-LMS (Moodle 5.3 LTS) được phát triển và vận hành bởi MEKOSOFT Corporation.</p></section>
+      <section><h2>Khung Chuẩn Năng Lực</h2><a href="{{competenciesurl}}?tab=vstep">Khung Ngoại Ngữ 6 Bậc VSTEP</a><a href="{{competenciesurl}}?tab=digcompedu">Khung Sư Phạm Số DigCompEdu</a><a href="{{competenciesurl}}?tab=mekoit">Khung Kỹ Thuật MEKO-IT</a></section>
+      <section><h2>Hệ Thống Trực Thuộc</h2><a href="{{catalogurl}}">MEKO-LMS</a><a href="{{frameworkadminurl}}">Quản trị khung năng lực Moodle</a></section>
+    </div>
+    <div class="framework-copyright">© 2026 Tập đoàn Công nghệ MEKOSOFT (MEKOSOFT Corporation). Mọi quyền được bảo lưu.</div>
+  </footer>
+
+  <div class="framework-modal" id="compModal" hidden>
+    <div class="framework-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header><h2 id="modalTitle"></h2><button type="button" id="closeModal" aria-label="Đóng">×</button></header>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="{{frameworkdataurl}}"></script>
+  <script>
+    (() => {
+      const frameworks = window.MEKO_FRAMEWORK_DATA || [];
+      const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+      const levelNames = {A1: 'Sơ cấp A1', A2: 'Sơ cấp A2', B1: 'Trung cấp B1', B2: 'Trung cấp B2', C1: 'Cao cấp C1', C2: 'Cao cấp C2'};
+      const tabs = document.getElementById('frameworkTabs');
+      const container = document.getElementById('competenciesContainer');
+      const modal = document.getElementById('compModal');
+      let activeFramework = frameworks[0];
+
+      const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[char]));
+      const allCompetencies = framework => framework.domains.reduce((all, domain) => all.concat(domain.competencies), []);
+      const displayName = framework => framework.name.replace(/\s+/g, ' ').trim();
+
+      function resetFilters() {
+        document.getElementById('filterKeyword').value = '';
+        document.getElementById('filterLevel').value = 'ALL';
+      }
+
+      function renderTabs() {
+        tabs.innerHTML = frameworks.map(framework => {
+          const count = allCompetencies(framework).length;
+          const iconClass = framework.id === 'vstep' ? 'fa-language' : framework.id === 'digcompedu' ? 'fa-graduation-cap' : 'fa-code';
+          const label = framework.id === 'vstep' ? 'VSTEP Ngoại Ngữ 6 Bậc' : framework.id === 'digcompedu' ? 'DigCompEdu Sư Phạm Số' : 'MEKO-IT Kỹ Thuật Lập Trình';
+          return `<button type="button" class="framework-tab${framework.id === activeFramework.id ? ' is-active' : ''}" role="tab" aria-selected="${framework.id === activeFramework.id}" data-framework="${escapeHtml(framework.id)}"><span><i class="fa ${iconClass}" aria-hidden="true"></i> ${label}</span><small>${count} Chuẩn</small></button>`;
+        }).join('');
+      }
+
+      function renderSummary() {
+        document.getElementById('bcFrameworkName').textContent = displayName(activeFramework);
+        document.getElementById('activeFwTitle').textContent = displayName(activeFramework);
+        document.getElementById('activeFwIdnumber').textContent = `ID Number: ${activeFramework.idnumber} · ${activeFramework.authority}`;
+        document.getElementById('activeFwDesc').textContent = activeFramework.description;
+        document.getElementById('metricFwCount').textContent = String(frameworks.length).padStart(2, '0');
+        document.getElementById('metricDomains').textContent = String(activeFramework.domains.length).padStart(2, '0');
+        document.getElementById('metricCompetencies').textContent = String(allCompetencies(activeFramework).length).padStart(2, '0');
+
+        document.getElementById('levelsStrip').innerHTML = activeFramework.levels.map(level => `
+          <article class="framework-level-card"><strong>Bậc ${levels.indexOf(level.code) + 1} (${escapeHtml(level.code)})</strong><span>${escapeHtml(level.name)}</span><p>${escapeHtml(level.desc)}</p></article>
+        `).join('');
+      }
+
+      function renderCsvPreview() {
+        const rows = [[
+          '(Root)', activeFramework.idnumber, displayName(activeFramework), activeFramework.description, 'Chưa đạt,Đạt', '0,1'
+        ]];
+        activeFramework.domains.forEach(domain => {
+          rows.push([activeFramework.idnumber, domain.code, domain.name, domain.description, '', '']);
+          domain.competencies.forEach(competency => rows.push([
+            domain.code, competency.code, competency.name, competency.statement, '', ''
+          ]));
+        });
+        document.getElementById('csvPreviewBody').innerHTML = rows.slice(0, 13).map((row, index) => `
+          <tr${index === 0 ? ' class="is-root"' : ''}>${row.map(value => `<td>${escapeHtml(value)}</td>`).join('')}</tr>
+        `).join('');
+      }
+
+      function renderDomains() {
+        const query = document.getElementById('filterKeyword').value.trim().toLocaleLowerCase();
+        const selectedLevel = document.getElementById('filterLevel').value;
+        let visibleCount = 0;
+        const blocks = activeFramework.domains.map((domain, domainIndex) => {
+          const matches = domain.competencies.filter(competency => {
+            const text = `${domain.name} ${domain.code} ${domain.description} ${competency.code} ${competency.name} ${competency.statement}`.toLocaleLowerCase();
+            return (selectedLevel === 'ALL' || competency.level === selectedLevel) && (!query || text.includes(query));
+          });
+          if (!matches.length) return '';
+          visibleCount += matches.length;
+          return `
+            <section class="framework-domain" id="domain-${domainIndex}">
+              <button type="button" class="framework-domain-heading" aria-expanded="true" data-domain="${domainIndex}">
+                <span class="framework-domain-code">${escapeHtml(domain.code)}</span><strong>${escapeHtml(domain.name)}</strong><small>${matches.length} chuẩn hiển thị</small><span class="framework-domain-chevron" aria-hidden="true">▼</span>
+              </button>
+              <div class="framework-domain-body">
+                <p class="framework-domain-description">${escapeHtml(domain.description)}</p>
+                <div class="framework-competency-grid">${matches.map(competency => `
+                  <article class="framework-competency-card">
+                    <div class="framework-competency-content">
+                      <div class="framework-competency-meta"><code>${escapeHtml(competency.code)}</code><span class="framework-level-badge level-${escapeHtml(competency.level.toLowerCase())}">Cấp ${escapeHtml(competency.level)}</span></div>
+                      <h3>${escapeHtml(competency.name)}</h3><p>${escapeHtml(competency.statement)}</p>
+                    </div>
+                    <footer><span>✓ ${escapeHtml(competency.rule)}</span><button type="button" data-competency="${escapeHtml(competency.code)}">Chi Tiết →</button></footer>
+                  </article>`).join('')}</div>
+              </div>
+            </section>`;
+        }).join('');
+
+        container.innerHTML = blocks || `<div class="framework-empty"><strong>Không tìm thấy chuẩn năng lực phù hợp</strong><p>Thử từ khóa khác hoặc chọn tất cả các bậc / cấp độ.</p></div>`;
+        container.dataset.visibleCount = String(visibleCount);
+      }
+
+      function render() {
+        renderTabs();
+        renderSummary();
+        renderCsvPreview();
+        renderDomains();
+      }
+
+      function switchFramework(id) {
+        const framework = frameworks.find(item => item.id === id);
+        if (!framework) return;
+        activeFramework = framework;
+        resetFilters();
+        const url = new URL(window.location.href);
+        url.searchParams.set('tab', id);
+        window.history.replaceState({}, '', url);
+        render();
+      }
+
+      function downloadCsv() {
+        const quote = value => `"${String(value ?? '').replace(/"/g, '""')}"`;
+        const rows = [['Parent ID number', 'ID number', 'Name', 'Description', 'Scale values', 'Scale configuration']];
+        rows.push(['', activeFramework.idnumber, displayName(activeFramework), activeFramework.description, 'Chưa đạt,Đạt', '0,1']);
+        activeFramework.domains.forEach(domain => {
+          rows.push([activeFramework.idnumber, domain.code, domain.name, domain.description, '', '']);
+          domain.competencies.forEach(competency => rows.push([
+            domain.code, competency.code, competency.name, competency.statement, '', ''
+          ]));
+        });
+        const blob = new Blob(['\uFEFF' + rows.map(row => row.map(quote).join(',')).join('\r\n')], {type: 'text/csv;charset=utf-8'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${activeFramework.idnumber.toLowerCase()}-framework.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+      }
+
+      function openDetails(code) {
+        const competency = allCompetencies(activeFramework).find(item => item.code === code);
+        if (!competency) return;
+        document.getElementById('modalTitle').textContent = `${competency.code}: ${competency.name}`;
+        document.getElementById('modalBody').innerHTML = `
+          <div class="framework-modal-row"><strong>Mã Chuẩn Năng Lực (ID Number)</strong><code>${escapeHtml(competency.code)}</code></div>
+          <div class="framework-modal-row"><strong>Khung Chuẩn &amp; Cấp Độ Trình Độ</strong><span>${escapeHtml(displayName(activeFramework))} · Cấp ${escapeHtml(competency.level)} (${escapeHtml(levelNames[competency.level] || '')})</span></div>
+          <div class="framework-modal-row"><strong>Mô Tả Năng Lực Cần Đạt</strong><p>${escapeHtml(competency.statement)}</p></div>
+          <div class="framework-modal-row"><strong>Quy Tắc Đánh Giá Tự Động</strong><p>${escapeHtml(competency.rule)}. Hoàn thành Quiz đạt ngưỡng để được đánh dấu Proficient.</p></div>
+          <div class="framework-modal-row"><strong>Khóa Học Tham Chiếu</strong><p>${escapeHtml(competency.course || 'Chưa gắn khóa học')}</p></div>`;
+        modal.hidden = false;
+        document.getElementById('closeModal').focus();
+      }
+
+      tabs.addEventListener('click', event => {
+        const button = event.target.closest('[data-framework]');
+        if (button) switchFramework(button.dataset.framework);
+      });
+      container.addEventListener('click', event => {
+        const heading = event.target.closest('[data-domain]');
+        if (heading) {
+          const block = heading.closest('.framework-domain');
+          const collapsed = block.classList.toggle('is-collapsed');
+          heading.setAttribute('aria-expanded', String(!collapsed));
+          return;
+        }
+        const details = event.target.closest('[data-competency]');
+        if (details) openDetails(details.dataset.competency);
+      });
+      document.getElementById('filterKeyword').addEventListener('input', renderDomains);
+      document.getElementById('filterLevel').addEventListener('change', renderDomains);
+      document.getElementById('expandAll').addEventListener('click', () => {
+        container.querySelectorAll('.framework-domain').forEach(block => {
+          block.classList.remove('is-collapsed');
+          block.querySelector('[data-domain]')?.setAttribute('aria-expanded', 'true');
+        });
+      });
+      document.getElementById('collapseAll').addEventListener('click', () => {
+        container.querySelectorAll('.framework-domain').forEach(block => {
+          block.classList.add('is-collapsed');
+          block.querySelector('[data-domain]')?.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.getElementById('downloadCsv').addEventListener('click', downloadCsv);
+      document.getElementById('downloadCsvPreview').addEventListener('click', downloadCsv);
+      document.getElementById('closeModal').addEventListener('click', () => { modal.hidden = true; });
+      modal.addEventListener('click', event => { if (event.target === modal) modal.hidden = true; });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') modal.hidden = true; });
+
+      if (!frameworks.length) {
+        container.innerHTML = '<div class="framework-empty">Không tải được dữ liệu khung năng lực.</div>';
+        return;
+      }
+      const requestedTab = new URLSearchParams(window.location.search).get('tab');
+      const aliases = {faculty: 'digcompedu', lecturer: 'digcompedu', student: 'vstep', it: 'mekoit'};
+      const initialFramework = aliases[requestedTab] || requestedTab;
+      activeFramework = frameworks.find(item => item.id === initialFramework) || frameworks[0];
+      resetFilters();
+      render();
+    })();
+  </script>
+</div>

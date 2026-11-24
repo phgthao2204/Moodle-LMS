@@ -1,0 +1,169 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - OFFICIAL CTU / ERASMUS+ FOOTER
+// ==============================================================================
+
+footer.site-footer,
+.site-footer,
+.site-footer.accees-footer-official,
+#page-footer {
+    background-color: $bg-footer !important;
+    color: #FFFFFF !important;
+    padding: 3.5rem 0 0 !important;
+    position: relative !important;
+    font-family: $font-family-sans !important;
+    line-height: 1.55 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-top: 3px solid $brand-primary !important;
+    box-sizing: border-box !important;
+    display: block !important;
+
+    .wrap {
+        width: min(100%, #{$container-max-width}) !important;
+        max-width: $container-max-width !important;
+        margin: 0 auto !important;
+        padding: 0 24px !important;
+        box-sizing: border-box !important;
+    }
+
+    .ft {
+        display: grid !important;
+        grid-template-columns: 360px 1fr !important;
+        gap: 0 3.5rem !important;
+        align-items: start !important;
+        padding-bottom: 2.5rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+        @media (max-width: 991px) {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+        }
+    }
+
+    .footer-logo-img {
+        height: 40px !important;
+        width: auto !important;
+        display: block !important;
+    }
+
+    .fb-text {
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-size: 13.5px !important;
+        line-height: 1.75 !important;
+        max-width: 360px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .social {
+        display: flex !important;
+        gap: 10px !important;
+        margin-top: 1.25rem !important;
+    }
+
+    .soc {
+        width: 36px !important;
+        height: 36px !important;
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: $radius-lg !important;
+        color: rgba(255, 255, 255, 0.75) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+
+        &:hover {
+            background-color: $brand-warning !important;
+            color: #FFFFFF !important;
+            border-color: $brand-warning !important;
+            transform: translateY(-2px) !important;
+        }
+
+        svg {
+            width: 15px !important;
+            height: 15px !important;
+        }
+    }
+
+    .fgroups {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1rem 1.5rem !important;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 1.5rem !important;
+        }
+    }
+
+    .fg-col {
+        h4 {
+            font-size: 11.5px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.14em !important;
+            color: $brand-warning !important;
+            margin-bottom: 1rem !important;
+            font-weight: 800 !important;
+        }
+
+        a {
+            display: block !important;
+            margin-bottom: 0.55rem !important;
+            font-size: 13.5px !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+            text-decoration: none !important;
+            transition: color 0.15s ease !important;
+
+            &:hover {
+                color: #FFFFFF !important;
+                text-decoration: underline !important;
+            }
+        }
+    }
+
+    .footer-bottom {
+        padding: 0 0 2rem !important;
+    }
+
+    .eu-funded-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1.75rem !important;
+        flex-wrap: wrap !important;
+        padding: 1.5rem 0 1.25rem !important;
+
+        .eu-badge-img {
+            height: auto !important;
+            width: 155px !important;
+            display: block !important;
+            flex-shrink: 0 !important;
+        }
+
+        .fsec {
+            flex: 1 !important;
+            min-width: 260px !important;
+            font-size: 12.5px !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+            line-height: 1.65 !important;
+        }
+    }
+
+    .fbot {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        padding-top: 1rem !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .fnote,
+    .fcoord {
+        font-size: 12.5px !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+}
+

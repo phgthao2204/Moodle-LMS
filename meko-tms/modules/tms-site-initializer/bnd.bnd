@@ -1,0 +1,5 @@
+Bundle-Name: ACCEES TMS Site Initializer
+Bundle-SymbolicName: vn.mekosoft.tms.site.initializer
+Bundle-Version: 1.0.0
+Service-Component: OSGI-INF/setup.xml
+Import-Package: com.liferay.portal.kernel.module.framework,*

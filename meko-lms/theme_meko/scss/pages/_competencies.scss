@@ -1,0 +1,214 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - COMPETENCY FRAMEWORKS & RUBRIC MATRIX
+// Fixes white-on-white KPI box text and styles 3-Tier Tree & Rubric Matrix
+// ==============================================================================
+
+.competency-framework-page-wrapper,
+.competency-matrix-page-wrapper {
+    max-width: $container-max-width;
+    margin: 0 auto;
+}
+
+// 1. Hero Strip Banner (Solid Navy #182B89)
+.hero-strip {
+    background-color: $brand-navy !important;
+    color: #FFFFFF !important;
+    border-radius: $radius-xl !important;
+
+    h1,
+    .h3 {
+        color: #FFFFFF !important;
+    }
+
+    // IMPORTANT: Do NOT set .hero-strip .small to #FFFFFF globally,
+    // because the 4 white KPI metric cards inside .hero-strip use .bg-white .small!
+    .bg-white {
+        background-color: $bg-surface !important;
+        color: $text-main !important;
+
+        .small,
+        .text-muted {
+            color: $text-secondary !important;
+        }
+    }
+}
+
+// 2. Multi-dimensional Filter Chips (Domains & Proficiency Levels)
+.filter-chips-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+
+    .filter-label {
+        font-size: 11px;
+        font-weight: 800;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 4px;
+        white-space: nowrap;
+    }
+
+    .chip-btn {
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: $radius-pill;
+        border: 1px solid $border-strong;
+        background-color: $bg-surface;
+        color: $text-secondary;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        line-height: 1.4;
+        user-select: none;
+        text-decoration: none !important;
+
+        &:hover {
+            border-color: $brand-primary;
+            color: $brand-primary;
+            background-color: $bg-subtle;
+        }
+
+        &.active {
+            background-color: $brand-primary-tint !important;
+            color: $brand-primary !important;
+            border-color: $brand-primary !important;
+            font-weight: 700 !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 182, 0.12);
+        }
+    }
+}
+
+// 3. Rubric Matrix Table (Horizontal Proficiency Comparison N1..N4 / Basic..Advanced)
+.rubric-matrix-table-wrapper {
+    background-color: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: $radius-xl;
+    overflow: clip;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+@media (min-width: 1200px) {
+    .rubric-matrix-table-wrapper,
+    .rubric-matrix-table-wrapper .table-responsive {
+        overflow: visible !important;
+    }
+
+    .rubric-matrix-table thead th {
+        position: sticky;
+        top: $navbar-height;
+        z-index: 15;
+    }
+
+    .rubric-matrix-table thead th:first-child {
+        border-top-left-radius: calc(#{$radius-xl} - 1px);
+    }
+
+    .rubric-matrix-table thead th:last-child {
+        border-top-right-radius: calc(#{$radius-xl} - 1px);
+    }
+}
+
+.rubric-matrix-table {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12.5px;
+
+    thead th {
+        background-color: $bg-subtle !important;
+        color: $text-main;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 14px 16px;
+        border-bottom: 2px solid $brand-primary !important;
+        border-right: 1px solid $border-default;
+        vertical-align: middle;
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+
+    td {
+        padding: 0;
+        vertical-align: top;
+        background-color: $bg-surface;
+    }
+
+    tbody.matrix-comp-group {
+        border-bottom: 1px solid $border-default;
+
+        &:hover tr td {
+            background-color: #FAFCFF !important;
+        }
+    }
+
+    .matrix-content-row td {
+        border-right: 1px solid $border-default;
+        border-bottom: none;
+        vertical-align: top;
+
+        &.rubric-comp-info-cell {
+            background-color: #FAFAFC;
+            border-bottom: 1px solid $border-default;
+            border-right: 1px solid $border-default;
+        }
+
+        &.rubric-content-cell {
+            padding: 16px 16px 10px 16px;
+            border-bottom: none;
+        }
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+
+    .matrix-action-row td {
+        border-top: none;
+        border-right: 1px solid $border-default;
+        border-bottom: 1px solid $border-default;
+        vertical-align: bottom;
+        padding: 0 16px 16px 16px;
+        height: 1px;
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+.rubric-desc-box {
+    font-size: 12px;
+    line-height: 1.6;
+    color: $text-secondary;
+    margin-bottom: 8px;
+
+    p {
+        margin-bottom: 6px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    strong {
+        color: $text-main;
+        font-weight: 700;
+    }
+}
+
+.rubric-action-box {
+    margin-top: 0;
+    padding-top: 10px;
+    border-top: 1px dashed $border-default !important;
+}
+

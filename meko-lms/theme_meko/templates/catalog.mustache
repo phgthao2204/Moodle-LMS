@@ -1,0 +1,1080 @@
+{{! MEKO catalog styled after the attached Moodle catalog mockup. }}
+<div class="meko-catalog-page">
+  <header class="meko-catalog-nav">
+    <div class="meko-catalog-nav-inner">
+      <a class="meko-catalog-brand" href="{{homeurl}}" aria-label="MEKOSOFT LMS">
+        <img src="{{logourl}}" alt="MEKOSOFT">
+      </a>
+      <nav aria-label="{{#str}} nav_main_menu, theme_meko {{/str}}">
+        <a href="{{homeurl}}">{{#str}} nav_home, theme_meko {{/str}}</a>
+        <a class="is-active" href="{{catalogurl}}">{{#str}} nav_catalog, theme_meko {{/str}}</a>
+        {{#isloggedin}}<a href="{{mycoursesurl}}">{{#str}} nav_mycourses, theme_meko {{/str}}</a>{{/isloggedin}}
+        <a href="{{competenciesurl}}">{{#str}} nav_competencies, theme_meko {{/str}}</a>
+      </nav>
+      <div class="meko-catalog-account">
+        <div class="lang-switch-cluster" aria-label="Ngôn ngữ">
+          <a class="lang-circle-btn{{#langvi}} active{{/langvi}}" href="{{langviurl}}" lang="vi"{{#langvi}} aria-current="true"{{/langvi}}>VI</a>
+          <a class="lang-circle-btn{{#langen}} active{{/langen}}" href="{{langenurl}}" lang="en"{{#langen}} aria-current="true"{{/langen}}>EN</a>
+          <a class="lang-circle-btn{{#langfr}} active{{/langfr}}" href="{{langfrurl}}" lang="fr"{{#langfr}} aria-current="true"{{/langfr}}>FR</a>
+        </div>
+        {{#isloggedin}}
+          <a href="{{userprofileurl}}">{{userfullname}}</a>
+          <a href="{{logouturl}}">{{#str}} nav_logout, theme_meko {{/str}}</a>
+        {{/isloggedin}}
+        {{^isloggedin}}<a class="meko-catalog-login" href="{{loginurl}}">{{#str}} login, theme_meko {{/str}} SSO</a>{{/isloggedin}}
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <!-- Breadcrumbs Bar -->
+    <div class="breadcrumb-bar" id="breadcrumbBar">
+      <a href="{{homeurl}}">{{#str}} nav_home, theme_meko {{/str}}</a> &nbsp;&gt;&nbsp;
+      <a href="javascript:void(0)" onclick="clearAllFilters()">{{#str}} nav_catalog, theme_meko {{/str}}</a>
+      <span id="bcCategoryText">Lĩnh vực 01: Dữ liệu &amp; Nội dung số</span>
+      <span id="bcDomainText">D1. Thông tin và dữ liệu số</span>
+      <strong id="bcLevelText">C1.1 [Bậc N1 - Cơ bản]</strong>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 2. THANH BỘ LỌC ĐANG ÁP DỤNG (MULTI-FACET CHIPS)-->
+    <!-- ============================================== -->
+    <div class="active-filters-strip" id="activeFiltersStrip">
+      <div class="active-filters-left">
+        <span class="filter-label-icon">{{#str}} catalogactivefilters, theme_meko {{/str}}</span>
+
+        <!-- Category Chip -->
+        <span class="filter-chip chip-category" id="chipCategory" style="display: inline-flex;">
+          <span>Lĩnh vực: <strong id="chipCategoryName">Lĩnh vực 01: Dữ liệu &amp; Nội dung số</strong></span>
+          <button class="chip-remove-btn" onclick="clearCategory()" title="Bỏ lọc lĩnh vực này">✕</button>
+        </span>
+
+        <!-- Framework Chip -->
+        <span class="filter-chip chip-framework" id="chipFramework" style="display: inline-flex;">
+          <span>Khung: <strong id="chipFrameworkName">Sinh viên (DigComp 2.2)</strong></span>
+        </span>
+
+        <!-- Competency Chip -->
+        <span class="filter-chip chip-competency" id="chipCompetency" style="display: inline-flex;">
+          <span>Chuẩn: <strong id="chipCompetencyName">SV_C1_1_N1</strong> (<span id="chipCompetencyLevel">Bậc N1</span>)</span>
+          <button class="chip-remove-btn" onclick="clearCompetency()" title="Bỏ lọc chuẩn đầu ra này">✕</button>
+        </span>
+      </div>
+
+      <div>
+        <button class="btn-clear-all" onclick="clearAllFilters()">✕ {{#str}} clearfilters, theme_meko {{/str}}</button>
+      </div>
+    </div>
+
+    <!-- Main Layout: 2 Columns (Sidebar + Courses Catalog) -->
+    <div class="catalog-layout">
+
+      <!-- ============================================== -->
+      <!-- CỘT TRÁI: SIDEBAR BỘ LỌC ĐA CHIỀU (MULTI-FACET) -->
+      <!-- ============================================== -->
+      <aside class="catalog-sidebar">
+
+        <!-- Widget 1: CHUẨN ĐẦU RA NĂNG LỰC SỐ (CÓ SWITCHER KHUNG & CÂY DUYỆT TẤT CẢ) -->
+        <div class="sidebar-widget">
+          <div class="widget-header">
+            <span>{{#str}} catalogcompetencies, theme_meko {{/str}}</span>
+            <span style="font-size: 11px; color: var(--meko-primary);" id="sidebarFrameworkCount">18 Năng lực</span>
+          </div>
+          <div class="widget-body">
+
+            <!-- Framework Switcher Tab (Sinh viên vs Giảng viên) -->
+            <div class="framework-tabs-switcher">
+              <button class="framework-tab-btn active" id="tabBtnStudents" onclick="switchFramework('students')">
+                Sinh viên
+              </button>
+              <button class="framework-tab-btn" id="tabBtnFaculty" onclick="switchFramework('faculty')">
+                 Giảng viên
+              </button>
+            </div>
+
+            <!-- Search within competencies tree -->
+            <div class="sidebar-search-box">
+              <span class="sidebar-search-icon"></span>
+              <input type="text" class="sidebar-search-input" placeholder="Tìm năng lực, mã số..." oninput="handleSidebarCompSearch(this.value)">
+            </div>
+
+            <!-- Collapsible Competency Tree -->
+            <ul class="comp-tree-list" id="compTreeList">
+              <!-- Rendered dynamically by JS -->
+            </ul>
+
+            <!-- Button to open Quick Selector Modal -->
+            <button class="btn-open-picker-modal" onclick="openCompetencyModal()">
+              <span>Mở bộ chọn nhanh toàn bộ khung</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Widget 2: CÂY DANH MỤC 6 LĨNH VỰC ĐÀO TẠO GỐC MOODLE -->
+        <div class="sidebar-widget">
+          <div class="widget-header">
+            <span>{{#str}} catalogtrainingareas, theme_meko {{/str}}</span>
+            <span style="font-size: 11px; color: #6B7280;">6 Lĩnh vực</span>
+          </div>
+          <div class="widget-body">
+            <ul class="cat-tree-list" id="catTreeList">
+              <!-- Rendered dynamically by JS -->
+            </ul>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ============================================== -->
+      <!-- CỘT PHẢI: KHU VỰC HIỂN THỊ KHÓA HỌC & BANNER    -->
+      <!-- ============================================== -->
+      <main class="catalog-main">
+
+        <!-- 1. BANNER LỌC THEO BẬC NĂNG LỰC SỐ -->
+        <section class="competency-filter-banner" id="bannerFilter">
+          <div class="banner-top-row">
+            <div>
+              <div class="banner-hierarchy-path">
+                <span class="tag-tier tag-tier-domain" id="bannerTierDomain">MIỀN 1</span>
+                <span id="bannerDomainName">D1. Thông tin và dữ liệu số</span> &nbsp;&gt;&nbsp;
+                <span class="tag-tier tag-tier-comp" id="bannerTierComp">NĂNG LỰC</span>
+                <span id="bannerCompName">C1.1. Tìm kiếm thông tin và dữ liệu</span>
+              </div>
+              <h1 class="banner-title">
+                <span class="tag-tier tag-tier-level" id="bannerTierLevel">BẬC MỤC TIÊU</span>
+                <span id="bannerLevelTitle">Bậc N1 - Cơ bản (Basic)</span>
+                <span class="banner-level-badge n1" id="bannerLevelBadge">N1</span>
+                <span class="banner-id-tag" id="bannerIdTag">SV_C1_1_N1</span>
+              </h1>
+            </div>
+
+            <div class="banner-actions">
+              <button class="btn-modal-trigger" onclick="openCompetencyModal()" title="Chọn sang một chuẩn năng lực khác">
+                <span>Đổi chuẩn năng lực</span>
+              </button>
+              <button class="btn-tree-link" onclick="clearCompetency()" title="Bỏ lọc chuẩn năng lực">
+                ✕ Xóa lọc năng lực
+              </button>
+            </div>
+          </div>
+
+          <!-- Specific Statement Box -->
+          <div class="banner-statement-box">
+            <strong>Yêu cầu chuẩn đầu ra Bậc mục tiêu:</strong>
+            <span id="bannerStatementText">
+              Thực hiện tìm kiếm đơn giản bằng cách dùng các từ khóa đơn lẻ trên công cụ tìm kiếm, thường theo chỉ dẫn. Dựa vào kết quả mặc định mà không lọc hay kiểm tra độ tin cậy.
+            </span>
+          </div>
+
+          <!-- Banner Footer -->
+          <div class="banner-footer-row">
+            <div class="banner-count-text">
+              Khung: <strong id="bannerFrameworkName">DigComp MEKO Students v1.0</strong> •
+              <span id="bannerIntersectionText">Đang lọc theo <strong>Lĩnh vực 01: Dữ liệu &amp; Nội dung số</strong>: hiển thị <strong id="bannerCourseCount">02</strong> khóa học đạt chuẩn</span>
+            </div>
+            <div style="font-size: 11.5px; color: #047857; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+              <span>✓ Tự động công nhận chuẩn CBE khi hoàn thành khóa</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. TOOLBAR TÌM KIẾM TRONG KẾT QUẢ & SẮP XẾP -->
+        <div class="course-control-toolbar">
+          <div class="search-within-box">
+            <span class="search-within-icon"></span>
+            <input type="text" class="search-within-input" placeholder="{{#str}} catalogsearchcourses, theme_meko {{/str}}..." oninput="handleCourseSearch(this.value)">
+          </div>
+          <div class="results-count-text">
+            <span>{{#str}} catalogshowing, theme_meko {{/str}}: <strong id="resultsCount">02</strong> {{#str}} catalogcoursesfound, theme_meko {{/str}}</span>
+          </div>
+        </div>
+
+        <!-- 3. LƯỚI KHÓA HỌC ĐẠT CHUẨN ĐẦU RA BẬC NÀY -->
+        <div class="courses-grid" id="coursesGrid">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- 4. INTELLIGENT EMPTY STATE (GỢI Ý NỚI LỎNG BỘ LỌC) -->
+        <div class="empty-state-card" id="emptyStateCard" style="display: none;">
+          <div class="empty-icon"></div>
+          <h3 class="empty-title">{{#str}} catalognocourses, theme_meko {{/str}}</h3>
+          <p class="empty-desc" id="emptyDescText">
+            Hiện tại chưa có khóa học nào thuộc <strong id="emptyCatName">Lĩnh vực đã chọn</strong> đáp ứng chuẩn đầu ra <strong id="emptyCompName">Bậc năng lực này</strong>. Bạn có thể nới lỏng bộ lọc để tiếp tục:
+          </p>
+          <div class="empty-actions-row">
+            <button class="btn-relax-filter" id="btnRelaxCategory" onclick="clearCategory()">
+              Xem khóa học đạt chuẩn này ở TẤT CẢ lĩnh vực
+            </button>
+            <button class="btn-relax-filter" id="btnRelaxComp" onclick="clearCompetency()">
+              Xem tất cả khóa học của lĩnh vực này
+            </button>
+            <button class="btn-relax-filter" onclick="clearAllFilters()">
+              ✕ Xóa tất cả bộ lọc
+            </button>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL / DRAWER: BỘ CHỌN CHUẨN NĂNG LỰC NHANH   -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="competencyModal" onclick="closeCompetencyModalOnBackdrop(event)">
+    <div class="picker-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>BỘ CHỌN CHUẨN ĐẦU RA NĂNG LỰC SỐ (MEKO CBE)</span>
+        </div>
+        <button class="btn-close-modal" onclick="closeCompetencyModal()">✕</button>
+      </div>
+
+      <div class="modal-subbar">
+        <!-- Modal Framework Switcher -->
+        <div class="framework-tabs-switcher" style="margin-bottom: 0; min-width: 260px;">
+          <button class="framework-tab-btn active" id="modalTabBtnStudents" onclick="switchFramework('students')">
+            Khung Sinh viên (18 NL)
+          </button>
+          <button class="framework-tab-btn" id="modalTabBtnFaculty" onclick="switchFramework('faculty')">
+             Khung Giảng viên (28 NL)
+          </button>
+        </div>
+
+        <!-- Modal Search Box -->
+        <div class="modal-search-box">
+          <span class="search-within-icon"></span>
+          <input type="text" class="modal-search-input" id="modalSearchInput" placeholder="Tìm kiếm năng lực (ví dụ: tìm kiếm, AI, an ninh, trích dẫn, C2.1)..." oninput="handleModalSearch(this.value)">
+        </div>
+      </div>
+
+      <div class="modal-body-scroll" id="modalBodyScroll">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div style="font-size: 1.3rem; font-weight: 800; color: #FFF; margin-bottom: 8px;">MEKO LMS</div>
+        <p style="line-height: 1.6; font-size: 13px;">
+          Hệ sinh thái Đào tạo Số MEKO (MEKO-DLE) do Tập đoàn MEKOSOFT phát triển và làm chủ công nghệ, cung cấp nền tảng quản lý đào tạo dựa trên năng lực (CBE). chương trình MEKOSOFT của Tập đoàn Công nghệ MEKOSOFT.<br>
+          Cơ quan điều phối: <strong>Tập đoàn Công nghệ MEKOSOFT</strong>.
+        </p>
+      </div>
+      <div>
+        <div class="footer-heading">Hệ sinh thái số MEKO</div>
+        <p style="font-size: 13px; line-height: 1.8;">
+          • <a href="https://repo.mekosoft.vn" target="_blank">Kho học liệu số DLRP &rarr;</a><br>
+          • <a href="https://tms.mekosoft.vn" target="_blank">Quản lý đào tạo TMS &rarr;</a><br>
+          • <a href="{{loginurl}}">Đăng nhập một lần SSO &rarr;</a><br>
+          • <a href="https://mekosoft.vn" target="_blank">Cổng thông tin dự án MEKOSOFT &rarr;</a>
+        </p>
+      </div>
+      <div>
+        <div class="footer-heading">Tiêu chuẩn năng lực</div>
+        <p style="font-size: 13px; line-height: 1.8;">
+          • <a href="{{competenciesurl}}?tab=student" style="color:#93C5FD;">DigComp Students v1.0 (/dig-comp-student)</a><br>
+          • <a href="{{competenciesurl}}?tab=lecturer" style="color:#93C5FD;">DigComp Faculty v1.0 (/dig-comp-lecturer)</a><br>
+          • Moodle 5.3 LTS CBE Option A (Compound Filter)<br>
+          • Open Badges 3.0 W3C VC
+        </p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      © 2026 Bản quyền thuộc về Hệ sinh thái MEKO (MEKOSOFT). Tài liệu được cấp phép theo Giấy phép Creative Commons CC-BY-NC 4.0.
+    </div>
+  </footer>
+
+
+<script>
+
+    // 1. DANH MỤC 6 LĨNH VỰC ĐÀO TẠO GỐC MOODLE
+    const CATEGORIES = {{{categoryjson}}};
+
+    // 2. KHUNG NĂNG LỰC SỐ (SINH VIÊN & GIẢNG VIÊN)
+    const FRAMEWORKS_DATA = {
+      'students': {
+        key: 'students',
+        name: 'DigComp MEKO Students v1.0',
+        shortname: 'Sinh viên (DigComp 2.2)',
+        domains: [
+          {
+            code: 'D1',
+            name: 'D1. Thông tin và dữ liệu số',
+            competencies: [
+              {
+                code: 'C1.1',
+                name: 'Tìm kiếm thông tin và dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C1_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Thực hiện tìm kiếm đơn giản bằng cách dùng các từ khóa đơn lẻ trên công cụ tìm kiếm, thường theo chỉ dẫn. Dựa vào kết quả mặc định mà không lọc hay kiểm tra độ tin cậy.' },
+                  { code: 'N2', idnumber: 'SV_C1_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tìm kiếm độc lập, chọn từ khóa phù hợp và sử dụng các bộ lọc có sẵn (thời gian, định dạng file, nguồn dữ liệu) để tìm thông tin đáp ứng nhu cầu cá nhân.' },
+                  { code: 'N3', idnumber: 'SV_C1_1_N3', title: 'Bậc N3: Nâng cao', badge_class: 'n3', statement: 'Áp dụng kỹ thuật tìm kiếm nâng cao (toán tử Boolean AND/OR/NOT, dấu ngoặc kép, CSDL học thuật, công cụ AI) trên nhiều nền tảng.' },
+                  { code: 'N4', idnumber: 'SV_C1_1_N4', title: 'Bậc N4: Chuyên sâu', badge_class: 'n4', statement: 'Thiết kế và tối ưu chiến lược tìm kiếm trong các CSDL chuyên ngành, xây dựng thư viện trích dẫn có cấu trúc (Zotero, Mendeley).' }
+                ]
+              },
+              {
+                code: 'C1.2',
+                name: 'Đánh giá thông tin và dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C1_2_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Nhận biết các dấu hiệu tin cậy rõ ràng (trang web uy tín, tên tác giả), nhưng vẫn chủ yếu dựa vào sự hướng dẫn của giảng viên.' },
+                  { code: 'N2', idnumber: 'SV_C1_2_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tự đánh giá tính xác thực của nguồn tin bằng cách so sánh nhiều kết quả; kiểm tra ngày xuất bản và tính khách quan.' }
+                ]
+              },
+              {
+                code: 'C1.3',
+                name: 'Lưu trữ và sắp xếp dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C1_3_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Lưu trữ tệp tin trên máy tính theo cấu trúc đơn giản, biết sử dụng USB hoặc Google Drive theo chỉ dẫn.' },
+                  { code: 'N2', idnumber: 'SV_C1_3_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tổ chức tệp tin theo thư mục môn học, đặt tên file có quy tắc, đồng bộ dữ liệu đám mây đa thiết bị.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D2',
+            name: 'D2. Giao tiếp và hợp tác số',
+            competencies: [
+              {
+                code: 'C2.1',
+                name: 'Tương tác qua công nghệ số',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C2_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Sử dụng các công cụ kỹ thuật số cơ bản (Email, tin nhắn LMS) để trao đổi thông tin theo chỉ dẫn.' },
+                  { code: 'N2', idnumber: 'SV_C2_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tham gia vào các cuộc trao đổi trực tuyến trong nhóm học tập (Teams, Zoom, Moodle Forum) một cách chủ động.' }
+                ]
+              },
+              {
+                code: 'C2.2',
+                name: 'Chia sẻ và xuất bản nội dung',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C2_2_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Chia sẻ tệp tin và liên kết tài liệu theo chỉ dẫn của giảng viên.' },
+                  { code: 'N2', idnumber: 'SV_C2_2_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Chia sẻ tài liệu học tập với bạn cùng lớp qua đám mây, tuân thủ quyền truy cập.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D3',
+            name: 'D3. Sáng tạo nội dung số',
+            competencies: [
+              {
+                code: 'C3.1',
+                name: 'Phát triển nội dung số',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C3_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Tạo văn bản và trang trình chiếu đơn giản bằng Word, PowerPoint, Canva.' },
+                  { code: 'N2', idnumber: 'SV_C3_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Thiết kế báo cáo học tập đa phương tiện (infographic, slide thuyết trình tương tác, video ngắn).' },
+                  { code: 'N3', idnumber: 'SV_C3_1_N3', title: 'Bậc N3: Nâng cao', badge_class: 'n3', statement: 'Tạo tài nguyên số phức hợp, ứng dụng công cụ GenAI hỗ trợ viết học thuật và minh họa.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D4',
+            name: 'D4. An toàn và an ninh mạng',
+            competencies: [
+              {
+                code: 'C4.1',
+                name: 'Bảo vệ thiết bị và dữ liệu',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C4_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Đặt mật khẩu cơ bản cho tài khoản trường, không chia sẻ mật khẩu cho người khác.' },
+                  { code: 'N2', idnumber: 'SV_C4_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Bật xác thực 2 yếu tố (2FA), nhận biết email giả mạo (phishing) và link độc hại.' },
+                  { code: 'N3', idnumber: 'SV_C4_1_N3', title: 'Bậc N3: Nâng cao', badge_class: 'n3', statement: 'Cấu hình bảo mật nâng cao trên thiết bị, sử dụng trình quản lý mật khẩu và mã hóa ổ đĩa.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'D5',
+            name: 'D5. Giải quyết vấn đề số',
+            competencies: [
+              {
+                code: 'C5.1',
+                name: 'Xử lý sự cố kỹ thuật',
+                levels: [
+                  { code: 'N1', idnumber: 'SV_C5_1_N1', title: 'Bậc N1: Cơ bản', badge_class: 'n1', statement: 'Khắc phục các sự cố kết nối mạng hoặc lỗi nộp bài cơ bản trên LMS.' },
+                  { code: 'N2', idnumber: 'SV_C5_1_N2', title: 'Bậc N2: Trung cấp', badge_class: 'n2', statement: 'Tự tìm kiếm giải pháp kỹ thuật trên diễn đàn hỗ trợ khi phần mềm học tập gặp lỗi.' }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      'faculty': {
+        key: 'faculty',
+        name: 'DigComp MEKO Faculty v1.0',
+        shortname: 'Giảng viên (DigCompEdu)',
+        domains: [
+          {
+            code: 'Miền 1',
+            name: 'Miền 1: Môi trường nghề nghiệp số',
+            competencies: [
+              {
+                code: 'GV_1_1',
+                name: 'Giao tiếp trong tổ chức giáo dục',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_1_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Sử dụng các kênh số của trường để thông báo lịch học và chia sẻ quy chế đào tạo.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_1_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Thiết lập các kênh tương tác số đa chiều giữa giảng viên và người học.' },
+                  { code: 'ADVANCED', idnumber: 'GV_1_1_ADVANCED', title: 'Bậc Nâng cao', badge_class: 'n3', statement: 'Dẫn dắt chiến lược truyền thông và hợp tác số trong khoa/trường.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'Miền 3',
+            name: 'Miền 3: Dạy và học số',
+            competencies: [
+              {
+                code: 'GV_3_1',
+                name: 'Tổ chức giảng dạy trực tuyến',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_3_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Sử dụng Moodle để đăng tải giáo trình và tạo bài kiểm tra trắc nghiệm đơn giản.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_3_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Thiết kế khóa học kết hợp (Blended Learning) với lộ trình năng lực số rõ ràng.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'Miền 4',
+            name: 'Miền 4: Đánh giá và kiểm tra số',
+            competencies: [
+              {
+                code: 'GV_4_1',
+                name: 'Chiến lược đánh giá năng lực số (CBE)',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_4_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Áp dụng quiz online chấm điểm tự động để đánh giá mức độ ghi nhớ kiến thức.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_4_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Thiết lập Rubric đánh giá năng lực số đa tiêu chí gắn với thang chuẩn CBE.' },
+                  { code: 'ADVANCED', idnumber: 'GV_4_1_ADVANCED', title: 'Bậc Nâng cao', badge_class: 'n3', statement: 'Xây dựng ngân hàng câu hỏi thích ứng (Adaptive Testing) dựa trên dữ liệu học tập.' }
+                ]
+              }
+            ]
+          },
+          {
+            code: 'Miền A',
+            name: 'Miền A: Trí tuệ nhân tạo (AI) trong Giáo dục',
+            competencies: [
+              {
+                code: 'GV_A_1',
+                name: 'Ứng dụng GenAI trong thiết kế bài giảng',
+                levels: [
+                  { code: 'BASIC', idnumber: 'GV_A_1_BASIC', title: 'Bậc Cơ bản (Basic)', badge_class: 'n1', statement: 'Sử dụng prompt cơ bản với ChatGPT/Claude để gợi ý ý tưởng xây dựng đề cương môn học.' },
+                  { code: 'INTERMEDIATE', idnumber: 'GV_A_1_INTERMEDIATE', title: 'Bậc Trung cấp', badge_class: 'n2', statement: 'Tối ưu prompt đa bước để tạo case study, rubric và kịch bản thực hành cho sinh viên.' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    };
+
+    // Moodle course data and assigned competencies.
+    const COURSES_DB = {{{coursejson}}};
+
+    // ==============================================
+    // TRẠNG THÁI TOÀN CỤC BỘ LỌC (GLOBAL FILTER STATE)
+    // ==============================================
+    let currentFrameworkKey = 'students';   // 'students' | 'faculty'
+    let currentCategoryId = null;
+    let currentCompetencyId = null;
+    let currentSearchQuery = '';
+
+    // Khởi tạo trang
+    window.addEventListener('DOMContentLoaded', () => {
+      // Đọc tham số URL nếu được điều hướng từ trang Khung năng lực hoặc trang khác
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('competencyid')) {
+        const compId = params.get('competencyid');
+        currentCompetencyId = compId;
+        if (compId.startsWith('GV_')) {
+          currentFrameworkKey = 'faculty';
+        } else {
+          currentFrameworkKey = 'students';
+        }
+      }
+      if (params.has('categoryid')) {
+        currentCategoryId = parseInt(params.get('categoryid'));
+      }
+      renderAll();
+    });
+
+    // Chuyển đổi Khung Năng Lực (Framework)
+    function switchFramework(fwKey) {
+      if (currentFrameworkKey === fwKey) return;
+      currentFrameworkKey = fwKey;
+
+      // Nếu competency hiện tại không thuộc khung mới, đổi sang competency mặc định của khung mới
+      const compObj = findCompetencyInFramework(currentCompetencyId, fwKey);
+      if (!compObj) {
+        if (fwKey === 'students') {
+          currentCompetencyId = 'SV_C1_1_N1';
+        } else {
+          currentCompetencyId = 'GV_4_1_INTERMEDIATE';
+        }
+      }
+
+      renderAll();
+    }
+
+    // Chọn Lĩnh vực (Category)
+    function setCategory(catId) {
+      currentCategoryId = catId;
+      renderAll();
+    }
+
+    function clearCategory() {
+      currentCategoryId = null;
+      renderAll();
+    }
+
+    // Chọn Chuẩn đầu ra (Competency)
+    function setCompetency(compId) {
+      currentCompetencyId = compId;
+      // Tự động kiểm tra xem competency này thuộc khung nào
+      if (compId.startsWith('GV_')) {
+        currentFrameworkKey = 'faculty';
+      } else if (compId.startsWith('SV_')) {
+        currentFrameworkKey = 'students';
+      }
+      closeCompetencyModal();
+      renderAll();
+    }
+
+    function clearCompetency() {
+      currentCompetencyId = null;
+      renderAll();
+    }
+
+    function clearAllFilters() {
+      currentCategoryId = null;
+      currentCompetencyId = null;
+      currentSearchQuery = '';
+      renderAll();
+    }
+
+    // Tìm kiếm thông tin năng lực
+    function findCompetencyInFramework(compId, fwKey) {
+      if (!compId) return null;
+      const fw = FRAMEWORKS_DATA[fwKey];
+      if (!fw) return null;
+
+      for (const d of fw.domains) {
+        for (const c of d.competencies) {
+          for (const lvl of c.levels) {
+            if (lvl.idnumber === compId) {
+              return {
+                domain: d,
+                competency: c,
+                level: lvl,
+                framework: fw
+              };
+            }
+          }
+        }
+      }
+      return null;
+    }
+
+    // Tìm kiếm trong toàn bộ các khung
+    function findCompetencyAnywhere(compId) {
+      return findCompetencyInFramework(compId, 'students') || findCompetencyInFramework(compId, 'faculty');
+    }
+
+    // ==============================================
+    // MAIN RENDER CONTROLLER
+    // ==============================================
+    function renderAll() {
+      renderBreadcrumbs();
+      renderActiveChips();
+      renderSidebarCompetencyTree();
+      renderSidebarCategoryTree();
+      renderBanner();
+      renderCoursesGrid();
+      updateModalTabs();
+    }
+
+    // 2. Render Breadcrumbs
+    function renderBreadcrumbs() {
+      const bcCat = document.getElementById('bcCategoryText');
+      const bcDom = document.getElementById('bcDomainText');
+      const bcLvl = document.getElementById('bcLevelText');
+
+      if (currentCategoryId !== null) {
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        bcCat.style.display = 'inline';
+        bcCat.innerText = cat ? cat.name : 'Lĩnh vực';
+      } else {
+        bcCat.style.display = 'none';
+      }
+
+      const compData = findCompetencyAnywhere(currentCompetencyId);
+      if (compData) {
+        bcDom.style.display = 'inline';
+        bcDom.innerText = compData.domain.name;
+        bcLvl.style.display = 'inline';
+        bcLvl.innerText = `${compData.competency.code} [${compData.level.title}]`;
+      } else {
+        bcDom.style.display = 'none';
+        bcLvl.style.display = 'none';
+      }
+    }
+
+    // 3. Render Active Chips
+    function renderActiveChips() {
+      const strip = document.getElementById('activeFiltersStrip');
+      const chipCat = document.getElementById('chipCategory');
+      const chipFw = document.getElementById('chipFramework');
+      const chipComp = document.getElementById('chipCompetency');
+
+      const hasCat = currentCategoryId !== null;
+      const hasComp = currentCompetencyId !== null;
+
+      if (!hasCat && !hasComp) {
+        strip.style.display = 'none';
+        return;
+      }
+      strip.style.display = 'flex';
+
+      // Chip Category
+      if (hasCat) {
+        chipCat.style.display = 'inline-flex';
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('chipCategoryName').innerText = cat ? cat.name : `Lĩnh vực ${currentCategoryId}`;
+      } else {
+        chipCat.style.display = 'none';
+      }
+
+      // Chip Framework & Competency
+      if (hasComp) {
+        chipFw.style.display = 'inline-flex';
+        document.getElementById('chipFrameworkName').innerText = FRAMEWORKS_DATA[currentFrameworkKey].shortname;
+
+        chipComp.style.display = 'inline-flex';
+        const compData = findCompetencyAnywhere(currentCompetencyId);
+        if (compData) {
+          document.getElementById('chipCompetencyName').innerText = compData.level.idnumber;
+          document.getElementById('chipCompetencyLevel').innerText = compData.level.code;
+        }
+      } else {
+        chipFw.style.display = 'none';
+        chipComp.style.display = 'none';
+      }
+    }
+
+    // 4. Render Sidebar Competency Tree
+    function renderSidebarCompetencyTree() {
+      const fw = FRAMEWORKS_DATA[currentFrameworkKey];
+      document.getElementById('sidebarFrameworkCount').innerText = `${fw.domains.reduce((sum, d) => sum + d.competencies.length, 0)} Năng lực`;
+
+      // Tabs active
+      document.getElementById('tabBtnStudents').className = `framework-tab-btn ${currentFrameworkKey === 'students' ? 'active' : ''}`;
+      document.getElementById('tabBtnFaculty').className = `framework-tab-btn ${currentFrameworkKey === 'faculty' ? 'active' : ''}`;
+
+      const treeContainer = document.getElementById('compTreeList');
+      let html = '';
+
+      fw.domains.forEach(d => {
+        // Kiểm tra xem competency hiện tại có nằm trong domain này không
+        const isCurrentDomain = d.competencies.some(c => c.levels.some(l => l.idnumber === currentCompetencyId));
+
+        html += `
+          <li class="comp-tree-domain">
+            <div class="domain-title-bar" onclick="toggleDomainCollapse(this)">
+              <span>${d.name}</span>
+              <span style="font-size: 11px;">${isCurrentDomain ? '▾' : '▸'}</span>
+            </div>
+            <ul class="domain-comp-list" style="display: ${isCurrentDomain ? 'block' : 'none'};">
+        `;
+
+        d.competencies.forEach(c => {
+          html += `
+            <li class="comp-item-block">
+              <div class="comp-item-title">
+                <span>${c.code}. ${c.name}</span>
+              </div>
+              <div class="comp-levels-pills">
+          `;
+
+          c.levels.forEach(lvl => {
+            const isActive = lvl.idnumber === currentCompetencyId;
+            html += `
+              <button class="comp-level-btn ${isActive ? 'active' : ''}" onclick="setCompetency('${lvl.idnumber}')" title="${lvl.title}">
+                ${lvl.code}
+              </button>
+            `;
+          });
+
+          html += `
+              </div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </li>
+        `;
+      });
+
+      treeContainer.innerHTML = html;
+    }
+
+    function toggleDomainCollapse(el) {
+      const list = el.nextElementSibling;
+      const arrow = el.querySelector('span:last-child');
+      if (list.style.display === 'none') {
+        list.style.display = 'block';
+        arrow.innerText = '▾';
+      } else {
+        list.style.display = 'none';
+        arrow.innerText = '▸';
+      }
+    }
+
+    // 5. Render Sidebar Category Tree
+    function renderSidebarCategoryTree() {
+      const listEl = document.getElementById('catTreeList');
+      let html = '';
+
+      // Item "Tất cả lĩnh vực"
+      const isAllActive = currentCategoryId === null;
+      html += `
+        <li class="cat-tree-item ${isAllActive ? 'active' : ''}">
+          <a href="javascript:void(0)" onclick="clearCategory()">
+            <span>Tất cả lĩnh vực</span>
+            <span class="cat-count-badge">${COURSES_DB.length}</span>
+          </a>
+        </li>
+      `;
+
+      CATEGORIES.forEach(cat => {
+        const isActive = cat.id === currentCategoryId;
+        // Đếm số khóa học thuộc lĩnh vực này (có tính cả competency nếu đang chọn)
+        const count = COURSES_DB.filter(c => {
+          if (c.category_id !== cat.id) return false;
+          if (currentCompetencyId && !c.competencies.includes(currentCompetencyId)) return false;
+          return true;
+        }).length;
+
+        html += `
+          <li class="cat-tree-item ${isActive ? 'active' : ''}">
+            <a href="javascript:void(0)" onclick="setCategory(${cat.id})">
+              <span>${cat.name}</span>
+              <span class="cat-count-badge">${count}</span>
+            </a>
+          </li>
+        `;
+      });
+
+      listEl.innerHTML = html;
+    }
+
+    // 6. Render Banner
+    function renderBanner() {
+      const banner = document.getElementById('bannerFilter');
+      const compData = findCompetencyAnywhere(currentCompetencyId);
+
+      if (!compData) {
+        // Khi không lọc theo competency: hiển thị banner giới thiệu danh mục
+        banner.style.borderLeftColor = 'var(--meko-navy)';
+        document.getElementById('bannerTierDomain').innerText = 'LĨNH VỰC';
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('bannerDomainName').innerText = cat ? cat.name : 'Tất cả lĩnh vực đào tạo';
+        document.getElementById('bannerTierComp').innerText = 'CHẾ ĐỘ';
+        document.getElementById('bannerCompName').innerText = 'Xem tổng quan khóa học';
+        document.getElementById('bannerTierLevel').innerText = 'TRẠNG THÁI';
+        document.getElementById('bannerLevelTitle').innerText = 'Chưa lọc theo Chuẩn đầu ra';
+        document.getElementById('bannerLevelBadge').style.display = 'none';
+        document.getElementById('bannerIdTag').innerText = 'Tất cả chuẩn CBE';
+        document.getElementById('bannerStatementText').innerText = 'Bạn có thể chọn một chuẩn đầu ra ở cột bên trái hoặc bấm nút "Đổi chuẩn năng lực" để lọc các khóa học đáp ứng chuẩn đầu ra tương ứng.';
+        document.getElementById('bannerFrameworkName').innerText = FRAMEWORKS_DATA[currentFrameworkKey].name;
+        document.getElementById('bannerIntersectionText').innerText = `Đang hiển thị toàn bộ khóa học`;
+        return;
+      }
+
+      banner.style.borderLeftColor = 'var(--meko-primary)';
+      document.getElementById('bannerTierDomain').innerText = 'TẦNG 1';
+      document.getElementById('bannerDomainName').innerText = compData.domain.name;
+      document.getElementById('bannerTierComp').innerText = 'TẦNG 2';
+      document.getElementById('bannerCompName').innerText = `${compData.competency.code}. ${compData.competency.name}`;
+      document.getElementById('bannerTierLevel').innerText = 'TẦNG 3';
+      document.getElementById('bannerLevelTitle').innerText = compData.level.title;
+
+      const badge = document.getElementById('bannerLevelBadge');
+      badge.style.display = 'inline-flex';
+      badge.className = `banner-level-badge ${compData.level.badge_class}`;
+      badge.innerText = compData.level.code;
+
+      document.getElementById('bannerIdTag').innerText = compData.level.idnumber;
+      document.getElementById('bannerStatementText').innerText = compData.level.statement;
+      document.getElementById('bannerFrameworkName').innerText = compData.framework.name;
+
+      if (currentCategoryId !== null) {
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('bannerIntersectionText').innerHTML = `Đang lọc kép: thuộc <strong>${cat ? cat.name : ''}</strong>`;
+      } else {
+        document.getElementById('bannerIntersectionText').innerHTML = `Đang lọc trên <strong>Toàn bộ lĩnh vực</strong>`;
+      }
+    }
+
+    // 7. Render Courses Grid (Lọc đồng thời Category + Competency)
+    function renderCoursesGrid() {
+      const grid = document.getElementById('coursesGrid');
+      const emptyState = document.getElementById('emptyStateCard');
+
+      // Filter logic:
+      let filtered = COURSES_DB.filter(c => {
+        // Filter by Category
+        if (currentCategoryId !== null && c.category_id !== currentCategoryId) {
+          return false;
+        }
+        // Filter by Competency
+        if (currentCompetencyId !== null && !c.competencies.includes(currentCompetencyId)) {
+          return false;
+        }
+        // Filter by Search Query
+        if (currentSearchQuery) {
+          const q = currentSearchQuery.toLowerCase();
+          const match = c.title.toLowerCase().includes(q) ||
+                        c.code.toLowerCase().includes(q) ||
+                        c.teacher.toLowerCase().includes(q) ||
+                        c.summary.toLowerCase().includes(q);
+          if (!match) return false;
+        }
+        return true;
+      });
+
+      // Update Counts
+      const countStr = String(filtered.length).padStart(2, '0');
+      document.getElementById('resultsCount').innerText = countStr;
+      const bannerCountEl = document.getElementById('bannerCourseCount');
+      if (bannerCountEl) bannerCountEl.innerText = countStr;
+
+      // Handle Empty State
+      if (filtered.length === 0) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+
+        const cat = CATEGORIES.find(c => c.id === currentCategoryId);
+        document.getElementById('emptyCatName').innerText = cat ? `Lĩnh vực "${cat.name}"` : 'lĩnh vực đã chọn';
+        document.getElementById('emptyCompName').innerText = currentCompetencyId ? `"${currentCompetencyId}"` : 'chuẩn đầu ra này';
+
+        // Toggle relax buttons
+        document.getElementById('btnRelaxCategory').style.display = currentCategoryId !== null ? 'inline-block' : 'none';
+        document.getElementById('btnRelaxComp').style.display = currentCompetencyId !== null ? 'inline-block' : 'none';
+        return;
+      }
+
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+
+      let html = '';
+      filtered.forEach(c => {
+        html += `
+          <div class="course-card">
+            <div class="card-top-bar"></div>
+            <div class="card-body">
+              <div class="card-badge-row">
+                <span class="card-domain-badge">${c.category_name.split(':')[0]}</span>
+                <span class="card-code-badge">${c.code}</span>
+              </div>
+              <h3 class="course-title">
+                <a href="{{{courseviewbase}}}?id=${c.id}">${c.title}</a>
+              </h3>
+              <p class="course-summary">${c.summary || 'Chưa có mô tả khóa học.'}</p>
+
+              <!-- CBE Target Level Tag -->
+              <div class="course-level-tag">
+                <div class="level-tag-header">
+                  <span class="level-tag-name">Chuẩn đầu ra: ${currentCompetencyId ? currentCompetencyId : (c.competencies[0] || 'Chưa gắn chuẩn')}</span>
+                </div>
+              </div>
+
+              <div class="card-meta-list">
+                <div class="meta-row"><span>Giảng viên:</span> <span class="meta-val">${c.teacher || 'Chưa công bố'}</span></div>
+                <div class="meta-row"><span>Khai giảng:</span> <span class="meta-val">${c.startdate || 'Chưa công bố'}</span></div>
+                <div class="meta-row"><span>Lĩnh vực:</span> <span class="meta-val">${c.category_name.split(':')[1] || c.category_name}</span></div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <a href="{{{courseviewbase}}}?id=${c.id}" class="btn-view-course">
+                <span>Vào học</span> &rarr;
+              </a>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    function handleCourseSearch(val) {
+      currentSearchQuery = val.trim();
+      renderCoursesGrid();
+    }
+
+    // ==============================================
+    // MODAL PICKER CONTROLLER
+    // ==============================================
+    function openCompetencyModal() {
+      document.getElementById('competencyModal').classList.add('active');
+      renderModalBody('');
+    }
+
+    function closeCompetencyModal() {
+      document.getElementById('competencyModal').classList.remove('active');
+    }
+
+    function closeCompetencyModalOnBackdrop(e) {
+      if (e.target.id === 'competencyModal') {
+        closeCompetencyModal();
+      }
+    }
+
+    function updateModalTabs() {
+      const btnSv = document.getElementById('modalTabBtnStudents');
+      const btnGv = document.getElementById('modalTabBtnFaculty');
+      if (btnSv) btnSv.className = `framework-tab-btn ${currentFrameworkKey === 'students' ? 'active' : ''}`;
+      if (btnGv) btnGv.className = `framework-tab-btn ${currentFrameworkKey === 'faculty' ? 'active' : ''}`;
+    }
+
+    function handleModalSearch(query) {
+      renderModalBody(query.trim().toLowerCase());
+    }
+
+    function renderModalBody(q) {
+      const container = document.getElementById('modalBodyScroll');
+      const fw = FRAMEWORKS_DATA[currentFrameworkKey];
+      let html = '';
+
+      fw.domains.forEach(d => {
+        let matchingComp = d.competencies;
+        if (q) {
+          matchingComp = d.competencies.filter(c => {
+            const inName = c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q);
+            const inLevels = c.levels.some(l => l.title.toLowerCase().includes(q) || l.statement.toLowerCase().includes(q) || l.idnumber.toLowerCase().includes(q));
+            return inName || inLevels;
+          });
+        }
+
+        if (matchingComp.length === 0) return;
+
+        html += `
+          <div class="modal-domain-section">
+            <div class="modal-domain-heading">
+              <span>${d.name}</span>
+            </div>
+            <div class="modal-comp-grid">
+        `;
+
+        matchingComp.forEach(c => {
+          html += `
+            <div class="modal-comp-card">
+              <div class="modal-comp-header">
+                <strong>${c.code}. ${c.name}</strong>
+              </div>
+              <div class="modal-comp-statement-sample">
+                ${c.levels[0] ? c.levels[0].statement.substring(0, 85) + '...' : ''}
+              </div>
+              <div class="modal-levels-row">
+          `;
+
+          c.levels.forEach(lvl => {
+            const isSelected = lvl.idnumber === currentCompetencyId;
+            html += `
+              <button class="btn-select-level ${isSelected ? 'active' : ''}" onclick="setCompetency('${lvl.idnumber}')" title="${lvl.statement}">
+                ${lvl.title} (${lvl.code})
+              </button>
+            `;
+          });
+
+          html += `
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      if (!html) {
+        html = `
+          <div style="text-align: center; padding: 40px; color: #94A3B8;">
+            <div style="font-size: 28px; margin-bottom: 8px;"></div>
+            <p>Không tìm thấy chuẩn năng lực nào khớp với từ khóa "<strong>${q}</strong>".</p>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    function handleSidebarCompSearch(q) {
+      const query = q.trim().toLowerCase();
+      const fw = FRAMEWORKS_DATA[currentFrameworkKey];
+      const treeContainer = document.getElementById('compTreeList');
+
+      if (!query) {
+        renderSidebarCompetencyTree();
+        return;
+      }
+
+      let html = '';
+      fw.domains.forEach(d => {
+        const matchingComp = d.competencies.filter(c => {
+          return c.name.toLowerCase().includes(query) ||
+                 c.code.toLowerCase().includes(query) ||
+                 c.levels.some(l => l.idnumber.toLowerCase().includes(query) || l.code.toLowerCase().includes(query));
+        });
+
+        if (matchingComp.length === 0) return;
+
+        html += `
+          <li class="comp-tree-domain">
+            <div class="domain-title-bar" style="background: #EEF2FF; color: var(--meko-primary);">
+              <span>${d.name}</span>
+              <span style="font-size: 11px;">▾</span>
+            </div>
+            <ul class="domain-comp-list" style="display: block;">
+        `;
+
+        matchingComp.forEach(c => {
+          html += `
+            <li class="comp-item-block">
+              <div class="comp-item-title">
+                <span>${c.code}. ${c.name}</span>
+              </div>
+              <div class="comp-levels-pills">
+          `;
+
+          c.levels.forEach(lvl => {
+            const isActive = lvl.idnumber === currentCompetencyId;
+            html += `
+              <button class="comp-level-btn ${isActive ? 'active' : ''}" onclick="setCompetency('${lvl.idnumber}')">
+                ${lvl.code}
+              </button>
+            `;
+          });
+
+          html += `
+              </div>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+          </li>
+        `;
+      });
+
+      treeContainer.innerHTML = html || '<li style="padding: 12px; text-align: center; color: #94A3B8; font-size: 12px;">Không tìm thấy</li>';
+    }
+
+</script>
+</div>

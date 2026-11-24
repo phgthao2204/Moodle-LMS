@@ -1,0 +1,256 @@
+{{!
+    @template theme_accees_lms_theme/mycourses
+    My Courses Dashboard (UC-LMS-03) using Standardized 14-Field Course Card & 1320px Grid System.
+}}
+<main class="accees-mycourses" data-mycourses-root>
+    <div class="container py-4" style="max-width: 1320px;">
+        <!-- Breadcrumb -->
+        <nav class="accees-mycourses-breadcrumb" aria-label="Breadcrumb">
+            <a href="{{config.wwwroot}}/?redirect=0"><i class="fa-solid fa-house me-1"></i>{{ui.breadcrumb_home}}</a>
+            <span aria-hidden="true">/</span>
+            <strong>{{ui.page_heading}}</strong>
+        </nav>
+
+        <!-- Header & 4 KPI Cards -->
+        <section class="accees-mycourses-titlebar">
+            <div class="accees-mycourses-heading">
+                <h1>{{ui.page_heading}}</h1>
+                <p>{{ui.page_subheading}}</p>
+            </div>
+
+            <div class="accees-mycourses-stats" aria-label="{{ui.page_heading}}">
+                <div class="accees-stat-box is-blue">
+                    <strong>{{ongoingcourses}}</strong>
+                    <span>{{ui.stat_ongoing}}</span>
+                </div>
+                <div class="accees-stat-box is-green">
+                    <strong>{{completedcourses}}</strong>
+                    <span>{{ui.stat_completed}}</span>
+                </div>
+                <div class="accees-stat-box is-orange">
+                    <strong>{{upcomingcourses}}</strong>
+                    <span>{{ui.stat_upcoming}}</span>
+                </div>
+                <div class="accees-stat-box is-navy">
+                    <strong>{{digitalbadges}}</strong>
+                    <span>{{ui.stat_badges}}</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter, Search, Sort & View Toolbar -->
+        <section class="accees-mycourses-toolbar" aria-label="Filter and search">
+            <div class="accees-filter-tabs" role="tablist">
+                <button type="button" class="is-active" data-course-filter="all">
+                    {{ui.filter_all}} <span class="filter-count">{{totalcourses}}</span>
+                </button>
+                <button type="button" data-course-filter="ongoing">
+                    {{ui.filter_ongoing}} <span class="filter-count">{{ongoingcourses}}</span>
+                </button>
+                <button type="button" data-course-filter="upcoming">
+                    {{ui.filter_upcoming}} <span class="filter_count filter-count">{{upcomingcourses}}</span>
+                </button>
+                <button type="button" data-course-filter="completed">
+                    {{ui.filter_completed}} <span class="filter-count">{{completedcourses}}</span>
+                </button>
+            </div>
+
+            <div class="accees-toolbar-controls">
+                <div class="accees-search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                    <input type="search" data-course-search placeholder="{{ui.search_placeholder}}">
+                </div>
+
+                <label class="accees-sort-box">
+                    <select data-course-sort aria-label="Sort courses">
+                        <option value="recent">{{ui.sort_recent}}</option>
+                        <option value="name">{{ui.sort_name}}</option>
+                        <option value="progress">{{ui.sort_progress}}</option>
+                    </select>
+                </label>
+
+                <div class="accees-view-switch" role="group" aria-label="Display mode">
+                    <button type="button" class="is-active" data-course-view="grid" title="{{ui.view_grid_title}}">
+                        <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" data-course-view="list" title="{{ui.view_list_title}}">
+                        <i class="fa-solid fa-list" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Standardized 14-Field Course Card Grid -->
+        {{#hascourses}}
+        <section class="row g-3 g-lg-4 accees-mycourses-grid" data-course-grid>
+            {{#courses}}
+            <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-4 accees-mycourse-col"
+                 data-course-card
+                 data-course-status="{{status}}"
+                 data-course-search-text="{{searchtext}}"
+                 data-course-name="{{fullname}}"
+                 data-course-progress="{{progress}}"
+                 data-course-sorttime="{{sorttime}}">
+                {{> core_course/course_card }}
+            </div>
+            {{/courses}}
+        </section>
+
+        <div class="accees-empty-courses" data-course-empty hidden>
+            <i class="fa-solid fa-magnifying-glass mb-2" style="font-size: 24px; color: #64748B;"></i>
+            <p class="mb-0 fw-semibold">{{ui.empty_filter_msg}}</p>
+        </div>
+        {{/hascourses}}
+
+        {{^hascourses}}
+        <div class="accees-empty-courses">
+            <i class="fa-solid fa-graduation-cap mb-2" style="font-size: 28px; color: #0000B6;"></i>
+            <h3 class="h6 fw-bold text-dark mb-1">{{ui.empty_enrolled_title}}</h3>
+            <p class="mb-3">{{ui.empty_enrolled_desc}}</p>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <a href="{{catalogurl}}" class="btn-accees-primary">
+                    <i class="fa-solid fa-book-open"></i> {{ui.res_dlrp_cta}} / {{ui.breadcrumb_home}}
+                </a>
+                <a href="{{competencyurl}}" class="btn-accees-secondary">
+                    <i class="fa-solid fa-sitemap"></i> CBE Framework
+                </a>
+            </div>
+        </div>
+        {{/hascourses}}
+
+        <!-- Learning Utilities & Ecosystem Links -->
+        <section class="accees-resource-section">
+            <h2><i class="fa-solid fa-layer-group me-2" style="color: #0000B6;"></i>{{ui.res_heading}}</h2>
+            <div class="accees-resource-grid">
+                <a class="accees-resource-card" href="{{competencyurl}}">
+                    <span class="accees-resource-icon is-blue" aria-hidden="true">
+                        <i class="fa-solid fa-award"></i>
+                    </span>
+                    <div class="accees-resource-body">
+                        <strong>{{ui.res_badge_title}}</strong>
+                        <p>{{ui.res_badge_desc}}</p>
+                    </div>
+                    <span class="accees-resource-cta">{{ui.res_badge_cta}} <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                </a>
+
+                <a class="accees-resource-card" href="{{dlrp_url}}" target="_blank" rel="noopener noreferrer">
+                    <span class="accees-resource-icon is-green" aria-hidden="true">
+                        <i class="fa-solid fa-box-archive"></i>
+                    </span>
+                    <div class="accees-resource-body">
+                        <strong>{{ui.res_dlrp_title}}</strong>
+                        <p>{{ui.res_dlrp_desc}}</p>
+                    </div>
+                    <span class="accees-resource-cta">{{ui.res_dlrp_cta}} <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i></span>
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script>
+(function() {
+    var root = document.querySelector('[data-mycourses-root]');
+    if (!root) {
+        return;
+    }
+
+    var grid = root.querySelector('[data-course-grid]');
+    if (!grid) {
+        return;
+    }
+
+    var cards = Array.from(grid.querySelectorAll('[data-course-card]'));
+    var filterButtons = Array.from(root.querySelectorAll('[data-course-filter]'));
+    var viewButtons = Array.from(root.querySelectorAll('[data-course-view]'));
+    var searchInput = root.querySelector('[data-course-search]');
+    var sortSelect = root.querySelector('[data-course-sort]');
+    var emptyState = root.querySelector('[data-course-empty]');
+    var activeFilter = 'all';
+
+    function updateCourses() {
+        var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+        var sortBy = sortSelect ? sortSelect.value : 'recent';
+
+        var sorted = cards.slice().sort(function(a, b) {
+            if (sortBy === 'name') {
+                return (a.dataset.courseName || '').localeCompare(b.dataset.courseName || '', 'vi');
+            }
+            if (sortBy === 'progress') {
+                return Number(b.dataset.courseProgress || 0) - Number(a.dataset.courseProgress || 0);
+            }
+            return Number(b.dataset.courseSorttime || 0) - Number(a.dataset.courseSorttime || 0);
+        });
+
+        var visibleCount = 0;
+        sorted.forEach(function(card) {
+            var matchesFilter = activeFilter === 'all' || card.dataset.courseStatus === activeFilter;
+            var haystack = (card.dataset.courseSearchText || '').toLowerCase();
+            var matchesQuery = query === '' || haystack.indexOf(query) !== -1;
+            var visible = matchesFilter && matchesQuery;
+
+            card.hidden = !visible;
+            if (visible) {
+                visibleCount++;
+            }
+            grid.appendChild(card);
+        });
+
+        if (emptyState) {
+            emptyState.hidden = visibleCount > 0;
+        }
+    }
+
+    filterButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            activeFilter = button.dataset.courseFilter || 'all';
+            filterButtons.forEach(function(item) {
+                item.classList.toggle('is-active', item === button);
+            });
+            updateCourses();
+        });
+    });
+
+    viewButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var mode = button.dataset.courseView || 'grid';
+            grid.classList.toggle('is-list', mode === 'list');
+            cards.forEach(function(col) {
+                if (mode === 'list') {
+                    col.classList.remove('col-xl-4', 'col-lg-4', 'col-md-6');
+                    col.classList.add('col-12');
+                } else {
+                    col.classList.add('col-xl-4', 'col-lg-4', 'col-md-6');
+                }
+            });
+            viewButtons.forEach(function(item) {
+                item.classList.toggle('is-active', item === button);
+            });
+            try {
+                localStorage.setItem('accees_mycourses_view', mode);
+            } catch(e) {}
+        });
+    });
+
+    try {
+        var savedMode = localStorage.getItem('accees_mycourses_view');
+        if (savedMode === 'list') {
+            var listBtn = root.querySelector('[data-course-view="list"]');
+            if (listBtn) {
+                listBtn.click();
+            }
+        }
+    } catch(e) {}
+
+    if (searchInput) {
+        searchInput.addEventListener('input', updateCourses);
+    }
+
+    if (sortSelect) {
+        sortSelect.addEventListener('change', updateCourses);
+    }
+
+    updateCourses();
+})();
+</script>
+

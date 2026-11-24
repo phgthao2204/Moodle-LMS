@@ -1,0 +1,200 @@
+{{!
+    @template theme_accees_lms_theme/navbar
+
+    ACCEES LMS Top Navigation Bar Template (Refined White Surface Theme).
+    100% aligned with the official ACCEES Portal (https://accees.ctu.edu.vn).
+    - Grid-aligned wrapper (max-width: 1320px) matching page content & footer.
+    - Hover & Click interactive dropdown menus.
+    - Be Vietnam Pro font & solid brand colors.
+    - Prominent Solid Navy (#182B89) login CTA.
+}}
+<nav class="navbar navbar-expand-lg fixed-top accees-navbar">
+    <div class="wrap d-flex align-items-center justify-content-between accees-header-wrap">
+        <!-- 1. Left Brand: Official Colored ACCEES Logo + Drawer Toggler -->
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler aabtn d-block d-md-none me-2 p-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary" aria-label="Toggle Navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand me-3 p-0 d-inline-flex align-items-center" id="nav-brand-logo" href="{{{ config.wwwroot }}}/?redirect=0" title="{{ sitename }}">
+                <img src="{{{ logo_url }}}" alt="{{ brand_name }} Logo" style="height: 36px; width: auto; object-fit: contain; display: block;">
+                <span class="brand-sub-badge ms-2">{{ brand_badge_text }}</span>
+            </a>
+
+            <!-- 2. LMS-Specific Primary Navigation (Design System Aligned) -->
+            <ul class="navbar-nav d-none d-md-flex align-items-center" id="nav-primary-menu" style="gap: 6px;">
+                <!-- Home -->
+                <li class="nav-item {{#nav_active_home}}active{{/nav_active_home}}" id="nav-item-home">
+                    <a class="nav-link d-inline-flex align-items-center {{#nav_active_home}}active{{/nav_active_home}}" id="nav-link-home" href="{{{ config.wwwroot }}}/?redirect=0">
+                        <span>{{#str}}nav_home, theme_meko{{/str}}</span>
+                    </a>
+                </li>
+
+                <!-- My Courses (when logged in, placed right next to Home) -->
+                {{#isloggedin}}
+                <li class="nav-item {{#nav_active_mycourses}}active{{/nav_active_mycourses}}" id="nav-item-mycourses">
+                    <a class="nav-link d-inline-flex align-items-center {{#nav_active_mycourses}}active{{/nav_active_mycourses}}" id="nav-link-mycourses" href="{{{ config.wwwroot }}}/my/courses.php">
+                        <span>{{#str}}nav_mycourses, theme_meko{{/str}}</span>
+                    </a>
+                </li>
+                {{/isloggedin}}
+
+                <!-- Course Catalog -->
+                <li class="nav-item {{#nav_active_courses}}active{{/nav_active_courses}}" id="nav-item-courses">
+                    <a class="nav-link d-inline-flex align-items-center {{#nav_active_courses}}active{{/nav_active_courses}}" id="nav-link-courses" href="{{{ config.wwwroot }}}/course/index.php">
+                        <span>{{#str}}nav_courses, theme_meko{{/str}}</span>
+                    </a>
+                </li>
+
+                <!-- Digital Competency Frameworks (Clean Dropdown with exactly 2 sub-frameworks, 0 icon clutter) -->
+                <li class="nav-item dropdown accees-nav-dropdown {{#nav_active_competencies}}active{{/nav_active_competencies}}" id="nav-item-competencies">
+                    <a class="nav-link dropdown-toggle d-inline-flex align-items-center {{#nav_active_competencies}}active{{/nav_active_competencies}}" href="{{{ config.wwwroot }}}/local/meko_competencies/index.php" id="acceesCompDropdown" role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>{{#str}}nav_competencies, theme_meko{{/str}}</span>
+                    </a>
+                    <div class="dropdown-menu accees-dropdown-menu shadow-sm" aria-labelledby="acceesCompDropdown" style="min-width: 240px; padding: 6px 0; border-radius: 8px;">
+                        <a class="dropdown-item py-2 px-3" id="nav-comp-student" href="{{{ config.wwwroot }}}/local/meko_competencies/index.php?framework=DIGCOMP_ACCEES_STUDENTS">
+                            <span class="d-block fw-semibold" style="font-size: 13.5px; color: #0F172A;">{{#str}}nav_comp_student, theme_meko{{/str}}</span>
+                        </a>
+                        <div class="dropdown-divider my-1"></div>
+                        <a class="dropdown-item py-2 px-3" id="nav-comp-teacher" href="{{{ config.wwwroot }}}/local/meko_competencies/index.php?framework=DIGCOMP_ACCEES_FACULTY">
+                            <span class="d-block fw-semibold" style="font-size: 13.5px; color: #0F172A;">{{#str}}nav_comp_teacher, theme_meko{{/str}}</span>
+                        </a>
+                        <div class="dropdown-divider my-1"></div>
+                        <a class="dropdown-item py-2 px-3" id="nav-comp-matrix" href="{{{ config.wwwroot }}}/local/meko_competencies/index.php?framework=DIGCOMP_ACCEES_STUDENTS&view=matrix">
+                            <span class="d-block fw-semibold" style="font-size: 13.5px; color: #0F172A;">{{#str}}nav_comp_matrix, theme_meko{{/str}}</span>
+                        </a>
+                    </div>
+                </li>
+
+                <!-- Site Administration Link (for Admin users) -->
+                {{#is_site_admin}}
+                <li class="nav-item" id="nav-item-siteadmin">
+                    <a class="nav-link d-inline-flex align-items-center text-primary fw-bold" id="nav-link-siteadmin" href="{{{ config.wwwroot }}}/admin/search.php" style="color: #0000B6 !important;">
+                        <span>{{#str}}nav_siteadmin, theme_meko{{/str}}</span>
+                    </a>
+                </li>
+                {{/is_site_admin}}
+                {{{ meko_custom_menu }}}
+            </ul>
+        </div>
+
+        <!-- 3. Right Utilities: User / SSO Menu -->
+        <div class="d-flex align-items-center" style="gap: 14px;">
+            {{#show_lang_menu}}
+            <div class="lang-switch-light" id="nav-lang-switcher" role="group" aria-label="Language Switcher">
+                <a id="nav-lang-vi" href="?lang=vi" onclick="return switchAcceesLang('vi');" class="lang-btn {{#lang_is_vi}}active{{/lang_is_vi}}" title="Tiếng Việt">VN</a>
+                <a id="nav-lang-en" href="?lang=en" onclick="return switchAcceesLang('en');" class="lang-btn {{#lang_is_en}}active{{/lang_is_en}}" title="English">EN</a>
+                <a id="nav-lang-fr" href="?lang=fr" onclick="return switchAcceesLang('fr');" class="lang-btn {{#lang_is_fr}}active{{/lang_is_fr}}" title="Français">FR</a>
+            </div>
+            {{/show_lang_menu}}
+            {{#isloggedin}}
+                <div class="d-flex align-items-center" style="gap: 8px;">
+                    {{{ output.edit_switch }}}
+                    {{{ output.navbar_plugin_output }}}
+                    <div class="usermenu-container" data-region="usermenu">
+                        {{#usermenu}}
+                            {{> core/user_menu }}
+                        {{/usermenu}}
+                        {{^usermenu}}
+                            {{{ user_menu_html }}}
+                        {{/usermenu}}
+                    </div>
+                </div>
+            {{/isloggedin}}
+            {{^isloggedin}}
+                <a class="btn-accees-nav-sso" id="nav-btn-login" href="{{{ config.wwwroot }}}/login/index.php" title="{{#str}}login_sso_btn, theme_meko{{/str}}">
+                    <span>{{#str}}login_sso_btn, theme_meko{{/str}}</span>
+                </a>
+            {{/isloggedin}}
+        </div>
+    </div>
+</nav>
+
+<script>
+// Interactive Dropdown Click & Hover fallback and Active Menu Sync
+(function() {
+    function syncAcceesNavActive() {
+        try {
+            var path = window.location.pathname || '';
+            var search = window.location.search || '';
+            var full = path + search;
+            var links = {
+                'mycourses': document.getElementById('nav-link-mycourses'),
+                'courses': document.getElementById('nav-link-courses'),
+                'competencies': document.getElementById('acceesCompDropdown'),
+                'home': document.getElementById('nav-link-home')
+            };
+            var items = {
+                'mycourses': document.getElementById('nav-item-mycourses'),
+                'courses': document.getElementById('nav-item-courses'),
+                'competencies': document.getElementById('nav-item-competencies'),
+                'home': document.getElementById('nav-item-home')
+            };
+
+            var activeKey = null;
+            if (path.indexOf('/my') !== -1) {
+                activeKey = 'mycourses';
+            } else if (path.indexOf('/course/') !== -1 || path.indexOf('/enrol/') !== -1) {
+                activeKey = 'courses';
+            } else if (full.indexOf('accees_competencies') !== -1 || path.indexOf('/competencies') !== -1) {
+                activeKey = 'competencies';
+            } else if (path === '/' || path === '/index.php' || full.indexOf('redirect=0') !== -1) {
+                activeKey = 'home';
+            }
+
+            if (activeKey && links[activeKey]) {
+                Object.keys(links).forEach(function(k) {
+                    if (links[k]) links[k].classList.remove('active');
+                    if (items[k]) items[k].classList.remove('active');
+                });
+                links[activeKey].classList.add('active');
+                if (items[activeKey]) items[activeKey].classList.add('active');
+            }
+        } catch(e) {}
+    }
+
+    function initAcceesDropdowns() {
+        syncAcceesNavActive();
+        try {
+            if (document.body.classList.contains('path-enrol')) {
+                var contBtn = document.querySelector('.continuebutton');
+                if (contBtn && !contBtn.querySelector('.btn-back-catalog')) {
+                    var backLink = document.createElement('a');
+                    var isVi = (document.documentElement.lang === 'vi' || document.body.classList.contains('lang-vi'));
+                    backLink.href = (window.M && window.M.cfg ? window.M.cfg.wwwroot : '') + '/course/index.php';
+                    backLink.className = 'btn-back-catalog';
+                    backLink.innerHTML = '<i class="fa-solid fa-arrow-left me-1"></i> ' + (isVi ? 'Quay lại Danh mục' : 'Back to Courses');
+                    contBtn.appendChild(backLink);
+                }
+            }
+        } catch(e) {}
+        var dropdownToggles = document.querySelectorAll('.accees-nav-dropdown .dropdown-toggle');
+        dropdownToggles.forEach(function(toggle) {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var menu = this.nextElementSibling;
+                if (!menu) return;
+                var wasOpen = menu.classList.contains('show');
+                document.querySelectorAll('.accees-dropdown-menu.show').forEach(function(m) {
+                    m.classList.remove('show');
+                });
+                if (!wasOpen) {
+                    menu.classList.add('show');
+                }
+            });
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.accees-nav-dropdown')) {
+                document.querySelectorAll('.accees-dropdown-menu.show').forEach(function(m) {
+                    m.classList.remove('show');
+                });
+            }
+        });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAcceesDropdowns);
+    } else {
+        initAcceesDropdowns();
+    }
+})();
+</script>

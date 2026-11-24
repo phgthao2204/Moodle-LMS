@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tra cứu &amp; Xác thực Chứng chỉ | MEKO-TMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0000B6;
+      --navy: #182B89;
+      --success: #39B500;
+      --bg: #F8F9FA;
+      --border: #E5E7EB;
+      --text: #1F2937;
+      --muted: #4B5563;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .navbar-header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      height: 58px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .navbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+
+    .navbar-left {
+      justify-self: start;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-center {
+      justify-self: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-right {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-logo-img {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-sub-badge {
+      background: #EEF2FF;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #D6E4FF;
+    }
+
+    .nav-links-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 24px;
+    }
+
+    .nav-link-anchor {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #374151;
+      white-space: nowrap;
+      padding: 6px 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-link-anchor.active {
+      color: #111827;
+      font-weight: 700;
+      border-bottom-color: var(--primary);
+    }
+
+    .btn-nav-lms {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      padding: 6px 12px;
+      border: 1px solid #D6E4FF;
+      background: #EEF2FF;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .hero-strip {
+      background: #0B1C61;
+      color: #FFFFFF;
+      padding: 34px 0;
+    }
+
+    .hero-strip h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .hero-strip p {
+      color: #CBD5E1;
+      font-size: 14px;
+    }
+
+    .main-wrap {
+      flex: 1;
+      padding: 32px 0 48px;
+    }
+
+    .verify-card {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .status-bar {
+      background: #DCFCE7;
+      color: #166534;
+      padding: 14px 20px;
+      border-bottom: 1px solid #BBF7D0;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      border: none;
+      background: var(--primary);
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .meta-item {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .meta-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .site-footer {
+      background: #0E1726;
+      color: #9CA3AF;
+      padding: 24px 0;
+      font-size: 12.5px;
+      border-top: 4px solid var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar-header">
+    <div class="navbar-inner">
+      <div class="navbar-left">
+        <a href="07_liferay_tms_portal_home.html" class="brand-logo-wrap">
+          <img src="assets/logo_meko.svg" alt="MEKOSOFT" class="brand-logo-img">
+          <span class="brand-sub-badge">TMS</span>
+        </a>
+      </div>
+      <nav class="navbar-center">
+        <ul class="nav-links-menu">
+          <li><a href="07_liferay_tms_portal_home.html" class="nav-link-anchor">Trang chủ</a></li>
+          <li><a href="07_liferay_tms_portal_home.html#catalog" class="nav-link-anchor">Khóa học</a></li>
+          <li><a href="15_tms_certificate_qr_verify.html" class="nav-link-anchor active">Tra cứu Chứng chỉ</a></li>
+        </ul>
+      </nav>
+      <div class="navbar-right">
+        <a href="06_moodle_lms_login_sso.html" class="btn-nav-lms"><i class="fa-solid fa-right-to-bracket"></i> Đăng
+          nhập</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-strip">
+    <div class="container">
+      <h1>Tra cứu &amp; Xác thực Chứng chỉ Điện tử</h1>
+      <p>Nhập mã xác thực hoặc quét mã QR trên văn bằng để kiểm tra tính hợp lệ.</p>
+    </div>
+  </section>
+
+  <main class="main-wrap">
+    <div class="container">
+      <div class="verify-card">
+        <div class="status-bar">
+          <i class="fa-solid fa-circle-check" style="font-size:18px;"></i>
+          <span>Chứng chỉ hợp lệ — Đã được cấp phát và lưu trữ chính thức trên hệ thống</span>
+        </div>
+        <div class="card-body">
+          <div class="search-bar">
+            <input type="text" value="MEKO-2026-00018" placeholder="Nhập số hiệu chứng chỉ hoặc mã tra cứu QR...">
+            <button class="btn"><i class="fa-solid fa-magnifying-glass"></i> Kiểm tra</button>
+          </div>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <div class="meta-label">Học viên được cấp</div>
+              <div class="meta-val">Nguyễn Văn An (MK2026001)</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Số hiệu chứng chỉ</div>
+              <div class="meta-val">MEKO-2026-00018</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Khóa đào tạo</div>
+              <div class="meta-val">Đóng gói Học liệu Chuẩn IMS CP</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Kết quả &amp; Chuẩn năng lực</div>
+              <div class="meta-val">8.5 / 10 (Đạt) · DigComp C1.1</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Ngày cấp phát</div>
+              <div class="meta-val">16/11/2026</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Đơn vị cấp</div>
+              <div class="meta-val">Mekosoft Training Hub</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>&copy; 2026 Mekosoft Corporation. All rights reserved.</span>
+      <span>MEKO-DLE Verification Portal</span>
+    </div>
+  </footer>
+</body>
+
+</html>

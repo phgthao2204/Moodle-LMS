@@ -1,0 +1,10 @@
+Bundle-Name: ACCEES TMS Core API
+Bundle-SymbolicName: vn.mekosoft.accees.tms.core.api
+Bundle-Version: 1.0.0
+Export-Package: \
+	vn.mekosoft.accees.tms.core.exception,\
+	vn.mekosoft.accees.tms.core.model,\
+	vn.mekosoft.accees.tms.core.service,\
+	vn.mekosoft.accees.tms.core.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../tms-core-service/service.xml

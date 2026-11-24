@@ -1,0 +1,256 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - GLOBAL BASE & MASTER LAYOUT FRAME
+// ==============================================================================
+
+*,
+*::before,
+*::after {
+    background-image: none !important; // Strict ban on CSS gradients across the LMS
+}
+
+body {
+    font-family: $font-family-sans !important;
+    color: $text-main;
+    background-color: $bg-subtle;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+// 1. Page Wrapper & Fixed Top Navbar Clearance
+#page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#page.drawers {
+    margin-top: $navbar-height !important;
+    padding: 0 !important;
+    background-color: $bg-subtle !important;
+    flex: 1 0 auto;
+    transition: margin-left 0.2s ease, width 0.2s ease;
+
+    .main-inner {
+        max-width: $container-max-width !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 20px 16px 48px !important;
+        width: 100% !important;
+        background-color: transparent !important;
+    }
+}
+
+// Push content right when left drawer is open so it NEVER overlays reading text
+body.drawer-open-left #page.drawers,
+body.drawer-open-index #page.drawers,
+body:has(#theme_boost-drawers-courseindex.show) #page.drawers {
+    @media (min-width: 992px) {
+        margin-left: 310px !important;
+        width: calc(100% - 310px) !important;
+    }
+}
+
+.drawer.drawer-left {
+    border-right: 1px solid $border-default !important;
+    box-shadow: 2px 0 12px rgba(15, 23, 42, 0.08) !important;
+    z-index: 1025 !important;
+}
+
+// Prevent duplicate activity headings on activity module pages (mod_page, mod_forum, mod_url, etc.)
+.path-mod #region-main > h2:first-of-type,
+.path-mod #region-main > .activity-header-heading {
+    display: none !important;
+}
+
+// Activity Card Styling (Solid Surface)
+.path-mod #region-main {
+    .generalbox {
+        background-color: #FFFFFF !important;
+        border: 1px solid $border-default !important;
+        border-radius: $radius-lg !important;
+        padding: 24px !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+        line-height: 1.7;
+        color: $text-main;
+        font-size: 15px;
+    }
+
+    // Make URL activity link a prominent Solid primary CTA button
+    .urlworkaround {
+        background-color: #FFFFFF !important;
+        border: 1px solid $border-default !important;
+        border-radius: $radius-lg !important;
+        padding: 28px !important;
+        text-align: center;
+        margin: 20px 0;
+
+        a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: $brand-primary !important;
+            color: #FFFFFF !important;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 12px 28px !important;
+            border-radius: $radius-md !important;
+            text-decoration: none !important;
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                background-color: $brand-primary-hover !important;
+                color: #FFFFFF !important;
+            }
+        }
+    }
+}
+
+#page.container-fluid {
+    margin-top: $navbar-height !important;
+}
+
+// Suppress duplicate Moodle default page header on custom ACCEES portal views
+body#page-course-index-category #page-header,
+body#page-local-accees_competencies-index #page-header,
+body.accees-no-page-header #page-header,
+#page.drawers:has(.course-catalog-page-wrapper) #page-header,
+#page.drawers:has(.competency-framework-page-wrapper) #page-header,
+#page.drawers:has(.competency-matrix-page-wrapper) #page-header {
+    display: none !important;
+}
+
+// Remove unwanted top padding inside region-main when custom wrappers render their own strips
+#page.drawers:has(.course-catalog-page-wrapper) .main-inner,
+#page.drawers:has(.competency-framework-page-wrapper) .main-inner,
+#page.drawers:has(.competency-matrix-page-wrapper) .main-inner {
+    max-width: $container-max-width !important;
+    padding-top: 8px !important;
+}
+
+// 2. Standardized Breadcrumbs
+.breadcrumb-nav {
+    margin-bottom: 16px !important;
+}
+
+.breadcrumb {
+    background-color: transparent !important;
+    padding: 8px 0 !important;
+    margin-bottom: 16px !important;
+    font-size: 13px !important;
+    border-bottom: 1px solid $border-default !important;
+
+    .breadcrumb-item {
+        a {
+            color: $brand-primary !important;
+            text-decoration: none !important;
+            font-weight: 600;
+
+            &:hover {
+                color: $brand-primary-hover !important;
+                text-decoration: underline !important;
+            }
+        }
+
+        &.active {
+            color: $text-main !important;
+            font-weight: 700 !important;
+        }
+
+        + .breadcrumb-item::before {
+            color: $text-muted !important;
+            content: "›" !important;
+            padding: 0 8px !important;
+        }
+    }
+}
+
+// 3. Secondary Navigation Tabs (Course / Settings / Participants / Grades / Competencies)
+.secondary-navigation {
+    .navigation {
+        border-bottom: 2px solid $border-default;
+
+        .nav-tabs .nav-link {
+            color: $text-secondary;
+            font-weight: 600;
+            border: none;
+            padding: 10px 16px;
+
+            &:hover {
+                color: $brand-primary;
+            }
+
+            &.active {
+                color: $brand-primary !important;
+                border-bottom: 3px solid $brand-primary !important;
+                font-weight: 700 !important;
+                background: transparent !important;
+            }
+        }
+    }
+}
+
+body.meko-course-secondary-nav .secondary-navigation {
+    margin-bottom: 1rem;
+    padding: 0.25rem 1rem 0.875rem;
+    background-color: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: var(--bs-border-radius-lg, 0.75rem);
+
+    .navigation,
+    .navigation.secondarynav-tabbar {
+        background-color: transparent;
+        border-bottom: 2px solid $border-default;
+        padding-inline: 0;
+    }
+
+    .navigation .more-nav {
+        max-width: $course-content-maxwidth;
+        margin-inline: auto;
+        gap: 0;
+    }
+
+    .navigation .nav-tabs > .nav-item > .nav-link,
+    .navigation .mds-nav-pill {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        padding: 0.625rem 1rem;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+        color: $text-secondary;
+        font-family: $font-family-sans;
+        font-size: 1rem;
+        line-height: 1.5;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+            color: $brand-primary;
+            background-color: $bg-subtle;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $brand-primary;
+            outline-offset: -3px;
+        }
+
+        &:is(.active, .mds-nav-pill--selected),
+        &.mds-nav-pill--selected:visited {
+            border-bottom-color: $brand-primary;
+            color: $brand-primary;
+            background-color: transparent;
+            font-weight: 700;
+        }
+
+        &.active::before,
+        .mds-nav-pill__indicator {
+            display: none;
+        }
+    }
+
+    .mds-nav-pill__label {
+        font: inherit;
+    }
+}

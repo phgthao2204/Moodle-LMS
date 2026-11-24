@@ -1,0 +1,106 @@
+@use "clay_variables" as theme;
+
+body.accees-tms {
+    --meko-primary: #{theme.$primary};
+    --meko-success: #{theme.$success};
+    --meko-warning: #{theme.$warning};
+    font-family: theme.$font-family-sans-serif;
+    color: #1f2937;
+    background: #f8f9fa;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.accees-tms #wrapper { display: flex; flex-direction: column; min-height: 100vh; padding: 0; }
+.tms-container, .tms-demo .container { width: 100%; max-width: 1320px; padding: 0 24px; margin: 0 auto; }
+.tms-header { height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 24px; border-bottom: 1px solid #e5e7eb; background: #fff; font-family: theme.$font-family-sans-serif; }
+.tms-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.tms-accees-logo, .tms-ctu-logo { object-fit: contain; display: block; }
+.tms-ctu-logo { border-left: 1px solid #e5e7eb; padding-left: 8px; width: 44px; }
+.tms-brand-badge { color: theme.$primary; background: #eef2ff; border: 1px solid #d6e4ff; border-radius: 12px; padding: 2px 8px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.tms-role-badge { background: #0b1c61; color: #fff; border-radius: 4px; padding: 4px 10px; font-size: 11.5px; font-weight: 700; margin-right: auto; }
+.tms-navigation, .tms-account { display: flex; align-items: center; gap: 20px; }
+.tms-navigation a { color: #374151; font-size: 14.5px; font-weight: 500; white-space: nowrap; padding: 6px 2px; border-bottom: 2px solid transparent; }
+.tms-navigation a.is-active { color: #111827; font-weight: 700; border-bottom-color: theme.$primary; }
+.tms-navigation a:hover { color: theme.$primary; text-decoration: none; }
+.tms-account { gap: 10px; flex-shrink: 0; }
+.tms-account .portlet { margin-bottom: 0; }
+.tms-link-button { padding: 6px 12px; border: 1px solid #d6e4ff; background: #eef2ff; color: theme.$primary; font-size: 12px; font-weight: 600; border-radius: 6px; white-space: nowrap; }
+.tms-admin-button { color: #fff; background: #182b89; border-color: #182b89; }
+.tms-login { font-size: 14.5px; font-weight: 600; color: theme.$primary; white-space: nowrap; }
+.tms-logout { font-size: 12px; color: #475569; white-space: nowrap; }
+.tms-entry { padding: 36px; }
+.tms-shell { display: flex; flex: 1; }
+.tms-content { min-width: 0; width: 100%; }
+.tms-sidebar { width: 250px; flex-shrink: 0; padding: 22px 12px; border-right: 1px solid #e5e7eb; background: #fff; }
+.tms-sidebar > p { color: #6b7280; padding: 0 12px; font-size: 11px; font-weight: 800; letter-spacing: .5px; }
+.tms-sidebar-group { color: #6b7280; padding: 0 12px; margin: 18px 0 8px; font-size: 10px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; }
+.tms-sidebar-group:first-child { margin-top: 0; }
+.tms-sidebar a { display: block; padding: 11px 12px; margin: 4px 0; color: #374151; font-weight: 600; font-size: 13px; border-radius: 6px; }
+.tms-sidebar a.is-active { color: theme.$primary; background: #eef2ff; }
+.tms-admin .tms-demo { padding: 24px 28px; }
+.tms-demo-note { font-size: 11px; text-align: center; color: #475569; padding: 4px 16px; background: #f1f5f9; border-bottom: 1px solid #e5e7eb; }
+.tms-demo { font-family: theme.$font-family-sans-serif; min-width: 0; }
+.tms-demo input, .tms-demo button, .tms-demo select, .tms-demo textarea { font-family: inherit; }
+.tms-demo .demo-icon { display: inline-block; width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; vertical-align: -.15em; }
+.tms-demo .courses-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tms-demo .course-card[hidden], .tms-demo tr[hidden], .tms-demo .meta-grid[hidden] { display: none; }
+.tms-demo .filter-tabs { flex-wrap: wrap; }
+.tms-demo .section-head { flex-wrap: wrap; }
+.tms-demo .hero-search input { min-width: 0; }
+.tms-demo table { width: 100%; }
+.tms-demo .card-table { overflow-x: auto; }
+.tms-demo .btn-primary, .accees-tms .btn-primary { color: #fff; background: theme.$primary; border-color: theme.$primary; }
+.tms-demo .btn-success { background: theme.$success; border-color: theme.$success; color: #fff; }
+.tms-demo .btn-card.disabled { cursor: not-allowed; }
+.tms-demo .progress-bar { display: block; background: #e5e7eb; }
+.tms-demo .progress-fill { height: 100%; background: theme.$success; }
+.tms-demo-widgets:has(.portlet-dropzone.empty):not(:has(.portlet-boundary)) { display: none; }
+.tms-widgets { padding: 0 24px; }
+.tms-toast { position: fixed; z-index: 1100; bottom: 24px; right: 24px; max-width: 420px; padding: 14px 18px; color: #fff; background: #182b89; border-radius: 8px; box-shadow: 0 4px 20px rgb(0 0 0 / 15%); font-size: 13px; }
+.tms-empty { padding: 28px; text-align: center; color: #64748b; }
+#footer.tms-footer { color: #9ca3af; background: #0e1726; border-top: 4px solid theme.$primary; padding: 42px 0 22px; margin-top: 32px; font-size: 13px; }
+.tms-footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.3fr; gap: 36px; margin-bottom: 24px; }
+.tms-footer h2 { font-size: 15px; font-weight: 700; color: #fff; margin: 0 0 12px; }
+.tms-footer p { line-height: 1.6; margin: 0 0 10px; }
+.tms-footer a { display: block; color: #9ca3af; margin-bottom: 7px; }
+.tms-footer a:hover { color: #fff; }
+.tms-eu-logo { display: block; width: 240px; max-width: 100%; height: auto; margin-top: 12px; }
+.tms-eu-disclaimer { font-size: 11px; max-width: 900px; }
+.tms-footer-bottom { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid #1f2937; padding-top: 18px; font-size: 12px; }
+.accees-tms a:focus-visible, .accees-tms button:focus-visible { outline: 3px solid theme.$warning; outline-offset: 3px; }
+@media (max-width: 1200px) {
+    .tms-header { gap: 14px; }
+    .tms-navigation { gap: 12px; }
+    .tms-navigation a { font-size: 13px; }
+    .tms-lms-link { display: none; }
+    .tms-demo .courses-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+    .tms-header { height: auto; min-height: 58px; flex-wrap: wrap; padding: 10px 18px; }
+    .tms-role-badge { display: none; }
+    .tms-navigation { order: 3; width: 100%; overflow-x: auto; }
+    .tms-demo .hero-grid, .tms-demo .grid-2, .tms-demo .form-grid, .tms-demo .meta-grid, .tms-footer-grid { grid-template-columns: 1fr; }
+    .tms-demo .hero-search { flex-wrap: wrap; }
+    .tms-demo .hero-search input { flex-basis: 65%; }
+    .tms-admin .tms-shell { flex-direction: column; }
+    .tms-sidebar { width: 100%; border-right: 0; border-bottom: 1px solid #e5e7eb; }
+    .tms-sidebar nav { display: flex; gap: 8px; overflow-x: auto; }
+    .tms-sidebar-group { display: none; }
+    .tms-sidebar a { white-space: nowrap; }
+    .tms-admin .tms-demo { padding: 20px; }
+}
+@media (max-width: 600px) {
+    .tms-container, .tms-demo .container { padding-right: 18px; padding-left: 18px; }
+    .tms-brand { gap: 6px; }
+    .tms-accees-logo { width: 104px; }
+    .tms-ctu-logo { width: 36px; height: 32px; }
+    .tms-brand-badge { font-size: 9px; padding: 2px 5px; }
+    .tms-account { margin-left: auto; gap: 6px; }
+    .tms-admin-button { padding: 5px; font-size: 10px; }
+    .tms-demo .courses-grid { grid-template-columns: 1fr; }
+    .tms-demo .page-head, .tms-demo .profile-top { flex-direction: column; align-items: stretch; gap: 16px; }
+    .tms-footer-bottom { flex-direction: column; }
+}
+@media print {
+    .tms-header, .tms-sidebar, .tms-footer, .tms-demo-note, .search-bar, .tms-toast { display: none; }
+}

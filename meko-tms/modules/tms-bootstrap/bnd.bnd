@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-Activator: vn.mekosoft.tms.bootstrap.TmsBootstrapActivator
+Bundle-Name: MEKOSOFT TMS Bootstrap
+Bundle-SymbolicName: vn.mekosoft.tms.bootstrap
+Bundle-Version: 1.0.0
+Import-Package: com.liferay.portal.kernel.model,\
+ com.liferay.portal.kernel.service,\
+ com.liferay.portal.kernel.util,\
+ java.lang,\
+ java.util,\
+ org.osgi.framework
+

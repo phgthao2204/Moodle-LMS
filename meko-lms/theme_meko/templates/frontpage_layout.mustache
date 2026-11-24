@@ -1,0 +1,26 @@
+{{!
+    @template theme_meko/frontpage_layout
+
+    Full-page shell for the custom MEKOSOFT landing page.
+}}
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper }}
+<div id="page-wrapper" class="d-print-block">
+    {{{ output.standard_top_of_body_html }}}
+
+    {{> theme_meko/frontpage }}
+
+    {{! Moodle requires main_content to be rendered once. The custom frontpage
+        already renders its own dynamic course list, so keep the core output in
+        the document without showing a duplicate section. }}
+    <main id="region-main" class="d-none" aria-hidden="true">
+        {{{ maincontent }}}
+    </main>
+
+    {{{ output.standard_after_main_region_html }}}
+    {{{ output.standard_end_of_body_html }}}
+</div>
+</body>
+</html>

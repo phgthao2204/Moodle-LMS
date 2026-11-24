@@ -1,0 +1,176 @@
+// ==============================================================================
+// MEKOSOFT LMS - Header Navbar Component
+// ==============================================================================
+
+.navbar.fixed-top,
+.navbar-header,
+.meko-navbar {
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+    min-height: 60px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1040 !important;
+}
+
+.wrap-1320 {
+    width: 100% !important;
+    max-width: 1320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 24px !important;
+}
+
+.brand-logo-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+
+    img.brand-logo-img {
+        height: 38px;
+        width: auto;
+        display: block;
+    }
+}
+
+.nav-links-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+
+    .nav-link-anchor {
+        color: #334155;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        transition: color 0.15s, background-color 0.15s;
+
+        &:hover {
+            color: #1E2F97;
+            background-color: #F1F5F9;
+        }
+
+        &:focus-visible {
+            outline: 2px solid #1E2F97;
+            outline-offset: 2px;
+        }
+    }
+
+    .nav-link-item.active .nav-link-anchor {
+        color: #1E2F97;
+        font-weight: 700;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 12px;
+            right: 12px;
+            height: 2px;
+            background: #F57C00;
+            border-radius: 2px;
+        }
+    }
+}
+
+.btn-header-login {
+    background-color: #1E2F97 !important;
+    color: #FFFFFF !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    padding: 8px 18px !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    transition: background-color 0.15s ease, transform 0.15s ease !important;
+
+    &:hover {
+        background-color: #162566 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(30, 47, 151, 0.25) !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .meko-navbar > .wrap-1320 {
+        padding-right: 12px !important;
+        padding-left: 12px !important;
+    }
+
+    .brand-logo-wrap img.brand-logo-img {
+        max-width: 140px;
+        height: auto !important;
+    }
+
+    .btn-header-login {
+        padding: 8px 10px !important;
+        font-size: 11px !important;
+        white-space: nowrap;
+    }
+}
+
+// Homepage mockup navbar: one component, rendered differently by Moodle auth state.
+.meko-navbar-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    padding-inline: 24px;
+    min-height: 60px;
+    margin-inline: auto;
+}
+
+.meko-navbar-left { justify-self: start; }
+.meko-navbar-center { justify-self: center; }
+.meko-navbar-right { display: flex; align-items: center; justify-self: end; gap: 14px; }
+
+.lang-switch-cluster { display: flex; align-items: center; gap: 4px; padding: 3px; border: 1px solid #e5e7eb; border-radius: 18px; background: #f8fafc; }
+.lang-circle-btn { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; color: #64748b; font-size: 10px; font-weight: 800; text-decoration: none !important; }
+.lang-circle-btn:hover { background: #e5e7eb; color: #111827; }
+.lang-circle-btn.active { background: #1e2f97; color: #fff; }
+
+.nav-login-link { padding: 6px 4px; color: #1e2f97; font-size: 14px; font-weight: 700; text-decoration: none !important; white-space: nowrap; }
+.nav-login-link:hover { color: #162566; text-decoration: underline !important; }
+
+.meko-user-actions { display: flex; align-items: center; gap: 8px; }
+.user-profile-badge { display: flex; align-items: center; gap: 7px; padding: 4px 9px; border: 1px solid #e5e7eb; border-radius: 7px; background: #f8fafc; color: #1f2937; text-decoration: none !important; }
+.user-avatar-circle { display: inline-flex; align-items: center; justify-content: center; width: 27px; height: 27px; border-radius: 50%; background: #1e2f97; color: #fff; font-size: 10px; font-weight: 800; }
+.user-display-name { max-width: 120px; overflow: hidden; font-size: 12px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.meko-logout-link { color: #b91c1c; font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+@media (max-width: 1199.98px) {
+    .meko-navbar {
+        height: auto !important;
+        flex-shrink: 0;
+    }
+
+    .meko-navbar-inner { display: flex; flex-wrap: wrap; justify-content: space-between; padding-block: 8px; }
+    .meko-navbar-center { display: block; order: 3; flex: 1 0 100%; overflow-x: auto; }
+    .nav-links-menu { justify-content: center; flex-wrap: wrap; }
+}
+
+@media (max-width: 575.98px) {
+    .meko-navbar-inner { padding-inline: 12px; row-gap: 4px; }
+    .meko-navbar-right { gap: 7px; }
+    .lang-switch-cluster { gap: 2px; }
+    .lang-circle-btn { width: 22px; height: 22px; }
+    .meko-navbar-left img.brand-logo-img { max-width: 124px; height: auto; }
+    .user-display-name, .meko-logout-link { display: none; }
+    .nav-login-link { padding: 7px 9px; border-radius: 6px; background: #1e2f97; color: #fff; font-size: 11px; }
+    .nav-links-menu .nav-link-anchor { padding: 7px 8px; font-size: 12px; }
+}

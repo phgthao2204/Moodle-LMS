@@ -1,0 +1,12 @@
+{
+  "event_id": "evt_20261117_0001",
+  "event_type": "course_completed",
+  "occurred_at": "2026-11-17T10:15:00+07:00",
+  "course_id": 105,
+  "shortname": "ACCEES-CS101",
+  "user_id": 42,
+  "username": "sv_ctu_001",
+  "progress_percent": 100.0,
+  "final_grade": 8.75,
+  "badges": []
+}

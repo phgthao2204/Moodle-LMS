@@ -1,0 +1,307 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - COURSE ENROLMENT PAGE (/enrol/index.php)
+// 100% Solid Colors, Zero Emoji, Font Be Vietnam Pro, Modern EdTech Card Container
+// ==============================================================================
+
+body.path-enrol {
+    background-color: #F8FAFC !important;
+
+    #page.drawers {
+        background-color: #F8FAFC !important;
+    }
+
+    #page-header {
+        max-width: 960px !important;
+        margin: 24px auto 0 !important;
+        padding: 0 16px !important;
+
+        .page-context-header {
+            margin-bottom: 0 !important;
+
+            h1.h2 {
+                font-size: 24px !important;
+                font-weight: 800 !important;
+                color: #0F172A !important;
+                line-height: 1.3 !important;
+                letter-spacing: -0.02em !important;
+            }
+        }
+    }
+
+    #page-content {
+        max-width: 960px !important;
+        margin: 0 auto !important;
+        padding: 16px 16px 64px !important;
+    }
+
+    #region-main-box {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #region-main {
+        background: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 16px !important;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+        padding: 32px 36px !important;
+        overflow: hidden !important;
+
+        @media (max-width: 768px) {
+            padding: 20px 16px !important;
+        }
+
+        div[role="main"] {
+            // Heading: "Enrolment options" / "Các tùy biến ghi danh"
+            > h2:first-of-type {
+                font-size: 19px !important;
+                font-weight: 700 !important;
+                color: #0F172A !important;
+                margin-bottom: 20px !important;
+                padding-bottom: 12px !important;
+                border-bottom: 2px solid #F1F5F9 !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+
+                &::before {
+                    content: "";
+                    display: inline-block;
+                    width: 4px;
+                    height: 18px;
+                    background-color: #0000B6;
+                    border-radius: 2px;
+                }
+            }
+
+            // Course Info Box
+            .generalbox.info {
+                background: #F8FAFC !important;
+                border: 1px solid #E2E8F0 !important;
+                border-radius: 12px !important;
+                padding: 20px !important;
+                margin-bottom: 20px !important;
+
+                .coursebox {
+                    border: none !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+
+                    .info {
+                        margin-bottom: 14px !important;
+
+                        .coursename {
+                            margin: 0 !important;
+
+                            a {
+                                font-size: 18px !important;
+                                font-weight: 700 !important;
+                                color: #0000B6 !important;
+                                text-decoration: none !important;
+                                line-height: 1.4 !important;
+
+                                &:hover {
+                                    color: #00008F !important;
+                                    text-decoration: underline !important;
+                                }
+                            }
+                        }
+                    }
+
+                    .content {
+                        margin: 0 !important;
+                        padding: 0 !important;
+
+                        .d-flex {
+                            gap: 20px !important;
+
+                            @media (max-width: 768px) {
+                                flex-direction: column !important;
+                            }
+                        }
+
+                        .courseimage {
+                            flex-shrink: 0 !important;
+                            width: 240px !important;
+                            height: 140px !important;
+                            border-radius: 8px !important;
+                            overflow: hidden !important;
+                            border: 1px solid #CBD5E1 !important;
+                            background-color: #0F172A !important;
+
+                            @media (max-width: 768px) {
+                                width: 100% !important;
+                                height: 180px !important;
+                            }
+
+                            img {
+                                width: 100% !important;
+                                height: 100% !important;
+                                object-fit: cover !important;
+                            }
+                        }
+
+                        .summary {
+                            font-size: 13.5px !important;
+                            color: #475569 !important;
+                            line-height: 1.55 !important;
+                            margin-bottom: 12px !important;
+                        }
+
+                        ul.teachers {
+                            list-style: none !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+
+                            li {
+                                display: inline-flex !important;
+                                align-items: center !important;
+                                gap: 6px !important;
+                                font-size: 12.5px !important;
+                                background-color: #FFFFFF !important;
+                                border: 1px solid #CBD5E1 !important;
+                                padding: 5px 12px !important;
+                                border-radius: 6px !important;
+                                color: #0F172A !important;
+
+                                span.fw-bold {
+                                    color: #64748B !important;
+                                    font-weight: 600 !important;
+                                }
+
+                                a {
+                                    color: #0000B6 !important;
+                                    font-weight: 600 !important;
+                                    text-decoration: none !important;
+
+                                    &:hover {
+                                        text-decoration: underline !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Notice Box ("Bạn không thể tự ghi danh vào khóa học này." / "You cannot enrol yourself in this course.")
+            #notice.generalbox {
+                background-color: #FEF3C7 !important;
+                border: 1px solid #FDE68A !important;
+                border-left: 5px solid #EA6400 !important;
+                border-radius: 8px !important;
+                padding: 14px 18px !important;
+                font-size: 13.5px !important;
+                font-weight: 500 !important;
+                color: #92400E !important;
+                margin-bottom: 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
+
+                &::before {
+                    content: "!";
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 22px;
+                    height: 22px;
+                    background-color: #EA6400;
+                    color: #FFFFFF;
+                    font-weight: 700;
+                    border-radius: 50%;
+                    flex-shrink: 0;
+                    font-size: 12px;
+                }
+            }
+
+            // Enrolment instances (Self enrolment form, guest, etc.)
+            .enroloptions {
+                .enrolinstance {
+                    background: #FFFFFF !important;
+                    border: 1px solid #E2E8F0 !important;
+                    border-radius: 10px !important;
+                    padding: 20px !important;
+                    margin-bottom: 20px !important;
+
+                    h3 {
+                        font-size: 16px !important;
+                        font-weight: 700 !important;
+                        color: #0F172A !important;
+                        margin-bottom: 12px !important;
+                    }
+
+                    .mform {
+                        .btn-primary {
+                            background-color: #0000B6 !important;
+                            border-color: #0000B6 !important;
+                            color: #FFFFFF !important;
+                            font-weight: 600 !important;
+                            padding: 8px 20px !important;
+                            border-radius: 6px !important;
+
+                            &:hover {
+                                background-color: #00008F !important;
+                                border-color: #00008F !important;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Action / Continue Button
+            .continuebutton {
+                text-align: left !important;
+                margin-top: 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
+                flex-wrap: wrap !important;
+
+                form {
+                    display: inline-block !important;
+                    margin: 0 !important;
+                }
+
+                .btn-primary, button[type="submit"] {
+                    background-color: #0000B6 !important;
+                    border-color: #0000B6 !important;
+                    color: #FFFFFF !important;
+                    font-weight: 600 !important;
+                    font-size: 13.5px !important;
+                    padding: 9px 22px !important;
+                    border-radius: 6px !important;
+                    box-shadow: 0 2px 6px rgba(0, 0, 182, 0.2) !important;
+                    transition: background-color 0.2s ease, transform 0.15s ease !important;
+
+                    &:hover {
+                        background-color: #00008F !important;
+                        border-color: #00008F !important;
+                        transform: translateY(-1px) !important;
+                    }
+                }
+
+                .btn-back-catalog {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 6px !important;
+                    background-color: #FFFFFF !important;
+                    border: 1px solid #CBD5E1 !important;
+                    color: #475569 !important;
+                    font-weight: 600 !important;
+                    font-size: 13.5px !important;
+                    padding: 9px 18px !important;
+                    border-radius: 6px !important;
+                    text-decoration: none !important;
+                    transition: all 0.2s ease !important;
+
+                    &:hover {
+                        background-color: #F8FAFC !important;
+                        border-color: #94A3B8 !important;
+                        color: #0F172A !important;
+                    }
+                }
+            }
+        }
+    }
+}

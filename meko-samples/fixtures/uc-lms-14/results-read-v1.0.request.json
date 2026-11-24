@@ -1,0 +1,11 @@
+{
+  "method": "GET",
+  "path": "/lms/api/rest/v2/local_accees_sync_api/courses/{courseid}/results",
+  "headers": {
+    "Authorization": "Bearer <OAuth2 access_token>",
+    "Accept": "application/json",
+    "X-ACCEES-API-Version": "1.0"
+  },
+  "scope": "local_accees_sync_api:result:read",
+  "query": {"page": 1, "per_page": 50, "completed_only": false}
+}

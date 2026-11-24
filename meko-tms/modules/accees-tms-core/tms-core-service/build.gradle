@@ -1,0 +1,16 @@
+dependencies {
+	api project(":modules:accees-tms-core:tms-core-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+}
+
+buildService {
+	apiDir = "../tms-core-api/src/main/java"
+	testDir = "../tms-core-test/src/testIntegration/java"
+}
+
+group = "vn.mekosoft.accees.tms.core"
+
+configurations.serviceBuilder.resolutionStrategy.force "com.liferay:com.liferay.portal.tools.service.builder:1.0.496"
+
+tasks.named("compileJava") { dependsOn tasks.named("buildService") }

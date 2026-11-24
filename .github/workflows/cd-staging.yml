@@ -1,0 +1,13 @@
+name: CD - Deploy MEKO-DLE to Staging
+on:
+  push:
+    branches: [staging]
+jobs:
+  deploy-staging:
+    runs-on: [self-hosted, staging]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Repository & Smoke Check Notice
+        run: |
+          echo "Deploying MEKO-DLE staging commit $GITHUB_SHA"
+          ls -la meko-lms meko-tms meko-devlocal

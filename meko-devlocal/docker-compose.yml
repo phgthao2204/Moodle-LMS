@@ -1,0 +1,124 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: devlocal-postgres
+    restart: unless-stopped
+    command: ["postgres", "-c", "synchronous_commit=off", "-c", "fsync=off", "-c", "full_page_writes=off", "-c", "max_wal_size=2GB", "-c", "checkpoint_timeout=15min"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_SUPERUSER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERPASS:-DevLocalRoot2026!@#}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata17:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER:-postgres}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    networks:
+      - devlocal-net
+
+  liferay:
+    image: liferay/portal:7.4.3.132-ga132
+    container_name: devlocal-liferay
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "11311:11311"
+    environment:
+      - LIFERAY_JVM_OPTS=${LIFERAY_JVM_OPTS:--Xms768m -Xmx1280m -XX:NewSize=256m -XX:MaxNewSize=512m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m}
+      - LIFERAY_SETUP_PERIOD_WIZARD_PERIOD_ENABLED=false
+      # PostgreSQL 17 connection
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME=org.postgresql.Driver
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:postgresql://postgres:5432/${LIFERAY_DB:-lportal}
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME=${LIFERAY_DB_USER:-liferay}
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD=${LIFERAY_DB_PASS:-LiferayPass2026!@#}
+      # Reverse Proxy awareness for meko.localhost
+      - LIFERAY_WEB_PERIOD_SERVER_PERIOD_HOST=${DOMAIN:-meko.localhost}
+      - LIFERAY_WEB_PERIOD_SERVER_PERIOD_HTTP_PERIOD_PORT=${HTTP_PORT:-80}
+      - LIFERAY_WEB_PERIOD_SERVER_PERIOD_PROTOCOL=http
+      # Allow OSGi Gogo shell from host for module debugging
+      - LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_OSGI_PERIOD_CONSOLE=0.0.0.0:11311
+      # Mailpit SMTP routing for DevLocal
+      - LIFERAY_MAIL_SESSION_MAIL_SMTP_HOST=mailpit
+      - LIFERAY_MAIL_SESSION_MAIL_SMTP_PORT=1025
+    volumes:
+      - liferay_data:/opt/liferay/data
+      - ./liferay/deploy:/opt/liferay/deploy
+    networks:
+      - devlocal-net
+
+  moodle:
+    image: elestio/moodle:v5.3.0
+    container_name: devlocal-moodle
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - MOODLE_DATABASE_HOST=postgres
+      - MOODLE_DATABASE_PORT_NUMBER=5432
+      - MOODLE_DATABASE_NAME=${MOODLE_DB:-accees_lms}
+      - MOODLE_DATABASE_USER=${MOODLE_DB_USER:-lms_user}
+      - MOODLE_DATABASE_PASSWORD=${MOODLE_DB_PASS:-LmsPassword2026!@#}
+      - MOODLE_DATABASE_TYPE=pgsql
+      - MOODLE_HOST=http://${DOMAIN:-meko.localhost}/lms
+      - MOODLE_SITE_NAME=MEKOSOFT LMS - Digital Learning & Competencies
+      - MOODLE_USERNAME=admin
+      - MOODLE_PASSWORD=AdminMoodle2026!@#
+      - MOODLE_EMAIL=admin@mekosoft.vn
+    volumes:
+      - moodledata:/var/moodledata
+      - ./moodle/config.php:/var/www/html/config.php:ro
+      - ./moodle/apache-lms.conf:/etc/apache2/conf-enabled/lms.conf:ro
+      - ../meko-lms/theme_meko:/var/www/html/public/theme/meko
+      - ../meko-lms/local/meko_competencies:/var/www/html/public/local/meko_competencies
+      - ../meko-lms/local/accees_imscp:/var/www/html/public/local/accees_imscp
+      - ../meko-lms/local/accees_sync_api:/var/www/html/public/local/accees_sync_api
+    networks:
+      - devlocal-net
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: devlocal-mailpit
+    restart: unless-stopped
+    environment:
+      - MP_WEBROOT=/mail
+    ports:
+      - "${MAILPIT_PORT:-8025}:8025"
+    networks:
+      - devlocal-net
+
+  gateway:
+    image: nginx:alpine
+    container_name: devlocal-gateway
+    restart: unless-stopped
+    depends_on:
+      - moodle
+      - liferay
+      - mailpit
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./gateway/dev-info.html:/usr/share/nginx/html/dev-info.html:ro
+    networks:
+      - devlocal-net
+
+volumes:
+  pgdata17:
+    name: devlocal_pgdata17
+  liferay_data:
+    name: devlocal_liferay_data
+  moodledata:
+    name: devlocal_moodledata
+
+networks:
+  devlocal-net:
+    name: devlocal_meko_net
+    driver: bridge

@@ -1,0 +1,94 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - MODULAR SCSS DESIGN TOKENS & VARIABLES
+// Spec: lms/docs/BANG_THIET_KE_THEME_ACCEES_LMS.md & ACCEES_LMS_Design_System.html
+// Strict Rule: 100% Solid Colors, 0% Gradients, Be Vietnam Pro Typography
+// ==============================================================================
+
+// 1. Official 12 Solid Color Tokens (SCSS Variables)
+$brand-primary:       #0000B6 !default; // Primary Solid Blue (Brand, Active, Links, CTA)
+$brand-primary-hover: #00008F !default; // Primary Hover
+$brand-primary-tint:  #EEF2FF !default; // Soft Blue Tint Surface
+$brand-primary-border:#C7D2FE !default; // Soft Blue Border
+
+$brand-navy:          #182B89 !default; // Secondary Dark Navy (Hero Strip, SSO CTA, Secondary Buttons)
+$brand-navy-hover:    #111E63 !default; // Navy Hover
+$brand-indigo:        #0B1C61 !default; // Deep Indigo Banner
+
+$brand-success:       #39B500 !default; // Competency Achieved / Open Status / Progress Bar
+$brand-success-hover: #2E9200 !default; // Success Hover
+$brand-success-tint:  #E8F8E5 !default; // Soft Green Surface
+$brand-success-border:#C8ECC2 !default; // Soft Green Border
+$brand-success-text:  #166534 !default; // Dark Green Text for high contrast on light green
+
+$brand-warning:       #EA6400 !default; // Accent Orange (Enter Course, Hero Bottom Accent, Highlights)
+$brand-warning-hover: #C85200 !default; // Warning Hover
+$brand-warning-tint:  #FFF5EB !default; // Soft Orange Surface
+$brand-warning-border:#FCDDC7 !default; // Soft Orange Border
+
+$text-main:           #0E1726 !default; // Primary Dark Slate Headings & Titles
+$text-heading:        #0F172A !default; // Dark Slate
+$text-secondary:      #475569 !default; // Body Copy & Descriptions
+$text-muted:          #64748B !default; // Meta Labels, Captions, Breadcrumbs
+
+$border-strong:       #CBD5E1 !default; // Form Inputs, Filter Chips, Strong Dividers
+$border-default:      #E2E8F0 !default; // Card Borders, Section Dividers, Table Borders
+
+$bg-page:             #F1F5F9 !default; // Login / Outer Canvas Background
+$bg-subtle:           #F8FAFC !default; // Standard LMS Page Background & Inner Box Surface
+$bg-surface:          #FFFFFF !default; // Pure White Card & Header Surface
+$bg-footer:           #0F172A !default; // Official CTU/ACCEES Dark Slate Footer
+
+// 2. Typography & Grid Layout Tokens
+$font-family-sans:    'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !default;
+$font-family-mono:    'JetBrains Mono', monospace !default;
+
+$container-max-width: 1320px !default;
+$navbar-height:       60px !default;
+
+$radius-sm:           4px !default;
+$radius-md:           6px !default;
+$radius-lg:           8px !default;
+$radius-xl:           10px !default;
+$radius-2xl:          12px !default;
+$radius-pill:         9999px !default;
+
+// 3. Export CSS Custom Properties (:root) for runtime components & templates
+:root {
+    --accees-primary:        #{$brand-primary};
+    --accees-primary-hover:  #{$brand-primary-hover};
+    --accees-primary-light:  #{$brand-primary-tint};
+    --accees-primary-border: #{$brand-primary-border};
+
+    --accees-navy:           #{$brand-navy};
+    --accees-deep:           #{$brand-navy};
+    --accees-navy-hover:     #{$brand-navy-hover};
+    --accees-indigo:         #{$brand-indigo};
+
+    --accees-green:          #{$brand-success};
+    --accees-success:        #{$brand-success};
+    --accees-green-light:    #{$brand-success-tint};
+    --accees-green-border:   #{$brand-success-border};
+
+    --accees-orange:         #{$brand-warning};
+    --accees-warning:        #{$brand-warning};
+    --accees-orange-light:   #{$brand-warning-tint};
+    --accees-orange-border:  #{$brand-warning-border};
+
+    --accees-text-main:      #{$text-main};
+    --accees-text-secondary: #{$text-secondary};
+    --accees-text-muted:     #{$text-muted};
+
+    --accees-border-strong:  #{$border-strong};
+    --accees-border-default: #{$border-default};
+
+    --accees-bg-page:        #{$bg-page};
+    --accees-bg-subtle:      #{$bg-subtle};
+    --accees-bg-surface:     #{$bg-surface};
+    --accees-bg-footer:      #{$bg-footer};
+
+    --accees-font-sans:      #{$font-family-sans};
+    --accees-font-mono:      #{$font-family-mono};
+    --accees-max-width:      #{$container-max-width};
+    --accees-navbar-height:  #{$navbar-height};
+}
+

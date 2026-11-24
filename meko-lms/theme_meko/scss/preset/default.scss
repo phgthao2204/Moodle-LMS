@@ -1,0 +1,47 @@
+// ACCEES Project SCSS Preset - Solid Branding Architecture
+// Colors strictly based on ACCEES Corporate Guidelines (Can Tho University)
+
+// Primary Brand Colors (Solid colors - absolutely no gradients)
+$primary:       #0000B6 !default; // ACCEES Solid Blue
+$secondary:     #475569 !default; // Slate Gray
+$success:       #39B500 !default; // ACCEES Accent Green
+$info:          #0288D1 !default; // Sky Blue
+$warning:       #EA6400 !default; // ACCEES Accent Orange
+$danger:        #D32F2F !default; // Crimson Red
+$light:          #F8FAFC !default; // Ice White
+$dark:           #0F172A !default; // Deep Navy
+
+// General typography - ACCEES Design System Official Font
+$font-family-sans-serif: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-base:       $font-family-sans-serif !default;
+$font-size-base:         1rem !default;       // 16px (text-base)
+$h1-font-size:           3rem !default;       // 48px (text-5xl - Hero / Section Title)
+$h2-font-size:           1.875rem !default;   // 30px (text-3xl - Subheading)
+$h3-font-size:           1.5rem !default;     // 24px (text-2xl)
+$h4-font-size:           1.25rem !default;    // 20px (text-xl)
+$small-font-size:        0.875rem !default;   // 14px (text-sm - Secondary text / Description)
+$font-size-xs:           0.75rem !default;    // 12px (text-xs - Meta / Label / Tag)
+$line-height-base:       1.5 !default;
+$body-bg:                #FFFFFF !default;
+$body-color:             #1E293B !default;
+
+// Links
+$link-color:             $primary !default;
+$link-decoration:        none !default;
+$link-hover-color:       darken($primary, 12%) !default;
+$link-hover-decoration:   underline !default;
+
+// Components
+$border-radius:          0.5rem !default;  // 8px
+$border-radius-lg:       0.75rem !default; // 12px
+$border-radius-sm:       0.25rem !default; // 4px
+$border-color:           #E2E8F0 !default;
+
+// Navbar - Solid primary blue background
+$navbar-dark-color:                 rgba(#FFFFFF, 0.9) !default;
+$navbar-dark-hover-color:           #FFFFFF !default;
+$navbar-dark-active-color:          #FFFFFF !default;
+
+// Buttons
+$btn-border-radius:      0.5rem !default;
+$btn-focus-box-shadow:   0 0 0 0.2rem rgba($primary, 0.25) !default;

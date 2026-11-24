@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 42" width="180" height="42">
+  <rect width="180" height="42" rx="6" fill="#FFFFFF"/>
+  <rect x="6" y="6" width="30" height="30" rx="6" fill="#0000B6"/>
+  <path d="M21 12L13 28H17.5L19.2 24.2H22.8L24.5 28H29L21 12ZM19.9 21.2L21 18.2L22.1 21.2H19.9Z" fill="#FFFFFF"/>
+  <circle cx="31" cy="11" r="3.5" fill="#39B500"/>
+  <text x="44" y="27" font-family="Be Vietnam Pro, Arial, sans-serif" font-size="21" font-weight="800" fill="#0000B6" letter-spacing="0.5">ACCEES</text>
+  <rect x="134" y="11" width="38" height="20" rx="4" fill="#EA6400"/>
+  <text x="153" y="25" font-family="Be Vietnam Pro, Arial, sans-serif" font-size="11" font-weight="800" fill="#FFFFFF" text-anchor="middle">CTU</text>
+</svg>
+

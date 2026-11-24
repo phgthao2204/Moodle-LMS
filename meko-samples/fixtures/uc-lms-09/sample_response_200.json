@@ -1,0 +1,10 @@
+{
+  "course_id": 35,
+  "shortname": "ACCEES-CS101",
+  "filename": "ACCEES-CS101-v1.0.imscc",
+  "size_bytes": 4993,
+  "checksum_sha256": "b6f1dc708e4bf39f87ec682d8d0dbc9808577cb044c7107e5619c6e355108057",
+  "download_url": "http://meko.localhost/lms/api/rest/v2/local_accees_imscp/exports/token-a1bd2c0c1545e24636406b83e2d3e7cb",
+  "expires_at": "2026-11-18T07:26:54+00:00",
+  "lom_included": true
+}

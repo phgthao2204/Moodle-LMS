@@ -1,0 +1,36 @@
+{
+  "name": "meko-lms-api-playwright-tests",
+  "version": "1.0.0",
+  "description": "E2E automated test suite for ACCEES LMS REST API v2 using Playwright Test",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:deployed": "playwright test --grep @deployed",
+    "test:e2e": "playwright test --grep @e2e",
+    "test:t0": "playwright test tests/t0-discovery-oauth2.spec.ts",
+    "test:uc08": "playwright test tests/uc-lms-08-import.spec.ts",
+    "test:uc09": "playwright test tests/uc-lms-09-export.spec.ts",
+    "test:uc10": "playwright test tests/uc-lms-10-courses-read.spec.ts",
+    "test:uc11": "playwright test tests/uc-lms-11-courses-update.spec.ts",
+    "test:uc12": "playwright test tests/uc-lms-12-enrolments.spec.ts",
+    "test:uc13": "playwright test tests/uc-lms-13-unenrol.spec.ts",
+    "test:uc14": "playwright test tests/uc-lms-14-results-webhook.spec.ts",
+    "report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "moodle",
+    "rest-api-v2",
+    "e2e",
+    "testing"
+  ],
+  "author": "MEKOSOFT QA / ACCEES LMS Team",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.1",
+    "dotenv": "^16.4.7",
+    "typescript": "^5.7.2"
+  }
+}
+

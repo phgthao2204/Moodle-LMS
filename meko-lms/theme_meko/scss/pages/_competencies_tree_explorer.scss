@@ -1,0 +1,610 @@
+.competency-tree-page {
+    --tree-bg: #f5f6fb;
+    --tree-surface: #fff;
+    --tree-ink: #12123a;
+    --tree-muted: #5b5f82;
+    --tree-line: #e3e5f2;
+    --tree-navy: #0000b6;
+    --tree-basic: #39b500;
+    --tree-inter: #0000b6;
+    --tree-adv: #ea6400;
+
+    min-height: 100vh;
+    background: var(--tree-bg);
+    color: var(--tree-ink);
+    font-family: "Be Vietnam Pro", system-ui, sans-serif;
+
+    button,
+    input {
+        font: inherit;
+    }
+
+    button {
+        color: inherit;
+        cursor: pointer;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+        outline: 2px solid var(--tree-adv);
+        outline-offset: 2px;
+    }
+
+    .framework-nav {
+        background: var(--tree-navy);
+        border-bottom: 3px solid var(--tree-adv);
+        color: #fff;
+    }
+
+    .framework-nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        max-width: 1360px;
+        min-height: 68px;
+        margin: 0 auto;
+        padding: 10px 24px;
+    }
+
+    .framework-brand img {
+        display: block;
+        width: auto;
+        max-width: 180px;
+        height: 38px;
+        object-fit: contain;
+    }
+
+    .framework-nav nav,
+    .framework-account,
+    .framework-languages {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .framework-nav nav a,
+    .framework-account a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .framework-nav nav a {
+        padding: 8px 10px;
+        border-radius: 6px;
+    }
+
+    .framework-nav nav a:hover,
+    .framework-nav nav a.is-active {
+        background: rgba(255, 255, 255, .16);
+    }
+
+    .framework-languages {
+        gap: 4px;
+    }
+
+    .framework-languages a {
+        padding: 4px 6px;
+        border-radius: 4px;
+        opacity: .8;
+    }
+
+    .framework-languages a.is-active {
+        background: rgba(255, 255, 255, .2);
+        opacity: 1;
+    }
+
+    .framework-login {
+        padding: 7px 10px;
+        border: 1px solid rgba(255, 255, 255, .6);
+        border-radius: 6px;
+    }
+
+    .competency-tree-container {
+        max-width: 1360px;
+        padding: 22px 24px 36px;
+    }
+
+    .framework-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 18px;
+        color: var(--tree-muted);
+        font-size: .82rem;
+    }
+
+    .framework-breadcrumb a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .competency-tree-intro {
+        margin-bottom: 20px;
+    }
+
+    .competency-tree-intro .framework-hero-kicker {
+        color: var(--tree-navy);
+        font-size: .75rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+    }
+
+    .competency-tree-intro h1 {
+        margin: 4px 0 6px;
+        color: var(--tree-ink);
+        font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .competency-tree-intro p {
+        margin: 0;
+        color: var(--tree-muted);
+    }
+
+    .competency-tree-explorer {
+        display: grid;
+        grid-template-columns: minmax(290px, 340px) minmax(0, 1fr);
+        align-items: start;
+        gap: 18px;
+    }
+
+    .competency-tree-sidebar,
+    .competency-tree-details {
+        min-width: 0;
+        border: 1px solid var(--tree-line);
+        border-radius: 10px;
+        background: var(--tree-surface);
+    }
+
+    .competency-tree-sidebar {
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        overflow: hidden;
+    }
+
+    .competency-tree-controls {
+        display: grid;
+        gap: 10px;
+        padding: 12px;
+        border-bottom: 1px solid var(--tree-line);
+    }
+
+    .competency-framework-switch,
+    .competency-tree-actions {
+        display: flex;
+        gap: 6px;
+    }
+
+    .competency-framework-button,
+    .competency-tree-actions button,
+    .competency-tree-toggle {
+        min-width: 0;
+        padding: 7px 9px;
+        border: 1px solid var(--tree-line);
+        border-radius: 6px;
+        background: transparent;
+        color: var(--tree-muted);
+        font-size: .82rem;
+    }
+
+    .competency-framework-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        color: var(--tree-muted);
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .competency-framework-button[aria-pressed="true"],
+    .competency-framework-button.is-active {
+        border-color: var(--tree-navy);
+        background: var(--tree-navy);
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .competency-framework-button:not(.is-active):hover {
+        border-color: var(--tree-navy);
+        color: var(--tree-navy);
+    }
+
+    .competency-tree-search-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .competency-tree-search {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .competency-tree-search input {
+        display: block;
+        width: 100%;
+        padding: 9px 10px;
+        border: 1px solid var(--tree-line);
+        border-radius: 6px;
+        background: var(--tree-bg);
+        color: var(--tree-ink);
+    }
+
+    .competency-tree-toggle {
+        width: 44px;
+        min-height: 44px;
+        flex: none;
+        color: var(--tree-muted);
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .competency-tree-toggle:hover {
+        border-color: var(--tree-navy);
+        color: var(--tree-navy);
+    }
+
+    .competency-tree-actions button {
+        flex: 1;
+    }
+
+    .competency-tree-actions button:hover {
+        border-color: var(--tree-navy);
+        color: var(--tree-navy);
+    }
+
+    .competency-tree {
+        max-height: calc(100vh - 220px);
+        overflow: auto;
+        padding: 8px;
+    }
+
+    .competency-tree-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .competency-tree-children {
+        margin-left: 13px;
+        padding-left: 7px;
+        border-left: 1px solid var(--tree-line);
+    }
+
+    .competency-tree-node {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 7px;
+        margin: 1px 0;
+        padding: 7px 8px;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        text-align: left;
+        line-height: 1.35;
+    }
+
+    .competency-tree-node:hover {
+        background: var(--tree-bg);
+    }
+
+    .competency-tree-node[aria-current="true"] {
+        background: #eaeafc;
+        color: var(--tree-ink);
+        font-weight: 700;
+    }
+
+    .competency-tree-node-domain {
+        font-size: .9rem;
+        font-weight: 700;
+    }
+
+    .competency-tree-node-competency {
+        font-size: .85rem;
+    }
+
+    .competency-tree-node-level {
+        color: var(--tree-muted);
+        font-size: .8rem;
+    }
+
+    .competency-tree-count {
+        margin-left: auto;
+        color: var(--tree-muted);
+        font-size: .75rem;
+        font-weight: 400;
+        white-space: nowrap;
+    }
+
+    .competency-tree-caret {
+        width: 14px;
+        flex: none;
+        color: var(--tree-muted);
+        font-size: 1.1rem;
+        line-height: 1;
+        transition: transform .15s ease;
+    }
+
+    .competency-tree-node[aria-expanded="true"] .competency-tree-caret {
+        transform: rotate(90deg);
+    }
+
+    .competency-tree-level-dot {
+        width: 9px;
+        height: 9px;
+        flex: none;
+        border-radius: 50%;
+        background: var(--level-color);
+    }
+
+    .level-basic {
+        --level-color: var(--tree-basic);
+    }
+
+    .level-intermediate {
+        --level-color: var(--tree-inter);
+    }
+
+    .level-advanced {
+        --level-color: var(--tree-adv);
+    }
+
+    .competency-tree-details {
+        min-height: 500px;
+        padding: clamp(18px, 3vw, 30px);
+    }
+
+    .competency-tree-breadcrumb {
+        margin-bottom: 8px;
+        color: var(--tree-muted);
+        font-size: .82rem;
+    }
+
+    .competency-tree-detail-heading h2 {
+        margin: 0 0 8px;
+        color: var(--tree-ink);
+        font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+        line-height: 1.3;
+    }
+
+    .competency-tree-description,
+    .competency-tree-hint {
+        max-width: 75ch;
+        color: var(--tree-muted);
+    }
+
+    .competency-tree-card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .competency-tree-card {
+        display: flex;
+        min-width: 0;
+        min-height: 117px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 5px;
+        padding: 14px 15px;
+        border: 1px solid var(--tree-line);
+        border-radius: 9px;
+        background: var(--tree-surface);
+        text-align: left;
+    }
+
+    .competency-tree-card:hover {
+        border-color: var(--tree-navy);
+        background: #fafaff;
+    }
+
+    .competency-tree-card-title {
+        color: var(--tree-ink);
+        font-weight: 700;
+        line-height: 1.45;
+    }
+
+    .competency-tree-card-meta {
+        color: var(--tree-muted);
+        font-size: .85rem;
+    }
+
+    .competency-tree-tabs {
+        display: flex;
+        gap: 8px;
+        margin: 20px 0 14px;
+        border-bottom: 1px solid var(--tree-line);
+    }
+
+    .competency-tree-tab {
+        padding: 9px 14px;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        background: transparent;
+        color: var(--tree-muted);
+        font-weight: 600;
+    }
+
+    .competency-tree-tab[aria-selected="true"] {
+        border-bottom-color: var(--level-color);
+        color: var(--tree-ink);
+    }
+
+    .competency-tree-level-panel {
+        padding: 16px;
+        border: 1px solid var(--tree-line);
+        border-left: 4px solid var(--level-color);
+        border-radius: 8px;
+        background: var(--tree-surface);
+    }
+
+    .competency-tree-content-block + .competency-tree-content-block {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid var(--tree-line);
+    }
+
+    .competency-tree-content-block h3 {
+        margin: 0 0 7px;
+        color: var(--tree-ink);
+        font-size: 1rem;
+    }
+
+    .competency-tree-content-block p {
+        margin: 0;
+        color: var(--tree-muted);
+        line-height: 1.65;
+        white-space: pre-line;
+    }
+
+    .competency-tree-example-list {
+        margin: 0;
+        padding-left: 1.25rem;
+        color: var(--tree-muted);
+        line-height: 1.65;
+    }
+
+    .competency-tree-example-list li + li {
+        margin-top: 5px;
+    }
+
+    .competency-tree-detail-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        padding-top: 14px;
+        border-top: 1px solid var(--tree-line);
+    }
+
+    .competency-tree-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 8px 14px;
+        border-radius: 6px;
+        background: var(--tree-navy);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .competency-tree-cta:hover {
+        background: #1616d0;
+        color: #fff;
+    }
+
+    .competency-tree-empty {
+        margin: 0;
+        padding: 12px;
+        color: var(--tree-muted);
+    }
+
+    .framework-footer {
+        padding: 16px 24px;
+        border-top: 1px solid var(--tree-line);
+        color: var(--tree-muted);
+        text-align: center;
+        font-size: .8rem;
+    }
+}
+
+.competency-tree-page.competency-tree-embedded {
+    min-height: 0;
+    background: transparent;
+}
+
+@media (max-width: 860px) {
+    .competency-tree-page {
+        .framework-nav-inner {
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+
+        .framework-nav nav {
+            order: 3;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .competency-tree-explorer {
+            grid-template-columns: 1fr;
+        }
+
+        .competency-tree-sidebar {
+            position: static;
+            max-height: none;
+        }
+
+        .competency-tree {
+            max-height: 46vh;
+        }
+
+        .competency-tree-details {
+            min-height: 0;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .competency-tree-page .competency-tree-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .competency-tree-page {
+        .framework-nav-inner,
+        .competency-tree-container {
+            padding-right: 14px;
+            padding-left: 14px;
+        }
+
+        .framework-account {
+            gap: 6px;
+        }
+
+        .framework-languages {
+            gap: 0;
+        }
+
+        .framework-nav nav {
+            gap: 2px;
+        }
+
+        .framework-nav nav a {
+            padding: 7px;
+            white-space: nowrap;
+            font-size: .85rem;
+        }
+
+        .competency-tree-details {
+            padding: 16px;
+        }
+
+        .competency-tree-tab {
+            flex: 1;
+            padding: 8px 4px;
+        }
+
+        .competency-tree-card-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .competency-tree-page * {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}

@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url "https://repository-cdn.liferay.com/nexus/content/groups/public" }
+    }
+}
+rootProject.name = "meko-tms"
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://repository-cdn.liferay.com/nexus/content/groups/public" }
+    }
+    dependencies {
+        classpath "com.liferay:com.liferay.gradle.plugins.workspace:17.1.11"
+    }
+}
+apply plugin: "com.liferay.workspace"
+include ":themes:accees-tms-theme"

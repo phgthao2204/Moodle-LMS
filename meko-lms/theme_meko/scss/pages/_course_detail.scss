@@ -1,0 +1,1311 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - COURSE DETAIL & SOLID TILES (/course/view.php)
+// ==============================================================================
+
+.accees-course-detail {
+    padding: 24px 16px 56px;
+    background-color: $bg-subtle;
+    min-height: calc(100vh - 180px);
+}
+
+.accees-course-container {
+    max-width: $container-max-width;
+    margin: 0 auto;
+}
+
+.accees-course-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $text-muted;
+    font-size: 13px;
+
+    a {
+        color: $brand-primary;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.accees-course-overview,
+.accees-course-main-content {
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: $radius-2xl;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.accees-course-overview {
+    padding: 26px;
+
+    h1 {
+        color: $text-main;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.3;
+        margin: 12px 0 10px;
+    }
+}
+
+.accees-course-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.accees-course-badge,
+.accees-course-framework-badge {
+    border: 1px solid $border-strong;
+    border-radius: $radius-md;
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+    padding: 4px 10px;
+}
+
+.accees-course-badge-category,
+.accees-course-framework-badge {
+    background: $brand-primary-tint;
+    border-color: $brand-primary-border;
+    color: $brand-primary;
+}
+
+.accees-course-badge-level {
+    background: $brand-primary;
+    border-color: $brand-primary;
+    color: #FFFFFF;
+}
+
+.accees-course-badge-code {
+    background: $brand-warning-tint;
+    border-color: $brand-warning-border;
+    color: $brand-warning;
+}
+
+.accees-course-badge-cbe {
+    background: $brand-success-tint;
+    border-color: $brand-success-border;
+    color: $brand-success-text;
+}
+
+.accees-course-badge-format {
+    background: $bg-subtle;
+    color: $text-secondary;
+}
+
+.accees-course-meta {
+    align-items: center;
+    color: $text-secondary;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 13.5px;
+
+    span {
+        color: $text-muted;
+    }
+
+    strong {
+        color: $text-main;
+    }
+}
+
+.accees-course-summary {
+    color: $text-secondary;
+    line-height: 1.65;
+    margin-top: 14px;
+    font-size: 14px;
+}
+
+.accees-course-overview-panels {
+    border-top: 1px solid $border-default;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    margin-top: 20px;
+    padding-top: 20px;
+
+    &.is-single-panel {
+        grid-template-columns: minmax(0, 1fr);
+
+        .accees-course-panel {
+            min-height: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.accees-course-panel {
+    background: $bg-subtle;
+    border: 1px solid $border-default;
+    border-radius: $radius-xl;
+    min-height: 195px;
+    padding: 18px;
+}
+
+.accees-course-panel-heading,
+.accees-progress-caption {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.accees-course-panel-heading {
+    margin-bottom: 12px;
+
+    h2 {
+        color: $text-main;
+        font-size: 13.5px;
+        font-weight: 800;
+        margin: 0;
+        text-transform: uppercase;
+    }
+}
+
+.accees-cbe-panel-heading {
+    align-items: center;
+    display: grid !important;
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.accees-cbe-panel-controls {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+    min-width: 0;
+
+    .accees-course-framework-badge {
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: normal;
+    }
+
+    .accees-cbe-toggle-btn {
+        flex: 0 0 auto;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 10px;
+        white-space: nowrap;
+    }
+}
+
+.accees-cbe-compact-pills {
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: $radius-lg;
+    margin-top: 14px;
+    padding: 12px 14px;
+}
+
+.accees-cbe-compact-label {
+    color: $text-muted;
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.045em;
+    margin-bottom: 9px;
+    text-transform: uppercase;
+}
+
+.accees-cbe-compact-list {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.accees-cbe-compact-chip {
+    background: $brand-primary-tint;
+    border: 1px solid $brand-primary-border;
+    border-radius: $radius-pill;
+    color: $brand-primary;
+    display: inline-flex;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.4;
+    max-width: 100%;
+    padding: 5px 10px;
+    overflow-wrap: anywhere;
+}
+
+.accees-cbe-details-collapse[hidden] {
+    display: none !important;
+}
+
+.accees-cbe-details-collapse:not([hidden]) {
+    display: block;
+}
+
+.accees-cbe-collapsible-panel.is-details-open .accees-cbe-compact-pills {
+    display: none;
+}
+
+.accees-cbe-scroll-region {
+    margin-top: 12px;
+    max-height: 390px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 8px;
+    scrollbar-color: #64748B $bg-subtle;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+
+    &:focus-visible {
+        outline: 2px solid $brand-primary;
+        outline-offset: 2px;
+    }
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $bg-subtle;
+        border-radius: $radius-pill;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #64748B;
+        border: 2px solid $bg-subtle;
+        border-radius: $radius-pill;
+    }
+}
+
+@media (max-width: 520px) {
+    .accees-cbe-panel-controls {
+        flex-wrap: wrap;
+
+        .accees-course-framework-badge {
+            flex-basis: 100%;
+        }
+    }
+
+    .accees-cbe-scroll-region {
+        max-height: 320px;
+        padding-right: 4px;
+    }
+}
+
+.accees-progress-value {
+    color: $brand-success;
+    font-size: 16px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.accees-progress-track {
+    background: $border-default;
+    border-radius: $radius-pill;
+    height: 12px;
+    overflow: hidden;
+
+    span {
+        background: $brand-success;
+        border-radius: inherit;
+        display: block;
+        height: 100%;
+    }
+}
+
+.accees-progress-caption {
+    color: $text-secondary;
+    font-size: 12.5px;
+    margin-top: 10px;
+
+    strong:last-child {
+        color: $brand-primary;
+    }
+}
+
+.accees-course-note,
+.accees-course-empty {
+    color: $text-muted;
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin: 10px 0 0;
+}
+
+.accees-competency-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.accees-competency-item {
+    align-items: center;
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-left: 4px solid $brand-primary;
+    border-radius: $radius-md;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 9px 12px;
+
+    &.is-proficient {
+        border-left-color: $brand-success;
+    }
+
+    strong {
+        color: $text-main;
+        font-size: 12.5px;
+    }
+}
+
+.accees-competency-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    flex: 1 1 200px;
+}
+
+.accees-competency-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+}
+
+.accees-competency-fw {
+    background: $bg-page;
+    border: 1px solid $border-default;
+    border-radius: $radius-sm;
+    color: $text-secondary;
+    font-weight: 700;
+    padding: 1px 6px;
+    white-space: nowrap;
+}
+
+.accees-competency-domain {
+    color: $text-muted;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 240px;
+}
+
+.accees-competency-name {
+    color: $text-main;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.accees-competency-levels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.accees-comp-level-pill {
+    display: inline-flex;
+    align-items: center;
+    background: $brand-primary-tint;
+    border: 1px solid $brand-primary-border;
+    border-radius: $radius-sm;
+    color: $brand-primary !important;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+
+    &.level-n1,
+    &.level-basic {
+        background: $brand-primary-tint;
+        border-color: $brand-primary-border;
+        color: $brand-primary !important;
+    }
+
+    &.level-n2,
+    &.level-intermediate {
+        background: $brand-success-tint;
+        border-color: $brand-success-border;
+        color: $brand-success-text !important;
+    }
+
+    &.level-n3,
+    &.level-advanced {
+        background: $brand-warning-tint;
+        border-color: $brand-warning-border;
+        color: $brand-warning !important;
+    }
+
+    &.level-n4 {
+        background: $bg-page;
+        border-color: $border-strong;
+        color: $text-secondary !important;
+    }
+
+    &:hover {
+        background: $brand-primary !important;
+        border-color: $brand-primary !important;
+        color: #FFFFFF !important;
+    }
+
+    &.is-proficient {
+        border-width: 1.5px;
+    }
+}
+
+.accees-competency-status {
+    background: $brand-success-tint;
+    border: 1px solid $brand-success-border;
+    border-radius: $radius-sm;
+    color: $brand-success-text;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    white-space: nowrap;
+}
+
+.accees-competency-link {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: $brand-primary;
+    text-decoration: none;
+    margin-top: 4px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.accees-course-content {
+    margin-top: 26px;
+}
+
+.accees-course-content-heading {
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 4px 14px;
+
+    h2 {
+        color: $text-main;
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0 0 4px;
+    }
+
+    p {
+        color: $text-muted;
+        font-size: 13px;
+        margin: 0;
+    }
+}
+
+.accees-tiles-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    @media (min-width: 769px) and (max-width: 1100px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+}
+
+.accees-tile-card {
+    appearance: none;
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-top: 4px solid $brand-primary;
+    border-radius: $radius-lg;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.04);
+    color: $text-main;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    min-height: 175px;
+    padding: 16px;
+    text-align: left;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+        border-color: $brand-primary;
+        box-shadow: 0 6px 16px rgba(0, 0, 182, 0.09);
+        transform: translateY(-2px);
+    }
+
+    &.is-active {
+        border: 2px solid $brand-primary;
+        border-top: 4px solid $brand-primary;
+        background-color: #FAFCFF;
+    }
+
+    &.is-complete {
+        border-top-color: $brand-success;
+    }
+
+    &.is-highlighted {
+        box-shadow: inset 0 0 0 1px $brand-primary-border, 0 2px 5px rgba(15, 23, 42, 0.04);
+    }
+}
+
+.accees-tile-card-top,
+.accees-tile-card-bottom {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.accees-tile-label {
+    background: $brand-primary-tint;
+    border-radius: $radius-sm;
+    color: $brand-primary;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    text-transform: uppercase;
+}
+
+.accees-tile-highlighted-badge {
+    align-self: flex-start;
+    background: $brand-primary;
+    border-radius: $radius-pill;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-top: 10px;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 3px 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &[hidden] {
+        display: none !important;
+    }
+}
+
+.accees-tile-progress {
+    align-items: center;
+    border: 2px solid $border-default;
+    border-radius: 50%;
+    color: $text-secondary;
+    display: inline-flex;
+    flex: 0 0 38px;
+    font-size: 11px;
+    font-weight: 800;
+    height: 38px;
+    justify-content: center;
+}
+
+.accees-tile-card.is-complete .accees-tile-progress {
+    border-color: $brand-success;
+    color: $brand-success;
+}
+
+.accees-tile-card.is-in-progress .accees-tile-progress {
+    border-color: $brand-warning;
+    color: $brand-warning;
+}
+
+.accees-tile-name {
+    color: $text-main;
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: auto 0 12px;
+    overflow-wrap: anywhere;
+}
+
+.accees-tile-card-bottom {
+    color: $text-muted;
+    font-size: 12px;
+}
+
+.accees-tile-card.is-complete .accees-tile-card-bottom span:last-child {
+    color: $brand-success;
+    font-weight: 700;
+}
+
+.accees-tile-card.is-in-progress .accees-tile-card-bottom span:last-child {
+    color: $brand-warning;
+    font-weight: 700;
+}
+
+.accees-tile-panel {
+    display: none;
+
+    &.is-active {
+        background: $bg-surface;
+        border: 1px solid $border-default;
+        border-radius: $radius-xl;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+        display: block;
+        margin-top: 22px;
+        padding: 24px;
+    }
+}
+
+.accees-tile-panel-header {
+    align-items: center;
+    border-bottom: 1px solid $border-default;
+    display: flex;
+    gap: 14px;
+    padding-bottom: 18px;
+
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+    }
+}
+
+.accees-tile-panel-icon,
+.accees-activity-icon {
+    align-items: center;
+    background: $brand-primary-tint;
+    border-radius: $radius-lg;
+    display: inline-flex;
+    flex: 0 0 46px;
+    height: 46px;
+    justify-content: center;
+}
+
+.accees-tile-panel-title {
+    flex: 1;
+    min-width: 0;
+
+    > span {
+        color: $brand-primary;
+        font-size: 11.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    h3 {
+        color: $text-main;
+        font-size: 18px;
+        font-weight: 800;
+        margin: 3px 0 0;
+    }
+}
+
+.accees-tile-panel-nav {
+    display: flex;
+    gap: 8px;
+
+    button {
+        background: $bg-surface;
+        border: 1px solid $border-strong;
+        border-radius: $radius-md;
+        color: $text-main;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 7px 12px;
+        transition: all 0.15s ease;
+
+        &:hover {
+            background: $brand-primary-tint;
+            border-color: $brand-primary;
+            color: $brand-primary;
+        }
+    }
+}
+
+.accees-tile-activity-list {
+    display: grid;
+    gap: 12px;
+    padding-top: 18px;
+}
+
+.accees-tile-activity {
+    align-items: center;
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-left: 5px solid $brand-primary;
+    border-radius: $radius-lg;
+    color: $text-main;
+    display: flex;
+    gap: 14px;
+    min-height: 84px;
+    padding: 14px 18px 22px;
+    text-decoration: none !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+        border-color: $brand-primary;
+        box-shadow: 0 4px 12px rgba(0, 0, 182, 0.08);
+        color: $text-main;
+    }
+
+    &.is-complete {
+        border-left-color: $brand-success;
+    }
+}
+
+.accees-activity-icon {
+    flex-basis: 42px;
+    height: 42px;
+
+    img {
+        height: 22px;
+        width: 22px;
+    }
+}
+
+.accees-activity-copy {
+    display: grid;
+    flex: 1;
+    gap: 3px;
+    min-width: 0;
+
+    strong {
+        color: $text-main;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    > span {
+        color: $text-secondary;
+        font-size: 12.5px;
+        line-height: 1.45;
+    }
+}
+
+.accees-activity-status {
+    color: $brand-warning;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+
+    &.is-neutral {
+        color: $text-muted;
+    }
+}
+
+.accees-tile-activity.is-complete .accees-activity-status {
+    color: $brand-success;
+}
+
+.accees-course-main-content {
+    padding: 20px 24px;
+}
+
+.accees-edit-tile-panel {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    margin-top: 18px !important;
+    padding: 0 !important;
+
+    .accees-course-main-content {
+        padding: 0;
+    }
+}
+
+.accees-edit-tile-panel .course-content {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    margin: 0;
+    padding: 18px 20px 24px;
+}
+
+.accees-edit-add-section-slot {
+    border-top: 1px solid $border-default;
+    margin-top: 20px;
+    padding-top: 20px;
+
+    &[hidden] {
+        display: none;
+    }
+
+    #course-addsection {
+        display: flex;
+        justify-content: stretch;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.accees-edit-add-section-slot #course-addsection > a.add-section {
+    align-items: center;
+    background: $bg-subtle;
+    border: 1px dashed $border-strong;
+    border-radius: $radius-xl;
+    box-shadow: none;
+    color: $text-secondary;
+    display: flex;
+    font-size: 15px;
+    font-weight: 700;
+    gap: 8px;
+    justify-content: center;
+    min-height: 92px;
+    padding: 20px !important;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    width: 100% !important;
+
+    &:hover,
+    &:focus-visible {
+        background: $brand-primary-tint;
+        border-color: $brand-primary;
+        color: $brand-primary;
+    }
+
+    img {
+        height: 18px;
+        width: 18px;
+    }
+}
+
+.is-course-edit-mode .course-content ul.topics,
+.is-course-edit-mode .course-content ul.weeks {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section,
+.is-course-edit-mode .course-content ul.weeks > li.course-section {
+    display: none;
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section.is-tile-selected,
+.is-course-edit-mode .course-content ul.weeks > li.course-section.is-tile-selected {
+    background: $bg-surface;
+    border: 1px solid $border-default;
+    border-radius: $radius-xl;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    display: block;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+    overflow: visible;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+
+    &:hover,
+    &:focus-within {
+        border-color: $brand-primary-border;
+        box-shadow: 0 4px 12px rgba(0, 0, 182, 0.07);
+    }
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section.is-tile-selected > .section-item,
+.is-course-edit-mode .course-content ul.weeks > li.course-section.is-tile-selected > .section-item {
+    background: $bg-surface;
+    border: 0;
+    box-shadow: none;
+    min-width: 0;
+    padding: 10px 14px 12px !important;
+}
+
+.is-course-edit-mode .course-section-header {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    min-height: 52px;
+    padding: 0;
+
+    > .d-flex.align-items-center.position-relative {
+        align-items: center;
+        flex: 1 1 auto;
+        gap: 10px;
+        min-height: 52px;
+        min-width: 220px;
+    }
+
+    .sectionname {
+        align-items: center;
+        display: flex;
+        flex: 1 1 auto;
+        font-size: 16px;
+        line-height: 1.35;
+        min-height: 36px;
+        overflow-wrap: anywhere;
+    }
+
+    [data-region="sectionbadges"] {
+        flex: 0 0 auto;
+        gap: 6px;
+        margin: 0;
+    }
+
+    [data-toggle="toggleall"] {
+        white-space: nowrap;
+    }
+}
+
+.is-course-edit-mode .course-section-header [data-toggle="toggleall"] {
+    align-items: center;
+    display: inline-flex;
+    min-height: 36px;
+}
+
+.is-course-edit-mode .course-section-header > .flex-fill {
+    align-self: stretch !important;
+    border-bottom: 1px solid $border-default;
+    flex: 0 0 100% !important;
+    justify-content: flex-end !important;
+    margin: 0 !important;
+    order: -1;
+    padding: 0 0 10px;
+}
+
+.is-course-edit-mode .course-section-header > .section_action_menu {
+    align-self: center;
+    flex: 0 0 auto;
+    margin-left: auto !important;
+}
+
+.is-course-edit-mode .course-section-header .icons-collapse-expand {
+    align-items: center;
+    background: $brand-primary-tint;
+    border: 2px solid $brand-primary-border;
+    border-radius: $radius-md;
+    color: $brand-primary;
+    display: inline-flex;
+    flex: 0 0 42px;
+    height: 42px;
+    justify-content: center;
+    margin: 0 !important;
+    padding: 0;
+    width: 42px;
+
+    &:hover,
+    &:focus-visible {
+        background: $brand-primary;
+        border-color: $brand-primary;
+        color: #FFFFFF;
+    }
+
+    .expanded-icon,
+    .collapsed-icon {
+        padding: 0 !important;
+
+        img,
+        i {
+            height: 16px;
+            width: 16px;
+        }
+    }
+}
+
+.is-course-edit-mode .course-section-header .sectionname .quickeditlink {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 1 auto;
+    gap: 6px;
+    min-width: 0;
+    text-decoration: none;
+    width: auto;
+
+    &:hover,
+    &:focus-visible {
+        color: $brand-primary;
+    }
+}
+
+.is-course-edit-mode .course-section-header .sectionname .quickediticon {
+    align-items: center;
+    background: $brand-primary-tint;
+    border: 1px solid $brand-primary-border;
+    border-radius: $radius-sm;
+    display: inline-flex;
+    flex: 0 0 30px;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+
+    img {
+        height: 14px;
+        width: 14px;
+    }
+
+    &:hover,
+    &:focus-visible {
+        background: $brand-primary;
+        border-color: $brand-primary;
+        color: #FFFFFF;
+    }
+}
+
+.is-course-edit-mode .course-section-header .section_action_menu .dropdown-toggle,
+.is-course-edit-mode .activity-item .activity-actions .dropdown-toggle {
+    align-items: center;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    display: inline-flex;
+    justify-content: center;
+    min-height: 38px;
+    min-width: 38px;
+
+    &:hover,
+    &:focus-visible {
+        background: $brand-primary-tint;
+        color: $brand-primary;
+    }
+}
+
+.is-course-edit-mode .activity-item .activity-icon.activityiconcontainer {
+    align-items: center;
+    background: $brand-primary-tint !important;
+    border: 0;
+    border-radius: $radius-lg;
+    display: inline-flex;
+    flex: 0 0 46px;
+    height: 46px;
+    justify-content: center;
+    margin: 0 12px 0 0 !important;
+    width: 46px;
+}
+
+.is-course-edit-mode .activity-item .activity-icon .activityicon {
+    height: 24px;
+    max-height: 24px;
+    max-width: 24px;
+    object-fit: contain;
+    width: 24px;
+}
+
+.is-course-edit-mode .activity-item .activity-grid {
+    align-items: center;
+}
+
+.is-course-edit-mode .course-section-header .sectionname a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.is-course-edit-mode .course-section-header .sectionname .inplaceeditable {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 100%;
+}
+
+.is-course-edit-mode .course-section-header .sectionname input {
+    max-width: min(100%, 520px);
+}
+
+.is-course-edit-mode .course-content-item-content {
+    border-top: 1px solid $border-default;
+    margin-top: 10px;
+    padding: 14px 0 26px !important;
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section .sectionname,
+.is-course-edit-mode .course-content ul.weeks > li.course-section .sectionname {
+    color: $text-main;
+    font-weight: 800;
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section .sectionname a,
+.is-course-edit-mode .course-content ul.weeks > li.course-section .sectionname a {
+    color: inherit;
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section .sectionname a:hover,
+.is-course-edit-mode .course-content ul.weeks > li.course-section .sectionname a:hover {
+    color: $brand-primary;
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section .section_availability,
+.is-course-edit-mode .course-content ul.weeks > li.course-section .section_availability {
+    overflow-wrap: anywhere;
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section [data-region="section-addsection"],
+.is-course-edit-mode .course-content ul.weeks > li.course-section [data-region="section-addsection"] {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .accees-edit-tile-panel .course-content {
+        padding: 12px 12px 18px;
+    }
+
+    .is-course-edit-mode .course-content ul.topics > li.course-section.is-tile-selected > .section-item,
+    .is-course-edit-mode .course-content ul.weeks > li.course-section.is-tile-selected > .section-item {
+        padding: 10px 10px 12px !important;
+    }
+
+    .is-course-edit-mode .course-section-header > .d-flex.align-items-center.position-relative {
+        gap: 8px;
+        min-height: 48px;
+        min-width: 0;
+    }
+
+    .is-course-edit-mode .course-section-header > .section_action_menu {
+        margin-left: auto !important;
+    }
+}
+
+.is-course-edit-mode .course-content ul.topics > li.course-section [data-region="section-addsection"] a.add-content,
+.is-course-edit-mode .course-content ul.weeks > li.course-section [data-region="section-addsection"] a.add-content,
+.is-course-edit-mode #course-addsection > a.add-section {
+    background: $brand-primary-tint;
+    border: 1px dashed $brand-primary-border;
+    border-radius: $radius-md;
+    color: $brand-primary;
+    font-weight: 700;
+    min-height: 36px;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        background: $brand-primary;
+        border-color: $brand-primary;
+        color: #FFFFFF;
+    }
+}
+
+.is-course-edit-mode #course-addsection {
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+.accees-section-delete-confirm,
+.modal.accees-section-delete-modal .modal-content {
+    background: $bg-surface;
+    border: 5px solid $brand-primary;
+    border-radius: 18px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.24);
+    overflow: hidden;
+}
+
+.accees-section-delete-confirm {
+    margin: 16px;
+    max-width: 640px;
+    outline: none;
+    width: calc(100% - 32px);
+}
+
+.accees-section-delete-confirm-overlay {
+    align-items: center;
+    background: rgba(15, 23, 42, 0.54);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: fixed;
+    z-index: 1090;
+}
+
+.accees-section-delete-confirm-header,
+.modal.accees-section-delete-modal .modal-header {
+    border-bottom: 1px solid $border-default;
+    padding: 18px 20px;
+}
+
+.accees-section-delete-confirm-header h2,
+.modal.accees-section-delete-modal .modal-title {
+    color: $text-main;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.accees-section-delete-confirm-body,
+.modal.accees-section-delete-modal .modal-body {
+    color: $text-secondary;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.accees-section-delete-confirm-footer,
+.modal.accees-section-delete-modal .modal-footer {
+    align-items: center;
+    border-top: 1px solid $border-default;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 16px 20px;
+}
+
+.accees-section-delete-confirm-footer button,
+.modal.accees-section-delete-modal .modal-footer .btn {
+    border-radius: 10px;
+    font-weight: 700;
+    min-height: 46px;
+    padding: 10px 18px;
+}
+
+.accees-section-delete-cancel,
+.modal.accees-section-delete-modal .modal-footer .btn-secondary {
+    background: $bg-surface;
+    border: 1px solid $border-strong;
+    color: $text-secondary;
+}
+
+.accees-section-delete-accept,
+.modal.accees-section-delete-modal .modal-footer .btn-primary {
+    background: $brand-primary;
+    border: 1px solid $brand-primary;
+    color: #FFFFFF;
+}
+
+@media (max-width: 520px) {
+    .accees-section-delete-confirm-header,
+    .modal.accees-section-delete-modal .modal-header {
+        padding: 14px 16px;
+    }
+
+    .accees-section-delete-confirm-header h2,
+    .modal.accees-section-delete-modal .modal-title {
+        font-size: 20px;
+    }
+
+    .accees-section-delete-confirm-body,
+    .modal.accees-section-delete-modal .modal-body {
+        font-size: 14px;
+        padding: 16px;
+    }
+
+    .accees-section-delete-confirm-footer,
+    .modal.accees-section-delete-modal .modal-footer {
+        padding: 12px 16px;
+    }
+}
+
+.accees-edit-add-section-slot #course-addsection {
+    display: flex;
+    justify-content: stretch;
+    margin: 0;
+}
+
+// Legacy Moodle format_tiles plugin support
+.format-tiles ul.tiles li.tile {
+    background-color: $bg-surface !important;
+    border: 1px solid $border-default !important;
+    border-top: 4px solid $brand-primary !important;
+    border-radius: $radius-lg !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}

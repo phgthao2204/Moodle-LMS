@@ -1,0 +1,574 @@
+openapi: 3.0.3
+info:
+  title: MEKO-DLE Ecosystem API Spec (MEKO-LMS + MEKO-TMS)
+  version: 1.0.0
+  description: |
+    Dac ta Endpoint & Schema (API Spec Baseline v1.0) cho toan bo he sinh thai MEKO-DLE:
+    - MEKO-LMS (Moodle 5.3 External Web Services - 6 ham qua /lms/webservice/rest/server.php)
+    - MEKO-TMS REST (Liferay 7.4 JAX-RS - 2 endpoints tai /o/meko-tms/api/...)
+    - MEKO-TMS Portlet Commands (Liferay MVCActionCommand & MVCResourceCommand - 13 commands tai /tms/...)
+
+    Dev co the import file nay vao Swagger Editor / Postman / Apidog hoac chay mock server:
+      python meko-samples/mock-server/mock_api.py
+servers:
+  - url: http://meko.localhost
+    description: DevLocal Docker Stack (Nginx Gateway)
+  - url: http://127.0.0.1:8099
+    description: Local Python Mock Server (meko-samples/mock-server/mock_api.py)
+
+tags:
+  - name: MEKO-LMS (Moodle Web Services)
+    description: 6 ham Moodle External API goi tu Liferay MoodleRestClient qua /lms/webservice/rest/server.php
+  - name: MEKO-TMS (JAX-RS REST)
+    description: 2 REST API cong khai & Webhook HMAC-SHA256 trong module tms-rest
+  - name: MEKO-TMS (Course Admin Commands)
+    description: 4 MVCActionCommand quan ly Ke hoach, Lop hoc va Trien khai Moodle (MEKO-TMS-04)
+  - name: MEKO-TMS (Enrollment & Logs Commands)
+    description: 7 MVCResourceCommand Catalog, 1-Click, Import Excel & Nhat ky Email (MEKO-TMS-05)
+  - name: MEKO-TMS (Profile & Certificate Commands)
+    description: 2 MVCResourceCommand Ho so hoc vien & Tai PDF Chung chi QR (MEKO-TMS-06)
+
+paths:
+  /lms/webservice/rest/server.php:
+    post:
+      tags: [MEKO-LMS (Moodle Web Services)]
+      summary: Moodle External Web Services Gateway (6 wsfunction)
+      description: |
+        Tat ca 6 Web Service cua MEKO-LMS deu goi qua endpoint nay voi tham so bat buoc:
+        - `wstoken`: Moodle Web Service Token
+        - `moodlewsrestformat`: `json`
+        - `wsfunction`: Mot trong 6 ham:
+          1. `local_meko_imscp_export_course` (MEKO-LMS-03)
+          2. `local_meko_imscp_create_course` (MEKO-LMS-04)
+          3. `local_meko_sync_get_courses` (MEKO-LMS-05)
+          4. `local_meko_sync_update_courses` (MEKO-LMS-05)
+          5. `local_meko_sync_enrol_users_bulk` (MEKO-LMS-05)
+          6. `local_meko_sync_get_learner_results` (MEKO-LMS-05)
+      parameters:
+        - name: wstoken
+          in: query
+          required: true
+          schema: { type: string }
+        - name: wsfunction
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - local_meko_imscp_export_course
+              - local_meko_imscp_create_course
+              - local_meko_sync_get_courses
+              - local_meko_sync_update_courses
+              - local_meko_sync_enrol_users_bulk
+              - local_meko_sync_get_learner_results
+        - name: moodlewsrestformat
+          in: query
+          required: true
+          schema: { type: string, default: json }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/MoodleExportCourseRequest'
+                - $ref: '#/components/schemas/MoodleCreateCourseRequest'
+                - $ref: '#/components/schemas/MoodleGetCoursesRequest'
+                - $ref: '#/components/schemas/MoodleUpdateCourseRequest'
+                - $ref: '#/components/schemas/MoodleEnrolBulkRequest'
+                - $ref: '#/components/schemas/MoodleGetResultsRequest'
+      responses:
+        '200':
+          description: Ket qua JSON tuong ung tung wsfunction
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/MoodleExportCourseResponse'
+                  - $ref: '#/components/schemas/MoodleCreateCourseResponse'
+                  - $ref: '#/components/schemas/MoodleGetCoursesResponse'
+                  - $ref: '#/components/schemas/MoodleEnrolBulkResponse'
+        '400':
+          description: Loi tham so hoac nghiep vu
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /o/meko-tms/api/webhooks/badge-awarded:
+    post:
+      tags: [MEKO-TMS (JAX-RS REST)]
+      summary: "API #7: Nhan Webhook cap Open Badge tu Moodle (MEKO-TMS-06)"
+      parameters:
+        - name: X-MEKO-Signature
+          in: header
+          required: true
+          description: "sha256=<hmac_sha256_hex(rawBody, secret)>"
+          schema: { type: string, example: sha256=abcdef123456 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WebhookBadgePayload' }
+      responses:
+        '200':
+          description: Da luu TMSStudentCertificate & sinh ma QR
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: ok }
+                  cert_id: { type: integer, example: 18 }
+                  cert_serial_code: { type: string, example: MEKO-2026-00018 }
+                  qr_verify_code: { type: string, example: 8f4a29b7c1e04d11a89c }
+        '401':
+          description: Sai chu ky HMAC-SHA256
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '400':
+          description: Khong tim thay enrollment tuong ung
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /o/meko-tms/api/certificates/verify:
+    get:
+      tags: [MEKO-TMS (JAX-RS REST)]
+      summary: "API #8: Tra cuu chung chi cong khai bang ma QR (MEKO-TMS-06)"
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema: { type: string, example: 8f4a29b7c1e04d11a89c }
+      responses:
+        '200':
+          description: Thong tin chung chi (ISSUED hoac REVOKED)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CertificateVerifyResponse' }
+        '404':
+          description: Khong tim thay ma chung chi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean, example: false }
+                  status: { type: string, example: NOT_FOUND }
+
+  /tms/plan/save:
+    post:
+      tags: [MEKO-TMS (Course Admin Commands)]
+      summary: "Command #9: Tao / Sua Ke hoach mo khoa (SaveCoursePlanMVCActionCommand)"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema: { $ref: '#/components/schemas/CoursePlanForm' }
+      responses:
+        '302':
+          description: PRG Redirect ve danh sach Ke hoach + SessionMessages(planSaved)
+
+  /tms/plan/approve:
+    post:
+      tags: [MEKO-TMS (Course Admin Commands)]
+      summary: "Command #10: Duyet / Tu choi Ke hoach (ApproveCoursePlanMVCActionCommand)"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [planId, actionType]
+              properties:
+                planId: { type: integer, example: 10 }
+                actionType: { type: string, enum: [APPROVE, REJECT] }
+                approvalNotes: { type: string }
+      responses:
+        '302':
+          description: Cap nhat trang thai APPROVED/REJECTED & Redirect PRG
+
+  /tms/course/save:
+    post:
+      tags: [MEKO-TMS (Course Admin Commands)]
+      summary: "Command #11: Tao / Sua Lop & gan Chuan nang luc (SaveCourseMVCActionCommand)"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema: { $ref: '#/components/schemas/CourseForm' }
+      responses:
+        '302':
+          description: Luu TMSCourse + TMSCourseCompetency[] & Redirect PRG
+
+  /tms/course/deploy:
+    post:
+      tags: [MEKO-TMS (Course Admin Commands)]
+      summary: "Command #12: Trien khai lop tu .imscc sang Moodle (DeployToMoodleMVCActionCommand)"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [courseId]
+              properties:
+                courseId: { type: integer, example: 101 }
+      responses:
+        '302':
+          description: Goi local_meko_imscp_create_course, cap nhat moodleCourseId & Redirect PRG
+
+  /tms/catalog/list:
+    get:
+      tags: [MEKO-TMS (Enrollment & Logs Commands)]
+      summary: "Command #13: Lay danh sach Catalog khoa hoc /tms (GetCatalogMVCResourceCommand)"
+      parameters:
+        - { name: keyword, in: query, schema: { type: string } }
+        - { name: status, in: query, schema: { type: string, enum: [ENROLLING, IN_PROGRESS, UPCOMING] } }
+        - { name: frameworkCode, in: query, schema: { type: string } }
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+        - { name: pageSize, in: query, schema: { type: integer, default: 12 } }
+      responses:
+        '200':
+          description: Danh sach khoa hoc Catalog JSON
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: ok }
+                  total: { type: integer, example: 12 }
+                  page: { type: integer, example: 1 }
+                  items: { type: array, items: { type: object } }
+
+  /tms/enroll/self:
+    post:
+      tags: [MEKO-TMS (Enrollment & Logs Commands)]
+      summary: "Command #14: Hoc vien Tu ghi danh 1-Click (SelfEnrollMVCResourceCommand)"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [courseId]
+              properties:
+                courseId: { type: integer, example: 101 }
+      responses:
+        '200':
+          description: Da tao don dang ky PENDING
+        '409':
+          description: Da dang ky truoc do hoac lop da du si so
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /tms/enroll/excel-preview:
+    post:
+      tags: [MEKO-TMS (Enrollment & Logs Commands)]
+      summary: "Command #15: Upload & Validate file Excel 6 cot (ImportExcelPreviewMVCResourceCommand)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [courseId, file]
+              properties:
+                courseId: { type: integer }
+                file: { type: string, format: binary }
+      responses:
+        '200':
+          description: Ket qua validate tung dong Excel
+
+  /tms/enroll/excel-confirm:
+    post:
+      tags: [MEKO-TMS (Enrollment & Logs Commands)]
+      summary: "Command #16: Xac nhan Import & day Queue LMB (ImportExcelConfirmMVCResourceCommand)"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [courseId, rows]
+              properties:
+                courseId: { type: integer, example: 101 }
+                rows: { type: array, items: { type: object } }
+      responses:
+        '200':
+          description: Da luu DB & day vao LMB Queue
+
+  /tms/enroll/decide:
+    post:
+      tags: [MEKO-TMS (Enrollment & Logs Commands)]
+      summary: "Command #17: Duyet hoac Tu choi don ghi danh + Gui Email (ApproveRejectEnrollmentMVCResourceCommand)"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [enrollmentIds, decision]
+              properties:
+                enrollmentIds: { type: array, items: { type: integer } }
+                decision: { type: string, enum: [APPROVE, REJECT] }
+                rejectReason: { type: string, description: "Bat buoc khi decision = REJECT" }
+      responses:
+        '200':
+          description: Da xu ly xet duyet & xep hang gui mail
+        '400':
+          description: Thieu rejectReason khi tu choi
+
+  /tms/logs/email-resend:
+    post:
+      tags: [MEKO-TMS (Enrollment & Logs Commands)]
+      summary: "Command #18: Gui lai Email tu TMSEmailLog (ResendEmailMVCResourceCommand)"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [emailLogId]
+              properties:
+                emailLogId: { type: integer, example: 88 }
+      responses:
+        '200':
+          description: Da gui lai email qua Mailpit/SMTP
+
+  /tms/logs/list:
+    get:
+      tags: [MEKO-TMS (Enrollment & Logs Commands)]
+      summary: "Command #19: Xem nhat ky TMSSyncLog / TMSEmailLog (GetLogsMVCResourceCommand)"
+      parameters:
+        - { name: logType, in: query, required: true, schema: { type: string, enum: [SYNC, EMAIL] } }
+        - { name: courseId, in: query, schema: { type: integer } }
+        - { name: status, in: query, schema: { type: string } }
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+      responses:
+        '200':
+          description: Danh sach log phan trang
+
+  /tms/profile/summary:
+    get:
+      tags: [MEKO-TMS (Profile & Certificate Commands)]
+      summary: "Command #20: Ho so hoc tap, Radar nang luc & Chung chi cua toi (GetMyProfileMVCResourceCommand)"
+      responses:
+        '200':
+          description: Du lieu Ho so hoc vien JSON
+        '401':
+          description: Chua dang nhap
+
+  /tms/profile/cert-pdf:
+    get:
+      tags: [MEKO-TMS (Profile & Certificate Commands)]
+      summary: "Command #21: Tai PDF Chung chi nhung ma QR (DownloadCertificatePdfMVCResourceCommand)"
+      parameters:
+        - { name: certId, in: query, required: true, schema: { type: integer, example: 18 } }
+      responses:
+        '200':
+          description: File binary PDF
+          content:
+            application/pdf:
+              schema: { type: string, format: binary }
+        '403':
+          description: Khong phai chu so huu chung chi
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [status, code, message]
+      properties:
+        status: { type: string, example: error }
+        code: { type: string, example: invalid_request }
+        message: { type: string }
+        details: { type: object }
+
+    MoodleExportCourseRequest:
+      type: object
+      required: [courseid]
+      properties:
+        courseid: { type: integer, example: 8 }
+        include_questionbank: { type: integer, enum: [0, 1], default: 1 }
+        include_userdata: { type: integer, enum: [0, 1], default: 0 }
+
+    MoodleExportCourseResponse:
+      type: object
+      properties:
+        status: { type: string, example: success }
+        shortname: { type: string, example: NLS-01-IMS }
+        filename: { type: string, example: NLS-01-IMS-20261116.imscc }
+        file_size_bytes: { type: integer }
+        download_url: { type: string }
+        imscc_sha256: { type: string }
+        stats: { type: object }
+
+    MoodleCreateCourseRequest:
+      type: object
+      required: [course_code, course_title, category_idnumber, imscc_source_type]
+      properties:
+        course_code: { type: string, example: MK-2026-01 }
+        course_title: { type: string }
+        summary: { type: string }
+        category_idnumber: { type: string, example: DIGCOMP_STU }
+        startdate: { type: integer }
+        enddate: { type: integer }
+        imscc_source_type: { type: string, enum: [URL, BASE64] }
+        imscc_url: { type: string }
+        imscc_base64: { type: string }
+        thumbnail_url: { type: string }
+        lecturer_email: { type: string }
+        lecturer_fullname: { type: string }
+        competency_idnumbers: { type: array, items: { type: string } }
+        customfields: { type: object }
+
+    MoodleCreateCourseResponse:
+      type: object
+      properties:
+        status: { type: string, example: success }
+        moodle_course_id: { type: integer, example: 21 }
+        shortname: { type: string, example: MK-2026-01 }
+        course_url: { type: string }
+        idempotent_reused: { type: boolean }
+        imported_sections: { type: integer }
+        imported_modules: { type: object }
+        linked_competencies: { type: integer }
+
+    MoodleGetCoursesRequest:
+      type: object
+      properties:
+        status: { type: string, default: PUBLISHED }
+        category_idnumber: { type: string }
+        modified_since: { type: integer, default: 0 }
+        page: { type: integer, default: 1 }
+        per_page: { type: integer, default: 50 }
+
+    MoodleGetCoursesResponse:
+      type: object
+      properties:
+        total: { type: integer }
+        page: { type: integer }
+        courses: { type: array, items: { type: object } }
+
+    MoodleUpdateCourseRequest:
+      type: object
+      required: [moodle_course_id]
+      properties:
+        moodle_course_id: { type: integer, example: 21 }
+        visible: { type: integer, enum: [0, 1] }
+        accees_course_status: { type: string, enum: [DRAFT, UNDER_REVIEW, PUBLISHED, CLOSED] }
+        fullname: { type: string }
+
+    MoodleEnrolBulkRequest:
+      type: object
+      required: [courseid, auth_type, users]
+      properties:
+        courseid: { type: integer, example: 21 }
+        auth_type: { type: string, enum: [manual, oidc], default: manual }
+        users:
+          type: array
+          maxItems: 50
+          items:
+            type: object
+            required: [username, email, firstname, lastname, roleid]
+            properties:
+              username: { type: string }
+              student_code: { type: string }
+              email: { type: string }
+              firstname: { type: string }
+              lastname: { type: string }
+              organization: { type: string }
+              roleid: { type: integer, default: 5 }
+
+    MoodleEnrolBulkResponse:
+      type: object
+      properties:
+        status: { type: string, example: success }
+        enrolled_count: { type: integer }
+        failed_count: { type: integer }
+        results: { type: array, items: { type: object } }
+        errors: { type: array, items: { type: object } }
+
+    MoodleGetResultsRequest:
+      type: object
+      required: [moodle_course_id]
+      properties:
+        moodle_course_id: { type: integer, example: 21 }
+        moodle_user_ids: { type: array, items: { type: integer } }
+        since_timestamp: { type: integer, default: 0 }
+
+    WebhookBadgePayload:
+      type: object
+      required: [event, moodle_course_id, moodle_userid, user_email, badge]
+      properties:
+        event: { type: string, example: badge_awarded }
+        timestamp: { type: integer, example: 1795000000 }
+        moodle_course_id: { type: integer, example: 21 }
+        course_shortname: { type: string, example: MK-2026-01 }
+        moodle_userid: { type: integer, example: 105 }
+        user_email: { type: string, example: an.nguyen@mekosoft.vn }
+        final_grade: { type: number, format: double, example: 8.5 }
+        badge:
+          type: object
+          properties:
+            id: { type: integer, example: 12 }
+            name: { type: string }
+            image_url: { type: string }
+            issued_at: { type: integer }
+
+    CertificateVerifyResponse:
+      type: object
+      properties:
+        valid: { type: boolean }
+        status: { type: string, enum: [ISSUED, REVOKED, NOT_FOUND] }
+        cert_serial_code: { type: string }
+        qr_verify_code: { type: string }
+        student_code: { type: string }
+        student_name: { type: string }
+        course_code: { type: string }
+        course_title: { type: string }
+        final_grade: { type: number }
+        badge_name: { type: string }
+        issued_date: { type: string }
+        revoke_reason: { type: string }
+
+    CoursePlanForm:
+      type: object
+      required: [courseTitle, imsPackageUrl, deliveryFormat, creditHours, estimatedLearners, expectedStartDate, expectedEndDate, lecturerName, lecturerEmail]
+      properties:
+        planId: { type: integer, default: 0 }
+        courseTitle: { type: string }
+        lomIdentifier: { type: string }
+        imsPackageUrl: { type: string }
+        deliveryFormat: { type: string, enum: [Online, Blended Learning, Self-paced] }
+        targetAudience: { type: string }
+        creditHours: { type: integer }
+        estimatedLearners: { type: integer }
+        expectedStartDate: { type: string, format: date }
+        expectedEndDate: { type: string, format: date }
+        lecturerName: { type: string }
+        lecturerEmail: { type: string, format: email }
+        courseDescription: { type: string }
+
+    CourseForm:
+      type: object
+      required: [planId, courseCode, courseTitle, startDate, endDate, maxEnrollment, thumbnailUrl]
+      properties:
+        courseId: { type: integer, default: 0 }
+        planId: { type: integer }
+        courseCode: { type: string }
+        courseTitle: { type: string }
+        academicYear: { type: string }
+        semester: { type: string }
+        startDate: { type: string, format: date }
+        endDate: { type: string, format: date }
+        enrollmentStartDate: { type: string, format: date }
+        enrollmentEndDate: { type: string, format: date }
+        maxEnrollment: { type: integer }
+        thumbnailUrl: { type: string }
+        frameworkIds: { type: array, items: { type: integer } }
+        status: { type: string, enum: [UPCOMING, ENROLLING, IN_PROGRESS, FINISHED, ARCHIVED] }
+        isFeatured: { type: boolean }

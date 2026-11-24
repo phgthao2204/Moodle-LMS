@@ -1,0 +1,205 @@
+// ==============================================================================
+// ACCEES-LMS DESIGN SYSTEM v2.0 - TOP NAVIGATION BAR (WHITE SURFACE)
+// ==============================================================================
+
+.accees-navbar,
+.navbar.fixed-top {
+    background-color: $bg-surface !important;
+    border-bottom: 1px solid $border-default !important;
+    min-height: $navbar-height !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+    z-index: 1030;
+    padding: 0 !important;
+}
+
+.accees-header-wrap {
+    width: min(100%, #{$container-max-width}) !important;
+    max-width: $container-max-width !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 24px !important;
+    height: $navbar-height !important;
+}
+
+.brand-sub-badge,
+.brand-badge {
+    background-color: $brand-primary-tint !important;
+    color: $brand-primary !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    padding: 2px 8px !important;
+    border-radius: 12px !important;
+    letter-spacing: 0.5px !important;
+    border: 1px solid $brand-primary-border !important;
+    display: inline-block !important;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.accees-navbar .nav-link,
+.navbar.fixed-top .nav-link {
+    color: $text-main !important;
+    font-weight: 600 !important;
+    font-size: 13.5px !important;
+    padding: 7px 12px !important;
+    border-radius: $radius-md;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    i {
+        color: $text-muted;
+        font-size: 13px;
+        transition: color 0.15s ease;
+    }
+
+    &:hover,
+    &:focus {
+        color: $brand-primary !important;
+        background-color: $bg-subtle !important;
+
+        i {
+            color: $brand-primary !important;
+        }
+    }
+
+    &.active,
+    &:where(.active) {
+        color: $brand-primary !important;
+        background-color: $brand-primary-tint !important;
+        font-weight: 700 !important;
+
+        i {
+            color: $brand-primary !important;
+        }
+    }
+}
+
+.accees-navbar .nav-item.active .nav-link,
+.navbar.fixed-top .nav-item.active .nav-link {
+    color: $brand-primary !important;
+    background-color: $brand-primary-tint !important;
+    font-weight: 700 !important;
+}
+
+@media (min-width: 992px) {
+    .accees-nav-dropdown {
+        position: relative;
+
+        &:hover>.dropdown-menu {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
+            pointer-events: auto !important;
+        }
+
+        >.dropdown-menu {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+            pointer-events: none;
+        }
+    }
+}
+
+.accees-dropdown-menu,
+.dropdown-menu.shadow {
+    background-color: $bg-surface !important;
+    border: 1px solid $border-default !important;
+    border-radius: $radius-lg !important;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08) !important;
+    padding: 8px 0 !important;
+    min-width: 260px;
+
+    &.show {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
+    }
+
+    .dropdown-item {
+        padding: 9px 16px !important;
+        font-size: 13px !important;
+        color: $text-main !important;
+        font-weight: 500 !important;
+        transition: all 0.15s ease !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &:hover {
+            background-color: $bg-subtle !important;
+            color: $brand-primary !important;
+        }
+    }
+
+    .dropdown-icon-box {
+        width: 30px;
+        height: 30px;
+        border-radius: $radius-md;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+}
+
+.lang-switch-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: $bg-page;
+    padding: 3px 5px;
+    border-radius: 20px;
+    border: 1px solid $border-default;
+
+    .lang-btn {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        color: $text-muted;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        text-decoration: none !important;
+        transition: all 0.15s ease;
+
+        &:hover {
+            background-color: $border-default;
+            color: $text-main;
+        }
+
+        &.active {
+            background-color: $brand-navy !important;
+            color: #FFFFFF !important;
+        }
+    }
+}
+
+// Notification bell & messaging: completely hidden as requested
+.popover-region,
+.popover-region-notifications,
+.popover-region-messages {
+    display: none !important;
+}
+
+// User Menu: Only keep Log out (hide Preferences and Switch role)
+.usermenu-container {
+
+    .dropdown-item[href*="preferences.php"],
+    .dropdown-item[href*="switchrole.php"] {
+        display: none !important;
+    }
+}

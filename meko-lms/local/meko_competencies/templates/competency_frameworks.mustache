@@ -1,0 +1,537 @@
+{{!
+    @template local_meko_competencies/competency_frameworks
+    ACCEES Digital Competency Framework Explorer - 3-Tier Tree View (UC-LMS-02).
+    Strict zero exposed idnumber policy (idnumber used strictly in URLs and data-* attributes).
+}}
+
+<div class="competency-framework-page-wrapper"
+     data-framework-key="{{ framework_key }}"
+     data-focus-competency="{{ focus_competency }}"
+     data-initial-domain="{{ initial_domain }}"
+     data-initial-level="{{ initial_level }}"
+     data-initial-query="{{ initial_query }}">
+
+    <div class="comp-page-shell">
+        {{! 1. Breadcrumb Bar }}
+        <div class="comp-breadcrumb-bar">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{{ config.wwwroot }}}/">{{#str}} home, local_meko_competencies {{/str}}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{{ config.wwwroot }}}/local/meko_competencies/index.php">{{#str}} competencies, local_meko_competencies {{/str}}</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ framework_title }}</li>
+                </ol>
+            </nav>
+        </div>
+
+        {{! 2. Hero Header & 4-Card Metrics Grid }}
+        <div class="comp-hero-banner">
+            <div class="comp-hero-grid">
+                <div class="comp-hero-copy">
+                    <span class="comp-hero-pill">
+                        <i class="fa fa-shield-halved"></i> {{#str}} hero_pill_badge, local_meko_competencies {{/str}}
+                    </span>
+                    <h1 class="comp-hero-title">{{ framework_title }}</h1>
+                    <div class="comp-hero-desc">{{{ framework_desc }}}</div>
+                </div>
+
+                <div class="comp-metrics-grid">
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val">{{ domains_count }}</div>
+                        <div class="comp-metric-label">{{#str}} domains, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val">{{ competencies_count }}</div>
+                        <div class="comp-metric-label">{{#str}} parent_competencies, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val metric-green">{{ levels_count }}</div>
+                        <div class="comp-metric-label">{{#str}} target_levels, local_meko_competencies {{/str}}</div>
+                    </div>
+                    <div class="comp-metric-card">
+                        <div class="comp-metric-val metric-orange">{{ mapped_courses_count }}</div>
+                        <div class="comp-metric-label">{{#str}} mapped_courses_metric, local_meko_competencies {{/str}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{! 3. Control Toolbar: Framework Switcher + Search + View Switcher + Utilities + Filter Chips }}
+        <div class="comp-toolbar-card">
+            <div class="comp-toolbar-top">
+                <div class="comp-fw-tabs" role="tablist" aria-label="Competency Framework">
+                    <a href="{{{ students_url }}}" class="comp-fw-tab {{#is_students}}active{{/is_students}}">
+                        <i class="fa fa-graduation-cap me-1"></i> {{#students_tab_label}}{{ students_tab_label }}{{/students_tab_label}}{{^students_tab_label}}{{#str}} students_framework_short, local_meko_competencies {{/str}}{{/students_tab_label}}
+                    </a>
+                    <a href="{{{ faculty_url }}}" class="comp-fw-tab {{#is_faculty}}active{{/is_faculty}}">
+                        <i class="fa fa-chalkboard-user me-1"></i> {{#faculty_tab_label}}{{ faculty_tab_label }}{{/faculty_tab_label}}{{^faculty_tab_label}}{{#str}} faculty_framework_short, local_meko_competencies {{/str}}{{/faculty_tab_label}}
+                    </a>
+                </div>
+
+                <div class="comp-search-box">
+                    <i class="fa fa-search comp-search-icon" aria-hidden="true"></i>
+                    <input type="text"
+                           id="compTreeSearchInput"
+                           class="comp-search-input"
+                           value="{{ initial_query }}"
+                           placeholder="{{#str}} search_filter_placeholder, local_meko_competencies {{/str}}"
+                           autocomplete="off">
+                    <button type="button"
+                            id="compTreeSearchClear"
+                            class="comp-search-clear"
+                            title="{{#str}} clear_search, local_meko_competencies {{/str}}"
+                            aria-label="{{#str}} clear_search, local_meko_competencies {{/str}}">&times;</button>
+                </div>
+
+                <div class="comp-toolbar-actions">
+                    <div class="comp-view-switcher" role="group" aria-label="View Mode">
+                        <a href="{{{ tree_view_url }}}" class="comp-view-btn {{#is_tree_view}}active{{/is_tree_view}}">
+                            <i class="fa fa-sitemap"></i> {{#str}} tree_view, local_meko_competencies {{/str}}
+                        </a>
+                        <a href="{{{ matrix_view_url }}}" id="compTreeToMatrixLink" data-base-url="{{{ matrix_view_url }}}" class="comp-view-btn {{#is_matrix_view}}active{{/is_matrix_view}}">
+                            <i class="fa fa-table-cells"></i> {{#str}} matrix_view, local_meko_competencies {{/str}}
+                        </a>
+                    </div>
+
+                    <button type="button" id="compExpandAllBtn" class="comp-utility-btn">
+                        <i class="fa fa-angles-down"></i> {{#str}} expand_all, local_meko_competencies {{/str}}
+                    </button>
+                    <button type="button" id="compCollapseAllBtn" class="comp-utility-btn">
+                        <i class="fa fa-angles-up"></i> {{#str}} collapse_all, local_meko_competencies {{/str}}
+                    </button>
+                </div>
+            </div>
+
+            {{! Domain Filter Chips }}
+            <div class="comp-filter-row" id="treeDomainFilterRow">
+                <span class="comp-filter-label"><i class="fa fa-folder-open me-1"></i> {{#str}} filter_domain_label, local_meko_competencies {{/str}}:</span>
+                <button type="button" class="comp-chip-btn active" data-filter-domain="ALL">
+                    {{#str}} all_domains, local_meko_competencies {{/str}} ({{ domains_count }})
+                </button>
+                {{#domains}}
+                    <button type="button" class="comp-chip-btn" data-filter-domain="{{ idnumber }}">
+                        {{ shortname }}
+                    </button>
+                {{/domains}}
+            </div>
+
+            {{! Proficiency Level Filter Chips }}
+            <div class="comp-filter-row" id="treeLevelFilterRow">
+                <span class="comp-filter-label"><i class="fa fa-layer-group me-1"></i> {{#str}} filter_level_label, local_meko_competencies {{/str}}:</span>
+                <button type="button" class="comp-chip-btn active" data-filter-level="ALL">
+                    {{#str}} all_levels, local_meko_competencies {{/str}}
+                </button>
+                {{#level_filters}}
+                    <button type="button" class="comp-chip-btn" data-filter-level="{{ level_key }}">
+                        {{ label }}
+                    </button>
+                {{/level_filters}}
+            </div>
+
+            <div class="comp-toolbar-status">
+                <span>
+                    {{#str}} showing_competencies_count, local_meko_competencies {{/str}}
+                    <strong id="compTreeVisibleCount">{{ competencies_count }}</strong>
+                    {{#str}} of_total, local_meko_competencies {{/str}}
+                    <strong>{{ competencies_count }}</strong>
+                    {{#str}} parent_competencies, local_meko_competencies {{/str}}
+                </span>
+                <button type="button" id="compTreeResetTopBtn" class="comp-reset-link">
+                    <i class="fa fa-rotate-left"></i> {{#str}} reset_filters, local_meko_competencies {{/str}}
+                </button>
+            </div>
+        </div>
+
+        {{! 4. 3-Tier Hierarchical Tree Explorer }}
+        <div id="compTreeContainer">
+            {{#domains}}
+                <section class="comp-domain-block" data-domain-id="{{ idnumber }}">
+                    {{! Tier 1: Domain Header }}
+                    <button type="button"
+                            class="comp-domain-header"
+                            aria-expanded="true">
+                        <div class="d-flex align-items-start gap-3">
+                            <span class="comp-domain-icon" aria-hidden="true">
+                                <i class="fa fa-layer-group"></i>
+                            </span>
+                            <div>
+                                <span class="tier-badge tier-badge-domain">{{#str}} tier_domain, local_meko_competencies {{/str}}</span>
+                                <h2 class="comp-domain-title">{{ shortname }}</h2>
+                                {{#description}}
+                                    <div class="comp-domain-desc">{{{ description }}}</div>
+                                {{/description}}
+                            </div>
+                        </div>
+
+                        <div class="comp-domain-meta">
+                            <span class="badge-solid-slate">
+                                {{ competencies_count }} {{#str}} parent_competencies, local_meko_competencies {{/str}}
+                            </span>
+                            {{#has_courses}}
+                                <span class="badge-solid-success">
+                                    <i class="fa fa-graduation-cap me-1"></i>{{ courses_count }} {{#str}} courses_count, local_meko_competencies {{/str}}
+                                </span>
+                            {{/has_courses}}
+                            <i class="fa fa-chevron-down comp-chevron comp-domain-chevron" aria-hidden="true"></i>
+                        </div>
+                    </button>
+
+                    {{! Tier 2: Competencies inside Domain }}
+                    <div class="comp-domain-body">
+                        {{#competencies}}
+                            <article class="comp-tree-item {{#is_default_open}}is-open{{/is_default_open}}"
+                                     id="compItem-{{ idnumber }}"
+                                     data-comp-code="{{ idnumber }}">
+                                <button type="button"
+                                        class="comp-tree-item-header"
+                                        aria-expanded="{{#is_default_open}}true{{/is_default_open}}{{^is_default_open}}false{{/is_default_open}}">
+                                    <div>
+                                        <span class="tier-badge tier-badge-comp">{{#str}} tier_competency, local_meko_competencies {{/str}}</span>
+                                        <h3 class="comp-tree-item-title">{{ shortname }}</h3>
+                                    </div>
+                                    <div class="comp-domain-meta">
+                                        <span class="badge-solid-primary">
+                                            {{ levels_count }} {{#str}} target_levels, local_meko_competencies {{/str}}
+                                        </span>
+                                        {{#has_courses}}
+                                            <span class="badge-solid-success">
+                                                <i class="fa fa-graduation-cap me-1"></i>{{ courses_count }} {{#str}} courses_count, local_meko_competencies {{/str}}
+                                            </span>
+                                        {{/has_courses}}
+                                        <i class="fa fa-chevron-down comp-tree-item-chevron" aria-hidden="true"></i>
+                                    </div>
+                                </button>
+
+                                <div class="comp-tree-item-body">
+                                    {{#description}}
+                                        <div class="comp-tree-item-purpose">{{{ description }}}</div>
+                                    {{/description}}
+
+                                    {{! Tier 3: Target Level Nodes 2-Col Grid }}
+                                    <div class="comp-levels-grid">
+                                        {{#levels}}
+                                            <div class="level-node-card level-node-{{ level_key }}"
+                                                 id="levelNode-{{ idnumber }}"
+                                                 data-level-code="{{ idnumber }}"
+                                                 data-level-key="{{ level_key }}">
+                                                <div class="level-node-top">
+                                                    <span class="badge {{ badge_class }}">{{ level_badge }}</span>
+                                                    <span class="tier-badge tier-badge-level">{{#str}} tier_target_level, local_meko_competencies {{/str}}</span>
+                                                </div>
+
+                                                <h4 class="level-node-title">{{ shortname }}</h4>
+
+                                                {{#description}}
+                                                    <div class="level-node-desc">{{{ description }}}</div>
+                                                {{/description}}
+
+                                                <div class="level-node-footer">
+                                                    <span class="small {{#has_courses}}fw-bold text-success{{/has_courses}}{{^has_courses}}text-muted{{/has_courses}}">
+                                                        <i class="fa fa-graduation-cap me-1"></i>
+                                                        {{ courses_count }} {{#str}} courses_count, local_meko_competencies {{/str}}
+                                                    </span>
+                                                    <a href="{{{ courses_url }}}" class="btn btn-sm btn-accees-navy text-decoration-none px-3 py-1">
+                                                        {{#str}} view_courses_btn, local_meko_competencies {{/str}} &rarr;
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        {{/levels}}
+                                    </div>
+                                </div>
+                            </article>
+                        {{/competencies}}
+                    </div>
+                </section>
+            {{/domains}}
+
+            {{! Empty Search/Filter Results Box }}
+            <div id="compTreeNoResults" class="comp-empty-box d-none">
+                <div class="display-6 text-muted mb-2"><i class="fa fa-search"></i></div>
+                <h3 class="h5 fw-bold text-dark mb-1">{{#str}} no_results_found, local_meko_competencies {{/str}}</h3>
+                <p class="text-muted small mb-3">{{#str}} no_results_desc, local_meko_competencies {{/str}}</p>
+                <button type="button" id="compTreeNoResResetBtn" class="btn btn-sm btn-accees-navy px-3 py-2">
+                    <i class="fa fa-rotate-left me-1"></i> {{#str}} reset_filters, local_meko_competencies {{/str}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var root = document.querySelector('.competency-framework-page-wrapper');
+    if (!root) return;
+
+    var selectedDomain = (root.getAttribute('data-initial-domain') || 'ALL').trim() || 'ALL';
+    var selectedLevel = (root.getAttribute('data-initial-level') || 'ALL').toLowerCase().trim() || 'all';
+    var searchInput = document.getElementById('compTreeSearchInput');
+    var clearSearchBtn = document.getElementById('compTreeSearchClear');
+    var searchQuery = searchInput ? normalizeText(searchInput.value) : '';
+
+    var domainChips = document.querySelectorAll('#treeDomainFilterRow [data-filter-domain]');
+    var levelChips = document.querySelectorAll('#treeLevelFilterRow [data-filter-level]');
+    var noResultsBox = document.getElementById('compTreeNoResults');
+    var visibleCountEl = document.getElementById('compTreeVisibleCount');
+    var resetTopBtn = document.getElementById('compTreeResetTopBtn');
+    var resetEmptyBtn = document.getElementById('compTreeNoResResetBtn');
+    var expandAllBtn = document.getElementById('compExpandAllBtn');
+    var collapseAllBtn = document.getElementById('compCollapseAllBtn');
+    var toMatrixLink = document.getElementById('compTreeToMatrixLink');
+
+    function normalizeText(str) {
+        if (!str) return '';
+        return str.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd')
+            .trim();
+    }
+
+    function setDomainExpanded(domEl, expanded) {
+        if (!domEl) return;
+        domEl.classList.toggle('is-collapsed', !expanded);
+        var hdr = domEl.querySelector('.comp-domain-header');
+        if (hdr) hdr.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+
+    function setCompExpanded(itemEl, expanded) {
+        if (!itemEl) return;
+        itemEl.classList.toggle('is-open', expanded);
+        var hdr = itemEl.querySelector('.comp-tree-item-header');
+        if (hdr) hdr.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+
+    function updateClearSearchVisibility() {
+        if (!clearSearchBtn || !searchInput) return;
+        if (searchInput.value.trim().length > 0) {
+            clearSearchBtn.classList.add('visible');
+        } else {
+            clearSearchBtn.classList.remove('visible');
+        }
+    }
+
+    function syncMatrixSwitcherUrl() {
+        if (!toMatrixLink) return;
+        var base = toMatrixLink.getAttribute('data-base-url') || toMatrixLink.href;
+        try {
+            var url = new URL(base, window.location.origin);
+            url.searchParams.delete('domain');
+            url.searchParams.delete('level');
+            url.searchParams.delete('q');
+            if (selectedDomain && selectedDomain !== 'ALL') url.searchParams.set('domain', selectedDomain);
+            if (selectedLevel && selectedLevel !== 'all') url.searchParams.set('level', selectedLevel);
+            if (searchInput && searchInput.value.trim()) url.searchParams.set('q', searchInput.value.trim());
+            toMatrixLink.href = url.toString();
+        } catch (e) {}
+    }
+
+    function syncActiveChips() {
+        domainChips.forEach(function(btn) {
+            var val = btn.getAttribute('data-filter-domain') || 'ALL';
+            btn.classList.toggle('active', val === selectedDomain);
+        });
+        levelChips.forEach(function(btn) {
+            var val = (btn.getAttribute('data-filter-level') || 'ALL').toLowerCase();
+            btn.classList.toggle('active', val === selectedLevel);
+        });
+        if (resetTopBtn) {
+            var dirty = (selectedDomain !== 'ALL' || selectedLevel !== 'all' || searchQuery.length > 0);
+            resetTopBtn.classList.toggle('visible', dirty);
+        }
+    }
+
+    function applyFilters() {
+        var domainBlocks = document.querySelectorAll('.comp-domain-block');
+        var totalVisibleComps = 0;
+        var hasActiveFilter = (selectedDomain !== 'ALL' || selectedLevel !== 'all' || searchQuery.length > 0);
+
+        domainBlocks.forEach(function(dom) {
+            var domId = dom.getAttribute('data-domain-id') || '';
+            if (selectedDomain !== 'ALL' && domId !== selectedDomain) {
+                dom.style.display = 'none';
+                return;
+            }
+
+            var compItems = dom.querySelectorAll('.comp-tree-item');
+            var domVisibleComps = 0;
+
+            compItems.forEach(function(item) {
+                var headerText = normalizeText((item.querySelector('.comp-tree-item-title') || {}).textContent || '');
+                var purposeText = normalizeText((item.querySelector('.comp-tree-item-purpose') || {}).textContent || '');
+                var compMatchedInMeta = searchQuery && (headerText.indexOf(searchQuery) !== -1 || purposeText.indexOf(searchQuery) !== -1);
+
+                var levelCards = item.querySelectorAll('.level-node-card');
+                var visibleLevelsInComp = 0;
+
+                levelCards.forEach(function(lvl) {
+                    var lvlKey = (lvl.getAttribute('data-level-key') || '').toLowerCase();
+                    var lvlText = normalizeText(lvl.textContent || '');
+
+                    var levelMatches = (selectedLevel === 'all') || (lvlKey === selectedLevel);
+                    var searchMatches = !searchQuery || compMatchedInMeta || (lvlText.indexOf(searchQuery) !== -1);
+
+                    if (levelMatches && searchMatches) {
+                        lvl.style.display = '';
+                        visibleLevelsInComp++;
+                    } else {
+                        lvl.style.display = 'none';
+                    }
+                });
+
+                if (visibleLevelsInComp > 0) {
+                    item.style.display = '';
+                    domVisibleComps++;
+                    totalVisibleComps++;
+                    if (hasActiveFilter) {
+                        setCompExpanded(item, true);
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (domVisibleComps > 0) {
+                dom.style.display = '';
+                if (hasActiveFilter) {
+                    setDomainExpanded(dom, true);
+                }
+            } else {
+                dom.style.display = 'none';
+            }
+        });
+
+        if (visibleCountEl) {
+            visibleCountEl.textContent = totalVisibleComps;
+        }
+        if (noResultsBox) {
+            noResultsBox.classList.toggle('d-none', totalVisibleComps > 0);
+        }
+
+        updateClearSearchVisibility();
+        syncActiveChips();
+        syncMatrixSwitcherUrl();
+    }
+
+    function resetAllFilters() {
+        selectedDomain = 'ALL';
+        selectedLevel = 'all';
+        searchQuery = '';
+        if (searchInput) searchInput.value = '';
+        applyFilters();
+    }
+
+    // Domain Tier 1 Collapse Toggle
+    document.querySelectorAll('.comp-domain-header').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var dom = btn.closest('.comp-domain-block');
+            if (!dom) return;
+            var currentlyOpen = !dom.classList.contains('is-collapsed');
+            setDomainExpanded(dom, !currentlyOpen);
+        });
+    });
+
+    // Competency Tier 2 Accordion Toggle
+    document.querySelectorAll('.comp-tree-item-header').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var item = btn.closest('.comp-tree-item');
+            if (!item) return;
+            var currentlyOpen = item.classList.contains('is-open');
+            setCompExpanded(item, !currentlyOpen);
+        });
+    });
+
+    // Expand All / Collapse All
+    if (expandAllBtn) {
+        expandAllBtn.addEventListener('click', function() {
+            document.querySelectorAll('.comp-domain-block').forEach(function(d) {
+                if (d.style.display !== 'none') setDomainExpanded(d, true);
+            });
+            document.querySelectorAll('.comp-tree-item').forEach(function(i) {
+                if (i.style.display !== 'none') setCompExpanded(i, true);
+            });
+        });
+    }
+
+    if (collapseAllBtn) {
+        collapseAllBtn.addEventListener('click', function() {
+            document.querySelectorAll('.comp-tree-item').forEach(function(i) {
+                setCompExpanded(i, false);
+            });
+        });
+    }
+
+    // Live Search & Clear
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchQuery = normalizeText(this.value);
+            applyFilters();
+        });
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                searchQuery = '';
+                applyFilters();
+            }
+        });
+    }
+
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', function() {
+            if (!searchInput) return;
+            searchInput.value = '';
+            searchQuery = '';
+            searchInput.focus();
+            applyFilters();
+        });
+    }
+
+    // Domain & Level Chip Listeners
+    domainChips.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            selectedDomain = this.getAttribute('data-filter-domain') || 'ALL';
+            applyFilters();
+        });
+    });
+
+    levelChips.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            selectedLevel = (this.getAttribute('data-filter-level') || 'ALL').toLowerCase();
+            applyFilters();
+        });
+    });
+
+    if (resetTopBtn) resetTopBtn.addEventListener('click', resetAllFilters);
+    if (resetEmptyBtn) resetEmptyBtn.addEventListener('click', resetAllFilters);
+
+    // Apply initial query/filters if navigated from Matrix View
+    if (selectedDomain !== 'ALL' || selectedLevel !== 'all' || searchQuery.length > 0) {
+        applyFilters();
+    } else {
+        updateClearSearchVisibility();
+        syncActiveChips();
+        syncMatrixSwitcherUrl();
+    }
+
+    // Deep-link focus handler (?competency=SV_C1_1_N2)
+    var focusCode = (root.getAttribute('data-focus-competency') || '').trim();
+    if (focusCode) {
+        var targetEl = document.querySelector('[data-level-code="' + focusCode + '"]') ||
+                       document.querySelector('[data-comp-code="' + focusCode + '"]');
+        if (targetEl) {
+            var parentDom = targetEl.closest('.comp-domain-block');
+            var parentComp = targetEl.closest('.comp-tree-item');
+            setDomainExpanded(parentDom, true);
+            setCompExpanded(parentComp, true);
+            if (targetEl.classList.contains('level-node-card')) {
+                targetEl.classList.add('is-focused');
+            }
+            setTimeout(function() {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 120);
+        }
+    }
+});
+</script>

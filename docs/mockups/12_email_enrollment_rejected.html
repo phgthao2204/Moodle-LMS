@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mẫu Email Thông Báo Không Chấp Nhận Ghi Danh (Mailpit Test) | MEKO-TMS</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', Arial, sans-serif;
+      background: #F1F5F9;
+      color: #1F2937;
+      padding: 28px 16px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .mailpit-bar {
+      max-width: 680px;
+      margin: 0 auto 14px;
+      background: #0E1726;
+      color: #CBD5E1;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mail-card {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .mail-top {
+      background: #FFFFFF;
+      padding: 18px 26px;
+      border-bottom: 3px solid #0000B6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mail-hero {
+      background: #EA6400;
+      color: #FFFFFF;
+      padding: 26px;
+      text-align: center;
+    }
+
+    .mail-hero h1 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .mail-hero p {
+      font-size: 13px;
+      color: #FFF7ED;
+    }
+
+    .mail-body {
+      padding: 26px;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      margin: 16px 0 18px;
+      font-size: 13.5px;
+    }
+
+    .info-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #E2E8F0;
+    }
+
+    .info-table td.lbl {
+      color: #4B5563;
+      width: 170px;
+      font-weight: 600;
+    }
+
+    .pill-rej {
+      background: #FEE2E2;
+      color: #991B1B;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .reason-box {
+      border-left: 4px solid #DC2626;
+      background: #FEF2F2;
+      padding: 14px 16px;
+      font-size: 13.5px;
+      margin-bottom: 20px;
+      color: #7F1D1D;
+    }
+
+    .cta-wrap {
+      text-align: center;
+      margin: 22px 0;
+    }
+
+    .btn-cta {
+      display: inline-block;
+      background: #0000B6;
+      color: #FFFFFF;
+      padding: 12px 26px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .mail-footer {
+      background: #F8FAFC;
+      border-top: 1px solid #E5E7EB;
+      padding: 16px 26px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748B;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mailpit-bar">
+    <span><i class="fa-solid fa-envelope-open-text"></i> Mailpit Preview: meko.localhost/mail (SMTP :1025)</span>
+    <span>Template: ENROLLMENT_REJECTED</span>
+  </div>
+
+  <div class="mail-card">
+    <div class="mail-top">
+      <img src="assets/logo_meko.svg" alt="MEKOSOFT" style="height: 32px;">
+      <span style="font-size: 11.5px; font-weight: 700; color: #4B5563;">HỆ THỐNG ĐÀO TẠO SỐ MEKO-DLE</span>
+    </div>
+    <div class="mail-hero">
+      <h1>THÔNG BÁO KẾT QUẢ XÉT DUYỆT GHI DANH</h1>
+      <p>Yêu cầu đăng ký lớp học của bạn chưa được chấp nhận trong đợt này</p>
+    </div>
+    <div class="mail-body">
+      <p style="margin-bottom: 10px;">Kính gửi Học viên <strong>Nguyễn Văn An</strong>,</p>
+      <p style="color: #4B5563;">Cán bộ Đào tạo đã xem xét yêu cầu đăng ký tham gia khóa học của bạn và thông báo kết
+        quả như sau:</p>
+
+      <table class="info-table">
+        <tr>
+          <td class="lbl">Khóa đào tạo:</td>
+          <td><strong>Phân tích Dữ liệu Học tập với PowerBI (MK-2026-02)</strong></td>
+        </tr>
+        <tr>
+          <td class="lbl">Ngày khai giảng:</td>
+          <td>25/11/2026</td>
+        </tr>
+        <tr>
+          <td class="lbl">Mã đơn ghi danh:</td>
+          <td class="mono">ENR-2026-0042</td>
+        </tr>
+        <tr>
+          <td class="lbl">Trạng thái:</td>
+          <td><span class="pill-rej">KHÔNG CHẤP NHẬN</span></td>
+        </tr>
+      </table>
+
+      <div class="reason-box">
+        <strong>Lý do cụ thể:</strong> Lớp MK-2026-02 đã đủ chỉ tiêu sĩ số tối đa (50/50 học viên) và ưu tiên đợt 1 cho
+        cán bộ khối Phân tích Dữ liệu. Bạn vui lòng đăng ký sang đợt khai giảng tháng 12/2026 hoặc chọn lớp tương đương
+        trên cổng MEKO-TMS.
+      </div>
+
+      <div class="cta-wrap">
+        <a href="07_liferay_tms_portal_home.html#catalog" class="btn-cta">XEM CÁC LỚP ĐANG MỞ KHÁC</a>
+      </div>
+
+      <p style="font-size: 12.5px; color: #64748B;">Mọi thắc mắc vui lòng liên hệ Bộ phận Đào tạo: daotao@mekosoft.vn
+      </p>
+    </div>
+    <div class="mail-footer">
+      <div><strong>MEKOSOFT CORPORATION</strong> · Ban Quản lý Đào tạo</div>
+      <div>Email gửi tự động từ hệ thống MEKO-TMS (Đã ghi vết trong tms_email_log).</div>
+    </div>
+  </div>
+</body>
+
+</html>

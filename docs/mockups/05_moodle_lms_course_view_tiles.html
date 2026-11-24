@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học: Kỹ Thuật Đóng Gói IMS CP & Nhúng DLRP (Format Tiles) | MEKO-LMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       STYLE CHUẨN NHẬN DIỆN MEKO (SOLID COLORS, NO GRADIENT, MOODLE 5.3 LTS)
+       Màn hình: /course/view.php?id=101 (Định dạng Tiles Course Format)
+       ========================================================================== */
+    :root {
+      --meko-primary: #0000B6;      /* Primary Blue - Xanh chủ đạo */
+      --meko-primary-dark: #000085; /* Xanh đậm Hover */
+      --meko-navy: #182B89;         /* Button Navy - Chuẩn mekosoft.vn */
+      --meko-navy-hover: #111E63;
+      --hero-deep: #0B1C61;           /* Deep Blue */
+      --meko-success: #39B500;      /* Accent Green - Tiến độ & Hoàn thành */
+      --meko-warning: #EA6400;      /* Accent Orange - Tương tác H5P & Badge */
+      --meko-danger: #DC2626;
+      
+      --neutral-bg: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --text-main: #1F2937;
+      --text-muted: #4B5563;
+      --text-light: #9CA3AF;
+      --border-color: #E5E7EB;
+      
+      --font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--neutral-bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ==========================================================================
+       1. TOP ROLE SWITCHER BAR (DÀNH CHO DEMO & TESTING HỌC VIÊN / GIẢNG VIÊN)
+       ========================================================================== */
+    .role-switcher-bar {
+      background-color: #111827;
+      color: #FFFFFF;
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 2px solid var(--meko-warning);
+    }
+
+    .role-switcher-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .role-switcher-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .role-switcher-badge {
+      background-color: var(--meko-warning);
+      color: #FFFFFF;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .role-toggle-group {
+      display: flex;
+      background-color: #1F2937;
+      border-radius: 6px;
+      padding: 3px;
+      gap: 4px;
+    }
+
+    .role-btn {
+      padding: 4px 14px;
+      border-radius: 4px;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #9CA3AF;
+      background: transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .role-btn.active {
+      background-color: var(--meko-navy);
+      color: #FFFFFF;
+    }
+
+    .role-btn:hover:not(.active) {
+      color: #FFFFFF;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ==========================================================================
+       2. TOP LANGUAGE BAR & MAIN NAVBAR
+       ========================================================================== */
+    .top-lang-strip {
+      background-color: #FFFFFF;
+      padding: 8px 0 4px;
+    }
+
+    .top-lang-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lang-circle-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #6B7280;
+      background-color: #F3F4F6;
+    }
+
+    .lang-circle-btn.active {
+      background-color: var(--meko-navy);
+      color: #FFFFFF;
+    }
+
+    .navbar-wrapper {
+      background-color: #FFFFFF;
+      padding: 4px 0 12px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-ribbon-icon {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--meko-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.1;
+    }
+
+    .brand-badge-lms {
+      font-size: 11px;
+      font-weight: 700;
+      background-color: var(--meko-primary);
+      color: #FFFFFF;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .brand-subtext {
+      font-size: 10.5px;
+      color: #6B7280;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .nav-links-area {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-item-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      padding: 6px 0;
+      position: relative;
+    }
+
+    .nav-item-link:hover, .nav-item-link.active {
+      color: var(--meko-primary);
+    }
+
+    .nav-item-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2.5px;
+      background-color: var(--meko-primary);
+      border-radius: 2px;
+    }
+
+    .nav-user-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      background-color: #F3F4F6;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--meko-navy);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .user-info-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .user-role-tag {
+      font-size: 11px;
+      color: var(--meko-navy);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       3. BREADCRUMBS & COURSE HERO HEADER
+       ========================================================================== */
+    .breadcrumb-section {
+      padding: 12px 0 8px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb-list {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-item a {
+      color: var(--meko-primary);
+    }
+
+    .breadcrumb-item a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumb-separator {
+      color: #9CA3AF;
+    }
+
+    .course-hero-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .course-hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .course-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge-solid {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-solid-blue {
+      background-color: #EEF2FF;
+      color: var(--meko-primary);
+      border: 1px solid #C7D2FE;
+    }
+
+    .badge-solid-green {
+      background-color: #EDFDF2;
+      color: #15803D;
+      border: 1px solid #BBF7D0;
+    }
+
+    .badge-solid-orange {
+      background-color: #FFF7ED;
+      color: #C2410C;
+      border: 1px solid #FFEDD5;
+    }
+
+    .badge-format-tiles {
+      background-color: #F8FAFC;
+      color: #334155;
+      border: 1px solid #CBD5E1;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .course-hero-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .course-meta-inline {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-item strong {
+      color: var(--text-main);
+    }
+
+    /* Giảng viên Action Bar */
+    .teacher-action-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border-color);
+      background-color: #FFFFFF;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background-color: #F3F4F6;
+      border-color: #D1D5DB;
+    }
+
+    .btn-action-primary {
+      background-color: var(--meko-navy);
+      color: #FFFFFF;
+      border-color: var(--meko-navy);
+    }
+
+    .btn-action-primary:hover {
+      background-color: var(--meko-navy-hover);
+    }
+
+    .edit-mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background-color: #EEF2FF;
+      border: 1px solid #C7D2FE;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--meko-primary);
+    }
+
+    .switch-toggle {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 20px;
+    }
+
+    .switch-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #CBD5E1;
+      transition: .3s;
+      border-radius: 20px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--meko-success);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(16px);
+    }
+
+    /* ==========================================================================
+       4. HAI KHỐI CỐT LÕI: TIẾN ĐỘ & CHUẨN NĂNG LỰC SỐ (COMPETENCIES)
+       ========================================================================== */
+    .course-hub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 900px) {
+      .course-hub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hub-box {
+      background-color: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .hub-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .hub-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .hub-title-icon {
+      color: var(--meko-primary);
+    }
+
+    /* Progress Widget */
+    .progress-bar-container {
+      width: 100%;
+      height: 12px;
+      background-color: #E2E8F0;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background-color: var(--meko-success);
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    .progress-stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .progress-stats-row strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .completion-criteria-note {
+      margin-top: 8px;
+      font-size: 11.5px;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Competencies Widget */
+    .comp-pill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .comp-pill-item {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--meko-primary);
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .comp-pill-item.status-proficient {
+      border-left-color: var(--meko-success);
+    }
+
+    .comp-pill-item.status-progress {
+      border-left-color: var(--meko-warning);
+    }
+
+    .comp-info-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .comp-code-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--meko-primary);
+    }
+
+    .comp-name-text {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .comp-level-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .comp-level-badge.proficient {
+      background-color: #EDFDF2;
+      color: #15803D;
+      border: 1px solid #BBF7D0;
+    }
+
+    .comp-level-badge.in-progress {
+      background-color: #FFF7ED;
+      color: #C2410C;
+      border: 1px solid #FFEDD5;
+    }
+
+    .hub-link-action {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--meko-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .hub-link-action:hover {
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       5. FORMAT TILES GRID (KHÓA HỌC DẠNG THẺ PHẲNG SOLID)
+       ========================================================================== */
+    .section-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .section-title-main {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tiles-grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .course-tile-card {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 155px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .course-tile-card:hover {
+      border-color: var(--meko-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 182, 0.08);
+    }
+
+    .course-tile-card.active {
+      border: 2px solid var(--meko-primary);
+      background-color: #F8FAFC;
+    }
+
+    .tile-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .tile-order-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--meko-primary);
+      background-color: #EEF2FF;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .tile-progress-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2.5px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .tile-progress-circle.completed {
+      border-color: var(--meko-success);
+      color: var(--meko-success);
+      background-color: #EDFDF2;
+    }
+
+    .tile-progress-circle.in-progress {
+      border-color: var(--meko-warning);
+      color: var(--meko-warning);
+      background-color: #FFF7ED;
+    }
+
+    .tile-body-content {
+      margin-bottom: 10px;
+    }
+
+    .tile-icon-svg {
+      font-size: 24px;
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    .tile-name-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .tile-footer-info {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ==========================================================================
+       6. KHU VỰC CHI TIẾT TILE ĐANG CHỌN (SUB-TILES ACCORDION / EXPANDED SECTION)
+       ========================================================================== */
+    .tile-expanded-section {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .tile-expanded-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tile-expanded-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tile-expanded-icon {
+      width: 44px;
+      height: 44px;
+      background-color: #EEF2FF;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--meko-primary);
+    }
+
+    .tile-expanded-h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .tile-expanded-subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .tile-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-tile-nav {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--border-color);
+      background-color: #FFFFFF;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-tile-nav:hover {
+      background-color: #F3F4F6;
+    }
+
+    /* Sub-tiles List */
+    .subtiles-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .subtile-card {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .subtile-card:hover {
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+      transform: translateX(2px);
+    }
+
+    /* Chuẩn hóa Màu Viền Sub-tiles Theo Báo Cáo Kỹ Thuật MEKO */
+    .subtile-card.modtype-imscp {
+      border-left: 5px solid var(--meko-navy) !important;
+    }
+
+    .subtile-card.modtype-resource {
+      border-left: 5px solid var(--meko-primary) !important;
+    }
+
+    .subtile-card.modtype-h5p {
+      border-left: 5px solid var(--meko-warning) !important;
+    }
+
+    .subtile-card.modtype-quiz {
+      border-left: 5px solid var(--meko-success) !important;
+    }
+
+    .subtile-main-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .subtile-type-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .icon-imscp {
+      background-color: #EEF2FF;
+      color: var(--meko-navy);
+    }
+
+    .icon-resource {
+      background-color: #E0E7FF;
+      color: var(--meko-primary);
+    }
+
+    .icon-h5p {
+      background-color: #FFF7ED;
+      color: var(--meko-warning);
+    }
+
+    .icon-quiz {
+      background-color: #EDFDF2;
+      color: var(--meko-success);
+    }
+
+    .subtile-texts {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .subtile-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .subtile-type-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    .label-imscp { background-color: #EEF2FF; color: var(--meko-navy); }
+    .label-resource { background-color: #E0E7FF; color: var(--meko-primary); }
+    .label-h5p { background-color: #FFF7ED; color: var(--meko-warning); }
+    .label-quiz { background-color: #EDFDF2; color: var(--meko-success); }
+
+    .subtile-comp-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #4B5563;
+      background-color: #F3F4F6;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    .subtile-title-link {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .subtile-title-link:hover {
+      color: var(--meko-primary);
+    }
+
+    .subtile-desc-summary {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .subtile-completion-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .completion-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .completion-checkbox.done {
+      background-color: var(--meko-success);
+      border-color: var(--meko-success);
+    }
+
+    .completion-checkbox.pending {
+      border-color: #94A3B8;
+      border-style: dashed;
+    }
+
+    .completion-text {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .teacher-add-activity-btn {
+      margin-top: 16px;
+      padding: 10px;
+      border: 2px dashed #CBD5E1;
+      border-radius: 8px;
+      background-color: #F8FAFC;
+      color: var(--meko-primary);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      display: none;
+      transition: all 0.15s ease;
+    }
+
+    .teacher-add-activity-btn:hover {
+      background-color: #EEF2FF;
+      border-color: var(--meko-primary);
+    }
+
+    /* ==========================================================================
+       7. MODAL PREVIEW HỌC LIỆU
+       ========================================================================== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-dialog-box {
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background-color: #F8FAFC;
+    }
+
+    .modal-title-text {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: 700;
+      color: #64748B;
+      cursor: pointer;
+    }
+
+    .modal-body-content {
+      padding: 24px;
+      overflow-y: auto;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .modal-footer-bar {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background-color: #F8FAFC;
+    }
+
+    /* ==========================================================================
+       8. FOOTER CHUẨN MEKO MEKOSOFT (3 CỘT)
+       ========================================================================== */
+    .site-footer {
+      background-color: #0E1726;
+      color: #E2E8F0;
+      padding: 48px 0 24px;
+      border-top: 4px solid var(--meko-primary);
+      margin-top: 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1.4fr;
+      gap: 36px;
+      margin-bottom: 36px;
+    }
+
+    @media (max-width: 850px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    .footer-col-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #94A3B8;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links-list a {
+      font-size: 13px;
+      color: #CBD5E1;
+    }
+
+    .footer-links-list a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    .footer-bottom-bar {
+      border-top: 1px solid #1E293B;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #64748B;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  
+    /* ==========================================================================
+       UNIFIED MASTER 1-LINE HEADER NAVBAR (MEKO-LMS SPEC)
+       ========================================================================== */
+    .navbar-header {
+      background-color: #FFFFFF;
+      border-bottom: 1px solid #E5E7EB;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      height: 58px;
+    }
+    .navbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+    .navbar-left { justify-self: start; display: flex; align-items: center; }
+    .navbar-center { justify-self: center; display: flex; align-items: center; }
+    .navbar-right { justify-self: end; display: flex; align-items: center; gap: 16px; }
+
+    .brand-logo-wrap { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+    .brand-logo-svg { height: 36px; width: auto; }
+    .brand-sub-badge {
+      background-color: #EEF2FF; color: var(--meko-primary);
+      font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 12px;
+      letter-spacing: 0.5px; border: 1px solid #D6E4FF;
+    }
+    .nav-links-menu { display: flex; align-items: center; list-style: none; gap: 22px; margin: 0; padding: 0; }
+    .nav-link-item { position: relative; }
+    .nav-link-anchor {
+      font-size: 14.5px; font-weight: 500; color: #374151;
+      display: inline-flex; align-items: center; gap: 5px; padding: 8px 2px;
+      text-decoration: none; transition: color 0.15s ease;
+    }
+    .nav-link-anchor:hover { color: var(--meko-primary); }
+    .nav-link-item.active .nav-link-anchor { color: #111827; font-weight: 700; border-bottom: 2px solid var(--meko-primary); }
+    .nav-link-anchor .chevron-icon { width: 12px; height: 12px; stroke: #6B7280; transition: transform 0.2s, stroke 0.15s; }
+    .nav-link-item:hover .nav-link-anchor .chevron-icon { transform: rotate(180deg); stroke: var(--meko-primary); }
+
+    .dropdown-container {
+      position: absolute; top: 100%; left: 0; background-color: #FFFFFF; min-width: 285px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 8px; border: 1px solid var(--border-color);
+      list-style: none; display: none; z-index: 1100; padding: 8px 0; margin-top: 6px;
+    }
+    .nav-link-item:hover .dropdown-container { display: block; }
+    .dropdown-container li a {
+      display: block; padding: 9px 18px; font-size: 13.5px; color: #4B5563; font-weight: 500;
+      text-decoration: none; transition: all 0.15s ease;
+    }
+    .dropdown-container li a:hover { background-color: #F8FAFC; color: var(--meko-primary); padding-left: 22px; }
+
+    .lang-switch-cluster { display: flex; align-items: center; gap: 5px; margin-left: 6px; }
+    .lang-circle-btn {
+      width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #64748B; background-color: #F3F4F6; border: none; cursor: pointer; text-decoration: none;
+    }
+    .lang-circle-btn.active { background-color: var(--meko-navy); color: #FFFFFF; }
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. TOP ROLE SWITCHER BAR (DEMO CHUYỂN GÓC NHÌN HỌC VIÊN / GIẢNG VIÊN)
+       ========================================================================== -->
+  <div class="role-switcher-bar">
+    <div class="container role-switcher-inner">
+      <div class="role-switcher-label">
+        <span class="role-switcher-badge">Demo Mode</span>
+        <span>MEKO Theme (/course/view.php - Format Tiles & Competency)</span>
+      </div>
+      <div class="d-flex align-items-center" style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:12px; color:#9CA3AF;">Chuyển góc nhìn diễn họa:</span>
+        <div class="role-toggle-group">
+          <button id="btnStudentRole" class="role-btn active" onclick="switchRole('student')">
+            <span></span> Học Viên (Student)
+          </button>
+          <button id="btnTeacherRole" class="role-btn" onclick="switchRole('teacher')">
+            <span></span> Giảng Viên (Teacher)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- ==========================================================================
+       MAIN NAVBAR: 1 DÒNG DUY NHẤT CHUẨN XÁC THEO MASTER DESIGN SPEC
+       ========================================================================== -->
+  <header class="navbar-header">
+    <div class="navbar-inner">
+      
+      <!-- 1. BÊN TRÁI: Logo MEKO Ribbon + Pill Badge LMS -->
+      <div class="navbar-left">
+        <a href="01_moodle_lms_homepage.html" class="brand-logo-wrap" title="Trang chủ MEKO-LMS">
+          <svg class="brand-logo-svg" viewBox="0 0 180 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="meko-mark">
+              <path d="M4 31V7L14 19L24 7V31H18V16L14 21L10 16V31H4Z" fill="#0000B6"/>
+              <circle cx="14" cy="5" r="2.5" fill="#EA6400"/>
+              <rect x="25" y="27" width="5" height="4" rx="1" fill="#39B500"/>
+            </g>
+            <text x="36" y="26" font-family="'Be Vietnam Pro', -apple-system, sans-serif" font-size="21" font-weight="800" fill="#0000B6" letter-spacing="0.5">MEKO<tspan fill="#EA6400">SOFT</tspan></text>
+          </svg>
+          <span class="brand-sub-badge">LMS</span>
+        </a>
+      </div>
+
+      <!-- 2. Ở GIỮA: Navigation Menu Links NẰM CHÍNH GIỮA (Courses/Tiles Active) -->
+      <nav class="navbar-center" aria-label="Main Navigation">
+        <ul class="nav-links-menu" id="mainNavMenu">
+          <li class="nav-link-item" id="menuItemHome">
+            <a href="01_moodle_lms_homepage.html" class="nav-link-anchor">Trang chủ</a>
+          </li>
+          <li class="nav-link-item" id="menuItemMyCourses">
+            <a href="03_moodle_lms_my_courses.html" class="nav-link-anchor">Khóa học của tôi</a>
+          </li>
+          <li class="nav-link-item active" id="menuItemCourses">
+            <a href="02_moodle_lms_course_catalog.html" class="nav-link-anchor">Danh mục khóa học</a>
+          </li>
+          <li class="nav-link-item dropdown" id="menuItemCompetencies">
+            <a href="04_moodle_lms_competencies.html" class="nav-link-anchor">
+              <span class="nav-text">Khung năng lực số</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <ul class="dropdown-container">
+              <li><a href="04_moodle_lms_competencies.html">Tất cả khung năng lực (/dig-comp) &rarr;</a></li>
+              <li style="border-top: 1px solid var(--border-color); margin: 4px 0;"></li>
+              <li><a href="04_moodle_lms_competencies.html?tab=lecturer">Khung năng lực Giảng viên (/dig-comp-lecturer)</a></li>
+              <li><a href="04_moodle_lms_competencies.html?tab=student">Khung năng lực Sinh viên (/dig-comp-student)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- 3. BÊN PHẢI: Language Switcher + User Profile Avatar -->
+      <div class="navbar-right">
+        <div class="lang-switch-cluster">
+          <button type="button" class="lang-circle-btn active" title="Tiếng Việt">VI</button>
+          <button type="button" class="lang-circle-btn" title="English">EN</button>
+          <button type="button" class="lang-circle-btn" title="Français">FR</button>
+        </div>
+        <div class="nav-user-area">
+          <div class="user-profile-badge" title="Tài khoản đang đăng nhập">
+            <div class="user-avatar" id="navAvatar">AN</div>
+            <div class="user-info-text">
+              <span class="user-name" id="navUserName">Nguyễn Văn An</span>
+              <span class="user-role-tag" id="navRoleTag">Học viên</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       2. BREADCRUMB & COURSE HERO CARD
+       ========================================================================== -->
+  <main class="container" style="padding-top: 14px;">
+    
+    <div class="breadcrumb-section">
+      <ul class="breadcrumb-list">
+        <li class="breadcrumb-item"><a href="01_moodle_lms_homepage.html">Trang chủ</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li class="breadcrumb-item"><a href="02_moodle_lms_course_catalog.html">Danh mục khóa học</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li class="breadcrumb-item"><a href="#">Lĩnh vực 01: Học liệu số</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li class="breadcrumb-item" style="color:var(--text-main); font-weight:600;">NLS-01-IMS</li>
+      </ul>
+    </div>
+
+    <!-- COURSE HERO CARD -->
+    <section class="course-hero-card">
+      <div class="course-hero-top">
+        <div style="flex:1;">
+          <div class="course-badge-row">
+            <span class="badge-solid badge-solid-blue">LĨNH VỰC 01: HỌC LIỆU SỐ</span>
+            <span class="badge-solid badge-solid-orange">MÃ: NLS-01-IMS</span>
+            <span class="badge-solid badge-format-tiles">
+              <span>▦</span> Tiles Course Format
+            </span>
+          </div>
+          <h1 class="course-hero-title">Kỹ Thuật Đóng Gói Học Liệu Chuẩn IMS CP & Nhúng Kho DLRP</h1>
+          <div class="course-meta-inline">
+            <div class="meta-item">
+              <span> Giảng viên:</span> <strong>TS. Nguyễn Văn A</strong>
+            </div>
+            <div class="meta-item">
+              <span>Khai giảng:</span> <strong>01/11/2026</strong>
+            </div>
+            <div class="meta-item">
+              <span>Chuẩn bài giảng:</span> <strong>Moodle Tiles & CBE Engine</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toolbar Thao tác (Thay đổi theo vai trò Giảng viên / Học viên) -->
+        <div id="teacherToolbarArea" style="display:none;">
+          <div class="teacher-action-bar">
+            <div class="edit-mode-toggle">
+              <span>Chế độ chỉnh sửa</span>
+              <label class="switch-toggle">
+                <input type="checkbox" id="editModeSwitch" onchange="toggleEditMode(this.checked)">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <button class="btn-action" onclick="alert('Mở trang quản lý người học: /user/index.php?id=101')">
+              Học viên (42)
+            </button>
+            <button class="btn-action" onclick="alert('Mở sổ điểm Moodle: /grade/report/grader/index.php?id=101')">
+              Sổ điểm
+            </button>
+            <button class="btn-action-primary" onclick="alert('Mở trang quản lý năng lực khóa học Moodle CBE: /admin/tool/lp/coursecompetencies.php?courseid=101')">
+              Quản trị năng lực
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- COURSE HUB GRID: TIẾN ĐỘ & CHUẨN NĂNG LỰC SỐ -->
+      <div class="course-hub-grid">
+        
+        <!-- CỘT 1: TIẾN ĐỘ HOÀN THÀNH (COURSE PROGRESS) -->
+        <div class="hub-box">
+          <div class="hub-box-header">
+            <span class="hub-title">
+              <span class="hub-title-icon"></span> Tiến Độ Học Tập Khóa Học
+            </span>
+            <span id="progressPercentBadge" style="font-size:13px; font-weight:800; color:var(--meko-success);">65% Hoàn thành</span>
+          </div>
+
+          <div class="progress-bar-container">
+            <div id="progressBarFill" class="progress-bar-fill" style="width: 65%;"></div>
+          </div>
+
+          <div class="progress-stats-row">
+            <span id="progressSummaryText">Đã hoàn thành: <strong>13/20</strong> hoạt động bắt buộc</span>
+            <span id="progressRoleExtra" style="font-size:11.5px; color:var(--meko-primary); font-weight:700;">Học viên tích cực</span>
+          </div>
+
+          <div class="completion-criteria-note" id="completionNote">
+            <span></span> Tiêu chí: Hoàn thành đầy đủ các bài giảng tương tác và đạt $\ge 8.0$ bài kiểm tra cuối khóa để cấp chứng chỉ Open Badges.
+          </div>
+        </div>
+
+        <!-- CỘT 2: CHUẨN NĂNG LỰC SỐ (COMPETENCIES LINKED) -->
+        <div class="hub-box">
+          <div class="hub-box-header">
+            <span class="hub-title">
+              <span class="hub-title-icon"></span> Chuẩn Năng Lực Số Liên Kết (CBE)
+            </span>
+            <a href="04_moodle_lms_competencies.html" class="badge-solid badge-solid-blue" style="font-size:11px;" target="_blank">Khung DigComp</a>
+          </div>
+
+          <div class="comp-pill-list">
+            <!-- Năng lực 1 -->
+            <div class="comp-pill-item status-proficient">
+              <div class="comp-info-block">
+                <span class="comp-code-tag">DigComp 2.2 • SV_C3_1_N2</span>
+                <span class="comp-name-text">Năng Lực 3.1: Phát Triển Nội Dung Số (Bậc N2 - Trung Cấp)</span>
+              </div>
+              <span class="comp-level-badge proficient" id="comp1Badge"><i class="fa-solid fa-check"></i> ĐÃ ĐẠT CHUẨN</span>
+            </div>
+
+            <!-- Năng lực 2 -->
+            <div class="comp-pill-item status-progress">
+              <div class="comp-info-block">
+                <span class="comp-code-tag">DigCompEdu • GV_2_2_INTERMEDIATE</span>
+                <span class="comp-name-text">Năng Lực 2.2: Tạo Lập & Đóng Gói Học Liệu Số Chuẩn IMS</span>
+              </div>
+              <span class="comp-level-badge in-progress" id="comp2Badge">ĐANG RÈN LUYỆN</span>
+            </div>
+          </div>
+
+          <a href="#" id="compDetailLink" class="hub-link-action" onclick="alert('Chuyển hướng đến bảng minh chứng năng lực cá nhân Moodle: /admin/tool/lp/user_competency_in_course.php')">
+            Xem báo cáo chi tiết minh chứng năng lực cá nhân &rarr;
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       3. ĐỊNH DẠNG KHÓA HỌC DẠNG THẺ (TILES COURSE FORMAT)
+       ========================================================================== -->
+    <div class="section-header-row">
+      <h2 class="section-title-main">
+        <span></span> Nội Dung Khóa Học Theo Chủ Đề (Tiles View)
+      </h2>
+      <div style="font-size:12.5px; color:var(--text-muted);">
+        Bấm vào từng Thẻ (Tile) bên dưới để xem danh sách học liệu tương tác
+      </div>
+    </div>
+
+    <!-- TILES GRID -->
+    <div class="tiles-grid-container">
+      
+      <!-- TILE 1 -->
+      <div class="course-tile-card" onclick="selectTile(1)">
+        <div class="tile-top-meta">
+          <span class="tile-order-num">CHỦ ĐỀ 1</span>
+          <div class="tile-progress-circle completed" title="Hoàn thành 100%">100%</div>
+        </div>
+        <div class="tile-body-content">
+          <div class="tile-icon-svg"></div>
+          <div class="tile-name-title">Tổng quan & Chuẩn Năng Lực Số</div>
+        </div>
+        <div class="tile-footer-info">
+          <span>3 Hoạt động</span>
+          <span style="color:var(--meko-success); font-weight:700;"><i class="fa-solid fa-check"></i> Hoàn tất</span>
+        </div>
+      </div>
+
+      <!-- TILE 2 (ACTIVE MẶC ĐỊNH) -->
+      <div class="course-tile-card active" id="tileCard2" onclick="selectTile(2)">
+        <div class="tile-top-meta">
+          <span class="tile-order-num">CHỦ ĐỀ 2</span>
+          <div class="tile-progress-circle in-progress" title="Tiến độ 75%">75%</div>
+        </div>
+        <div class="tile-body-content">
+          <div class="tile-icon-svg"></div>
+          <div class="tile-name-title">Đóng Gói Học Liệu Chuẩn IMS CP</div>
+        </div>
+        <div class="tile-footer-info">
+          <span>4 Hoạt động</span>
+          <span style="color:var(--meko-warning); font-weight:700;">Đang học (3/4)</span>
+        </div>
+      </div>
+
+      <!-- TILE 3 -->
+      <div class="course-tile-card" onclick="selectTile(3)">
+        <div class="tile-top-meta">
+          <span class="tile-order-num">CHỦ ĐỀ 3</span>
+          <div class="tile-progress-circle in-progress" title="Tiến độ 50%">50%</div>
+        </div>
+        <div class="tile-body-content">
+          <div class="tile-icon-svg"></div>
+          <div class="tile-name-title">Khai Thác & Nhúng Kho DLRP</div>
+        </div>
+        <div class="tile-footer-info">
+          <span>4 Hoạt động</span>
+          <span style="color:var(--meko-warning); font-weight:700;">Đang học (2/4)</span>
+        </div>
+      </div>
+
+      <!-- TILE 4 -->
+      <div class="course-tile-card" onclick="selectTile(4)">
+        <div class="tile-top-meta">
+          <span class="tile-order-num">CHỦ ĐỀ 4</span>
+          <div class="tile-progress-circle" title="Tiến độ 25%">25%</div>
+        </div>
+        <div class="tile-body-content">
+          <div class="tile-icon-svg"></div>
+          <div class="tile-name-title">Bài Giảng Tương Tác H5P</div>
+        </div>
+        <div class="tile-footer-info">
+          <span>4 Hoạt động</span>
+          <span>1/4 hoàn thành</span>
+        </div>
+      </div>
+
+      <!-- TILE 5 -->
+      <div class="course-tile-card" onclick="selectTile(5)">
+        <div class="tile-top-meta">
+          <span class="tile-order-num">CHỦ ĐỀ 5</span>
+          <div class="tile-progress-circle" title="Tiến độ 0%">0%</div>
+        </div>
+        <div class="tile-body-content">
+          <div class="tile-icon-svg"></div>
+          <div class="tile-name-title">Kiểm Định & Cấp Open Badges</div>
+        </div>
+        <div class="tile-footer-info">
+          <span>2 Hoạt động</span>
+          <span>Chưa bắt đầu</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================================================
+       4. KHU VỰC CHI TIẾT TILE ĐANG CHỌN (SUB-TILES ĐƯỢC PHÂN MÀU THEO QUY CHUẨN)
+       ========================================================================== -->
+    <section class="tile-expanded-section" id="expandedTileSection">
+      <div class="tile-expanded-header">
+        <div class="tile-expanded-title-area">
+          <div class="tile-expanded-icon" id="tileHeaderIcon"></div>
+          <div>
+            <div style="font-size:11.5px; font-weight:700; color:var(--meko-primary);" id="tileHeaderBadge">CHỦ ĐỀ 02 • ĐANG MỞ</div>
+            <h3 class="tile-expanded-h3" id="tileHeaderTitle">Kỹ Thuật Đóng Gói Học Liệu Chuẩn IMS Content Packaging</h3>
+            <div class="tile-expanded-subtitle" id="tileHeaderDesc">
+              Nắm vững cấu trúc tệp imsmanifest.xml, đóng gói đa phương tiện và kiểm thử gói bài giảng trên Moodle LMS.
+            </div>
+          </div>
+        </div>
+        <div class="tile-nav-controls">
+          <button class="btn-tile-nav" onclick="selectTile(1)">&larr; Chủ đề 1</button>
+          <button class="btn-tile-nav" onclick="selectTile(3)">Chủ đề 3 &rarr;</button>
+        </div>
+      </div>
+
+      <!-- DANH SÁCH SUB-TILES -->
+      <div class="subtiles-container" id="subtilesList">
+        
+        <!-- SUB-TILE 1: GÓI IMS CP (Viền Navy #182B89) -->
+        <div class="subtile-card modtype-imscp" onclick="openModal('Bài Giảng Chuẩn IMS CP v1.2: Cấu Trúc Khung Học Liệu', 'imscp')">
+          <div class="subtile-main-info">
+            <div class="subtile-type-icon icon-imscp"></div>
+            <div class="subtile-texts">
+              <div class="subtile-tag-row">
+                <span class="subtile-type-label label-imscp">IMS CP MODULE</span>
+                <span class="subtile-comp-tag">DigComp: SV_C3_1_N2</span>
+              </div>
+              <span class="subtile-title-link">Bài Giảng Tương Tác: Khung Cấu Trúc Gói Bài Học Chuẩn IMS CP v1.2</span>
+              <span class="subtile-desc-summary">Tìm hiểu sơ đồ cây tài nguyên, chuẩn năng lực và cách đóng gói tệp .zip hợp chuẩn.</span>
+            </div>
+          </div>
+          <div class="subtile-completion-box">
+            <div class="completion-checkbox done" title="Đã hoàn thành"><i class="fa-solid fa-check"></i></div>
+            <span class="completion-text" style="color:var(--meko-success);">Đã xem bài</span>
+          </div>
+        </div>
+
+        <!-- SUB-TILE 2: HỌC LIỆU DLRP (Viền Blue #0000B6) -->
+        <div class="subtile-card modtype-resource" onclick="openModal('Tài Liệu Học Tập Số MEKO', 'resource')">
+          <div class="subtile-main-info">
+            <div class="subtile-type-icon icon-resource"></div>
+            <div class="subtile-texts">
+              <div class="subtile-tag-row">
+                <span class="subtile-type-label label-resource">Tài Liệu Số MEKO</span>
+                <span class="subtile-comp-tag">Học Liệu Khóa Học Tiles Record #84920</span>
+              </div>
+              <span class="subtile-title-link">Tài Nguyên Số Mở: Bộ Học Liệu Mẫu Đa Phương Tiện Cho Giảng Viên</span>
+              <span class="subtile-desc-summary">Tài liệu tham khảo xuất bản bởi MEKOSOFT, tích hợp trực tiếp qua MEKO Learning Asset REST API.</span>
+            </div>
+          </div>
+          <div class="subtile-completion-box">
+            <div class="completion-checkbox done" title="Đã hoàn thành"><i class="fa-solid fa-check"></i></div>
+            <span class="completion-text" style="color:var(--meko-success);">Đã nghiên cứu</span>
+          </div>
+        </div>
+
+        <!-- SUB-TILE 3: HOẠT ĐỘNG H5P (Viền Orange #EA6400) -->
+        <div class="subtile-card modtype-h5p" onclick="openModal('Thực Hành H5P: Phân Tích Lỗi Đóng Gói Manifest', 'h5p')">
+          <div class="subtile-main-info">
+            <div class="subtile-type-icon icon-h5p"></div>
+            <div class="subtile-texts">
+              <div class="subtile-tag-row">
+                <span class="subtile-type-label label-h5p">H5P INTERACTIVE</span>
+                <span class="subtile-comp-tag">Thực Hành Năng Lực 3.1</span>
+              </div>
+              <span class="subtile-title-link">Thực Hành Kéo Thả: Sắp Đặt Cấu Trúc Thẻ XML Trong imsmanifest</span>
+              <span class="subtile-desc-summary">Bài tập tương tác kiểm tra độ thành thạo kỹ thuật khai báo manifest và đường dẫn tệp.</span>
+            </div>
+          </div>
+          <div class="subtile-completion-box">
+            <div class="completion-checkbox done" title="Đã hoàn thành"><i class="fa-solid fa-check"></i></div>
+            <span class="completion-text" style="color:var(--meko-success);">Đạt điểm 10/10</span>
+          </div>
+        </div>
+
+        <!-- SUB-TILE 4: ĐÁNH GIÁ QUIZ (Viền Green #39B500) -->
+        <div class="subtile-card modtype-quiz" onclick="openModal('Bài Kiểm Tra Đánh Giá Năng Lực Chủ Đề 02', 'quiz')">
+          <div class="subtile-main-info">
+            <div class="subtile-type-icon icon-quiz"></div>
+            <div class="subtile-texts">
+              <div class="subtile-tag-row">
+                <span class="subtile-type-label label-quiz">QUIZ ASSESSMENT</span>
+                <span class="subtile-comp-tag">Tiêu chí CBE: Điểm ≥ 8.0</span>
+              </div>
+              <span class="subtile-title-link">Bài Kiểm Tra Trắc Nghiệm: Đóng Gói & Xuất Bản Học Liệu Số Thực Tế</span>
+              <span class="subtile-desc-summary">15 câu hỏi trắc nghiệm khách quan mô phỏng tình huống sư phạm số và thẩm định gói bài giảng.</span>
+            </div>
+          </div>
+          <div class="subtile-completion-box">
+            <div class="completion-checkbox pending" title="Chưa hoàn thành"></div>
+            <span class="completion-text" style="color:var(--meko-warning);">Cần làm bài</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Nút Thêm Hoạt Động (Chỉ Hiện Khi Giảng Viên Bật Chế Độ Chỉnh Sửa) -->
+      <div id="teacherAddActivityBtn" class="teacher-add-activity-btn" onclick="alert('Mở Popup Moodle Native: Thêm hoạt động hoặc tài nguyên (Add an activity or resource) - bao gồm mod_resource, IMS CP, Quiz, H5P...')">
+        <span>[+] Thêm Hoạt Động Hoặc Học Liệu Số Vào Chủ Đề Này</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL PREVIEW HỌC LIỆU (MÔ PHỎNG IN-PAGE / MODAL VIEWER)
+       ========================================================================== -->
+  <div class="modal-overlay" id="previewModal" onclick="closeModal(event)">
+    <div class="modal-dialog-box" onclick="event.stopPropagation()">
+      <div class="modal-header-bar">
+        <h4 class="modal-title-text" id="modalTitle">Xem Trước Học Liệu Số</h4>
+        <button class="modal-close-btn" onclick="closeModalDirect()">&times;</button>
+      </div>
+      <div class="modal-body-content" id="modalBody">
+        <!-- Nội dung nhúng động -->
+      </div>
+      <div class="modal-footer-bar">
+        <button class="btn-action" onclick="closeModalDirect()">Đóng</button>
+        <button class="btn-action-primary" onclick="alert('Đánh dấu hoàn thành hoạt động thành công qua Moodle Completion API!'); closeModalDirect();">
+          <i class="fa-solid fa-check"></i> Đánh Dấu Đã Học Xong
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER CHUẨN MEKO MEKOSOFT
+       ========================================================================== -->
+  <!-- FOOTER (CHUẨN MEKO THEO CỔNG THÔNG TIN MEKOSOFT.VN) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-col-title">TẬP ĐOÀN CÔNG NGHỆ MEKOSOFT (MEKOSOFT CORPORATION)</div>
+          <p class="footer-text" style="color: #CBD5E1; margin-bottom: 8px;">
+            Hệ sinh thái Đào tạo & Quản lý Năng lực số Doanh nghiệp MEKO-DLE được phát triển và vận hành độc quyền bởi Tập đoàn Công nghệ MEKOSOFT thông qua Chương trình <strong>MEKOSOFT</strong> – Capacity Building in Higher Education (Mã dự án: <code>MEKO-ENTERPRISE-5.3-LTS</code>).
+          </p>
+          <p style="font-size: 11.5px; color: #94A3B8; margin-bottom: 10px; line-height: 1.5;">
+            <em>Bản quyền giải pháp phần mềm và nội dung đào tạo thuộc sở hữu của MEKOSOFT Corporation.</em>
+          </p>
+          <p class="footer-text" style="color:#FFFFFF; font-weight:700;">
+            Đơn vị điều phối: Tập đoàn Công nghệ MEKOSOFT<br>
+            <span style="font-weight:400; font-size:12px; color:#94A3B8;">Tòa nhà MEKOSOFT Tower, Khu Công Nghệ Phần Mềm, TP. MEKOSOFT & TP. Hồ Chí Minh</span>
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">KHUNG NĂNG LỰC SỐ</div>
+          <ul class="footer-links-list">
+            <li><a href="04_moodle_lms_competencies.html">Khung Năng Lực Giảng Viên (DigCompEdu)</a></li>
+            <li><a href="04_moodle_lms_competencies.html">Khung Năng Lực Sinh Viên (DigComp 2.2 / Pix)</a></li>
+            <li><a href="02_moodle_lms_course_catalog.html">Danh Mục Khóa Bồi Dưỡng Trực Tuyến</a></li>
+            <li><a href="https://repo.mekosoft.vn" target="_blank">Kho Học Liệu Mở MEKO-REPO &rarr;</a></li>
+            <li><a href="#">Hệ Thống Huy Hiệu Mở (Open Badges)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">HỖ TRỢ & LIÊN HỆ</div>
+          <p class="footer-text">
+            <strong>Email:</strong> <a href="mailto:lienhe@mekosoft.vn" style="color:#93C5FD;">lienhe@mekosoft.vn</a><br>
+            <strong>Điện thoại:</strong> <a href="tel:02923832663" style="color:#93C5FD;">(+84) 292 3832 663</a><br>
+            <strong>Cổng thông tin dự án:</strong> <a href="https://mekosoft.vn" target="_blank" style="color:#93C5FD;">https://mekosoft.vn &rarr;</a><br>
+            <strong>Định danh tập trung:</strong> <a href="06_moodle_lms_login_sso.html" target="_blank" style="color:#93C5FD;">Cổng MEKO-SSO &rarr;</a>
+          </p>
+          <div style="margin-top: 10px;">
+            <span style="display: inline-block; background-color: #1E293B; color: #93C5FD; border: 1px solid #334155; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+              <div style="font-weight:700; color:#0000B6; letter-spacing:0.5px;">MEKOSOFT CORPORATION • DIGITAL LEARNING ECOSYSTEM</div>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar" style="border-top: 1px solid #1E293B; padding-top: 18px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div style="font-weight: 600; color: #E2E8F0;">&copy; 2026 Hệ sinh thái MEKO MEKOSOFT. Mọi quyền được bảo lưu.</div>
+        <div style="color: #94A3B8;">Hệ thống Quản lý Học tập MEKO-LMS (Moodle 5.3 LTS) • Bản quyền phát triển bởi MEKOSOFTSOFT</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       JAVASCRIPT LOGIC CHO DEMO ROLE SWITCHER & TILES NAVIGATION
+       ========================================================================== -->
+  <script>
+    let currentRole = 'student';
+    let isEditMode = false;
+
+    // 1. Chuyển đổi Góc nhìn Học viên <-> Giảng viên
+    function switchRole(role) {
+      currentRole = role;
+      const btnStudent = document.getElementById('btnStudentRole');
+      const btnTeacher = document.getElementById('btnTeacherRole');
+      const navAvatar = document.getElementById('navAvatar');
+      const navUserName = document.getElementById('navUserName');
+      const navRoleTag = document.getElementById('navRoleTag');
+      const teacherToolbarArea = document.getElementById('teacherToolbarArea');
+      const teacherAddActivityBtn = document.getElementById('teacherAddActivityBtn');
+      const progressPercentBadge = document.getElementById('progressPercentBadge');
+      const progressSummaryText = document.getElementById('progressSummaryText');
+      const progressRoleExtra = document.getElementById('progressRoleExtra');
+      const comp1Badge = document.getElementById('comp1Badge');
+      const comp2Badge = document.getElementById('comp2Badge');
+      const compDetailLink = document.getElementById('compDetailLink');
+      const completionNote = document.getElementById('completionNote');
+
+      if (role === 'student') {
+        btnStudent.classList.add('active');
+        btnTeacher.classList.remove('active');
+        navAvatar.innerText = 'HV';
+        navUserName.innerText = 'Nguyễn Văn Bình';
+        navRoleTag.innerText = 'Học viên (Sinh viên)';
+        teacherToolbarArea.style.display = 'none';
+        teacherAddActivityBtn.style.display = 'none';
+
+        progressPercentBadge.innerText = '65% Hoàn thành';
+        progressSummaryText.innerHTML = 'Đã hoàn thành: <strong>13/20</strong> hoạt động bắt buộc';
+        progressRoleExtra.innerText = 'Học viên tích cực';
+        comp1Badge.innerText = '<i class="fa-solid fa-check"></i> ĐÃ ĐẠT CHUẨN';
+        comp1Badge.className = 'comp-level-badge proficient';
+        comp2Badge.innerText = 'ĐANG RÈN LUYỆN';
+        comp2Badge.className = 'comp-level-badge in-progress';
+        compDetailLink.innerText = 'Xem báo cáo chi tiết minh chứng năng lực cá nhân →';
+        completionNote.innerHTML = '<span></span> Tiêu chí: Hoàn thành đầy đủ các bài giảng tương tác và đạt $\\ge 8.0$ bài kiểm tra cuối khóa để cấp chứng chỉ Open Badges.';
+      } else {
+        btnTeacher.classList.add('active');
+        btnStudent.classList.remove('active');
+        navAvatar.innerText = 'GV';
+        navUserName.innerText = 'TS. Nguyễn Văn A';
+        navRoleTag.innerText = 'Giảng viên phụ trách';
+        teacherToolbarArea.style.display = 'block';
+        if (isEditMode) {
+          teacherAddActivityBtn.style.display = 'block';
+        }
+
+        progressPercentBadge.innerText = '58% TB Hoàn thành cả lớp';
+        progressSummaryText.innerHTML = 'Học viên tích cực: <strong>36/42</strong> • 18 học viên đã đạt chuẩn';
+        progressRoleExtra.innerText = 'Báo cáo lớp học';
+        comp1Badge.innerText = '35/42 HV ĐẠT CHUẨN (83%)';
+        comp1Badge.className = 'comp-level-badge proficient';
+        comp2Badge.innerText = '22/42 HV ĐẠT CHUẨN (52%)';
+        comp2Badge.className = 'comp-level-badge in-progress';
+        compDetailLink.innerText = 'Quản trị Khung năng lực & Đánh giá học viên (tool_lp) →';
+        completionNote.innerHTML = '<span></span> Thống kê Giảng viên: 42 Học viên ghi danh. Đã liên kết 02 Bậc năng lực chuẩn vào khóa học. Bấm vào Quản trị năng lực để đánh giá.';
+      }
+    }
+
+    // 2. Chế độ Bật/Tắt Chỉnh sửa của Giảng viên
+    function toggleEditMode(enabled) {
+      isEditMode = enabled;
+      const addBtn = document.getElementById('teacherAddActivityBtn');
+      if (currentRole === 'teacher' && isEditMode) {
+        addBtn.style.display = 'block';
+      } else {
+        addBtn.style.display = 'none';
+      }
+    }
+
+    // 3. Chuyển đổi Tile xem nội dung chi tiết
+    const tilesData = {
+      1: {
+        num: '01',
+        title: 'Tổng Quan Khóa Học & Giới Thiệu Khung Năng Lực Số',
+        icon: '',
+        desc: 'Mục tiêu đào tạo, cấu trúc học tập và cách thức đánh giá năng lực số theo chuẩn DigComp và DigCompEdu.'
+      },
+      2: {
+        num: '02',
+        title: 'Kỹ Thuật Đóng Gói Học Liệu Chuẩn IMS Content Packaging',
+        icon: '',
+        desc: 'Nắm vững cấu trúc tệp imsmanifest.xml, đóng gói đa phương tiện và kiểm thử gói bài giảng trên Moodle LMS.'
+      },
+      3: {
+        num: '03',
+        title: 'Tổ Chức Bài Giảng Tương Tác & Đánh Giá Năng Lực Chuẩn VSTEP / DigCompEdu',
+        icon: '',
+        desc: 'Kết nối kho tài nguyên giáo dục mở Học Liệu Khóa Học Tiles, tìm kiếm tài liệu có gắn siêu dữ liệu MEKO-Standard và nhúng vào Moodle.'
+      },
+      4: {
+        num: '04',
+        title: 'Thiết Kế Hoạt Động Học Tập Tương Tác Nâng Cao Với H5P',
+        icon: '',
+        desc: 'Xây dựng Interactive Video, Branching Scenario và các bài tập kéo thả tăng cường mức độ gắn kết của người học.'
+      },
+      5: {
+        num: '05',
+        title: 'Kiểm Định Đánh Giá Năng Lực & Cấp Chứng Nhận Open Badges',
+        icon: '',
+        desc: 'Thực hiện bài kiểm tra tổng hợp cuối khóa và tự động nhận Huy hiệu số mở Open Badges minh chứng năng lực số.'
+      }
+    };
+
+    function selectTile(tileId) {
+      // Bỏ active tất cả tile cards
+      const allCards = document.querySelectorAll('.course-tile-card');
+      allCards.forEach(c => c.classList.remove('active'));
+
+      // Active thẻ được chọn
+      const selectedIndex = tileId - 1;
+      if (allCards[selectedIndex]) {
+        allCards[selectedIndex].classList.add('active');
+      }
+
+      // Cập nhật Header của Tile Expanded
+      const data = tilesData[tileId];
+      if (data) {
+        document.getElementById('tileHeaderIcon').innerText = data.icon;
+        document.getElementById('tileHeaderBadge').innerText = 'CHỦ ĐỀ ' + data.num + ' • ĐANG MỞ';
+        document.getElementById('tileHeaderTitle').innerText = data.title;
+        document.getElementById('tileHeaderDesc').innerText = data.desc;
+      }
+
+      // Scroll mượt đến phần chi tiết
+      document.getElementById('expandedTileSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // 4. Mở Popup Modal xem trước học liệu
+    function openModal(title, type) {
+      const modal = document.getElementById('previewModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBody = document.getElementById('modalBody');
+
+      modalTitle.innerText = title;
+
+      if (type === 'imscp') {
+        modalBody.innerHTML = `
+          <div style="background-color:#F8FAFC; padding:16px; border-radius:8px; border:1px solid #E2E8F0; margin-bottom:16px;">
+            <span style="font-size:12px; font-weight:700; color:#182B89;">GÓI CHUẨN IMS CONTENT PACKAGING V1.2</span>
+            <h4 style="margin:6px 0 8px; color:#1F2937;">Khung Kiến Trúc Gói Bài Học Số Chuẩn Hóa</h4>
+            <p style="font-size:13px; color:#4B5563; margin-bottom:12px;">Bài học này hướng dẫn các thành phần cốt lõi: <code>imsmanifest.xml</code>, <code>organizations</code>, <code>resources</code> và tích hợp chuẩn năng lực.</p>
+            <div style="background-color:#1E293B; color:#E2E8F0; padding:12px; border-radius:6px; font-family:monospace; font-size:12px; overflow-x:auto;">
+              &lt;manifest identifier="MEKO_PKG_01" version="1.2"&gt;<br>
+              &nbsp;&nbsp;&lt;metadata&gt;...&lt;/metadata&gt;<br>
+              &nbsp;&nbsp;&lt;organizations default="ORG-1"&gt;...&lt;/organizations&gt;<br>
+              &nbsp;&nbsp;&lt;resources&gt;...&lt;/resources&gt;<br>
+              &lt;/manifest&gt;
+            </div>
+          </div>
+          <p style="font-size:13px; color:#4B5563;">Sau khi học xong bài này, hệ thống Moodle sẽ tự động ghi nhận hoàn thành hoạt động vào tiến độ tổng thể và cập nhật trạng thái chuẩn năng lực <strong>DigComp: SV_C3_1_N2</strong>.</p>
+        `;
+      } else if (type === 'resource') {
+        modalBody.innerHTML = `
+          <div style="background-color:#EEF2FF; padding:16px; border-radius:8px; border:1px solid #C7D2FE; margin-bottom:16px;">
+            <span style="font-size:12px; font-weight:700; color:#0000B6;">HỌC LIỆU SỐ NHÚNG TỪ KHO MEKO-REPO (resourceRDM)</span>
+            <h4 style="margin:6px 0 8px; color:#1F2937;">Bộ Học Liệu Mẫu Đa Phương Tiện Chuẩn Quốc Tế</h4>
+            <p style="font-size:13px; color:#4B5563; margin-bottom:8px;">Học liệu được liên kết và trích dẫn trực tiếp từ kho số của Trường MEKOSOFT qua REST API Học Liệu Khóa Học Tiles.</p>
+            <ul style="font-size:12.5px; color:#374151; padding-left:18px; line-height:1.6;">
+              <li><strong>Record ID:</strong> <code>84920</code></li>
+              <li><strong>Giấy phép:</strong> Creative Commons BY-NC-SA 4.0</li>
+              <li><strong>Định dạng tệp:</strong> PDF Sư Phạm Số & Bài giảng SCORM đính kèm</li>
+            </ul>
+          </div>
+          <iframe style="width:100%; height:320px; border:1px solid #CBD5E1; border-radius:6px; background:#F1F5F9;" srcdoc="<div style='display:flex;align-items:center;justify-content:center;height:100%;color:#64748B;font-family:sans-serif;'>Khung hiển thị học liệu nhúng DLRP Viewer (Chiều cao 750px trên màn hình thực tế)</div>"></iframe>
+        `;
+      } else if (type === 'h5p') {
+        modalBody.innerHTML = `
+          <div style="background-color:#FFF7ED; padding:16px; border-radius:8px; border:1px solid #FFEDD5; margin-bottom:16px;">
+            <span style="font-size:12px; font-weight:700; color:#EA6400;">BÀI TẬP TƯƠNG TÁC H5P</span>
+            <h4 style="margin:6px 0 8px; color:#1F2937;">Thực Hành Sắp Đặt Cấu Trúc Manifest</h4>
+            <p style="font-size:13px; color:#4B5563;">Kéo và thả các thẻ XML vào đúng vị trí phân cấp trong tài liệu manifest chuẩn IMS CP.</p>
+          </div>
+          <div style="border:2px dashed #EA6400; background:#FFFBEB; border-radius:8px; padding:30px; text-align:center; color:#B45309; font-weight:600;">
+            Khu vực tương tác bài giảng H5P (Tích hợp core Moodle H5P Activity)
+          </div>
+        `;
+      } else if (type === 'quiz') {
+        modalBody.innerHTML = `
+          <div style="background-color:#EDFDF2; padding:16px; border-radius:8px; border:1px solid #BBF7D0; margin-bottom:16px;">
+            <span style="font-size:12px; font-weight:700; color:#15803D;">BÀI KIỂM TRA ĐÁNH GIÁ NĂNG LỰC SỐ (MOODLE QUIZ)</span>
+            <h4 style="margin:6px 0 8px; color:#1F2937;">Kiểm Tra Năng Lực Đóng Gói Học Liệu Số Thực Tế</h4>
+            <p style="font-size:13px; color:#4B5563; margin-bottom:8px;">Số câu hỏi: 15 câu • Thời gian làm bài: 30 phút • Điểm đạt tiêu chuẩn CBE: $\ge 8.0/10$.</p>
+          </div>
+          <div style="padding:16px; background:#F8FAFC; border-radius:6px; border:1px solid #E2E8F0;">
+            <p style="font-weight:700; font-size:13.5px; margin-bottom:8px;">Câu 1: Tệp tin bắt buộc phải nằm ở thư mục gốc của gói bài giảng IMS CP là gì?</p>
+            <label style="display:block; margin-bottom:6px; font-size:13px;"><input type="radio" name="q1" checked> A. imsmanifest.xml</label>
+            <label style="display:block; margin-bottom:6px; font-size:13px;"><input type="radio" name="q1"> B. index.html</label>
+            <label style="display:block; margin-bottom:6px; font-size:13px;"><input type="radio" name="q1"> C. meko_blueprint.json</label>
+            <label style="display:block; font-size:13px;"><input type="radio" name="q1"> D. package.config</label>
+          </div>
+        `;
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeModalDirect() {
+      document.getElementById('previewModal').style.display = 'none';
+    }
+
+    function closeModal(e) {
+      if (e.target.id === 'previewModal') {
+        closeModalDirect();
+      }
+    }
+  </script>
+
+</body>
+</html>

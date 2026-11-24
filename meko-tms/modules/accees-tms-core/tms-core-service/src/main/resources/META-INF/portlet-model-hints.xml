@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="vn.mekosoft.accees.tms.core.model.TMSCompetencyFramework">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="frameworkCode" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="domainName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="competencyName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="levelDescriptor" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSCoursePlan">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="lomIdentifier" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="imsPackageUrl" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="courseTitle" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="courseDescription" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="targetAudience" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="institution" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="scheduleInfo" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="location" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="lecturerUsername" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="lecturerName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="lecturerEmail" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="approvedByUserName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="approvalNotes" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="lomPayloadJson" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSCourse">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="courseCode" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="courseTitle" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="courseDescription" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="lomIdentifier" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="imsPackageUrl" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="institution" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="scheduleInfo" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="location" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="lecturerUsername" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="lecturerName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="lecturerEmail" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="thumbnailUrl" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="moodleShortname" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSCourseCompetency">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSStudent">
+		<field name="createdByUserName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="ssoUserId" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="ssoUsername" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="studentCode" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="fullName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="email" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="organization" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSEnrollment">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="enrollmentCode" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="approvedByUserName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="approvalNotes" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="lastSyncError" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="lastEmailError" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSStudentCertificate">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="badgeName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="badgeImageUrl" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="badgeUniqueHash" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="badgeAssertionUrl" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="badgesJson" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="certSerialCode" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="qrVerifyCode" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="qrVerifyUrl" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="digitalSignatureHash" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="revokedByUserName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="revokeReason" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSSyncLog">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="actionName" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="eventId" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="requestUrl" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
+		<field name="requestPayload" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="responseBody" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="errorMessage" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSEmailTemplate">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="templateCode" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="subject" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="bodyHtml" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+	</model>
+
+	<model name="vn.mekosoft.accees.tms.core.model.TMSEmailLog">
+		<field name="userName" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="templateCode" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="recipientEmail" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="recipientName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="subject" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="renderedBodyHtml" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+		<field name="errorMessage" type="String">
+			<hint name="max-length">2000000</hint>
+		</field>
+	</model>
+</model-hints>
